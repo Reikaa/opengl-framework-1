@@ -9,8 +9,6 @@
 #ifndef __OpenGLFramework__light__
 #define __OpenGLFramework__light__
 
-#include <stdio.h>
-
 namespace lkogl {
     namespace graphics {
         class Light {

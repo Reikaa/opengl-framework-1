@@ -9,7 +9,6 @@
 #ifndef __OpenGLFramework__scene_renderer__
 #define __OpenGLFramework__scene_renderer__
 
-#include <stdio.h>
 #include "visitor.h"
 #include "group.h"
 #include "leaf.h"
@@ -23,7 +22,7 @@ namespace lkogl {
             {
                 math::Mat4<GLfloat> modelMatrix_;
                 math::Mat4<GLfloat> viewMatrix_ = math::lookAt(math::Vec3<GLfloat>(4,10,16), math::Vec3<GLfloat>(1,1,1), math::Vec3<GLfloat>(0,1,0));
-                math::Mat4<GLfloat> projectionMatrix_ = math::perspective(math::radians(85.0f), 16/9.0f, 2.f, 100.f);
+                math::Mat4<GLfloat> projectionMatrix_ = math::perspective(math::radians(65.0f), 16/9.0f, 2.f, 100.f);
                 math::Vec3<GLfloat> cameraPosition_;
             public:
                 SceneRenderer();

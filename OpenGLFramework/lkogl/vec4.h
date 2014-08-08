@@ -9,9 +9,6 @@
 #ifndef __OpenGLFramework__vec4__
 #define __OpenGLFramework__vec4__
 
-#include <stdio.h>
-
-
 namespace lkogl {
     namespace math {
         typedef float basetype;

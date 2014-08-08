@@ -9,8 +9,6 @@
 #include "scene_renderer.h"
 #include "material.h"
 
-#include <iostream>
-
 namespace lkogl {
     namespace scene {
         namespace visitor {

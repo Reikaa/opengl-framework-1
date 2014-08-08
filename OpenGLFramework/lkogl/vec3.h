@@ -9,7 +9,6 @@
 #ifndef __OpenGLFramework__vec3__
 #define __OpenGLFramework__vec3__
 
-#include <stdio.h>
 #include <math.h>
 
 namespace lkogl {

@@ -9,7 +9,6 @@
 #ifndef __OpenGLFramework__group__
 #define __OpenGLFramework__group__
 
-#include <stdio.h>
 #include <list>
 
 #include "node.h"

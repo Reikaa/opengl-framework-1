@@ -9,7 +9,6 @@
 #ifndef __OpenGLFramework__material__
 #define __OpenGLFramework__material__
 
-#include <stdio.h>
 #include <vector>
 
 #include "texture.h"

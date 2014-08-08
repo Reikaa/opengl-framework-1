@@ -9,8 +9,6 @@
 #ifndef __OpenGLFramework__texture__
 #define __OpenGLFramework__texture__
 
-#include <stdio.h>
-
 #include "opengl.h"
 #include "image.h"
 

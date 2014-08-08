@@ -9,7 +9,6 @@
 #ifndef __OpenGLFramework__graph__
 #define __OpenGLFramework__graph__
 
-#include <stdio.h>
 #include "group.h"
 
 namespace lkogl {

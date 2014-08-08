@@ -9,7 +9,6 @@
 #ifndef __OpenGLFramework__transform__
 #define __OpenGLFramework__transform__
 
-#include <stdio.h>
 #include "mesh.h"
 
 namespace lkogl {

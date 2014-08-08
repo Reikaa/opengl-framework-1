@@ -9,8 +9,6 @@
 #ifndef __OpenGLFramework__first_person_camera__
 #define __OpenGLFramework__first_person_camera__
 
-#include <stdio.h>
-
 namespace lkogl {
     namespace camera {
         class FirstPersonCamera {

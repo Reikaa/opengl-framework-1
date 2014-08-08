@@ -9,14 +9,12 @@
 #ifndef __OpenGLFramework__math__
 #define __OpenGLFramework__math__
 
-#include <stdio.h>
+#include <math.h>
 
 #include "vec3.h"
 #include "vec4.h"
 #include "mat4.h"
 #include "quat.h"
-
-#include <math.h>
 
 namespace lkogl {
     namespace math {

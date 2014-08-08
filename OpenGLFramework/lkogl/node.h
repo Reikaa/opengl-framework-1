@@ -9,8 +9,6 @@
 #ifndef __OpenGLFramework__node__
 #define __OpenGLFramework__node__
 
-#include <stdio.h>
-
 #include "visitor.h"
 #include "transform.h"
 

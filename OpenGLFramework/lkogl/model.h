@@ -9,7 +9,6 @@
 #ifndef __OpenGLFramework__model__
 #define __OpenGLFramework__model__
 
-#include <stdio.h>
 #include "shader.h"
 #include "material.h"
 

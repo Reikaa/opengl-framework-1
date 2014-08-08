@@ -9,7 +9,6 @@
 #ifndef __OpenGLFramework__text__
 #define __OpenGLFramework__text__
 
-#include <stdio.h>
 #include <string>
 
 namespace lkogl {

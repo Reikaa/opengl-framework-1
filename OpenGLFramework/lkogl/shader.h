@@ -9,7 +9,6 @@
 #ifndef __OpenGLFramework__shader__
 #define __OpenGLFramework__shader__
 
-#include <stdio.h>
 #include <string>
 #include <exception>
 

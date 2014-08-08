@@ -7,7 +7,6 @@
 //
 
 #include "shader.h"
-#include <iostream>
 
 namespace lkogl {
     namespace graphics {

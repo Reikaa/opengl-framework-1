@@ -9,7 +9,6 @@
 #ifndef __OpenGLFramework__mesh__
 #define __OpenGLFramework__mesh__
 
-#include <stdio.h>
 #include <vector>
 
 #include "opengl.h"

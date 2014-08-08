@@ -9,7 +9,6 @@
 #ifndef __OpenGLFramework__mat4__
 #define __OpenGLFramework__mat4__
 
-#include <stdio.h>
 #include <string>
 
 #include "vec4.h"

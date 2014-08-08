@@ -10,7 +10,6 @@
 #define __OpenGLFramework__window__
 
 #include <string>
-#include <stdio.h>
 
 #include "sdl.h"
 

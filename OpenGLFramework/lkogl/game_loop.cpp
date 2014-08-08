@@ -7,7 +7,6 @@
 //
 
 #include <chrono>
-#include <iostream>
 
 #include "game_loop.h"
 

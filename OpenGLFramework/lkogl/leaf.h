@@ -9,8 +9,6 @@
 #ifndef __OpenGLFramework__leaf__
 #define __OpenGLFramework__leaf__
 
-#include <stdio.h>
-
 #include "node.h"
 #include "model.h"
 

@@ -9,8 +9,6 @@
 #ifndef __OpenGLFramework__quat__
 #define __OpenGLFramework__quat__
 
-#include <stdio.h>
-
 #include "vec3.h"
 #include "vec4.h"
 

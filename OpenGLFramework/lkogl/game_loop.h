@@ -9,8 +9,6 @@
 #ifndef __OpenGLFramework__game_loop__
 #define __OpenGLFramework__game_loop__
 
-#include <stdio.h>
-
 #include "window.h"
 
 constexpr long operator "" _fps(unsigned long long int fps) {

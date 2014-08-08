@@ -7,7 +7,6 @@
 //
 
 #include "model.h"
-#include <iostream>
 
 namespace lkogl {
     namespace graphics {

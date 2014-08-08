@@ -9,8 +9,6 @@
 #ifndef __OpenGLFramework__visitor__
 #define __OpenGLFramework__visitor__
 
-#include <stdio.h>
-
 namespace lkogl {
     namespace scene {
         class Visitor {

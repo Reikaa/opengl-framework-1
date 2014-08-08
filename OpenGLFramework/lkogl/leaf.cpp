@@ -7,7 +7,6 @@
 //
 
 #include "leaf.h"
-#include <iostream>
 
 namespace lkogl {
     namespace scene {
