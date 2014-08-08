@@ -47,19 +47,44 @@
 			remoteGlobalIDString = F297075B19936C1600D48CE5;
 			remoteInfo = OpenGLFramework;
 		};
+		F2C3A9CC19955E02002511E0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F297071F1993682F00D48CE5 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F297075B19936C1600D48CE5;
+			remoteInfo = OpenGLFramework;
+		};
+		F2C3A9CE19955E02002511E0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F297071F1993682F00D48CE5 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F297075B19936C1600D48CE5;
+			remoteInfo = OpenGLFramework;
+		};
+		F2C3A9D019955E04002511E0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F297071F1993682F00D48CE5 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F297075B19936C1600D48CE5;
+			remoteInfo = OpenGLFramework;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		F27044C91994C2C200C57B6A /* phong.vsh */ = {isa = PBXFileReference; explicitFileType = sourcecode.glsl; fileEncoding = 4; path = phong.vsh; sourceTree = SOURCE_ROOT; };
-		F27044CB1994C2CC00C57B6A /* phong.fsh */ = {isa = PBXFileReference; explicitFileType = sourcecode.glsl; fileEncoding = 4; path = phong.fsh; sourceTree = SOURCE_ROOT; };
+		F27044C91994C2C200C57B6A /* phong.vsh */ = {isa = PBXFileReference; explicitFileType = sourcecode.glsl; fileEncoding = 4; name = phong.vsh; path = OpenGLFramework/Resources/phong.vsh; sourceTree = SOURCE_ROOT; };
+		F27044CB1994C2CC00C57B6A /* phong.fsh */ = {isa = PBXFileReference; explicitFileType = sourcecode.glsl; fileEncoding = 4; name = phong.fsh; path = OpenGLFramework/Resources/phong.fsh; sourceTree = SOURCE_ROOT; };
 		F27044CD1994C36C00C57B6A /* text.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = text.cpp; sourceTree = "<group>"; };
 		F27044CE1994C36C00C57B6A /* text.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = text.h; sourceTree = "<group>"; };
 		F27044D01994EC4E00C57B6A /* transform.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = transform.cpp; sourceTree = "<group>"; };
 		F27044D11994EC4E00C57B6A /* transform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = transform.h; sourceTree = "<group>"; };
+		F27044D41995424100C57B6A /* vec3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vec3.h; sourceTree = "<group>"; };
+		F27044D71995428B00C57B6A /* vec4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vec4.h; sourceTree = "<group>"; };
+		F27044DA199542B800C57B6A /* mat4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mat4.h; sourceTree = "<group>"; };
+		F27044DD199542D700C57B6A /* quat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = quat.h; sourceTree = "<group>"; };
 		F297072A1993682F00D48CE5 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
-		F297075619936A9A00D48CE5 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = ../Info.plist; sourceTree = "<group>"; };
+		F297075619936A9A00D48CE5 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F297075C19936C1600D48CE5 /* OpenGLFramework.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OpenGLFramework.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		F297076519936C1600D48CE5 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = ../Images.xcassets; sourceTree = "<group>"; };
+		F297076519936C1600D48CE5 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		F297076E19936C1600D48CE5 /* OpenGLFrameworkTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OpenGLFrameworkTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F297077319936C1600D48CE5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F297077D19936F7D00D48CE5 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
@@ -310,6 +335,10 @@
 			children = (
 				F2970792199370EE00D48CE5 /* math.cpp */,
 				F2970793199370EE00D48CE5 /* math.h */,
+				F27044D41995424100C57B6A /* vec3.h */,
+				F27044D71995428B00C57B6A /* vec4.h */,
+				F27044DA199542B800C57B6A /* mat4.h */,
+				F27044DD199542D700C57B6A /* quat.h */,
 			);
 			name = math;
 			sourceTree = "<group>";
@@ -355,6 +384,9 @@
 			);
 			dependencies = (
 				F297077019936C1600D48CE5 /* PBXTargetDependency */,
+				F2C3A9CD19955E02002511E0 /* PBXTargetDependency */,
+				F2C3A9CF19955E02002511E0 /* PBXTargetDependency */,
+				F2C3A9D119955E04002511E0 /* PBXTargetDependency */,
 			);
 			name = OpenGLFrameworkTests;
 			productName = OpenGLFrameworkTests;
@@ -462,6 +494,21 @@
 			target = F297075B19936C1600D48CE5 /* OpenGLFramework */;
 			targetProxy = F297076F19936C1600D48CE5 /* PBXContainerItemProxy */;
 		};
+		F2C3A9CD19955E02002511E0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F297075B19936C1600D48CE5 /* OpenGLFramework */;
+			targetProxy = F2C3A9CC19955E02002511E0 /* PBXContainerItemProxy */;
+		};
+		F2C3A9CF19955E02002511E0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F297075B19936C1600D48CE5 /* OpenGLFramework */;
+			targetProxy = F2C3A9CE19955E02002511E0 /* PBXContainerItemProxy */;
+		};
+		F2C3A9D119955E04002511E0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F297075B19936C1600D48CE5 /* OpenGLFramework */;
+			targetProxy = F2C3A9D019955E04002511E0 /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
@@ -553,7 +600,7 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = OpenGLFramework/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/OpenGLFramework/Resources/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -569,7 +616,7 @@
 					"$(inherited)",
 					"$(USER_LIBRARY_DIR)/Frameworks",
 				);
-				INFOPLIST_FILE = OpenGLFramework/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/OpenGLFramework/Resources/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};

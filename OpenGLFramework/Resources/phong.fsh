@@ -14,7 +14,7 @@ struct Material {
     sampler2D specularColor;
 };
 
-uniform vec3 cameraPosition;
+uniform vec3 uCameraPosition;
 uniform Material uMaterial;
 uniform Light uLight;
 
@@ -45,7 +45,7 @@ void main() {
     
     // Specular
     if(lambertian > 0.0 && length(fSpecularBase) > 0.0) {
-        vec3 Eye = normalize(cameraPosition-fPosition);
+        vec3 Eye = normalize(uCameraPosition-fPosition);
         vec3 halfDir = normalize(lightDirection + Eye);
         
         //float specAngle = max(dot(Reflection, Eye), 0.0);

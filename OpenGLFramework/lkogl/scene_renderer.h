@@ -13,6 +13,7 @@
 #include "visitor.h"
 #include "group.h"
 #include "leaf.h"
+#include "math.h"
 
 namespace lkogl {
     namespace scene {
@@ -20,7 +21,13 @@ namespace lkogl {
 
             class SceneRenderer : public Visitor
             {
+                math::Mat4<GLfloat> modelMatrix_;
+                math::Mat4<GLfloat> viewMatrix_ = math::lookAt(math::Vec3<GLfloat>(4,10,16), math::Vec3<GLfloat>(1,1,1), math::Vec3<GLfloat>(0,1,0));
+                math::Mat4<GLfloat> projectionMatrix_ = math::perspective(math::radians(85.0f), 16/9.0f, 2.f, 100.f);
+                math::Vec3<GLfloat> cameraPosition_;
             public:
+                SceneRenderer();
+                ~SceneRenderer();
                 void visit(const Group&) const;
                 void visit(const Leaf&) const;
                 

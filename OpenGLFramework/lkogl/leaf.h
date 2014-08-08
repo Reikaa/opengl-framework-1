@@ -21,7 +21,7 @@ namespace lkogl {
         public:
             Leaf(graphics::Model model);
             ~Leaf();
-            graphics::Model model() const;
+            const graphics::Model& model() const;
             void accept( const Visitor & ) const;
         };
     }

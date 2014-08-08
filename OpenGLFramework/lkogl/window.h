@@ -23,6 +23,9 @@ namespace lkogl {
             Window(int width, int height, std::string title);
             ~Window();
             
+            int width() const;
+            int height() const;
+            
             void refreshDisplay() const;
         };
     }

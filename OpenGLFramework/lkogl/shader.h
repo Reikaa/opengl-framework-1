@@ -15,6 +15,7 @@
 
 #include "opengl.h"
 #include "mesh.h"
+#include "math.h"
 
 namespace lkogl {
     namespace graphics {
@@ -52,7 +53,13 @@ namespace lkogl {
         };
         
         class Program {
-            GLuint handle_;
+            struct ProgramHandles {
+                GLuint programId;
+                GLint modelMatrix;
+                GLint viewMatrix;
+                GLint projectionMatrix;
+                GLint cameraPosition;
+            } handles_;
 
         public:
             Program(const std::string& vsh, const std::string& fsh) throw (ShaderException);
@@ -60,9 +67,9 @@ namespace lkogl {
             Program(Program&&) throw();
             ~Program();
             
-            const GLuint& handle() const { return handle_; }
+            const ProgramHandles& handles() const { return handles_; }
         private:
-            GLuint link(const Shader& vsh, const Shader& fsh) throw (ShaderException);
+            ProgramHandles link(const Shader& vsh, const Shader& fsh) throw (ShaderException);
 
         };
         
@@ -71,6 +78,16 @@ namespace lkogl {
         public:
             ProgramUse(const Program&);
             ~ProgramUse();
+        };
+        
+        class MatrixUse {
+        public:
+            MatrixUse(const Program&,
+                      const math::Mat4<GLfloat>& modelMat,
+                      const math::Mat4<GLfloat>& viewMat,
+                      const math::Mat4<GLfloat>& projectionMat,
+                      const math::Vec3<GLfloat>& cameraPosition);
+            ~MatrixUse();
         };
         
         class GeometryObject {
@@ -82,13 +99,13 @@ namespace lkogl {
             int indexCount_;
             
         public:
-            
+            GeometryObject() = delete;
             GeometryObject(const geometry::Mesh&);
             GeometryObject(GeometryObject&&);
             ~GeometryObject();
             
             const GeometryHandle& handle() const { return handles_; }
-            const int& indexCount() const { return indexCount_; }
+            int indexCount() const { return indexCount_; }
         private:
             GeometryHandle buffer(const geometry::Mesh& mesh);
         };

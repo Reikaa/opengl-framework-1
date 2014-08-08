@@ -7,6 +7,7 @@
 //
 
 #include "shader.h"
+#include <iostream>
 
 namespace lkogl {
     namespace graphics {
@@ -56,17 +57,18 @@ namespace lkogl {
             }
         }
         
-        Program::Program(const Shader& vsh, const Shader& fsh) throw(lkogl::graphics::ShaderException) : handle_(link(vsh, fsh))
+        Program::Program(const Shader& vsh, const Shader& fsh) throw(lkogl::graphics::ShaderException) : handles_(link(vsh, fsh))
         {
         }
         
         Program::Program(const std::string& vsh, const std::string& fsh) throw(lkogl::graphics::ShaderException) :
-            handle_(link(Shader(graphics::ShaderType::VERTEX, vsh), Shader(graphics::ShaderType::FRAGMENT, fsh)))
+            handles_(link(Shader(graphics::ShaderType::VERTEX, vsh), Shader(graphics::ShaderType::FRAGMENT, fsh)))
         {
         }
         
-        GLuint Program::link(const Shader& vsh, const Shader& fsh) throw (ShaderException) {
+        Program::ProgramHandles Program::link(const Shader& vsh, const Shader& fsh) throw (ShaderException) {
             GLuint handle = glCreateProgram();
+            GLint mMat, vMat, pMat, camPos;
             
             try {
                 GLint compileOk;
@@ -75,6 +77,11 @@ namespace lkogl {
                 
                 glAttachShader(handle, vsh.handle());
                 glAttachShader(handle, fsh.handle());
+                
+                glBindAttribLocation(handle, LOCATION_POSITION, "vPosition");
+                glBindAttribLocation(handle, LOCATION_NORMAL, "vNormal");
+                glBindAttribLocation(handle, LOCATION_COLOR, "vColor");
+                glBindAttribLocation(handle, LOCATION_TEXTURE_COORDS, "vTexCoord");
 
                 glLinkProgram(handle);
                 glGetProgramiv(handle, GL_LINK_STATUS, &compileOk);
@@ -84,33 +91,56 @@ namespace lkogl {
                     glGetProgramInfoLog(handle, errLength, &errLength, errMsg);
                     throw ShaderException(errMsg);
                 }
+                
+                mMat = glGetUniformLocation(handle, "uModelMatrix");
+                vMat = glGetUniformLocation(handle, "uViewMatrix");
+                pMat = glGetUniformLocation(handle, "uProjectionMatrix");
+                camPos = glGetUniformLocation(handle, "uCameraPosition");
             } catch(...) {
                 glDeleteProgram(handle);
                 throw;
             }
             
-            return handle;
+            return Program::ProgramHandles{handle, mMat, vMat, pMat, camPos};
         }
 
-        Program::Program(Program&& p) throw() : handle_(p.handle_) {
-            p.handle_ = 0;
+        Program::Program(Program&& p) throw() : handles_(p.handles_) {
+            p.handles_.programId = 0;
         }
         
         Program::~Program() {
-            if(handle_) {
-                glDeleteProgram(handle_);
+            if(handles_.programId) {
+                glDeleteProgram(handles_.programId);
             }
         }
         
         ProgramUse::ProgramUse(const Program& p) : program_(p) {
-            glUseProgram(program_.handle());
+            glUseProgram(program_.handles().programId);
         }
         
         ProgramUse::~ProgramUse() {
             glUseProgram(0);
         }
         
-        GeometryObject::GeometryObject(const geometry::Mesh& mesh) : handles_(buffer(mesh)), indexCount_((GLuint)mesh.triangles.size())
+        MatrixUse::MatrixUse(const Program& prog,
+                             const math::Mat4<GLfloat>& modelMat,
+                             const math::Mat4<GLfloat>& viewMat,
+                             const math::Mat4<GLfloat>& projectionMat,
+                             const math::Vec3<GLfloat>& cameraPosition) {
+            std::cout << math::toString(modelMat) << std::endl;
+            std::cout << math::toString(viewMat) << std::endl;
+            std::cout << math::toString(projectionMat) << std::endl;
+            glUniformMatrix4fv(prog.handles().modelMatrix, 1, GL_FALSE, &modelMat[0][0]);
+            glUniformMatrix4fv(prog.handles().viewMatrix, 1, GL_FALSE, &viewMat[0][0]);
+            glUniformMatrix4fv(prog.handles().projectionMatrix, 1, GL_FALSE, &projectionMat[0][0]);
+            glUniform3f(prog.handles().cameraPosition, cameraPosition.x, cameraPosition.y, cameraPosition.z);
+        }
+        
+        MatrixUse::~MatrixUse() {
+            glUseProgram(0);
+        }
+        
+        GeometryObject::GeometryObject(const geometry::Mesh& mesh) : handles_(buffer(mesh)), indexCount_((GLuint)mesh.triangles.size()*3)
         {
         }
         
@@ -171,7 +201,7 @@ namespace lkogl {
         }
             
         void GeometryObjectUse::render() {
-            glDrawElements(GL_TRIANGLES, geometry_.indexCount(), GL_UNSIGNED_INT, 0);
+            glDrawElements(GL_TRIANGLES, geometry_.indexCount(), GL_UNSIGNED_INT, (void*)0);
         }
     }
 }

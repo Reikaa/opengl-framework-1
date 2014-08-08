@@ -11,46 +11,35 @@
 
 #include <stdio.h>
 
+#include "vec3.h"
+#include "vec4.h"
+#include "mat4.h"
+#include "quat.h"
+
+#include <math.h>
+
 namespace lkogl {
     namespace math {
         typedef float basetype;
         
-        template <typename T = basetype>
-        struct Vec3 {
-            T x, y, z;
-            Vec3();
-            Vec3(const T& x, const T& y, const T& z);
-            ~Vec3();
-        };
+        template<typename T>
+        Mat4<T> perspective(T const & fovy, T const & aspect, T const & zNear, T const & zFar)
+        {
+            T tanHalfFovy = tan(fovy / static_cast<T>(2));
+            
+            Mat4<T> result(static_cast<T>(0));
+            result[0][0] = static_cast<T>(1) / (aspect * tanHalfFovy);
+            result[1][1] = static_cast<T>(1) / (tanHalfFovy);
+            result[2][2] = - (zFar + zNear) / (zFar - zNear);
+            result[2][3] = - static_cast<T>(1);
+            result[3][2] = - (static_cast<T>(2) * zFar * zNear) / (zFar - zNear);
+            return result;
+        }
         
-        template <typename T = basetype>
-        struct Vec4 {
-            T x, y, z, w;
-            Vec4();
-            Vec4(const T& x, const T& y, const T& z, const T& w);
-            ~Vec4();
-        };
-        
-        template <typename T = basetype>
-        struct Mat4 {
-            Mat4();
-            ~Mat4();
-        };
-        
-        template <typename T = basetype>
-        struct Quat {
-            T x, y, z, w;
-            Quat();
-            Quat(const T& angle, const Vec3<T>& axis);
-            Quat(const T& x, const T& y, const T& z, const T& w);
-            ~Quat();
-        };
-        
-        template<typename T = basetype>
-        Quat<T> rotation(const T& angle, const Vec3<T>& axis);
-        
-        template<typename T = basetype>
-        Quat<T> rotation(const Vec3<T>& v1, const Vec3<T>& v2);
+        template<typename T>
+        T radians(const T& deg) {
+            return deg * 2 * M_PI / 360.f;
+        }
     }
 }
 

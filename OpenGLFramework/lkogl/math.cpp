@@ -10,11 +10,5 @@
 
 namespace lkogl {
     namespace math {
-        
-        template<typename T>
-        Quat<T> rotation(const T angle, Vec3<T> axis)
-        {
-        
-        }
     }
 }

@@ -7,10 +7,11 @@
 //
 
 #include "leaf.h"
+#include <iostream>
 
 namespace lkogl {
     namespace scene {
-        Leaf::Leaf(graphics::Model model) : model_(model)
+        Leaf::Leaf(graphics::Model model) : model_(std::move(model))
         {
         }
         
@@ -18,7 +19,7 @@ namespace lkogl {
         
         }
         
-        graphics::Model Leaf::model() const {
+        const graphics::Model& Leaf::model() const {
             return model_;
         }
         

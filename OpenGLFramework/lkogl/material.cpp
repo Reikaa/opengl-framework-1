@@ -11,11 +11,21 @@
 namespace lkogl {
     namespace graphics {
 
-        Material::Material(const Program&, const std::vector<Texture>&) {}
+        Material::Material(Program program, std::vector<Texture> textures) :
+        program_(std::move(program)), textures_(std::move(textures)) {}
+        
+        Material::Material(Material&& mat) :
+            program_(std::move(mat.program_)),
+            textures_(std::move(mat.textures_))
+        {
+        }
+        
         Material::~Material() {}
 
 
-        MaterialUse::MaterialUse(const Material&) {}
+        MaterialUse::MaterialUse(const Material& material) : p(material.program())
+        {}
+        
         MaterialUse::~MaterialUse() {}
 
     }

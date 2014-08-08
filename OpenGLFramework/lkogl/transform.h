@@ -19,7 +19,7 @@ namespace lkogl {
             
             Vec3 translation = Vec3(0,0,0);
             Vec3 scale = Vec3(1,1,1);
-            Quat rotation = lkogl::math::rotation(0, Vec3(0,0,1));
+            Quat rotation = Quat(0, Vec3(0,0,1));
         };
     }
 }

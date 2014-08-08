@@ -16,11 +16,16 @@
 namespace lkogl {
     namespace graphics {
         class Model {
-            const GeometryObject& geometry_;
-            const Material& material_;
+            GeometryObject geometry_;
+            Material material_;
         public:
-            Model(const GeometryObject& geo, const Material& mat);
+            Model(GeometryObject geo, Material mat);
+            Model(Model&& m);
+
             ~Model();
+            
+            const GeometryObject& geometry() const;
+            const Material& material() const;
         };
     }
 }

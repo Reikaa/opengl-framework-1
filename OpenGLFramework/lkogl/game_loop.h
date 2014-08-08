@@ -23,7 +23,37 @@ namespace lkogl {
         
         long lowrestime();
         
-        template <typename DELEGATE>
+        class DefaultDelegate {
+        public:
+            void setUp() const {
+            }
+            
+            void tearDown() const {
+            }
+            
+            void input() const {
+            }
+            
+            void update() const {
+            }
+            
+            void render() const {
+            }
+            
+            void resize(int width, int height) const {
+            }
+            
+            const std::string title() const {
+                return "Untitled";
+            }
+            
+            ~DefaultDelegate() {
+                
+            }
+        };
+
+        
+        template <typename DELEGATE = DefaultDelegate>
         class Looping {
             const DELEGATE& delegate_;
         public:
@@ -62,6 +92,7 @@ namespace lkogl {
                 }
                 
                 Looping<DELEGATE> l(delegate_);
+                resize(window_.width(), window_.height());
                 
                 state_.behind = state_.updateDuration + 1;
                 state_.lastTime = hirestime();
@@ -90,6 +121,15 @@ namespace lkogl {
                             switch(e.type) {
                                 case SDL_QUIT:
                                     stop();
+                                    break;
+                                case SDL_WINDOWEVENT:
+                                    switch (e.window.event)
+                                    {
+                                        case SDL_WINDOWEVENT_RESIZED:
+                                            int windowWidth = e.window.data1;
+                                            int windowHeight = e.window.data2;
+                                            resize(windowWidth, windowHeight);
+                                    }
                                     break;
                             }
                         }
@@ -133,6 +173,10 @@ namespace lkogl {
             
             void render() const {
                 delegate_.render();
+            }
+            
+            void resize(int w, int h) const {
+                delegate_.resize(w, h);
             }
         };
         

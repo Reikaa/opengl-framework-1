@@ -40,6 +40,24 @@ namespace lkogl {
             SDL_RenderPresent(displayRenderer_);
         }
         
+        int Window::width() const
+        {
+            int w;
+            int h;
+            SDL_GetWindowSize(displayWindow_, &w, &h);
+            
+            return w;
+        }
+        
+        int Window::height() const
+        {
+            int w;
+            int h;
+            SDL_GetWindowSize(displayWindow_, &w, &h);
+            
+            return h;
+        }
+        
         Window::~Window() {
             SDL_DestroyRenderer(displayRenderer_);
             SDL_DestroyWindow(displayWindow_);
