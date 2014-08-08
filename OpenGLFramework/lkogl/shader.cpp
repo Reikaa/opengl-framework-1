@@ -127,9 +127,6 @@ namespace lkogl {
                              const math::Mat4<GLfloat>& viewMat,
                              const math::Mat4<GLfloat>& projectionMat,
                              const math::Vec3<GLfloat>& cameraPosition) {
-            std::cout << math::toString(modelMat) << std::endl;
-            std::cout << math::toString(viewMat) << std::endl;
-            std::cout << math::toString(projectionMat) << std::endl;
             glUniformMatrix4fv(prog.handles().modelMatrix, 1, GL_FALSE, &modelMat[0][0]);
             glUniformMatrix4fv(prog.handles().viewMatrix, 1, GL_FALSE, &viewMat[0][0]);
             glUniformMatrix4fv(prog.handles().projectionMatrix, 1, GL_FALSE, &projectionMat[0][0]);
