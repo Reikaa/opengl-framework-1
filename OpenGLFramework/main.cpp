@@ -31,29 +31,16 @@ public:
     void setUp() const {
         std::cout << "setup" << std::endl;
         
-        /* Enable smooth shading */
-        //glShadeModel( GL_SMOOTH );
-        
-        /* Set the background black */
         glClearColor( 0.0f, 0.0f, 0.0f, 0.0f );
-        
-        /* Depth buffer setup */
         glClearDepth( 1.0f );
         
         glEnable(GL_TEXTURE_2D);
-        
-        //glEnable(GL_CULL_FACE);
         glEnable( GL_BLEND );
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         
-        /* Enables Depth Testing */
+        glEnable(GL_CULL_FACE);
         glEnable( GL_DEPTH_TEST );
-        /* The Type Of Depth Test To Do */
         glDepthFunc( GL_LEQUAL );
-        
-        
-        /* Really Nice Perspective Calculations */
-        //glHint( GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST );
         
         try {
             PlainText vshSource("phong.vsh");
