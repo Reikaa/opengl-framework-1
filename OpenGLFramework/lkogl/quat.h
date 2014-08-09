@@ -300,7 +300,7 @@ namespace lkogl {
         }
         
         template <typename T>
-        Quat<T> mat4_cast(Quat<T> const & q)
+        Mat4<T> mat4_cast(Quat<T> const & q)
         {
             Mat4<T> Result(T(1));
             T qxx(q.x * q.x);
@@ -334,6 +334,14 @@ namespace lkogl {
             Result[3][3] = 1;
             
             return Result;
+        }
+        
+        
+        
+        template<typename T>
+        Mat4<T> rotate(const Mat4<T> mat, Quat<T> rotation)
+        {
+            return mat * mat4_cast(rotation);
         }
     }
 }

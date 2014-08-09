@@ -7,3 +7,16 @@
 //
 
 #include "transform.h"
+
+namespace lkogl {
+    namespace geometry {
+        const Transform::Mat4 Transform::matrix() const
+        {
+            Mat4 result = math::translate(Mat4(), translation);
+            result = math::scale(result, scale);
+            result = math::rotate(result, rotation);
+            
+            return result;
+        }
+    }
+}

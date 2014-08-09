@@ -15,8 +15,10 @@ namespace lkogl {
             
             SceneRenderer::SceneRenderer()
             {
-                cameraPosition_ = math::Vec3<GLfloat>(0,0,4);
-                modelMatrix_ = math::scale(modelMatrix_, 8.f);
+                cameraPosition_ = math::Vec3<GLfloat>(0,0,4);                
+                viewMatrix_ = math::lookAt(math::Vec3<GLfloat>(3,0,4), math::Vec3<GLfloat>(1,1,1), math::Vec3<GLfloat>(0,1,0));
+                projectionMatrix_ = math::perspective(math::radians(65.0f), 16/9.0f, 2.f, 100.f);
+                cameraPosition_ = math::Vec3<GLfloat>(3,0,4);
             }
             
             SceneRenderer::~SceneRenderer()
@@ -33,7 +35,7 @@ namespace lkogl {
                 const graphics::Model& m = leaf.model();
                 
                 graphics::MaterialUse mat(m.material());
-                graphics::MatrixUse matrix(m.material().program(), modelMatrix_, viewMatrix_, projectionMatrix_, cameraPosition_);
+                graphics::MatrixUse matrix(m.material().program(), leaf.transformation.matrix(), viewMatrix_, projectionMatrix_, cameraPosition_);
                 graphics::GeometryObjectUse geo(m.geometry());
                 
                 geo.render();

@@ -15,10 +15,13 @@ namespace lkogl {
     namespace geometry {
         struct Transform {
             typedef lkogl::math::Quat<GLfloat> Quat;
+            typedef lkogl::math::Mat4<GLfloat> Mat4;
             
-            Vec3 translation = Vec3(0,0,0);
-            Vec3 scale = Vec3(1,1,1);
-            Quat rotation = Quat(0, Vec3(0,0,1));
+            Vec3 translation = Vec3(0);
+            Vec3 scale = Vec3(1);
+            Quat rotation = Quat(0, Vec3(0,1,0));
+            
+            const Mat4 matrix() const;
         };
     }
 }

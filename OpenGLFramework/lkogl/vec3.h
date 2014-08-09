@@ -31,6 +31,10 @@ namespace lkogl {
             {
             }
             
+            explicit Vec3(const T& v) : x(v), y(v), z(v)
+            {
+            }
+            
             ~Vec3()
             {
             }

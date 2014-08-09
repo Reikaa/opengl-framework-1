@@ -25,7 +25,16 @@ namespace lkogl {
             {
             }
             
+            Vec4(const Vec3<T>& o, T wp) : x(o.x), y(o.y), z(o.z), w(wp)
+            {
+            }
+            
             Vec4(const T& xp, const T& yp, const T& zp, const T& wp) : x(xp), y(yp), z(zp), w(wp)
+            {
+            }
+            
+            
+            explicit Vec4(const T& v) : x(v), y(v), z(v), w(v)
             {
             }
             

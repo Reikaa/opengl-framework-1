@@ -19,6 +19,7 @@ using namespace lkogl::geometry;
 using namespace lkogl::utils;
 using namespace lkogl::scene;
 using namespace lkogl::loop;
+using namespace lkogl::math;
 
 class MyGame {
     visitor::SceneRenderer r;
@@ -64,7 +65,7 @@ public:
             Material mat(std::move(program), {});
             Model modelOne(std::move(geo), std::move(mat));
             std::shared_ptr<Leaf> node = std::make_shared<Leaf>(std::move(modelOne));
-        
+            node->transformation.translation += Vec3<GLfloat>(0,0.5,0);
             
             graph.root().add(node);
         } catch(ShaderException e) {

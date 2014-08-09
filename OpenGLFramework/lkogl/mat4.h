@@ -401,11 +401,33 @@ namespace lkogl {
         Mat4<T> scale(const Mat4<T> mat, T factor)
         {
             return Mat4<T>(
-                factor * mat[0],
-                factor * mat[1],
-                factor * mat[2],
-                mat[3]
-            );
+                           factor * mat[0],
+                           factor * mat[1],
+                           factor * mat[2],
+                           mat[3]
+                           );
+        }
+        
+        template<typename T>
+        Mat4<T> scale(const Mat4<T> mat, Vec3<T> factor)
+        {
+            return Mat4<T>(
+                           factor.x * mat[0],
+                           factor.y * mat[1],
+                           factor.z * mat[2],
+                           mat[3]
+                           );
+        }
+        
+        template<typename T>
+        Mat4<T> translate(const Mat4<T> mat, Vec3<T> offset)
+        {
+            return Mat4<T>(
+                           mat[0],
+                           mat[1],
+                           mat[2],
+                           mat[3] + Vec4<T>(offset, 0)
+                           );
         }
         
         template <typename T>
