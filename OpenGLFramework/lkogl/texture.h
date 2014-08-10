@@ -11,21 +11,28 @@
 
 #include "opengl.h"
 #include "image.h"
+#include "shader.h"
 
 namespace lkogl {
     namespace graphics {
         class TextureException {};
         
         class Texture {
-            GLuint handle_;
+            mutable GLuint handle_;
         public:
             Texture(const utils::Image&) throw (TextureException);
             Texture(const Texture&&);
             ~Texture();
-            
-            const GLuint& handle() { return handle_; }
         private:
             GLuint convert(const utils::Image& img) throw (TextureException);
+            
+            friend class TextureUse;
+        };
+        
+        class TextureUse {
+        public:
+            TextureUse(const Program& p, const Texture&);
+            ~TextureUse();
         };
     }
 }

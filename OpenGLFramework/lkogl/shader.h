@@ -39,10 +39,10 @@ namespace lkogl {
         };
         
         class Shader {
-            GLuint handle_;
+            mutable GLuint handle_;
         public:
             Shader(ShaderType, const std::string&) throw (ShaderException);
-            Shader(Shader&&) throw ();
+            Shader(const Shader&&) throw ();
 
             ~Shader();
             const GLuint& handle() const { return handle_; }
@@ -53,16 +53,23 @@ namespace lkogl {
         
         class Program {
             struct ProgramHandles {
-                GLuint programId;
-                GLint modelMatrix;
-                GLint viewProjectionMatrix;
-                GLint cameraPosition;
+                mutable GLuint programId;
+                GLint modelMatrixPosition;
+                GLint viewProjectionMatrixPosition;
+                GLint samplerPosition;
+                GLint ambientIntensityPosition;
+                GLint eyePosition;
+                GLint specularIntensityPosition;
+                GLint specularPowerPosition;
+                GLint directionalLightColorPosition;
+                GLint directionalLightIntensityPosition;
+                GLint directionalLightDirectionPosition;
             } handles_;
 
         public:
             Program(const std::string& vsh, const std::string& fsh) throw (ShaderException);
             Program(const Shader& vsh, const Shader& fsh) throw (ShaderException);
-            Program(Program&&) throw();
+            Program(const Program&&) throw();
             ~Program();
             
             const ProgramHandles& handles() const { return handles_; }
@@ -94,7 +101,7 @@ namespace lkogl {
         };
         
         class GeometryObject {
-            struct GeometryHandle {
+            mutable struct GeometryHandle {
                 GLuint object;
                 GLuint vertexBuffer;
                 GLuint indexBuffer;
@@ -104,7 +111,7 @@ namespace lkogl {
         public:
             GeometryObject() = delete;
             GeometryObject(const geometry::Mesh&);
-            GeometryObject(GeometryObject&&);
+            GeometryObject(const GeometryObject&&);
             ~GeometryObject();
             
             const GeometryHandle& handle() const { return handles_; }

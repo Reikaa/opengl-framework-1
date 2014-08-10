@@ -9,25 +9,28 @@
 #ifndef __OpenGLFramework__material__
 #define __OpenGLFramework__material__
 
-#include <vector>
-
 #include "texture.h"
 #include "shader.h"
 
 namespace lkogl {
     namespace graphics {
         class Material {
-            std::vector<Texture> textures_;
+            Texture texture_;
+            float specularIntensity_ = 4;
+            float specularPower_ = 4;
         public:
             Material() = delete;
             Material(Material&& mat);
-            Material(const std::vector<Texture>);
+            Material(Texture, float specInt, float specPow);
             ~Material();
+            
+            friend class MaterialUse;
         };
         
         class MaterialUse {
+            TextureUse _texUse;
         public:
-            MaterialUse(const Material&);
+            MaterialUse(const Program& p, const Material&);
             ~MaterialUse();
         };
     }

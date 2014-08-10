@@ -13,6 +13,11 @@
 #include "lkogl/shader.h"
 #include "lkogl/text.h"
 
+#include "lkogl/ambient_light.h"
+#include "lkogl/ambient_light_component.h"
+#include "lkogl/directional_light.h"
+
+
 #include "lkogl/camera_component.h"
 #include "lkogl/render_component.h"
 #include "lkogl/scene_deep_walker.h"
@@ -26,6 +31,7 @@
 
 using namespace lkogl::math;
 using namespace lkogl::graphics;
+using namespace lkogl::graphics::lighting;
 using namespace lkogl::geometry;
 using namespace lkogl::utils;
 using namespace lkogl::scene;
@@ -40,7 +46,8 @@ using namespace lkogl::input::movement;
 class MyGame {
     mutable std::shared_ptr<Node> graph;
     SceneDeepWalker walker;
-    mutable std::shared_ptr<Program> program_;
+    mutable std::shared_ptr<Program> programAmbient_;
+    mutable std::shared_ptr<Program> programDirectional_;
     mutable std::shared_ptr<CameraComponent> cameraComponent;
     
     FirstPersonMovement movement;
@@ -84,19 +91,25 @@ public:
 
         
         try {
-            PlainText vshSource("phong.vsh");
-            PlainText fshSource("phong.fsh");
+            PlainText vshSourceAmbient("ambient-forward.vsh");
+            PlainText fshSourceAmbient("ambient-forward.fsh");
+            programAmbient_ = std::make_shared<Program>(vshSourceAmbient.content, fshSourceAmbient.content);
+            
+            PlainText vshSourceDirectional("directional-forward.vsh");
+            PlainText fshSourceDirectional("directional-forward.fsh");
+            programDirectional_ = std::make_shared<Program>(vshSourceDirectional.content, fshSourceDirectional.content);
             
             graph = std::make_shared<Node>();
 
-            program_ = std::make_shared<Program>(vshSource.content, fshSource.content);
             Mesh mesh = primitives::makePyramid();
             GeometryObject geo(mesh);
-            Material mat({});
+            Texture tex(Image("pattern.png"));
+            Material mat(std::move(tex), 7, 20);
             Model modelOne(std::move(geo), std::move(mat));
             std::shared_ptr<Node> node = std::make_shared<Node>();
             node->addComponent(std::make_shared<RenderComponent>(std::move(modelOne)));
-            node->transformation.translation += Vec3<GLfloat>(0,0,0);
+            node->transformation.translation = Vec3<GLfloat>(0,0.0001,0);
+            node->transformation.rotation = angleAxis<float>(radians(45), {0,1,0});
             
             graph->addChild(node);
             auto cam = Camera(screen.width, screen.height);
@@ -105,6 +118,8 @@ public:
             cameraComponent = std::make_shared<CameraComponent>(cam);
             
             graph->addComponent(cameraComponent);
+            graph->addComponent(std::make_shared<AmbientLightComponent>(AmbientLight({0.1,0.1,0.1})));
+            
         } catch(ShaderException e) {
             std::cerr << e.msg << std::endl;
             exit(1);
@@ -152,10 +167,10 @@ public:
                 
         if(mouseLocked) {
             if(mouse_.delta.x != 0) {
-                movement.rotateHorizontally(cameraComponent->camera(), radians(.3f*mouse_.delta.x));
+                movement.rotateHorizontally(cameraComponent->camera(), radians(.25f*mouse_.delta.x));
             }
             if(mouse_.delta.y != 0) {
-                movement.rotateVertically(cameraComponent->camera(), radians(.3f*mouse_.delta.y));
+                movement.rotateVertically(cameraComponent->camera(), radians(.25f*mouse_.delta.y));
             }
         }
         
@@ -172,8 +187,27 @@ public:
         glClearColor(0,0.2,0.3,0);
         glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
         
-        ProgramUse p(*program_);
-        walker.walk(graph, &Component::render, *program_);
+        ProgramUse ambient(*programAmbient_);
+        walker.walk(graph, &Component::render, *programAmbient_);
+        
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_ONE, GL_ONE);
+        glDepthMask(false);
+        glDepthFunc(GL_EQUAL);
+        
+        ProgramUse directional(*programDirectional_);
+        DirectionalLight light;
+        light.direction_ = {0,-1,0};
+        light.baseLight_.color_ = {0.6,0.7,0.9};
+        light.baseLight_.intensity_ = 0.9;
+        DirectionalLightUse lightuse(*programDirectional_, light);
+        
+        walker.walk(graph, &Component::render, *programDirectional_);
+        
+        
+        glDepthFunc(GL_LEQUAL);
+        glDepthMask(true);
+        glDisable(GL_BLEND);
     }
     
     void resize(int width, int height) const {

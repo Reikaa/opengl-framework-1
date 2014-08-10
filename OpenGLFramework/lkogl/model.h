@@ -18,7 +18,7 @@ namespace lkogl {
             GeometryObject geometry_;
             Material material_;
         public:
-            Model(GeometryObject geo, Material mat);
+            Model(const GeometryObject geo, Material mat);
             Model(Model&& m);
 
             ~Model();

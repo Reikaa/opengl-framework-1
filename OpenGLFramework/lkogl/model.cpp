@@ -10,7 +10,7 @@
 
 namespace lkogl {
     namespace graphics {
-        Model::Model(GeometryObject geo, Material mat) :
+        Model::Model(const GeometryObject geo, Material mat) :
         geometry_(std::move(geo)), material_(std::move(mat))
         {
         }

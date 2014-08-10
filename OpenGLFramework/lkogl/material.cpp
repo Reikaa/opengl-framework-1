@@ -11,19 +11,22 @@
 namespace lkogl {
     namespace graphics {
 
-        Material::Material(std::vector<Texture> textures) :
-        textures_(std::move(textures)) {}
+        Material::Material(Texture texture, float specInt, float specPow) :
+        texture_(std::move(texture)), specularIntensity_(specInt), specularPower_(specPow) {}
         
         Material::Material(Material&& mat) :
-            textures_(std::move(mat.textures_))
+            texture_(std::move(mat.texture_)), specularIntensity_(mat.specularIntensity_), specularPower_(mat.specularPower_)
         {
         }
         
         Material::~Material() {}
 
 
-        MaterialUse::MaterialUse(const Material& material)
-        {}
+        MaterialUse::MaterialUse(const Program& p, const Material& mat) : _texUse(p, mat.texture_)
+        {
+            glUniform1f(p.handles().specularIntensityPosition, mat.specularIntensity_);
+            glUniform1f(p.handles().specularPowerPosition, mat.specularPower_);
+        }
         
         MaterialUse::~MaterialUse() {}
 

@@ -18,7 +18,7 @@ namespace lkogl {
             
         }
         
-        Shader::Shader(Shader&& s) throw() : handle_(s.handle_) {
+        Shader::Shader(const Shader&& s) throw() : handle_(s.handle_) {
             s.handle_ = 0;
         }
         
@@ -68,7 +68,7 @@ namespace lkogl {
         
         Program::ProgramHandles Program::link(const Shader& vsh, const Shader& fsh) throw (ShaderException) {
             GLuint handle = glCreateProgram();
-            GLint mMat, vpMat, camPos;
+            GLint mMat, vpMat, samplerPos, ambientPos, eysPos, specIntPos, specPowPos, lightColPos, lightIntPos, lightDirPos;
             
             try {
                 GLint compileOk;
@@ -94,16 +94,27 @@ namespace lkogl {
                 
                 mMat = glGetUniformLocation(handle, "uModelMatrix");
                 vpMat = glGetUniformLocation(handle, "uViewProjMatrix");
-                camPos = glGetUniformLocation(handle, "uCameraPosition");
+                samplerPos = glGetUniformLocation(handle, "uSampler");
+                ambientPos = glGetUniformLocation(handle, "uAmbientIntensity");
+                
+                eysPos = glGetUniformLocation(handle, "uEyePosition");
+                specIntPos =glGetUniformLocation(handle, "uMaterial.specularIntensity");
+                specPowPos =glGetUniformLocation(handle, "uMaterial.specularPower");
+                lightColPos =glGetUniformLocation(handle, "uDirectionalLight.base.color");
+                lightIntPos =glGetUniformLocation(handle, "uDirectionalLight.base.intensity");
+                lightDirPos =glGetUniformLocation(handle, "uDirectionalLight.direction");
             } catch(...) {
                 glDeleteProgram(handle);
                 throw;
             }
             
-            return Program::ProgramHandles{handle, mMat, vpMat, camPos};
+            return Program::ProgramHandles{
+                handle, mMat, vpMat, samplerPos, ambientPos,
+                eysPos, specIntPos, specPowPos, lightColPos, lightIntPos, lightDirPos
+            };
         }
 
-        Program::Program(Program&& p) throw() : handles_(p.handles_) {
+        Program::Program(const Program&& p) throw() : handles_(p.handles_) {
             p.handles_.programId = 0;
         }
         
@@ -123,7 +134,7 @@ namespace lkogl {
         
         ModelMatrixUse::ModelMatrixUse(const Program& prog,
                                        const math::Mat4<GLfloat>& modelMat) {
-            glUniformMatrix4fv(prog.handles().modelMatrix, 1, GL_FALSE, &modelMat[0][0]);
+            glUniformMatrix4fv(prog.handles().modelMatrixPosition, 1, GL_FALSE, &modelMat[0][0]);
         }
         
         ModelMatrixUse::~ModelMatrixUse() {
@@ -132,8 +143,8 @@ namespace lkogl {
         CameraMatrixUse::CameraMatrixUse(const Program& prog,
                                        const math::Mat4<GLfloat>& viewProjectionMat,
                                        const math::Vec3<GLfloat>& cameraPosition) {
-            glUniformMatrix4fv(prog.handles().viewProjectionMatrix, 1, GL_FALSE, &viewProjectionMat[0][0]);
-            glUniform3f(prog.handles().cameraPosition, cameraPosition.x, cameraPosition.y, cameraPosition.z);
+            glUniformMatrix4fv(prog.handles().viewProjectionMatrixPosition, 1, GL_FALSE, &viewProjectionMat[0][0]);
+            glUniform3f(prog.handles().eyePosition, cameraPosition.x, cameraPosition.y, cameraPosition.z);
         }
         
         CameraMatrixUse::~CameraMatrixUse() {
@@ -143,9 +154,8 @@ namespace lkogl {
         {
         }
         
-        GeometryObject::GeometryObject(GeometryObject&& go) : handles_(go.handles_), indexCount_(go.indexCount_) {
+        GeometryObject::GeometryObject(const GeometryObject&& go) : handles_(go.handles_), indexCount_(go.indexCount_) {
             go.handles_ = { 0,0,0 };
-            go.indexCount_ = 0;
         }
         
         GeometryObject::~GeometryObject() {

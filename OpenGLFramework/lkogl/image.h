@@ -10,6 +10,7 @@
 #define __OpenGLFramework__image__
 
 #include <string>
+#include "sdl.h"
 
 namespace lkogl {
     namespace utils {
@@ -17,12 +18,16 @@ namespace lkogl {
         
         class Image {
         public:
-            const int width;
-            const int height;
-            const int bytesPerPixel;
-            const void* pixels;
-            Image(const std::string name) throw (ImageException);
+            SDL_Surface* surface_;
+            Image(const std::string& name) throw (ImageException);
             ~Image();
+            
+            int width() const;
+            int height() const;
+            int bytesPerPixel() const;
+            const void* pixels() const;
+        private:
+            SDL_Surface* load(const std::string& path) throw (ImageException);
         };
     }
 }

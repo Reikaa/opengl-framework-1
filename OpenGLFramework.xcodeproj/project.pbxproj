@@ -25,7 +25,6 @@
 		F29707AC1993737E00D48CE5 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F29707A31993734100D48CE5 /* OpenGL.framework */; };
 		F29707B11993786600D48CE5 /* image.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F29707AF1993786600D48CE5 /* image.cpp */; };
 		F29707B5199379DC00D48CE5 /* material.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F29707B3199379DC00D48CE5 /* material.cpp */; };
-		F29707B819937ADF00D48CE5 /* light.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F29707B619937ADF00D48CE5 /* light.cpp */; };
 		F29707B9199391FD00D48CE5 /* SDL2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F29707A51993735D00D48CE5 /* SDL2.framework */; };
 		F29707BA199391FD00D48CE5 /* SDL2_image.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F29707A61993735D00D48CE5 /* SDL2_image.framework */; };
 		F29707BB199391FD00D48CE5 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F29707A31993734100D48CE5 /* OpenGL.framework */; };
@@ -42,6 +41,15 @@
 		F2DEC6211997BFA700EE31E7 /* first_person_movement.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2DEC61F1997BFA700EE31E7 /* first_person_movement.cpp */; };
 		F2DEC6251997C63E00EE31E7 /* mouse.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2DEC6231997C63E00EE31E7 /* mouse.cpp */; };
 		F2DEC6281997C7EA00EE31E7 /* mouse_adapter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2DEC6261997C7EA00EE31E7 /* mouse_adapter.cpp */; };
+		F2DEC62B1997D49300EE31E7 /* ambient-forward.vsh in Resources */ = {isa = PBXBuildFile; fileRef = F2DEC6291997D49300EE31E7 /* ambient-forward.vsh */; };
+		F2DEC62D1997D4B300EE31E7 /* ambient-forward.fsh in Resources */ = {isa = PBXBuildFile; fileRef = F2DEC62C1997D4B300EE31E7 /* ambient-forward.fsh */; };
+		F2DEC62F1997D4C900EE31E7 /* directional-forward.vsh in Resources */ = {isa = PBXBuildFile; fileRef = F2DEC62E1997D4C900EE31E7 /* directional-forward.vsh */; };
+		F2DEC6311997D4D600EE31E7 /* directional-forward.fsh in Resources */ = {isa = PBXBuildFile; fileRef = F2DEC6301997D4D600EE31E7 /* directional-forward.fsh */; };
+		F2DEC6331997DDD300EE31E7 /* pattern.png in Resources */ = {isa = PBXBuildFile; fileRef = F2DEC6321997DDD300EE31E7 /* pattern.png */; };
+		F2DEC6371997EA7600EE31E7 /* ambient_light.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2DEC6351997EA7600EE31E7 /* ambient_light.cpp */; };
+		F2DEC63A1997ECCE00EE31E7 /* ambient_light_component.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2DEC6381997ECCE00EE31E7 /* ambient_light_component.cpp */; };
+		F2DEC63D1997F4E000EE31E7 /* directional_light.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2DEC63B1997F4E000EE31E7 /* directional_light.cpp */; };
+		F2DEC6401997F4F800EE31E7 /* base_light.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2DEC63E1997F4F800EE31E7 /* base_light.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -114,8 +122,6 @@
 		F29707B01993786600D48CE5 /* image.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = image.h; sourceTree = "<group>"; };
 		F29707B3199379DC00D48CE5 /* material.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = material.cpp; sourceTree = "<group>"; };
 		F29707B4199379DC00D48CE5 /* material.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = material.h; sourceTree = "<group>"; };
-		F29707B619937ADF00D48CE5 /* light.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = light.cpp; sourceTree = "<group>"; };
-		F29707B719937ADF00D48CE5 /* light.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = light.h; sourceTree = "<group>"; };
 		F29707BC199397FF00D48CE5 /* window.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = window.cpp; sourceTree = "<group>"; };
 		F29707BD199397FF00D48CE5 /* window.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = window.h; sourceTree = "<group>"; };
 		F29707C91993BD9700D48CE5 /* scene_deep_walker.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = scene_deep_walker.cpp; sourceTree = "<group>"; };
@@ -143,6 +149,19 @@
 		F2DEC6241997C63E00EE31E7 /* mouse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mouse.h; sourceTree = "<group>"; };
 		F2DEC6261997C7EA00EE31E7 /* mouse_adapter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = mouse_adapter.cpp; sourceTree = "<group>"; };
 		F2DEC6271997C7EA00EE31E7 /* mouse_adapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mouse_adapter.h; sourceTree = "<group>"; };
+		F2DEC6291997D49300EE31E7 /* ambient-forward.vsh */ = {isa = PBXFileReference; explicitFileType = sourcecode.glsl; fileEncoding = 4; path = "ambient-forward.vsh"; sourceTree = "<group>"; };
+		F2DEC62C1997D4B300EE31E7 /* ambient-forward.fsh */ = {isa = PBXFileReference; explicitFileType = sourcecode.glsl; fileEncoding = 4; path = "ambient-forward.fsh"; sourceTree = "<group>"; };
+		F2DEC62E1997D4C900EE31E7 /* directional-forward.vsh */ = {isa = PBXFileReference; explicitFileType = sourcecode.glsl; fileEncoding = 4; path = "directional-forward.vsh"; sourceTree = "<group>"; };
+		F2DEC6301997D4D600EE31E7 /* directional-forward.fsh */ = {isa = PBXFileReference; explicitFileType = sourcecode.glsl; fileEncoding = 4; path = "directional-forward.fsh"; sourceTree = "<group>"; };
+		F2DEC6321997DDD300EE31E7 /* pattern.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pattern.png; sourceTree = "<group>"; };
+		F2DEC6351997EA7600EE31E7 /* ambient_light.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ambient_light.cpp; sourceTree = "<group>"; };
+		F2DEC6361997EA7600EE31E7 /* ambient_light.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ambient_light.h; sourceTree = "<group>"; };
+		F2DEC6381997ECCE00EE31E7 /* ambient_light_component.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ambient_light_component.cpp; sourceTree = "<group>"; };
+		F2DEC6391997ECCE00EE31E7 /* ambient_light_component.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ambient_light_component.h; sourceTree = "<group>"; };
+		F2DEC63B1997F4E000EE31E7 /* directional_light.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = directional_light.cpp; sourceTree = "<group>"; };
+		F2DEC63C1997F4E000EE31E7 /* directional_light.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = directional_light.h; sourceTree = "<group>"; };
+		F2DEC63E1997F4F800EE31E7 /* base_light.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = base_light.cpp; sourceTree = "<group>"; };
+		F2DEC63F1997F4F800EE31E7 /* base_light.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = base_light.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -174,6 +193,10 @@
 			children = (
 				F27044C91994C2C200C57B6A /* phong.vsh */,
 				F27044CB1994C2CC00C57B6A /* phong.fsh */,
+				F2DEC6291997D49300EE31E7 /* ambient-forward.vsh */,
+				F2DEC62C1997D4B300EE31E7 /* ambient-forward.fsh */,
+				F2DEC62E1997D4C900EE31E7 /* directional-forward.vsh */,
+				F2DEC6301997D4D600EE31E7 /* directional-forward.fsh */,
 			);
 			name = Shader;
 			sourceTree = "<group>";
@@ -227,6 +250,7 @@
 		F297077F19936F8B00D48CE5 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				F2DEC6321997DDD300EE31E7 /* pattern.png */,
 				F27044C81994C29600C57B6A /* Shader */,
 				F297076519936C1600D48CE5 /* Images.xcassets */,
 				F297075619936A9A00D48CE5 /* Info.plist */,
@@ -277,6 +301,7 @@
 		F29707831993704700D48CE5 /* graphics */ = {
 			isa = PBXGroup;
 			children = (
+				F2DEC6341997EA4000EE31E7 /* lighting */,
 				F29707CC1994382E00D48CE5 /* model.cpp */,
 				F29707CD1994382E00D48CE5 /* model.h */,
 				F29707851993706C00D48CE5 /* shader.cpp */,
@@ -285,8 +310,6 @@
 				F2970790199370D800D48CE5 /* texture.h */,
 				F29707B3199379DC00D48CE5 /* material.cpp */,
 				F29707B4199379DC00D48CE5 /* material.h */,
-				F29707B619937ADF00D48CE5 /* light.cpp */,
-				F29707B719937ADF00D48CE5 /* light.h */,
 			);
 			name = graphics;
 			sourceTree = "<group>";
@@ -379,6 +402,8 @@
 				F2DEC6071997621400EE31E7 /* render_component.h */,
 				F2DEC60B1997681E00EE31E7 /* camera_component.cpp */,
 				F2DEC60C1997681E00EE31E7 /* camera_component.h */,
+				F2DEC6381997ECCE00EE31E7 /* ambient_light_component.cpp */,
+				F2DEC6391997ECCE00EE31E7 /* ambient_light_component.h */,
 			);
 			name = components;
 			sourceTree = "<group>";
@@ -401,6 +426,19 @@
 				F2DEC6201997BFA700EE31E7 /* first_person_movement.h */,
 			);
 			name = movement;
+			sourceTree = "<group>";
+		};
+		F2DEC6341997EA4000EE31E7 /* lighting */ = {
+			isa = PBXGroup;
+			children = (
+				F2DEC6351997EA7600EE31E7 /* ambient_light.cpp */,
+				F2DEC6361997EA7600EE31E7 /* ambient_light.h */,
+				F2DEC63B1997F4E000EE31E7 /* directional_light.cpp */,
+				F2DEC63C1997F4E000EE31E7 /* directional_light.h */,
+				F2DEC63E1997F4F800EE31E7 /* base_light.cpp */,
+				F2DEC63F1997F4F800EE31E7 /* base_light.h */,
+			);
+			name = lighting;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -486,9 +524,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F2DEC62B1997D49300EE31E7 /* ambient-forward.vsh in Resources */,
 				F27044CA1994C2C200C57B6A /* phong.vsh in Resources */,
+				F2DEC62F1997D4C900EE31E7 /* directional-forward.vsh in Resources */,
 				F27044CC1994C2CC00C57B6A /* phong.fsh in Resources */,
+				F2DEC6331997DDD300EE31E7 /* pattern.png in Resources */,
+				F2DEC6311997D4D600EE31E7 /* directional-forward.fsh in Resources */,
 				F297076619936C1600D48CE5 /* Images.xcassets in Resources */,
+				F2DEC62D1997D4B300EE31E7 /* ambient-forward.fsh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -512,8 +555,8 @@
 				F29707BE199397FF00D48CE5 /* window.cpp in Sources */,
 				F2DEC6281997C7EA00EE31E7 /* mouse_adapter.cpp in Sources */,
 				F2DEC613199790A600EE31E7 /* camera.cpp in Sources */,
-				F29707B819937ADF00D48CE5 /* light.cpp in Sources */,
 				F2970791199370D800D48CE5 /* texture.cpp in Sources */,
+				F2DEC63D1997F4E000EE31E7 /* directional_light.cpp in Sources */,
 				F29707CB1993BD9700D48CE5 /* scene_deep_walker.cpp in Sources */,
 				F29707B5199379DC00D48CE5 /* material.cpp in Sources */,
 				F2DEC60419975A8700EE31E7 /* node_component.cpp in Sources */,
@@ -522,6 +565,7 @@
 				F29707CE1994382E00D48CE5 /* model.cpp in Sources */,
 				F2970794199370EE00D48CE5 /* math.cpp in Sources */,
 				F27044CF1994C36C00C57B6A /* text.cpp in Sources */,
+				F2DEC6371997EA7600EE31E7 /* ambient_light.cpp in Sources */,
 				F297078E199370C400D48CE5 /* mesh.cpp in Sources */,
 				F2DEC61D1997B7AB00EE31E7 /* keyboard_adapter.cpp in Sources */,
 				F29707A21993728300D48CE5 /* game_loop.cpp in Sources */,
@@ -530,7 +574,9 @@
 				F29707B11993786600D48CE5 /* image.cpp in Sources */,
 				F29707971993716300D48CE5 /* node.cpp in Sources */,
 				F2DEC6191997B59A00EE31E7 /* keyboard.cpp in Sources */,
+				F2DEC6401997F4F800EE31E7 /* base_light.cpp in Sources */,
 				F2DEC6081997621400EE31E7 /* render_component.cpp in Sources */,
+				F2DEC63A1997ECCE00EE31E7 /* ambient_light_component.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

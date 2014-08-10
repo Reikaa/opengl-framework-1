@@ -61,5 +61,5 @@ void main() {
     vec4 SpecularResult = fSpecularBase * SpecularFactor;
     
     //oColor =  vec4(max(AmbientResult.xyz, max(1.5*fEmittingBase.xyz*fEmittingBase.w, DiffuseResult.xyz)) + SpecularResult.xyz, max(fDiffuseBase.w, 2*SpecularResult.w));
-    oColor = vec4(fNormal,1);
+    oColor = texture(uMaterial.diffuseColor, fTexCoord);
 }
