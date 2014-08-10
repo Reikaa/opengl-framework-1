@@ -10,7 +10,7 @@
 
 namespace lkogl {
     namespace camera {
-        Camera::Camera(int w, int h) : projection_(60.f, w, h, 1.f, 100.f)
+        Camera::Camera(int w, int h) : projection_(50.f, 16, 9, 1.f, 100.f)
         {}
         
         Camera::~Camera()
@@ -30,9 +30,20 @@ namespace lkogl {
             return position_;
         }
         
+        const math::Quat<float>& Camera::rotation() const
+        {
+            return rotation_;
+        }
+        
         void Camera::setPosition(const math::Vec3<float>& p)
         {
             position_ = p;
+            dirty_ = true;
+        }
+        
+        void Camera::setRotation(const math::Quat<float>& r)
+        {
+            rotation_ = r;
             dirty_ = true;
         }
         

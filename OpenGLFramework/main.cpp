@@ -17,6 +17,13 @@
 #include "lkogl/render_component.h"
 #include "lkogl/scene_deep_walker.h"
 
+#include "lkogl/keyboard.h"
+#include "lkogl/keyboard_adapter.h"
+#include "lkogl/mouse.h"
+#include "lkogl/mouse_adapter.h"
+
+#include "lkogl/first_person_movement.h"
+
 using namespace lkogl::math;
 using namespace lkogl::graphics;
 using namespace lkogl::geometry;
@@ -27,6 +34,8 @@ using namespace lkogl::math;
 using namespace lkogl::scene::components;
 using namespace lkogl::scene::walker;
 using namespace lkogl::camera;
+using namespace lkogl::input;
+using namespace lkogl::input::movement;
 
 class MyGame {
     mutable std::shared_ptr<Node> graph;
@@ -34,10 +43,24 @@ class MyGame {
     mutable std::shared_ptr<Program> program_;
     mutable std::shared_ptr<CameraComponent> cameraComponent;
     
+    FirstPersonMovement movement;
+    mutable float moveDelay = 0.f;
+    
+    mutable Keyboard keyboard_;
+    adapter::KeyboardAdapter kbAdapter_;
+    
+    mutable Mouse mouse_;
+    adapter::MouseAdapter mouseAdapter_;
+    
     mutable struct {
         int width, height;
     } screen;
 public:
+    mutable bool mouseLocked = true;
+    
+    MyGame() : kbAdapter_(keyboard_), mouseAdapter_(mouse_)
+    {}
+    
     void setUp() const {
         std::cout << "setup" << std::endl;
         
@@ -80,6 +103,7 @@ public:
             cam.setPosition({4,1,5});
             cam.lookAt({0,0,0});
             cameraComponent = std::make_shared<CameraComponent>(cam);
+            
             graph->addComponent(cameraComponent);
         } catch(ShaderException e) {
             std::cerr << e.msg << std::endl;
@@ -91,12 +115,55 @@ public:
         std::cout << "tear down" << std::endl;
     }
     
-    void input() const {
+    void processEvent(const SDL_Event& e) const {
+        kbAdapter_.processEvent(e) || mouseAdapter_.processEvent(e);
+    }
     
+    void input() const {
+        Vec2<float> dir(0,0);
+        
+        if(keyboard_.pressed(Keyboard::Key::ESCAPE)) {
+            mouseLocked = !mouseLocked;
+        }
+        
+        if(keyboard_.isDown(Keyboard::Key::LEFT_ARROW) || keyboard_.isDown(Keyboard::Key::LETTER_A)) {
+            dir.x+=1;
+        }
+        if(keyboard_.isDown(Keyboard::Key::RIGHT_ARROW) || keyboard_.isDown(Keyboard::Key::LETTER_D)) {
+            dir.x-=1;
+        }
+        
+        if(keyboard_.isDown(Keyboard::Key::UP_ARROW) || keyboard_.isDown(Keyboard::Key::LETTER_W)) {
+            dir.y+=1;
+        }
+        if(keyboard_.isDown(Keyboard::Key::DOWN_ARROW) || keyboard_.isDown(Keyboard::Key::LETTER_S)) {
+            dir.y-=1;
+        }
+        
+        if(length(dir)) {
+            if(moveDelay<0.25) {
+                moveDelay+=0.03125;
+            }
+        } else if(moveDelay>0) {
+            moveDelay-=0.03125;
+        }
+        
+        movement.move(cameraComponent->camera(), dir, moveDelay/2);
+                
+        if(mouseLocked) {
+            if(mouse_.delta.x != 0) {
+                movement.rotateHorizontally(cameraComponent->camera(), radians(.3f*mouse_.delta.x));
+            }
+            if(mouse_.delta.y != 0) {
+                movement.rotateVertically(cameraComponent->camera(), radians(.3f*mouse_.delta.y));
+            }
+        }
+        
     }
     
     void update() const {
-    
+        keyboard_.update();
+        mouse_.update();
     }
     
     void render() const {
@@ -124,7 +191,6 @@ public:
             glViewport(0, -(newHeight - screen.height) / 2,
                        screen.width, newHeight);
         }
-        cameraComponent->camera().projection().setSize(screen.width, screen.height);
     }
 
     
@@ -133,6 +199,10 @@ public:
         ss << "My Game" << "  (" << "OpenGL " << glGetString(GL_VERSION) << ")";
         
         return ss.str();
+    }
+    
+    void report(int frameCount, int updateCount) const {
+        std::cout << "FPS:" << frameCount << ", UPS" << updateCount << std::endl;
     }
     
     ~MyGame() {

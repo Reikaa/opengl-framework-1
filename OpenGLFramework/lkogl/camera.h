@@ -31,7 +31,9 @@ namespace lkogl {
             Projection& projection();
             
             const math::Vec3<float>& position() const;
+            const math::Quat<float>& rotation() const;
             void setPosition(const math::Vec3<float>& pos);
+            void setRotation(const math::Quat<float>& rot);
             void lookAt(const math::Vec3<float>& p);
         };
     }

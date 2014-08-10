@@ -24,8 +24,6 @@ namespace lkogl {
             
             void CameraComponent::render(const geometry::Transform& transformation, const graphics::Program& program) const
             {
-                std::cout << toString(camera_.projection_.matrix()) << std::endl;
-
                 graphics::CameraMatrixUse(program, camera_.viewMatrix(), camera_.projection_.matrix(), camera_.position());
             }
             

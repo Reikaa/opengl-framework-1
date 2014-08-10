@@ -9,8 +9,6 @@
 #ifndef __OpenGLFramework__mat4__
 #define __OpenGLFramework__mat4__
 
-#include <string>
-
 #include "vec4.h"
 
 namespace lkogl {
@@ -438,18 +436,6 @@ namespace lkogl {
             result += toString(m[1]) + "\n";
             result += toString(m[2]) + "\n";
             result += toString(m[3]);
-            
-            return result;
-        }
-        
-        template <typename T>
-        std::string toString(const Vec4<T>& v)
-        {
-            std::string result;
-            result += "(" + std::to_string(v.x) + ", ";
-            result += std::to_string(v.y) + ", ";
-            result += std::to_string(v.z) + ", ";
-            result += std::to_string(v.w) + ")";
             
             return result;
         }

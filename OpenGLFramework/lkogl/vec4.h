@@ -345,6 +345,18 @@ namespace lkogl {
             return Vec4<T>(v.x * oneOverLen, v.y * oneOverLen, v.z * oneOverLen, v.w * oneOverLen);
         }
         
+        template <typename T>
+        std::string toString(const Vec4<T>& v)
+        {
+            std::string result;
+            result += "(" + std::to_string(v.x) + ", ";
+            result += std::to_string(v.y) + ", ";
+            result += std::to_string(v.z) + ", ";
+            result += std::to_string(v.w) + ")";
+            
+            return result;
+        }
+        
     }
 }
 

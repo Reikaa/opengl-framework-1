@@ -9,6 +9,7 @@
 #ifndef __OpenGLFramework__game_loop__
 #define __OpenGLFramework__game_loop__
 
+#include <vector>
 #include "window.h"
 
 constexpr long operator "" _fps(unsigned long long int fps) {
@@ -21,12 +22,22 @@ namespace lkogl {
         
         long lowrestime();
         
+        class InputHandler {
+        public:
+            virtual bool processEvent(const SDL_Event&) const = 0;
+        };
+        
         class DefaultDelegate {
         public:
+            bool mouseLocked = true;
+            
             void setUp() const {
             }
             
             void tearDown() const {
+            }
+            
+            void processEvent(const SDL_Event& e) const {
             }
             
             void input() const {
@@ -39,6 +50,9 @@ namespace lkogl {
             }
             
             void resize(int width, int height) const {
+            }
+            
+            void report(int frameCount, int updateCount) const {
             }
             
             const std::string title() const {
@@ -103,6 +117,7 @@ namespace lkogl {
                 int frames = 0;
                 int updates = 0;
                 state_.running = true;
+                int mouseLocked = false;
                 
                 while(state_.running)
                 {
@@ -114,6 +129,11 @@ namespace lkogl {
                     
                     
                     while(state_.behind > state_.updateDuration) {
+                        if(mouseLocked != delegate_.mouseLocked) {
+                            mouseLocked = delegate_.mouseLocked;
+                            SDL_SetRelativeMouseMode(mouseLocked ? SDL_TRUE : SDL_FALSE);
+                        }
+                        
                         state_.behind -= state_.updateDuration;
                         while( SDL_PollEvent( &e ) != 0 )
                         {
@@ -131,6 +151,8 @@ namespace lkogl {
                                     }
                                     break;
                             }
+                            
+                            processEvent(e);
                         }
                         
                         input();
@@ -141,6 +163,7 @@ namespace lkogl {
                     }
                     
                     if(lowrestime() - time >= 1) {
+                        delegate_.report(frames, updates);
                         time = lowrestime();
                         frames = 0;
                         updates = 0;
@@ -152,6 +175,7 @@ namespace lkogl {
                     
                     state_.renderTime = hirestime()-beforeRender;
                     window_.refreshDisplay();
+                    frames++;
                 }
                 
             }
@@ -166,6 +190,10 @@ namespace lkogl {
                 delegate_.input();
             }
 
+            void processEvent(const SDL_Event& e) const {
+                delegate_.processEvent(e);
+            }
+            
             void update() const {
                 delegate_.update();
             }

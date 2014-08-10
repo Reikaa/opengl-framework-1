@@ -343,6 +343,12 @@ namespace lkogl {
             return mat * mat4_cast(rotation);
         }
         
+        template<typename T>
+        Vec3<T> rotate(const Vec3<T> vec, Quat<T> rotation)
+        {
+            return rotation * vec;
+        }
+        
         
         
         template <typename T>

@@ -23,7 +23,7 @@ namespace lkogl {
         const math::Mat4<float>& Projection::matrix() const
         {
             if(dirty_) {
-                matrix_ = math::perspective(math::radians(fov_), 16/9.0f, near_, far_);
+                matrix_ = math::perspective(math::radians(fov_), width_/float(height_), near_, far_);
                 dirty_ = false;
             }
             
