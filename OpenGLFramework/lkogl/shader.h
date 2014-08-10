@@ -55,8 +55,7 @@ namespace lkogl {
             struct ProgramHandles {
                 GLuint programId;
                 GLint modelMatrix;
-                GLint viewMatrix;
-                GLint projectionMatrix;
+                GLint viewProjectionMatrix;
                 GLint cameraPosition;
             } handles_;
 
@@ -89,8 +88,7 @@ namespace lkogl {
         class CameraMatrixUse {
         public:
             CameraMatrixUse(const Program&,
-                      const math::Mat4<GLfloat>& viewMat,
-                      const math::Mat4<GLfloat>& projectionMat,
+                      const math::Mat4<GLfloat>& viewProjectionMat,
                       const math::Vec3<GLfloat>& cameraPosition);
             ~CameraMatrixUse();
         };

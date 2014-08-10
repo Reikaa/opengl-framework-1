@@ -18,11 +18,20 @@ namespace lkogl {
         
         const math::Mat4<float>& Camera::viewMatrix() const
         {
-            if(dirty_) {
+            if(dirtyView_) {
                 viewMatrix_ = math::inverse(math::translate(math::Mat4<float>(), position_) * math::mat4_cast(rotation_));
-                dirty_ = false;
+                dirtyView_ = false;
             }
             return viewMatrix_;
+        }
+        
+        const math::Mat4<float>& Camera::viewProjectionMatrix() const
+        {
+            if(dirtyView_ || dirtyProjection_) {
+                viewProjectionMatrix_ = projection_.matrix() * viewMatrix();
+                dirtyProjection_ = false;
+            }
+            return viewProjectionMatrix_;
         }
         
         const math::Vec3<float>& Camera::position() const
@@ -38,23 +47,18 @@ namespace lkogl {
         void Camera::setPosition(const math::Vec3<float>& p)
         {
             position_ = p;
-            dirty_ = true;
+            dirtyView_ = true;
         }
         
         void Camera::setRotation(const math::Quat<float>& r)
         {
             rotation_ = r;
-            dirty_ = true;
+            dirtyView_ = true;
         }
-        
-        const Projection& Camera::projection() const
+                
+        void Camera::setProjection(const Projection& proj)
         {
-            return projection_;
-        }
-        
-        Projection& Camera::projection()
-        {
-            return projection_;
+            projection_ = proj;
         }
         
         void Camera::lookAt(const math::Vec3<float>& p)

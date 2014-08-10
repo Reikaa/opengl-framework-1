@@ -1,8 +1,7 @@
 #version 330
 
 uniform mat4 uModelMatrix;
-uniform mat4 uViewMatrix;
-uniform mat4 uProjectionMatrix;
+uniform mat4 uViewProjMatrix;
 
 in vec3 vPosition;
 in vec3 vNormal;
@@ -16,14 +15,13 @@ out vec2 fTexCoord;
 
 void main() {
     vec4 worldPos = uModelMatrix * vec4(vPosition, 1.0);
-    vec4 camPos = uViewMatrix * worldPos;
+    vec4 camPos = uViewProjMatrix * worldPos;
     vec4 worldNormal = uModelMatrix * vec4(vNormal, 0.0);
-    vec4 camNormal = uViewMatrix * worldNormal;
     
     fPosition = worldPos.xyz;
     fNormal = worldNormal.xyz;
     fColor = vColor;
     fTexCoord = vTexCoord;
     
-    gl_Position = uProjectionMatrix * camPos;
+    gl_Position = camPos;
 }

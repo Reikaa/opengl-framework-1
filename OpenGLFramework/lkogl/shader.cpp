@@ -68,7 +68,7 @@ namespace lkogl {
         
         Program::ProgramHandles Program::link(const Shader& vsh, const Shader& fsh) throw (ShaderException) {
             GLuint handle = glCreateProgram();
-            GLint mMat, vMat, pMat, camPos;
+            GLint mMat, vpMat, camPos;
             
             try {
                 GLint compileOk;
@@ -93,15 +93,14 @@ namespace lkogl {
                 }
                 
                 mMat = glGetUniformLocation(handle, "uModelMatrix");
-                vMat = glGetUniformLocation(handle, "uViewMatrix");
-                pMat = glGetUniformLocation(handle, "uProjectionMatrix");
+                vpMat = glGetUniformLocation(handle, "uViewProjMatrix");
                 camPos = glGetUniformLocation(handle, "uCameraPosition");
             } catch(...) {
                 glDeleteProgram(handle);
                 throw;
             }
             
-            return Program::ProgramHandles{handle, mMat, vMat, pMat, camPos};
+            return Program::ProgramHandles{handle, mMat, vpMat, camPos};
         }
 
         Program::Program(Program&& p) throw() : handles_(p.handles_) {
@@ -131,11 +130,9 @@ namespace lkogl {
         }
         
         CameraMatrixUse::CameraMatrixUse(const Program& prog,
-                                       const math::Mat4<GLfloat>& viewMat,
-                                       const math::Mat4<GLfloat>& projectionMat,
-                                       const math::Vec3<GLfloat>& cameraPosition) {            
-            glUniformMatrix4fv(prog.handles().viewMatrix, 1, GL_FALSE, &viewMat[0][0]);
-            glUniformMatrix4fv(prog.handles().projectionMatrix, 1, GL_FALSE, &projectionMat[0][0]);
+                                       const math::Mat4<GLfloat>& viewProjectionMat,
+                                       const math::Vec3<GLfloat>& cameraPosition) {
+            glUniformMatrix4fv(prog.handles().viewProjectionMatrix, 1, GL_FALSE, &viewProjectionMat[0][0]);
             glUniform3f(prog.handles().cameraPosition, cameraPosition.x, cameraPosition.y, cameraPosition.z);
         }
         

@@ -15,8 +15,11 @@
 namespace lkogl {
     namespace camera {
         class Camera {
-            mutable bool dirty_ = true;
+            mutable bool dirtyView_ = true;
             mutable math::Mat4<float> viewMatrix_;
+            
+            mutable bool dirtyProjection_ = true;
+            mutable math::Mat4<float> viewProjectionMatrix_;
             
         public:
             Projection projection_;
@@ -27,8 +30,8 @@ namespace lkogl {
             ~Camera();
             
             const math::Mat4<float>& viewMatrix() const;
-            const Projection& projection() const;
-            Projection& projection();
+            const math::Mat4<float>& viewProjectionMatrix() const;
+            void setProjection(const Projection& proj);
             
             const math::Vec3<float>& position() const;
             const math::Quat<float>& rotation() const;

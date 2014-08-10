@@ -202,7 +202,7 @@ public:
     }
     
     void report(int frameCount, int updateCount) const {
-        std::cout << "FPS:" << frameCount << ", UPS" << updateCount << std::endl;
+        std::cout << "fps:" << frameCount << ", ups: " << updateCount << std::endl;
     }
     
     ~MyGame() {
