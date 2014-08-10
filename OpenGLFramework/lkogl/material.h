@@ -17,19 +17,15 @@
 namespace lkogl {
     namespace graphics {
         class Material {
-            Program program_;
             std::vector<Texture> textures_;
         public:
             Material() = delete;
             Material(Material&& mat);
-            Material(const Program, const std::vector<Texture>);
+            Material(const std::vector<Texture>);
             ~Material();
-            
-            const Program& program() const { return program_; }
         };
         
         class MaterialUse {
-            const ProgramUse p;
         public:
             MaterialUse(const Material&);
             ~MaterialUse();

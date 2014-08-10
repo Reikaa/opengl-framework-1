@@ -7,6 +7,7 @@
 //
 
 #include "shader.h"
+#include <iostream>
 
 namespace lkogl {
     namespace graphics {
@@ -121,19 +122,24 @@ namespace lkogl {
             glUseProgram(0);
         }
         
-        MatrixUse::MatrixUse(const Program& prog,
-                             const math::Mat4<GLfloat>& modelMat,
-                             const math::Mat4<GLfloat>& viewMat,
-                             const math::Mat4<GLfloat>& projectionMat,
-                             const math::Vec3<GLfloat>& cameraPosition) {
+        ModelMatrixUse::ModelMatrixUse(const Program& prog,
+                                       const math::Mat4<GLfloat>& modelMat) {
             glUniformMatrix4fv(prog.handles().modelMatrix, 1, GL_FALSE, &modelMat[0][0]);
+        }
+        
+        ModelMatrixUse::~ModelMatrixUse() {
+        }
+        
+        CameraMatrixUse::CameraMatrixUse(const Program& prog,
+                                       const math::Mat4<GLfloat>& viewMat,
+                                       const math::Mat4<GLfloat>& projectionMat,
+                                       const math::Vec3<GLfloat>& cameraPosition) {            
             glUniformMatrix4fv(prog.handles().viewMatrix, 1, GL_FALSE, &viewMat[0][0]);
             glUniformMatrix4fv(prog.handles().projectionMatrix, 1, GL_FALSE, &projectionMat[0][0]);
             glUniform3f(prog.handles().cameraPosition, cameraPosition.x, cameraPosition.y, cameraPosition.z);
         }
         
-        MatrixUse::~MatrixUse() {
-            glUseProgram(0);
+        CameraMatrixUse::~CameraMatrixUse() {
         }
         
         GeometryObject::GeometryObject(const geometry::Mesh& mesh) : handles_(buffer(mesh)), indexCount_((GLuint)mesh.triangles.size()*3)

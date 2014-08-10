@@ -77,7 +77,8 @@ namespace lkogl {
                 const long updateDuration = 60_fps;
             } state_;
         public:
-            Loop(const DELEGATE& del) : delegate_(del), window_(900,600, del.title()) {
+            Loop(const DELEGATE& del) : delegate_(del), window_(900,600, "Loading...") {
+                window_.setTitle(del.title());
             }
             
             ~Loop() {

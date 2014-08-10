@@ -7,23 +7,33 @@
 //
 
 #include <iostream>
+#include <sstream>
 #include "lkogl/game_loop.h"
-#include "lkogl/scene_renderer.h"
-#include "lkogl/graph.h"
 #include "lkogl/material.h"
 #include "lkogl/shader.h"
 #include "lkogl/text.h"
 
+#include "lkogl/camera_component.h"
+#include "lkogl/render_component.h"
+#include "lkogl/scene_deep_walker.h"
+
+using namespace lkogl::math;
 using namespace lkogl::graphics;
 using namespace lkogl::geometry;
 using namespace lkogl::utils;
 using namespace lkogl::scene;
 using namespace lkogl::loop;
 using namespace lkogl::math;
+using namespace lkogl::scene::components;
+using namespace lkogl::scene::walker;
+using namespace lkogl::camera;
 
 class MyGame {
-    visitor::SceneRenderer r;
-    SceneGraph graph;
+    mutable std::shared_ptr<Node> graph;
+    SceneDeepWalker walker;
+    mutable std::shared_ptr<Program> program_;
+    mutable std::shared_ptr<CameraComponent> cameraComponent;
+    
     mutable struct {
         int width, height;
     } screen;
@@ -38,23 +48,39 @@ public:
         glEnable( GL_BLEND );
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         
+        glFrontFace(GL_CCW);
+        glCullFace(GL_BACK);
         glEnable(GL_CULL_FACE);
+        
         glEnable( GL_DEPTH_TEST );
         glDepthFunc( GL_LEQUAL );
+        
+        glEnable(GL_FRAMEBUFFER_SRGB);
+        
+        glEnable(GL_DEPTH_CLAMP);
+
         
         try {
             PlainText vshSource("phong.vsh");
             PlainText fshSource("phong.fsh");
+            
+            graph = std::make_shared<Node>();
 
-            Program program(vshSource.content, fshSource.content);
+            program_ = std::make_shared<Program>(vshSource.content, fshSource.content);
             Mesh mesh = primitives::makePyramid();
             GeometryObject geo(mesh);
-            Material mat(std::move(program), {});
+            Material mat({});
             Model modelOne(std::move(geo), std::move(mat));
-            std::shared_ptr<Leaf> node = std::make_shared<Leaf>(std::move(modelOne));
-            node->transformation.translation += Vec3<GLfloat>(0,0.5,0);
+            std::shared_ptr<Node> node = std::make_shared<Node>();
+            node->addComponent(std::make_shared<RenderComponent>(std::move(modelOne)));
+            node->transformation.translation += Vec3<GLfloat>(0,0,0);
             
-            graph.root().add(node);
+            graph->addChild(node);
+            auto cam = Camera(screen.width, screen.height);
+            cam.setPosition({4,1,5});
+            cam.lookAt({0,0,0});
+            cameraComponent = std::make_shared<CameraComponent>(cam);
+            graph->addComponent(cameraComponent);
         } catch(ShaderException e) {
             std::cerr << e.msg << std::endl;
             exit(1);
@@ -79,8 +105,8 @@ public:
         glClearColor(0,0.2,0.3,0);
         glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
         
-        
-        graph.root().accept(r);
+        ProgramUse p(*program_);
+        walker.walk(graph, &Component::render, *program_);
     }
     
     void resize(int width, int height) const {
@@ -98,11 +124,15 @@ public:
             glViewport(0, -(newHeight - screen.height) / 2,
                        screen.width, newHeight);
         }
+        cameraComponent->camera().projection().setSize(screen.width, screen.height);
     }
 
     
     const std::string title() const {
-        return "My Game";
+        std::stringstream ss;
+        ss << "My Game" << "  (" << "OpenGL " << glGetString(GL_VERSION) << ")";
+        
+        return ss.str();
     }
     
     ~MyGame() {

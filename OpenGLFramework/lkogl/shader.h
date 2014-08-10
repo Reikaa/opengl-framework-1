@@ -79,14 +79,20 @@ namespace lkogl {
             ~ProgramUse();
         };
         
-        class MatrixUse {
+        class ModelMatrixUse {
         public:
-            MatrixUse(const Program&,
-                      const math::Mat4<GLfloat>& modelMat,
+            ModelMatrixUse(const Program&,
+                      const math::Mat4<GLfloat>& modelMat);
+            ~ModelMatrixUse();
+        };
+        
+        class CameraMatrixUse {
+        public:
+            CameraMatrixUse(const Program&,
                       const math::Mat4<GLfloat>& viewMat,
                       const math::Mat4<GLfloat>& projectionMat,
                       const math::Vec3<GLfloat>& cameraPosition);
-            ~MatrixUse();
+            ~CameraMatrixUse();
         };
         
         class GeometryObject {

@@ -14,6 +14,11 @@ struct Material {
     sampler2D specularColor;
 };
 
+uniform mat4 uModelMatrix;
+uniform mat4 uViewMatrix;
+uniform mat4 uProjectionMatrix;
+
+
 uniform vec3 uCameraPosition;
 uniform Material uMaterial;
 uniform Light uLight;
@@ -55,5 +60,6 @@ void main() {
     
     vec4 SpecularResult = fSpecularBase * SpecularFactor;
     
-    oColor =  vec4(max(AmbientResult.xyz, max(1.5*fEmittingBase.xyz*fEmittingBase.w, DiffuseResult.xyz)) + SpecularResult.xyz, max(fDiffuseBase.w, 2*SpecularResult.w));
+    //oColor =  vec4(max(AmbientResult.xyz, max(1.5*fEmittingBase.xyz*fEmittingBase.w, DiffuseResult.xyz)) + SpecularResult.xyz, max(fDiffuseBase.w, 2*SpecularResult.w));
+    oColor = vec4(fNormal,1);
 }

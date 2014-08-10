@@ -9,18 +9,33 @@
 #ifndef __OpenGLFramework__node__
 #define __OpenGLFramework__node__
 
-#include "visitor.h"
+
+#include <list>
+#include <vector>
 #include "transform.h"
+#include "node_component.h"
 
 namespace lkogl {
     namespace scene {
         
+        namespace walker {
+            class SceneDeepWalker;
+        }
+        
         class Node {
+            mutable std::list<std::shared_ptr<Node>> children_;
+            mutable std::vector<std::shared_ptr<Component>> components_;
+
         public:
             geometry::Transform transformation;
 
-            virtual ~Node();
-            virtual void accept( const Visitor & ) const = 0;
+            Node();
+            ~Node();
+            
+            void addChild(std::shared_ptr<Node>);
+            void addComponent(std::shared_ptr<Component>);
+            
+            friend class walker::SceneDeepWalker;
         };
     }
 }

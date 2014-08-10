@@ -54,7 +54,7 @@ namespace lkogl {
             Vec3<T> & operator= (Vec3<T> const & other)
             {
                 x = other.x;
-                y = other.z;
+                y = other.y;
                 z = other.z;
                 
                 return *this;
@@ -316,8 +316,13 @@ namespace lkogl {
         template <typename T>
         T length(const Vec3<T>& v)
         {
-            T sqr = v.x * v.x + v.y * v.y + v.z * v.z;
-            return sqrt(sqr);
+            return sqrt(length2(v));
+        }
+        
+        template <typename T>
+        T length2(const Vec3<T>& v)
+        {
+            return dot(v,v);
         }
         
         template <typename T>

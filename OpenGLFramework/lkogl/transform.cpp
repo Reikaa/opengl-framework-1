@@ -7,6 +7,7 @@
 //
 
 #include "transform.h"
+#include <iostream>
 
 namespace lkogl {
     namespace geometry {

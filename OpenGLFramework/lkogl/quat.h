@@ -32,7 +32,6 @@ namespace lkogl {
             }
             
             Quat(const T& wp, const T& xp, const T& yp, const T& zp) : x(xp), y(yp), z(zp), w(wp)
-
             {
             }
             
@@ -342,6 +341,20 @@ namespace lkogl {
         Mat4<T> rotate(const Mat4<T> mat, Quat<T> rotation)
         {
             return mat * mat4_cast(rotation);
+        }
+        
+        
+        
+        template <typename T>
+        std::string toString(const Quat<T>& v)
+        {
+            std::string result;
+            result += "(" + std::to_string(v.x) + ", ";
+            result += std::to_string(v.y) + ", ";
+            result += std::to_string(v.z) + ", ";
+            result += std::to_string(v.w) + ")";
+            
+            return result;
         }
     }
 }

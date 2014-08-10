@@ -25,6 +25,8 @@ namespace lkogl {
             int width() const;
             int height() const;
             
+            void setTitle(const std::string&) const;
+            
             void refreshDisplay() const;
         };
     }

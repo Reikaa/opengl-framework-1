@@ -1,0 +1,40 @@
+//
+//  camera.h
+//  OpenGLFramework
+//
+//  Created by Laszlo Korte on 10.08.14.
+//  Copyright (c) 2014 Laszlo Korte. All rights reserved.
+//
+
+#ifndef __OpenGLFramework__camera__
+#define __OpenGLFramework__camera__
+
+#include "math.h"
+#include "projection.h"
+
+namespace lkogl {
+    namespace camera {
+        class Camera {
+            mutable bool dirty_ = true;
+            mutable math::Mat4<float> viewMatrix_;
+            
+        public:
+            Projection projection_;
+            math::Quat<float> rotation_;
+            math::Vec3<float> position_;
+            
+            Camera(int w, int h);
+            ~Camera();
+            
+            const math::Mat4<float>& viewMatrix() const;
+            const Projection& projection() const;
+            Projection& projection();
+            
+            const math::Vec3<float>& position() const;
+            void setPosition(const math::Vec3<float>& pos);
+            void lookAt(const math::Vec3<float>& p);
+        };
+    }
+}
+
+#endif /* defined(__OpenGLFramework__camera__) */

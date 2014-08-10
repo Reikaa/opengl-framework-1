@@ -323,9 +323,13 @@ namespace lkogl {
         template <typename T>
         T length(const Vec4<T>& v)
         {
-            T sqr = v.x * v.x + v.y * v.y + v.z * v.z + v.w * v.w;
-            
-            return sqrt(sqr);
+            return sqrt(length2(v));
+        }
+        
+        template <typename T>
+        T length2(const Vec4<T>& v)
+        {
+            return dot(v,v);
         }
         
         template <typename T>

@@ -10,7 +10,18 @@
 
 namespace lkogl {
     namespace scene {
+        Node::Node() {
+        }
+        
         Node::~Node() {
+        }
+        
+        void Node::addChild(std::shared_ptr<Node> n) {
+            children_.push_back(n);
+        }
+        
+        void Node::addComponent(std::shared_ptr<Component> c) {
+            components_.push_back(c);
         }
     }
 }

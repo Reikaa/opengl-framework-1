@@ -19,7 +19,6 @@
 		F2970791199370D800D48CE5 /* texture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F297078F199370D800D48CE5 /* texture.cpp */; };
 		F2970794199370EE00D48CE5 /* math.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2970792199370EE00D48CE5 /* math.cpp */; };
 		F29707971993716300D48CE5 /* node.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F29707951993716300D48CE5 /* node.cpp */; };
-		F297079A1993719C00D48CE5 /* group.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F29707981993719C00D48CE5 /* group.cpp */; };
 		F297079E1993723B00D48CE5 /* first_person_camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F297079C1993723B00D48CE5 /* first_person_camera.cpp */; };
 		F29707A21993728300D48CE5 /* game_loop.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F29707A01993728300D48CE5 /* game_loop.cpp */; };
 		F29707AA1993737E00D48CE5 /* SDL2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F29707A51993735D00D48CE5 /* SDL2.framework */; };
@@ -32,11 +31,13 @@
 		F29707BA199391FD00D48CE5 /* SDL2_image.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F29707A61993735D00D48CE5 /* SDL2_image.framework */; };
 		F29707BB199391FD00D48CE5 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F29707A31993734100D48CE5 /* OpenGL.framework */; };
 		F29707BE199397FF00D48CE5 /* window.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F29707BC199397FF00D48CE5 /* window.cpp */; };
-		F29707C11993B4DB00D48CE5 /* graph.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F29707BF1993B4DB00D48CE5 /* graph.cpp */; };
-		F29707C41993B57500D48CE5 /* visitor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F29707C21993B57500D48CE5 /* visitor.cpp */; };
-		F29707C71993B63D00D48CE5 /* leaf.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F29707C51993B63D00D48CE5 /* leaf.cpp */; };
-		F29707CB1993BD9700D48CE5 /* scene_renderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F29707C91993BD9700D48CE5 /* scene_renderer.cpp */; };
+		F29707CB1993BD9700D48CE5 /* scene_deep_walker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F29707C91993BD9700D48CE5 /* scene_deep_walker.cpp */; };
 		F29707CE1994382E00D48CE5 /* model.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F29707CC1994382E00D48CE5 /* model.cpp */; };
+		F2DEC60419975A8700EE31E7 /* node_component.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2DEC60219975A8700EE31E7 /* node_component.cpp */; };
+		F2DEC6081997621400EE31E7 /* render_component.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2DEC6061997621400EE31E7 /* render_component.cpp */; };
+		F2DEC60D1997681E00EE31E7 /* camera_component.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2DEC60B1997681E00EE31E7 /* camera_component.cpp */; };
+		F2DEC613199790A600EE31E7 /* camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2DEC611199790A600EE31E7 /* camera.cpp */; };
+		F2DEC616199793A100EE31E7 /* projection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2DEC614199793A100EE31E7 /* projection.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -98,8 +99,6 @@
 		F2970793199370EE00D48CE5 /* math.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = math.h; sourceTree = "<group>"; };
 		F29707951993716300D48CE5 /* node.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = node.cpp; sourceTree = "<group>"; };
 		F29707961993716300D48CE5 /* node.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = node.h; sourceTree = "<group>"; };
-		F29707981993719C00D48CE5 /* group.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = group.cpp; sourceTree = "<group>"; };
-		F29707991993719C00D48CE5 /* group.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = group.h; sourceTree = "<group>"; };
 		F297079C1993723B00D48CE5 /* first_person_camera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = first_person_camera.cpp; sourceTree = "<group>"; };
 		F297079D1993723B00D48CE5 /* first_person_camera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = first_person_camera.h; sourceTree = "<group>"; };
 		F29707A01993728300D48CE5 /* game_loop.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = game_loop.cpp; sourceTree = "<group>"; };
@@ -117,16 +116,20 @@
 		F29707B719937ADF00D48CE5 /* light.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = light.h; sourceTree = "<group>"; };
 		F29707BC199397FF00D48CE5 /* window.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = window.cpp; sourceTree = "<group>"; };
 		F29707BD199397FF00D48CE5 /* window.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = window.h; sourceTree = "<group>"; };
-		F29707BF1993B4DB00D48CE5 /* graph.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = graph.cpp; sourceTree = "<group>"; };
-		F29707C01993B4DB00D48CE5 /* graph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = graph.h; sourceTree = "<group>"; };
-		F29707C21993B57500D48CE5 /* visitor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = visitor.cpp; sourceTree = "<group>"; };
-		F29707C31993B57500D48CE5 /* visitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = visitor.h; sourceTree = "<group>"; };
-		F29707C51993B63D00D48CE5 /* leaf.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = leaf.cpp; sourceTree = "<group>"; };
-		F29707C61993B63D00D48CE5 /* leaf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = leaf.h; sourceTree = "<group>"; };
-		F29707C91993BD9700D48CE5 /* scene_renderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = scene_renderer.cpp; sourceTree = "<group>"; };
-		F29707CA1993BD9700D48CE5 /* scene_renderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = scene_renderer.h; sourceTree = "<group>"; };
+		F29707C91993BD9700D48CE5 /* scene_deep_walker.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = scene_deep_walker.cpp; sourceTree = "<group>"; };
+		F29707CA1993BD9700D48CE5 /* scene_deep_walker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = scene_deep_walker.h; sourceTree = "<group>"; };
 		F29707CC1994382E00D48CE5 /* model.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = model.cpp; sourceTree = "<group>"; };
 		F29707CD1994382E00D48CE5 /* model.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = model.h; sourceTree = "<group>"; };
+		F2DEC60219975A8700EE31E7 /* node_component.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = node_component.cpp; sourceTree = "<group>"; };
+		F2DEC60319975A8700EE31E7 /* node_component.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = node_component.h; sourceTree = "<group>"; };
+		F2DEC6061997621400EE31E7 /* render_component.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = render_component.cpp; sourceTree = "<group>"; };
+		F2DEC6071997621400EE31E7 /* render_component.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = render_component.h; sourceTree = "<group>"; };
+		F2DEC60B1997681E00EE31E7 /* camera_component.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = camera_component.cpp; sourceTree = "<group>"; };
+		F2DEC60C1997681E00EE31E7 /* camera_component.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = camera_component.h; sourceTree = "<group>"; };
+		F2DEC611199790A600EE31E7 /* camera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = camera.cpp; sourceTree = "<group>"; };
+		F2DEC612199790A600EE31E7 /* camera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = camera.h; sourceTree = "<group>"; };
+		F2DEC614199793A100EE31E7 /* projection.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = projection.cpp; sourceTree = "<group>"; };
+		F2DEC615199793A100EE31E7 /* projection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = projection.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -285,17 +288,12 @@
 		F297078B199370A800D48CE5 /* scene */ = {
 			isa = PBXGroup;
 			children = (
-				F29707C81993BD8100D48CE5 /* visitors */,
+				F2DEC605199761FD00EE31E7 /* components */,
+				F29707C81993BD8100D48CE5 /* walker */,
 				F29707951993716300D48CE5 /* node.cpp */,
 				F29707961993716300D48CE5 /* node.h */,
-				F29707981993719C00D48CE5 /* group.cpp */,
-				F29707991993719C00D48CE5 /* group.h */,
-				F29707BF1993B4DB00D48CE5 /* graph.cpp */,
-				F29707C01993B4DB00D48CE5 /* graph.h */,
-				F29707C21993B57500D48CE5 /* visitor.cpp */,
-				F29707C31993B57500D48CE5 /* visitor.h */,
-				F29707C51993B63D00D48CE5 /* leaf.cpp */,
-				F29707C61993B63D00D48CE5 /* leaf.h */,
+				F2DEC60219975A8700EE31E7 /* node_component.cpp */,
+				F2DEC60319975A8700EE31E7 /* node_component.h */,
 			);
 			name = scene;
 			sourceTree = "<group>";
@@ -305,6 +303,10 @@
 			children = (
 				F297079C1993723B00D48CE5 /* first_person_camera.cpp */,
 				F297079D1993723B00D48CE5 /* first_person_camera.h */,
+				F2DEC611199790A600EE31E7 /* camera.cpp */,
+				F2DEC612199790A600EE31E7 /* camera.h */,
+				F2DEC614199793A100EE31E7 /* projection.cpp */,
+				F2DEC615199793A100EE31E7 /* projection.h */,
 			);
 			name = camera;
 			sourceTree = "<group>";
@@ -343,13 +345,24 @@
 			name = math;
 			sourceTree = "<group>";
 		};
-		F29707C81993BD8100D48CE5 /* visitors */ = {
+		F29707C81993BD8100D48CE5 /* walker */ = {
 			isa = PBXGroup;
 			children = (
-				F29707C91993BD9700D48CE5 /* scene_renderer.cpp */,
-				F29707CA1993BD9700D48CE5 /* scene_renderer.h */,
+				F29707C91993BD9700D48CE5 /* scene_deep_walker.cpp */,
+				F29707CA1993BD9700D48CE5 /* scene_deep_walker.h */,
 			);
-			name = visitors;
+			name = walker;
+			sourceTree = "<group>";
+		};
+		F2DEC605199761FD00EE31E7 /* components */ = {
+			isa = PBXGroup;
+			children = (
+				F2DEC6061997621400EE31E7 /* render_component.cpp */,
+				F2DEC6071997621400EE31E7 /* render_component.h */,
+				F2DEC60B1997681E00EE31E7 /* camera_component.cpp */,
+				F2DEC60C1997681E00EE31E7 /* camera_component.h */,
+			);
+			name = components;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -455,26 +468,27 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F2DEC60D1997681E00EE31E7 /* camera_component.cpp in Sources */,
 				F29707871993706C00D48CE5 /* shader.cpp in Sources */,
-				F29707C71993B63D00D48CE5 /* leaf.cpp in Sources */,
 				F27044D21994EC4E00C57B6A /* transform.cpp in Sources */,
-				F297079A1993719C00D48CE5 /* group.cpp in Sources */,
 				F29707BE199397FF00D48CE5 /* window.cpp in Sources */,
+				F2DEC613199790A600EE31E7 /* camera.cpp in Sources */,
 				F29707B819937ADF00D48CE5 /* light.cpp in Sources */,
 				F2970791199370D800D48CE5 /* texture.cpp in Sources */,
-				F29707CB1993BD9700D48CE5 /* scene_renderer.cpp in Sources */,
-				F29707C41993B57500D48CE5 /* visitor.cpp in Sources */,
+				F29707CB1993BD9700D48CE5 /* scene_deep_walker.cpp in Sources */,
 				F29707B5199379DC00D48CE5 /* material.cpp in Sources */,
-				F29707C11993B4DB00D48CE5 /* graph.cpp in Sources */,
+				F2DEC60419975A8700EE31E7 /* node_component.cpp in Sources */,
 				F297077C19936F4E00D48CE5 /* main.cpp in Sources */,
 				F29707CE1994382E00D48CE5 /* model.cpp in Sources */,
 				F2970794199370EE00D48CE5 /* math.cpp in Sources */,
 				F27044CF1994C36C00C57B6A /* text.cpp in Sources */,
 				F297078E199370C400D48CE5 /* mesh.cpp in Sources */,
 				F29707A21993728300D48CE5 /* game_loop.cpp in Sources */,
+				F2DEC616199793A100EE31E7 /* projection.cpp in Sources */,
 				F29707B11993786600D48CE5 /* image.cpp in Sources */,
 				F297079E1993723B00D48CE5 /* first_person_camera.cpp in Sources */,
 				F29707971993716300D48CE5 /* node.cpp in Sources */,
+				F2DEC6081997621400EE31E7 /* render_component.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

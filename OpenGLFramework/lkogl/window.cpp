@@ -58,6 +58,11 @@ namespace lkogl {
             return h;
         }
         
+        void Window::setTitle(const std::string& title) const
+        {
+            SDL_SetWindowTitle(displayWindow_, title.c_str());
+        }
+        
         Window::~Window() {
             SDL_DestroyRenderer(displayRenderer_);
             SDL_DestroyWindow(displayWindow_);
