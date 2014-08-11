@@ -9,7 +9,7 @@
 #ifndef __OpenGLFramework__model__
 #define __OpenGLFramework__model__
 
-#include "shader.h"
+#include "geometry_object.h"
 #include "material.h"
 
 namespace lkogl {

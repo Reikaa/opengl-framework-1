@@ -11,7 +11,7 @@
 
 #include <stdio.h>
 #include "transform.h"
-#include "shader.h"
+#include "program.h"
 
 namespace lkogl {
     namespace scene {

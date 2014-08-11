@@ -23,7 +23,7 @@ namespace lkogl {
             void RenderComponent::render(const geometry::Transform& transformation, const graphics::Program& program) const
             {
                 graphics::MaterialUse mat(program, model_.material());
-                graphics::GeometryObjectUse geo(model_.geometry());
+                const graphics::GeometryObjectUse geo(model_.geometry());
                 graphics::ModelMatrixUse matrix(program, transformation.matrix());
                 
                 geo.render();

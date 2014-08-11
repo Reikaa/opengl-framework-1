@@ -12,6 +12,13 @@ namespace lkogl {
     namespace graphics {
         namespace lighting {
             
+            DirectionalLight::DirectionalLight(math::Vec3<float> color, float intensity, math::Vec3<float> direction)
+            :baseLight_(color, intensity), direction_(direction)
+            {}
+            
+            DirectionalLight::~DirectionalLight()
+            {}
+            
             DirectionalLightUse::DirectionalLightUse(const Program& program, const DirectionalLight& l)
             {
                 glUniform3f(program.handles().directionalLightColorPosition, l.baseLight_.color_.x, l.baseLight_.color_.y, l.baseLight_.color_.z);

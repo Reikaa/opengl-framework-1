@@ -10,7 +10,7 @@
 #define __OpenGLFramework__directional_light__
 
 #include "base_light.h"
-#include "shader.h"
+#include "program.h"
 
 namespace lkogl {
     namespace graphics {
@@ -19,6 +19,8 @@ namespace lkogl {
             public:
                 BaseLight baseLight_;
                 math::Vec3<float> direction_;
+                DirectionalLight(math::Vec3<float> color, float intensity, math::Vec3<float> direction);
+                ~DirectionalLight();
                 
                 friend class DirectionalLightUse;
             };

@@ -16,6 +16,8 @@
 #include "lkogl/ambient_light.h"
 #include "lkogl/ambient_light_component.h"
 #include "lkogl/directional_light.h"
+#include "lkogl/point_light.h"
+#include "lkogl/spot_light.h"
 
 
 #include "lkogl/camera_component.h"
@@ -48,6 +50,8 @@ class MyGame {
     SceneDeepWalker walker;
     mutable std::shared_ptr<Program> programAmbient_;
     mutable std::shared_ptr<Program> programDirectional_;
+    mutable std::shared_ptr<Program> programPoint_;
+    mutable std::shared_ptr<Program> programSpot_;
     mutable std::shared_ptr<CameraComponent> cameraComponent;
     
     FirstPersonMovement movement;
@@ -99,16 +103,24 @@ public:
             PlainText fshSourceDirectional("directional-forward.fsh");
             programDirectional_ = std::make_shared<Program>(vshSourceDirectional.content, fshSourceDirectional.content);
             
+            PlainText vshSourcePoint("point-forward.vsh");
+            PlainText fshSourcePoint("point-forward.fsh");
+            programPoint_ = std::make_shared<Program>(vshSourcePoint.content, fshSourcePoint.content);
+            
+            PlainText vshSourceSpot("spot-forward.vsh");
+            PlainText fshSourceSpot("spot-forward.fsh");
+            programSpot_ = std::make_shared<Program>(vshSourceSpot.content, fshSourceSpot.content);
+            
             graph = std::make_shared<Node>();
 
             Mesh mesh = primitives::makePyramid();
             GeometryObject geo(mesh);
             Texture tex(Image("pattern.png"));
-            Material mat(std::move(tex), 7, 20);
-            Model modelOne(std::move(geo), std::move(mat));
+            Material mat(tex, 7, 20);
+            Model modelOne(geo, std::move(mat));
             std::shared_ptr<Node> node = std::make_shared<Node>();
             node->addComponent(std::make_shared<RenderComponent>(std::move(modelOne)));
-            node->transformation.translation = Vec3<GLfloat>(0,0.0001,0);
+            //node->transformation.translation = Vec3<GLfloat>(0,0.5,0);
             node->transformation.rotation = angleAxis<float>(radians(45), {0,1,0});
             
             graph->addChild(node);
@@ -192,20 +204,37 @@ public:
         
         glEnable(GL_BLEND);
         glBlendFunc(GL_ONE, GL_ONE);
-        glDepthMask(false);
-        glDepthFunc(GL_EQUAL);
+
+        // TODO: remove this, use glDepthFunc(GL_GEQUAL); glDepthMask(GL_FALSE);
+        glClear( GL_DEPTH_BUFFER_BIT );
+
         
         ProgramUse directional(*programDirectional_);
-        DirectionalLight light;
-        light.direction_ = {0,-1,0};
-        light.baseLight_.color_ = {0.6,0.7,0.9};
-        light.baseLight_.intensity_ = 0.9;
+        DirectionalLight light({0.6,0.7,0.9}, 0.1, {1,-1,1});
         DirectionalLightUse lightuse(*programDirectional_, light);
         
         walker.walk(graph, &Component::render, *programDirectional_);
         
         
-        glDepthFunc(GL_LEQUAL);
+        glClear( GL_DEPTH_BUFFER_BIT );
+        
+        ProgramUse pointy(*programPoint_);
+        PointLight pp({1,0,0}, 0.7, {0,2,2}, Attenuation(0, 0, 1));
+        PointLightUse(*programPoint_, pp);
+        
+        walker.walk(graph, &Component::render, *programPoint_);
+        
+        glClear( GL_DEPTH_BUFFER_BIT );
+        
+        ProgramUse spoty(*programPoint_);
+        SpotLight sp({1,1,0}, 0.7, {2,1,0}, Attenuation(0, 0, 1), {-1,-1,-1}, 4);
+        SpotLightUse(*programSpot_, sp);
+        
+        walker.walk(graph, &Component::render, *programPoint_);
+
+        
+        //glDepthFunc(GL_LESS);
+
         glDepthMask(true);
         glDisable(GL_BLEND);
     }

@@ -11,7 +11,7 @@
 namespace lkogl {
     namespace graphics {
         Model::Model(const GeometryObject geo, Material mat) :
-        geometry_(std::move(geo)), material_(std::move(mat))
+        geometry_(geo), material_(std::move(mat))
         {
         }
         
@@ -19,7 +19,7 @@ namespace lkogl {
         {
         }
         
-        Model::Model(Model&& m) :geometry_(std::move(m.geometry_)), material_(std::move(m.material_)) {
+        Model::Model(Model&& m) :geometry_(m.geometry_), material_(std::move(m.material_)) {
         }
         
         const GeometryObject& Model::geometry() const

@@ -21,14 +21,14 @@ namespace lkogl {
             {
                 auto q = math::angleAxis(-radians, up_);
                 
-                cam.setRotation(q * cam.rotation());
+                cam.setRotation(math::normalize(q * cam.rotation()));
             }
             
             void FirstPersonMovement::rotateVertically(camera::Camera &cam, float radians) const
             {
                 auto q = math::angleAxis(-radians, sideward_);
                 
-                math::Quat<float> newRot = cam.rotation() * q;
+                math::Quat<float> newRot = math::normalize(cam.rotation() * q);
                 
                 if(math::dot(newRot * up_, up_) > 0) {
                     cam.setRotation(newRot);

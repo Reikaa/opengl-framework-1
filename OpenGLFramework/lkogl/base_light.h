@@ -18,6 +18,9 @@ namespace lkogl {
             public:
                 math::Vec3<float> color_;
                 float intensity_;
+                
+                BaseLight(math::Vec3<float> color, float intensity);
+                ~BaseLight();
             };
         }
     }

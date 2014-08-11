@@ -307,6 +307,12 @@ namespace lkogl {
         }
         
         template <typename T>
+        T max(const Vec2<T>& v)
+        {
+            return std::max(v.x, v.y);
+        }
+        
+        template <typename T>
         Vec2<T> normalize(const Vec2<T>& v)
         {
             T len = length(v);

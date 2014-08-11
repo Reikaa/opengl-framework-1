@@ -11,6 +11,13 @@
 namespace lkogl {
     namespace graphics {
         namespace lighting {
+            
+            BaseLight::BaseLight(math::Vec3<float> color, float intensity) : color_(color), intensity_(intensity)
+            {}
+            
+            BaseLight::~BaseLight()
+            {}
+            
         }
     }
 }

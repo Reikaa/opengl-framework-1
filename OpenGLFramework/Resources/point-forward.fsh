@@ -5,9 +5,17 @@ struct BaseLight {
     float intensity;
 };
 
-struct DirectionalLight {
+struct Attenuation {
+    float constant;
+    float linear;
+    float quadratic;
+};
+
+struct PointLight {
     BaseLight base;
-    vec3 direction;
+    Attenuation attenuation;
+    vec3 position;
+    float range;
 };
 
 struct Material {
@@ -20,13 +28,17 @@ uniform sampler2D uSampler;
 
 uniform Material uMaterial;
 
-uniform DirectionalLight uDirectionalLight;
+uniform PointLight uPointLight;
 
 in vec3 fPosition;
 in vec3 fNormal;
 in vec2 fTexCoord;
 
 out vec4 oColor;
+
+float calcAttenuation(Attenuation att, float x) {
+    return att.constant + x * att.linear + x*x *att.quadratic;
+}
 
 vec4 calcLight(BaseLight light, vec3 direction, vec3 normal) {
     float diffuseFactor = dot(normal, -direction);
@@ -39,7 +51,7 @@ vec4 calcLight(BaseLight light, vec3 direction, vec3 normal) {
         vec3 directionToEye = normalize(uEyePosition - fPosition);
         //vec3 reflectionDirection = normalize(reflect(direction, normal));
         vec3 halfDirection = normalize(directionToEye - direction);
-
+        
         //float specularBase = dot(directionToEye, reflectionDirection);
         float specularBase = dot(halfDirection, normal);
         float specularFactor = pow(specularBase, 2*uMaterial.specularPower);
@@ -52,10 +64,21 @@ vec4 calcLight(BaseLight light, vec3 direction, vec3 normal) {
     return diffuseColor + specularColor;
 }
 
-vec4 calcDirectionalLight(DirectionalLight light, vec3 normal) {
-    return calcLight(light.base, light.direction, normal);
+vec4 calcPointLight(PointLight light, vec3 normal) {
+    vec3 lightDirection = fPosition - light.position;
+    float distanceToLight = length(lightDirection);
+    
+    if(distanceToLight > light.range)
+        return vec4(0,0,0,0);
+    
+    lightDirection = normalize(lightDirection);
+    
+    vec4 color = calcLight(light.base, lightDirection, normal);
+    float attenuation = abs(calcAttenuation(light.attenuation, distanceToLight))+0.0001;
+    
+    return color/attenuation;
 }
 
 void main() {
-    oColor = texture(uSampler, fTexCoord) * calcDirectionalLight(uDirectionalLight, normalize(fNormal));
+    oColor = texture(uSampler, fTexCoord) * calcPointLight(uPointLight, normalize(fNormal));
 }

@@ -12,10 +12,10 @@ namespace lkogl {
     namespace graphics {
 
         Material::Material(Texture texture, float specInt, float specPow) :
-        texture_(std::move(texture)), specularIntensity_(specInt), specularPower_(specPow) {}
+        texture_(texture), specularIntensity_(specInt), specularPower_(specPow) {}
         
         Material::Material(Material&& mat) :
-            texture_(std::move(mat.texture_)), specularIntensity_(mat.specularIntensity_), specularPower_(mat.specularPower_)
+            texture_(mat.texture_), specularIntensity_(mat.specularIntensity_), specularPower_(mat.specularPower_)
         {
         }
         

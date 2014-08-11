@@ -10,23 +10,39 @@
 
 namespace lkogl {
     namespace graphics {
-        Texture::Texture(const utils::Image& img) throw (TextureException) : handle_(convert(img)) {
-            
+        TextureResource::TextureResource() : handle_(generate())
+        {
         }
         
-        Texture::Texture(const Texture&& tex) : handle_(tex.handle_) {
-            tex.handle_ = 0;
-        }
-        
-        GLuint Texture::convert(const utils::Image& image) throw (TextureException) {
+        GLuint TextureResource::generate() const {
             GLuint handle;
-            int mode;
-            int modeInternal;
-            
             glGenTextures(1, &handle);
+            
             if(!handle) {
                 throw "Texture could not be created";
             }
+            
+            return handle;
+        }
+        
+        TextureResource::~TextureResource() {
+            glDeleteTextures(1, &handle_);
+            printf("texture deleted");
+        }
+        
+        Texture::Texture(const utils::Image& img) throw (TextureException) :
+        resource_(std::make_shared<TextureResource>()) {
+            replaceImage(img);
+            printf("new texture");
+        }
+        
+        Texture::Texture(const Texture& tex) : resource_(tex.resource_) {
+
+        }
+        
+        void Texture::replaceImage(const utils::Image& image) throw (TextureException) {
+            int mode;
+            int modeInternal;
             
             if(image.bytesPerPixel() == 4) {
                 mode = GL_RGBA;
@@ -38,30 +54,25 @@ namespace lkogl {
                 throw "Invalid texture format";
             }
             
+            TextureResource::Binding b(*resource_.get(), 0);
             glTexImage2D(GL_TEXTURE_2D, 0, mode, image.width(), image.height(), 0, modeInternal, GL_UNSIGNED_BYTE, image.pixels());
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-            glBindTexture(GL_TEXTURE_2D, 0);
-            
-            return handle;
         }
         
-        Texture::~Texture() {
-            if(handle_) {
-                glDeleteTextures(1, &handle_);
-            }
-        }
-        
-        TextureUse::TextureUse(const Program& p, const Texture& tex)
+        Texture::~Texture()
         {
-            glActiveTexture(GL_TEXTURE1);
-            glBindTexture(GL_TEXTURE_2D, tex.handle_);
-            glUniform1i(p.handles().samplerPosition, 0);
+        }
+        
+        TextureUse::TextureUse(const Program& p, const Texture& tex) :
+        b_(*tex.resource_.get(), 2)
+        {
+            glUniform1i(p.handles().samplerPosition, 2);
         }
         
         TextureUse::~TextureUse()
         {
-            glBindTexture(GL_TEXTURE_2D, 0);
+            
         }
     }
 }
