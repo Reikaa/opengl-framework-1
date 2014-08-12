@@ -17,11 +17,11 @@ namespace lkogl {
             {
             }
             
-            void CameraComponent::update(const TreeTransform& transformation) const
+            void CameraComponent::update(TreeTransformation& transformation) const
             {
             }
             
-            void CameraComponent::render(const TreeTransform& transformation, const graphics::Program& program) const
+            void CameraComponent::render(const TreeTransformation& transformation, const graphics::Program& program) const
             {
                 graphics::CameraMatrixUse(program, camera_.viewProjectionMatrix(), camera_.position());
             }

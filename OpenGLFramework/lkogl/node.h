@@ -12,7 +12,7 @@
 
 #include <list>
 #include <vector>
-#include "tree_transform.h"
+#include "tree_transformation.h"
 #include "node_component.h"
 
 namespace lkogl {
@@ -27,7 +27,7 @@ namespace lkogl {
             mutable std::vector<std::shared_ptr<Component>> components_;
 
         public:
-            TreeTransform transformation;
+            TreeTransformation transformation;
 
             Node();
             ~Node();

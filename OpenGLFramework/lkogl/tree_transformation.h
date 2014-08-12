@@ -9,7 +9,7 @@
 #ifndef __OpenGLFramework__tree_transform__
 #define __OpenGLFramework__tree_transform__
 
-#include "transform.h"
+#include "transformation.h"
 
 namespace lkogl {
     namespace scene {
@@ -18,19 +18,19 @@ namespace lkogl {
         typedef lkogl::math::Mat4<GLfloat> Mat4;
         typedef lkogl::math::Vec3<GLfloat> Vec3;
         
-        class TreeTransform {
-            geometry::Transform relativTransform_;
-            const TreeTransform* parent_;
+        class TreeTransformation {
+            geometry::Transformation relativTransform_;
+            const TreeTransformation* parent_;
             mutable Mat4 selfMat_;
             mutable Mat4 mat_;
             mutable bool dirty_;
             
         public:
-            TreeTransform();
-            TreeTransform(const TreeTransform&);
-            ~TreeTransform();
+            TreeTransformation();
+            TreeTransformation(const TreeTransformation&);
+            ~TreeTransformation();
             
-            void setParent(const TreeTransform* p) {
+            void setParent(const TreeTransformation* p) {
                 parent_ = p;
             }
                         
@@ -41,6 +41,8 @@ namespace lkogl {
             void setTranslation(const Vec3&);
             void setScale(const Vec3&);
             void setRotation(const Quat&);
+            
+            void add(const geometry::Transformation& t);
             
             const Mat4 matrix() const;
         

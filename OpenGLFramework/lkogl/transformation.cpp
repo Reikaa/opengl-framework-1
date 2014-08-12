@@ -6,12 +6,12 @@
 //  Copyright (c) 2014 Laszlo Korte. All rights reserved.
 //
 
-#include "transform.h"
+#include "transformation.h"
 #include <iostream>
 
 namespace lkogl {
     namespace geometry {
-        const Transform::Mat4 Transform::matrix() const
+        const Transformation::Mat4 Transformation::matrix() const
         {
             Mat4 result = math::translate(Mat4(), translation);
             result = math::scale(result, scale);

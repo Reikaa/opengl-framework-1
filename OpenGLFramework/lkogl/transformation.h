@@ -1,5 +1,5 @@
 //
-//  transform.h
+//  transformation.h
 //  OpenGLFramework
 //
 //  Created by Laszlo Korte on 08.08.14.
@@ -13,12 +13,12 @@
 
 namespace lkogl {
     namespace geometry {
-        struct Transform {
+        struct Transformation {
             typedef lkogl::math::Quat<GLfloat> Quat;
             typedef lkogl::math::Mat4<GLfloat> Mat4;
             typedef lkogl::math::Vec3<GLfloat> Vec3;
             
-            Vec3 translation = Vec3(0);
+            Vec3 translation = Vec3(0.0);
             Vec3 scale = Vec3(1);
             Quat rotation = math::angleAxis(0.f, Vec3(0,1,0));
             

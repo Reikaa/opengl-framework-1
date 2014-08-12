@@ -16,11 +16,14 @@
 		F21EA822199A870900D78E1C /* SDL2.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F29707A51993735D00D48CE5 /* SDL2.framework */; };
 		F21EA823199A870900D78E1C /* SDL2_image.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F29707A61993735D00D48CE5 /* SDL2_image.framework */; };
 		F21EA824199A870900D78E1C /* SDL2_image.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F29707A61993735D00D48CE5 /* SDL2_image.framework */; };
-		F21EA828199A8C5600D78E1C /* tree_transform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F21EA826199A8C5600D78E1C /* tree_transform.cpp */; };
+		F21EA828199A8C5600D78E1C /* tree_transformation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F21EA826199A8C5600D78E1C /* tree_transformation.cpp */; };
+		F21EA82A199AB97100D78E1C /* monkey.obj in Resources */ = {isa = PBXBuildFile; fileRef = F21EA829199AB97100D78E1C /* monkey.obj */; };
+		F21EA82C199ABB3600D78E1C /* plain.png in Resources */ = {isa = PBXBuildFile; fileRef = F21EA82B199ABB3600D78E1C /* plain.png */; };
+		F21EA82F199ABD0B00D78E1C /* animation_component.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F21EA82D199ABD0B00D78E1C /* animation_component.cpp */; };
 		F27044CA1994C2C200C57B6A /* phong.vsh in Resources */ = {isa = PBXBuildFile; fileRef = F27044C91994C2C200C57B6A /* phong.vsh */; };
 		F27044CC1994C2CC00C57B6A /* phong.fsh in Resources */ = {isa = PBXBuildFile; fileRef = F27044CB1994C2CC00C57B6A /* phong.fsh */; };
 		F27044CF1994C36C00C57B6A /* text.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F27044CD1994C36C00C57B6A /* text.cpp */; };
-		F27044D21994EC4E00C57B6A /* transform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F27044D01994EC4E00C57B6A /* transform.cpp */; };
+		F27044D21994EC4E00C57B6A /* transformation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F27044D01994EC4E00C57B6A /* transformation.cpp */; };
 		F297076619936C1600D48CE5 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F297076519936C1600D48CE5 /* Images.xcassets */; };
 		F297077C19936F4E00D48CE5 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F297072A1993682F00D48CE5 /* main.cpp */; };
 		F297077E19936F7D00D48CE5 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F297077D19936F7D00D48CE5 /* main.cpp */; };
@@ -123,14 +126,18 @@
 		F21EA81A199A04AC00D78E1C /* obj_model.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = obj_model.cpp; sourceTree = "<group>"; };
 		F21EA81B199A04AC00D78E1C /* obj_model.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = obj_model.h; sourceTree = "<group>"; };
 		F21EA81F199A257F00D78E1C /* box.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = box.obj; sourceTree = "<group>"; };
-		F21EA826199A8C5600D78E1C /* tree_transform.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tree_transform.cpp; sourceTree = "<group>"; };
-		F21EA827199A8C5600D78E1C /* tree_transform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tree_transform.h; sourceTree = "<group>"; };
+		F21EA826199A8C5600D78E1C /* tree_transformation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tree_transformation.cpp; sourceTree = "<group>"; };
+		F21EA827199A8C5600D78E1C /* tree_transformation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tree_transformation.h; sourceTree = "<group>"; };
+		F21EA829199AB97100D78E1C /* monkey.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = monkey.obj; sourceTree = "<group>"; };
+		F21EA82B199ABB3600D78E1C /* plain.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = plain.png; sourceTree = "<group>"; };
+		F21EA82D199ABD0B00D78E1C /* animation_component.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = animation_component.cpp; sourceTree = "<group>"; };
+		F21EA82E199ABD0B00D78E1C /* animation_component.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = animation_component.h; sourceTree = "<group>"; };
 		F27044C91994C2C200C57B6A /* phong.vsh */ = {isa = PBXFileReference; explicitFileType = sourcecode.glsl; fileEncoding = 4; name = phong.vsh; path = OpenGLFramework/Resources/phong.vsh; sourceTree = SOURCE_ROOT; };
 		F27044CB1994C2CC00C57B6A /* phong.fsh */ = {isa = PBXFileReference; explicitFileType = sourcecode.glsl; fileEncoding = 4; name = phong.fsh; path = OpenGLFramework/Resources/phong.fsh; sourceTree = SOURCE_ROOT; };
 		F27044CD1994C36C00C57B6A /* text.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = text.cpp; sourceTree = "<group>"; };
 		F27044CE1994C36C00C57B6A /* text.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = text.h; sourceTree = "<group>"; };
-		F27044D01994EC4E00C57B6A /* transform.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = transform.cpp; sourceTree = "<group>"; };
-		F27044D11994EC4E00C57B6A /* transform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = transform.h; sourceTree = "<group>"; };
+		F27044D01994EC4E00C57B6A /* transformation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = transformation.cpp; sourceTree = "<group>"; };
+		F27044D11994EC4E00C57B6A /* transformation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = transformation.h; sourceTree = "<group>"; };
 		F27044D41995424100C57B6A /* vec3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vec3.h; sourceTree = "<group>"; };
 		F27044D71995428B00C57B6A /* vec4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vec4.h; sourceTree = "<group>"; };
 		F27044DA199542B800C57B6A /* mat4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mat4.h; sourceTree = "<group>"; };
@@ -324,6 +331,8 @@
 		F297077F19936F8B00D48CE5 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				F21EA82B199ABB3600D78E1C /* plain.png */,
+				F21EA829199AB97100D78E1C /* monkey.obj */,
 				F21EA81F199A257F00D78E1C /* box.obj */,
 				F2DEC6321997DDD300EE31E7 /* pattern.png */,
 				F27044C81994C29600C57B6A /* Shader */,
@@ -366,8 +375,8 @@
 		F29707821993703C00D48CE5 /* geometry */ = {
 			isa = PBXGroup;
 			children = (
-				F27044D01994EC4E00C57B6A /* transform.cpp */,
-				F27044D11994EC4E00C57B6A /* transform.h */,
+				F27044D01994EC4E00C57B6A /* transformation.cpp */,
+				F27044D11994EC4E00C57B6A /* transformation.h */,
 				F297078C199370C400D48CE5 /* mesh.cpp */,
 				F297078D199370C400D48CE5 /* mesh.h */,
 			);
@@ -416,8 +425,8 @@
 				F29707961993716300D48CE5 /* node.h */,
 				F2DEC60219975A8700EE31E7 /* node_component.cpp */,
 				F2DEC60319975A8700EE31E7 /* node_component.h */,
-				F21EA826199A8C5600D78E1C /* tree_transform.cpp */,
-				F21EA827199A8C5600D78E1C /* tree_transform.h */,
+				F21EA826199A8C5600D78E1C /* tree_transformation.cpp */,
+				F21EA827199A8C5600D78E1C /* tree_transformation.h */,
 			);
 			name = scene;
 			sourceTree = "<group>";
@@ -486,6 +495,8 @@
 				F2DEC60C1997681E00EE31E7 /* camera_component.h */,
 				F2DEC6381997ECCE00EE31E7 /* ambient_light_component.cpp */,
 				F2DEC6391997ECCE00EE31E7 /* ambient_light_component.h */,
+				F21EA82D199ABD0B00D78E1C /* animation_component.cpp */,
+				F21EA82E199ABD0B00D78E1C /* animation_component.h */,
 			);
 			name = components;
 			sourceTree = "<group>";
@@ -619,6 +630,7 @@
 				F2A4968319981D4200588B03 /* spot-forward.fsh in Resources */,
 				F2A4967F199811A200588B03 /* point-forward.fsh in Resources */,
 				F27044CA1994C2C200C57B6A /* phong.vsh in Resources */,
+				F21EA82A199AB97100D78E1C /* monkey.obj in Resources */,
 				F2DEC62F1997D4C900EE31E7 /* directional-forward.vsh in Resources */,
 				F27044CC1994C2CC00C57B6A /* phong.fsh in Resources */,
 				F2DEC6331997DDD300EE31E7 /* pattern.png in Resources */,
@@ -626,6 +638,7 @@
 				F21EA820199A257F00D78E1C /* box.obj in Resources */,
 				F297076619936C1600D48CE5 /* Images.xcassets in Resources */,
 				F2DEC62D1997D4B300EE31E7 /* ambient-forward.fsh in Resources */,
+				F21EA82C199ABB3600D78E1C /* plain.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -646,18 +659,19 @@
 				F2DEC60D1997681E00EE31E7 /* camera_component.cpp in Sources */,
 				F29707871993706C00D48CE5 /* shader.cpp in Sources */,
 				F21EA819199A03EF00D78E1C /* index_model.cpp in Sources */,
-				F27044D21994EC4E00C57B6A /* transform.cpp in Sources */,
+				F27044D21994EC4E00C57B6A /* transformation.cpp in Sources */,
 				F29707BE199397FF00D48CE5 /* window.cpp in Sources */,
 				F2DEC6281997C7EA00EE31E7 /* mouse_adapter.cpp in Sources */,
 				F2A4967B1998102C00588B03 /* point_light.cpp in Sources */,
 				F21EA81119990FF200D78E1C /* geometry_object.cpp in Sources */,
 				F2DEC613199790A600EE31E7 /* camera.cpp in Sources */,
+				F21EA82F199ABD0B00D78E1C /* animation_component.cpp in Sources */,
 				F2970791199370D800D48CE5 /* texture.cpp in Sources */,
 				F2DEC63D1997F4E000EE31E7 /* directional_light.cpp in Sources */,
 				F29707CB1993BD9700D48CE5 /* scene_deep_walker.cpp in Sources */,
 				F29707B5199379DC00D48CE5 /* material.cpp in Sources */,
 				F2DEC60419975A8700EE31E7 /* node_component.cpp in Sources */,
-				F21EA828199A8C5600D78E1C /* tree_transform.cpp in Sources */,
+				F21EA828199A8C5600D78E1C /* tree_transformation.cpp in Sources */,
 				F297077C19936F4E00D48CE5 /* main.cpp in Sources */,
 				F2DEC6251997C63E00EE31E7 /* mouse.cpp in Sources */,
 				F29707CE1994382E00D48CE5 /* model.cpp in Sources */,

@@ -15,11 +15,11 @@ namespace lkogl {
             {
             }
             
-            void AmbientLightComponent::update(const TreeTransform& transformation) const
+            void AmbientLightComponent::update(TreeTransformation& transformation) const
             {
             }
             
-            void AmbientLightComponent::render(const TreeTransform& transformation, const graphics::Program& program) const
+            void AmbientLightComponent::render(const TreeTransformation& transformation, const graphics::Program& program) const
             {
                 graphics::lighting::AmbientLightUse(program, light_);
             }

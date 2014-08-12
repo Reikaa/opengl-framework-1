@@ -23,6 +23,7 @@
 #include "lkogl/obj_model.h"
 
 
+#include "lkogl/animation_component.h"
 #include "lkogl/camera_component.h"
 #include "lkogl/render_component.h"
 #include "lkogl/scene_deep_walker.h"
@@ -118,10 +119,12 @@ public:
             Texture tex(Image("pattern.png"));
             Material mat(tex, 7, 20);
             
+            Texture tex2(Image("plain.png"));
+            Material mat2(tex2, 7, 20);
+            
             Mesh pyramid = primitives::makePyramid();
-            GeometryObject geo(pyramid);
             std::shared_ptr<Node> node = std::make_shared<Node>();
-            node->addComponent(std::make_shared<RenderComponent>(Model(geo, mat)));
+            node->addComponent(std::make_shared<RenderComponent>(Model(pyramid, mat)));
             node->transformation.setTranslation({0,1,0});
                         
             node->transformation.setRotation(angleAxis<float>(radians(1.0), {1,1,1}));
@@ -129,12 +132,22 @@ public:
             
             
             Mesh cube = lkogl::resources::mesh_loader::obj_from_file("box.obj").toIndexedModel().toMesh();
-            GeometryObject geoCube(cube);
             std::shared_ptr<Node> node2 = std::make_shared<Node>();
             node2->addComponent(std::make_shared<RenderComponent>(Model(cube, mat)));
             node2->transformation.setTranslation({-5,0.5,-2});
             node2->transformation.setRotation(angleAxis<float>(radians(45), {0,1,0}));
             node->addChild(node2);
+            
+            Mesh monkey = lkogl::resources::mesh_loader::obj_from_file("monkey.obj").toIndexedModel().toMesh();
+            std::shared_ptr<Node> node3 = std::make_shared<Node>();
+            node3->addComponent(std::make_shared<RenderComponent>(Model(monkey, mat2)));
+            Transformation spin;
+            spin.rotation = angleAxis(radians(1.0f), {0.0f,1.0f,0.0f});;
+            
+            node3->addComponent(std::make_shared<AnimationComponent>(spin));
+            node3->transformation.setTranslation({5,0.5,-2});
+            node3->transformation.setRotation(angleAxis<float>(radians(45), {0,1,0}));
+            node->addChild(node3);
 
             
             
@@ -205,6 +218,8 @@ public:
     void update() const {
         keyboard_.update();
         mouse_.update();
+        
+        walker.walk(graph, &Component::update);
     }
     
     void render() const {
@@ -215,6 +230,7 @@ public:
         
         ProgramUse ambient(*programAmbient_);
         walker.walk(graph, &Component::render, *programAmbient_);
+        
         
         glEnable( GL_POLYGON_OFFSET_FILL );
         glPolygonOffset( -.1f, -0.1f );
@@ -229,8 +245,15 @@ public:
             DirectionalLightUse lightuse(*programDirectional_, light);
             
             walker.walk(graph, &Component::render, *programDirectional_);
+            
+            DirectionalLight light2({0.6,0.7,0.9}, 0.1, {-1,-1,-1});
+            DirectionalLightUse lightuse2(*programDirectional_, light2);
+            
+            walker.walk(graph, &Component::render, *programDirectional_);
         }
         
+        if(true /*keyboard_.isDown(Keyboard::Key::SPACE)*/) {
+
         glPolygonOffset( -.2f, -0.2f );
 
         {
@@ -240,21 +263,21 @@ public:
             
             walker.walk(graph, &Component::render, *programPoint_);
             
-            PointLight pp2({1,0,1}, 0.7, {0,2,-2}, Attenuation(0, 0, 1));
-            PointLightUse(*programPoint_, pp2);
-            
-            walker.walk(graph, &Component::render, *programPoint_);
+//            PointLight pp2({1,0,1}, 0.7, {0,2,-2}, Attenuation(0, 0, 1));
+//            PointLightUse(*programPoint_, pp2);
+//            
+//            walker.walk(graph, &Component::render, *programPoint_);
 
-        
-            PointLight pp3({0,1,1}, 0.7, {-2,2,0}, Attenuation(0, 0, 1));
-            PointLightUse(*programPoint_, pp3);
-            
-            walker.walk(graph, &Component::render, *programPoint_);
-            
-            PointLight pp4({1,1,0}, 0.7, {2,2,0}, Attenuation(0, 0, 1));
-            PointLightUse(*programPoint_, pp4);
-            
-            walker.walk(graph, &Component::render, *programPoint_);
+//
+//            PointLight pp3({0,1,1}, 0.7, {-2,2,0}, Attenuation(0, 0, 1));
+//            PointLightUse(*programPoint_, pp3);
+//            
+//            walker.walk(graph, &Component::render, *programPoint_);
+//            
+//            PointLight pp4({1,1,0}, 0.7, {2,2,0}, Attenuation(0, 0, 1));
+//            PointLightUse(*programPoint_, pp4);
+//            
+//            walker.walk(graph, &Component::render, *programPoint_);
         }
         
         glPolygonOffset( -.3f, -0.3f );
@@ -265,6 +288,8 @@ public:
             SpotLightUse(*programSpot_, sp);
             
             walker.walk(graph, &Component::render, *programSpot_);
+        }
+            
         }
         
         

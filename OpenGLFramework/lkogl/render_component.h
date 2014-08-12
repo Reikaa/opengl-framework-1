@@ -22,8 +22,8 @@ namespace lkogl {
                 RenderComponent(graphics::Model m);
                 ~RenderComponent();
 
-                void update(const TreeTransform& transformation) const;
-                void render(const TreeTransform& transformation, const graphics::Program&) const;
+                void update(TreeTransformation& transformation) const override;
+                void render(const TreeTransformation& transformation, const graphics::Program&) const override;
             };
         }
     }
