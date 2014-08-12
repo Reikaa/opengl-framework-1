@@ -253,7 +253,7 @@ namespace lkogl {
             result.x = axis.x * s;
             result.y = axis.y * s;
             result.z = axis.z * s;
-            
+                        
             return result;
         }
         

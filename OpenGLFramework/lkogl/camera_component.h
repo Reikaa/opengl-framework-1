@@ -12,6 +12,7 @@
 #include "node_component.h"
 #include "camera.h"
 
+
 namespace lkogl {
     namespace scene {
         namespace components {
@@ -23,8 +24,8 @@ namespace lkogl {
                 
                 camera::Camera& camera();
                 
-                void update(const geometry::Transform& transformation) const;
-                void render(const geometry::Transform& transformation, const graphics::Program&) const;
+                void update(const TreeTransform& transformation) const;
+                void render(const TreeTransform& transformation, const graphics::Program&) const;
             };
         }
     }

@@ -17,6 +17,7 @@ namespace lkogl {
         }
         
         void Node::addChild(std::shared_ptr<Node> n) {
+            n->transformation.setParent(&transformation);
             children_.push_back(n);
         }
         

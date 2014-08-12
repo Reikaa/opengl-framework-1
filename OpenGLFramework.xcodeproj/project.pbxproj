@@ -11,8 +11,12 @@
 		F21EA814199911F900D78E1C /* program.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F21EA812199911F900D78E1C /* program.cpp */; };
 		F21EA819199A03EF00D78E1C /* index_model.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F21EA817199A03EF00D78E1C /* index_model.cpp */; };
 		F21EA81C199A04AC00D78E1C /* obj_model.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F21EA81A199A04AC00D78E1C /* obj_model.cpp */; };
-		F21EA81E199A091600D78E1C /* test.obj in Resources */ = {isa = PBXBuildFile; fileRef = F21EA81D199A091600D78E1C /* test.obj */; };
 		F21EA820199A257F00D78E1C /* box.obj in Resources */ = {isa = PBXBuildFile; fileRef = F21EA81F199A257F00D78E1C /* box.obj */; };
+		F21EA821199A870900D78E1C /* SDL2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F29707A51993735D00D48CE5 /* SDL2.framework */; };
+		F21EA822199A870900D78E1C /* SDL2.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F29707A51993735D00D48CE5 /* SDL2.framework */; };
+		F21EA823199A870900D78E1C /* SDL2_image.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F29707A61993735D00D48CE5 /* SDL2_image.framework */; };
+		F21EA824199A870900D78E1C /* SDL2_image.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F29707A61993735D00D48CE5 /* SDL2_image.framework */; };
+		F21EA828199A8C5600D78E1C /* tree_transform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F21EA826199A8C5600D78E1C /* tree_transform.cpp */; };
 		F27044CA1994C2C200C57B6A /* phong.vsh in Resources */ = {isa = PBXBuildFile; fileRef = F27044C91994C2C200C57B6A /* phong.vsh */; };
 		F27044CC1994C2CC00C57B6A /* phong.fsh in Resources */ = {isa = PBXBuildFile; fileRef = F27044CB1994C2CC00C57B6A /* phong.fsh */; };
 		F27044CF1994C36C00C57B6A /* text.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F27044CD1994C36C00C57B6A /* text.cpp */; };
@@ -31,8 +35,6 @@
 		F29707AC1993737E00D48CE5 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F29707A31993734100D48CE5 /* OpenGL.framework */; };
 		F29707B11993786600D48CE5 /* image.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F29707AF1993786600D48CE5 /* image.cpp */; };
 		F29707B5199379DC00D48CE5 /* material.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F29707B3199379DC00D48CE5 /* material.cpp */; };
-		F29707B9199391FD00D48CE5 /* SDL2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F29707A51993735D00D48CE5 /* SDL2.framework */; };
-		F29707BA199391FD00D48CE5 /* SDL2_image.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F29707A61993735D00D48CE5 /* SDL2_image.framework */; };
 		F29707BB199391FD00D48CE5 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F29707A31993734100D48CE5 /* OpenGL.framework */; };
 		F29707BE199397FF00D48CE5 /* window.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F29707BC199397FF00D48CE5 /* window.cpp */; };
 		F29707CB1993BD9700D48CE5 /* scene_deep_walker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F29707C91993BD9700D48CE5 /* scene_deep_walker.cpp */; };
@@ -96,6 +98,21 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		F21EA825199A870900D78E1C /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				F21EA822199A870900D78E1C /* SDL2.framework in Embed Frameworks */,
+				F21EA824199A870900D78E1C /* SDL2_image.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		F21EA80F19990FF200D78E1C /* geometry_object.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = geometry_object.cpp; sourceTree = "<group>"; };
 		F21EA81019990FF200D78E1C /* geometry_object.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = geometry_object.h; sourceTree = "<group>"; };
@@ -105,8 +122,9 @@
 		F21EA818199A03EF00D78E1C /* index_model.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = index_model.h; sourceTree = "<group>"; };
 		F21EA81A199A04AC00D78E1C /* obj_model.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = obj_model.cpp; sourceTree = "<group>"; };
 		F21EA81B199A04AC00D78E1C /* obj_model.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = obj_model.h; sourceTree = "<group>"; };
-		F21EA81D199A091600D78E1C /* test.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = test.obj; sourceTree = "<group>"; };
 		F21EA81F199A257F00D78E1C /* box.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = box.obj; sourceTree = "<group>"; };
+		F21EA826199A8C5600D78E1C /* tree_transform.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tree_transform.cpp; sourceTree = "<group>"; };
+		F21EA827199A8C5600D78E1C /* tree_transform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tree_transform.h; sourceTree = "<group>"; };
 		F27044C91994C2C200C57B6A /* phong.vsh */ = {isa = PBXFileReference; explicitFileType = sourcecode.glsl; fileEncoding = 4; name = phong.vsh; path = OpenGLFramework/Resources/phong.vsh; sourceTree = SOURCE_ROOT; };
 		F27044CB1994C2CC00C57B6A /* phong.fsh */ = {isa = PBXFileReference; explicitFileType = sourcecode.glsl; fileEncoding = 4; name = phong.fsh; path = OpenGLFramework/Resources/phong.fsh; sourceTree = SOURCE_ROOT; };
 		F27044CD1994C36C00C57B6A /* text.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = text.cpp; sourceTree = "<group>"; };
@@ -202,9 +220,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F29707B9199391FD00D48CE5 /* SDL2.framework in Frameworks */,
-				F29707BA199391FD00D48CE5 /* SDL2_image.framework in Frameworks */,
 				F29707BB199391FD00D48CE5 /* OpenGL.framework in Frameworks */,
+				F21EA821199A870900D78E1C /* SDL2.framework in Frameworks */,
+				F21EA823199A870900D78E1C /* SDL2_image.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -307,7 +325,6 @@
 			isa = PBXGroup;
 			children = (
 				F21EA81F199A257F00D78E1C /* box.obj */,
-				F21EA81D199A091600D78E1C /* test.obj */,
 				F2DEC6321997DDD300EE31E7 /* pattern.png */,
 				F27044C81994C29600C57B6A /* Shader */,
 				F297076519936C1600D48CE5 /* Images.xcassets */,
@@ -399,6 +416,8 @@
 				F29707961993716300D48CE5 /* node.h */,
 				F2DEC60219975A8700EE31E7 /* node_component.cpp */,
 				F2DEC60319975A8700EE31E7 /* node_component.h */,
+				F21EA826199A8C5600D78E1C /* tree_transform.cpp */,
+				F21EA827199A8C5600D78E1C /* tree_transform.h */,
 			);
 			name = scene;
 			sourceTree = "<group>";
@@ -520,6 +539,7 @@
 				F297075819936C1600D48CE5 /* Sources */,
 				F297075919936C1600D48CE5 /* Frameworks */,
 				F297075A19936C1600D48CE5 /* Resources */,
+				F21EA825199A870900D78E1C /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -599,7 +619,6 @@
 				F2A4968319981D4200588B03 /* spot-forward.fsh in Resources */,
 				F2A4967F199811A200588B03 /* point-forward.fsh in Resources */,
 				F27044CA1994C2C200C57B6A /* phong.vsh in Resources */,
-				F21EA81E199A091600D78E1C /* test.obj in Resources */,
 				F2DEC62F1997D4C900EE31E7 /* directional-forward.vsh in Resources */,
 				F27044CC1994C2CC00C57B6A /* phong.fsh in Resources */,
 				F2DEC6331997DDD300EE31E7 /* pattern.png in Resources */,
@@ -638,6 +657,7 @@
 				F29707CB1993BD9700D48CE5 /* scene_deep_walker.cpp in Sources */,
 				F29707B5199379DC00D48CE5 /* material.cpp in Sources */,
 				F2DEC60419975A8700EE31E7 /* node_component.cpp in Sources */,
+				F21EA828199A8C5600D78E1C /* tree_transform.cpp in Sources */,
 				F297077C19936F4E00D48CE5 /* main.cpp in Sources */,
 				F2DEC6251997C63E00EE31E7 /* mouse.cpp in Sources */,
 				F29707CE1994382E00D48CE5 /* model.cpp in Sources */,

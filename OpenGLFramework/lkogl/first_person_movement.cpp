@@ -38,7 +38,7 @@ namespace lkogl {
             void FirstPersonMovement::move(camera::Camera &cam, math::Vec2<float> dir2d, float amount) const
             {
                 if(math::length(math::normalize(dir2d)) == 0) return;
-                
+
                 auto dir = cam.rotation() * -math::Vec3<float>(dir2d.x, 0, dir2d.y);
                 auto newPos = cam.position() + amount*math::normalize(math::Vec3<float>(dir.x,0,dir.z));
                 cam.setPosition(newPos);
@@ -53,6 +53,7 @@ namespace lkogl {
                 // You can skip that part if you really want to force desiredUp
                 math::Vec3<float> right = math::cross(direction, up_);
                 math::Vec3<float> desiredUp = math::normalize(math::cross(right, direction));
+                
                 
                 // Because of the 1rst rotation, the up is probably completely screwed up.
                 // Find the rotation between the "up" of the rotated object, and the desired up

@@ -16,11 +16,11 @@ namespace lkogl {
             RenderComponent::RenderComponent(graphics::Model m) : model_(std::move(m))
             {}
             
-            void RenderComponent::update(const geometry::Transform& transformation) const
+            void RenderComponent::update(const TreeTransform& transformation) const
             {
             }
             
-            void RenderComponent::render(const geometry::Transform& transformation, const graphics::Program& program) const
+            void RenderComponent::render(const TreeTransform& transformation, const graphics::Program& program) const
             {
                 graphics::MaterialUse mat(program, model_.material());
                 const graphics::GeometryObjectUse geo(model_.geometry());

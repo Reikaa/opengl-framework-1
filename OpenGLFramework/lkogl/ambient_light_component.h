@@ -21,8 +21,8 @@ namespace lkogl {
                 AmbientLightComponent(graphics::lighting::AmbientLight light);
                 ~AmbientLightComponent();
                 
-                void update(const geometry::Transform& transformation) const;
-                void render(const geometry::Transform& transformation, const graphics::Program&) const;
+                void update(const TreeTransform& transformation) const;
+                void render(const TreeTransform& transformation, const graphics::Program&) const;
             };
         }
     }

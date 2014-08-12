@@ -10,7 +10,7 @@
 #define __OpenGLFramework__node_component__
 
 #include <stdio.h>
-#include "transform.h"
+#include "tree_transform.h"
 #include "program.h"
 
 namespace lkogl {
@@ -18,12 +18,12 @@ namespace lkogl {
         class Component
         {
         public:
-            typedef void (Component::*ComponentUpdateMethod)(const geometry::Transform& transformation) const;
-            typedef void (Component::*ComponentRenderMethod)(const geometry::Transform& transformation, const graphics::Program&) const;
+            typedef void (Component::*ComponentUpdateMethod)(const TreeTransform& transformation) const;
+            typedef void (Component::*ComponentRenderMethod)(const TreeTransform& transformation, const graphics::Program&) const;
             
-            virtual void update(const geometry::Transform& transformation) const = 0;
+            virtual void update(const TreeTransform& transformation) const = 0;
             
-            virtual void render(const geometry::Transform& transformation, const graphics::Program&) const = 0;
+            virtual void render(const TreeTransform& transformation, const graphics::Program&) const = 0;
             
             virtual ~Component();
         };

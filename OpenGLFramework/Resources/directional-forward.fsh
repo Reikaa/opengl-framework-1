@@ -42,7 +42,7 @@ vec4 calcLight(BaseLight light, vec3 direction, vec3 normal) {
 
         //float specularBase = dot(directionToEye, reflectionDirection);
         float specularBase = dot(halfDirection, normal);
-        float specularFactor = pow(specularBase, 2*uMaterial.specularPower);
+        float specularFactor = pow(specularBase, 8*uMaterial.specularPower);
         
         if(specularFactor > 0) {
             specularColor = vec4(light.color, 1) * specularFactor * uMaterial.specularIntensity;

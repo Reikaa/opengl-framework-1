@@ -94,7 +94,7 @@ public:
         
         glEnable(GL_FRAMEBUFFER_SRGB);
         
-        glEnable(GL_DEPTH_CLAMP);
+        //glEnable(GL_DEPTH_CLAMP);
         
         try {
             PlainText vshSourceAmbient("ambient-forward.vsh");
@@ -122,8 +122,9 @@ public:
             GeometryObject geo(pyramid);
             std::shared_ptr<Node> node = std::make_shared<Node>();
             node->addComponent(std::make_shared<RenderComponent>(Model(geo, mat)));
-            node->transformation.translation = Vec3<GLfloat>(0,0.5,0);
-            node->transformation.rotation = angleAxis<float>(radians(45), {0,1,0});
+            node->transformation.setTranslation({0,1,0});
+                        
+            node->transformation.setRotation(angleAxis<float>(radians(1.0), {1,1,1}));
             graph->addChild(node);
             
             
@@ -131,15 +132,15 @@ public:
             GeometryObject geoCube(cube);
             std::shared_ptr<Node> node2 = std::make_shared<Node>();
             node2->addComponent(std::make_shared<RenderComponent>(Model(cube, mat)));
-            node2->transformation.translation = Vec3<GLfloat>(-5,0.5,-2);
-            node2->transformation.rotation = angleAxis<float>(radians(45), {0,1,0});
-            graph->addChild(node2);
+            node2->transformation.setTranslation({-5,0.5,-2});
+            node2->transformation.setRotation(angleAxis<float>(radians(45), {0,1,0}));
+            node->addChild(node2);
 
             
             
             auto cam = Camera(screen.width, screen.height);
             cam.setPosition({4,1,5});
-            cam.lookAt({0,0,0});
+            movement.lookAt(cam, {0,0,0});
             cameraComponent = std::make_shared<CameraComponent>(cam);
             
             graph->addComponent(cameraComponent);
@@ -215,31 +216,60 @@ public:
         ProgramUse ambient(*programAmbient_);
         walker.walk(graph, &Component::render, *programAmbient_);
         
+        glEnable( GL_POLYGON_OFFSET_FILL );
+        glPolygonOffset( -.1f, -0.1f );
         glEnable(GL_BLEND);
         glBlendFunc(GL_ONE, GL_ONE);
 
-        glDepthFunc(GL_GEQUAL | GL_LEQUAL);
+        glDepthFunc(GL_LEQUAL);
 
-        ProgramUse directional(*programDirectional_);
-        DirectionalLight light({0.6,0.7,0.9}, 0.1, {1,-1,1});
-        DirectionalLightUse lightuse(*programDirectional_, light);
+        {
+            ProgramUse directional(*programDirectional_);
+            DirectionalLight light({0.6,0.7,0.9}, 0.1, {1,-1,1});
+            DirectionalLightUse lightuse(*programDirectional_, light);
+            
+            walker.walk(graph, &Component::render, *programDirectional_);
+        }
         
-        walker.walk(graph, &Component::render, *programDirectional_);
+        glPolygonOffset( -.2f, -0.2f );
+
+        {
+            ProgramUse pointy(*programPoint_);
+            PointLight pp({1,0,0}, 0.7, {0,2,2}, Attenuation(0, 0, 1));
+            PointLightUse(*programPoint_, pp);
+            
+            walker.walk(graph, &Component::render, *programPoint_);
+            
+            PointLight pp2({1,0,1}, 0.7, {0,2,-2}, Attenuation(0, 0, 1));
+            PointLightUse(*programPoint_, pp2);
+            
+            walker.walk(graph, &Component::render, *programPoint_);
+
+        
+            PointLight pp3({0,1,1}, 0.7, {-2,2,0}, Attenuation(0, 0, 1));
+            PointLightUse(*programPoint_, pp3);
+            
+            walker.walk(graph, &Component::render, *programPoint_);
+            
+            PointLight pp4({1,1,0}, 0.7, {2,2,0}, Attenuation(0, 0, 1));
+            PointLightUse(*programPoint_, pp4);
+            
+            walker.walk(graph, &Component::render, *programPoint_);
+        }
+        
+        glPolygonOffset( -.3f, -0.3f );
+
+        {
+            ProgramUse spoty(*programSpot_);
+            SpotLight sp({1,1,0}, 0.7, {-3.9,2,-2}, Attenuation(1, 0, 4), {.1,-1,0}, 0.5);
+            SpotLightUse(*programSpot_, sp);
+            
+            walker.walk(graph, &Component::render, *programSpot_);
+        }
         
         
-        ProgramUse pointy(*programPoint_);
-        PointLight pp({1,0,0}, 0.7, {0,2,2}, Attenuation(0, 0, 1));
-        PointLightUse(*programPoint_, pp);
-        
-        walker.walk(graph, &Component::render, *programPoint_);
-        
-        
-        ProgramUse spoty(*programPoint_);
-        SpotLight sp({1,1,0}, 0.2, {2,1,0}, Attenuation(0, 0, 1), {-1,-1,-1}, 4);
-        SpotLightUse(*programSpot_, sp);
-        
-        walker.walk(graph, &Component::render, *programPoint_);
-        
+        glDisable( GL_POLYGON_OFFSET_FILL );
+
         glDepthFunc(GL_LEQUAL);
 
         glDepthMask(GL_TRUE);

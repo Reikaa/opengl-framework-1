@@ -9,7 +9,6 @@
 #include <iostream>
 
 #include "camera_component.h"
-#include "shader.h"
 
 namespace lkogl {
     namespace scene {
@@ -18,11 +17,11 @@ namespace lkogl {
             {
             }
             
-            void CameraComponent::update(const geometry::Transform& transformation) const
+            void CameraComponent::update(const TreeTransform& transformation) const
             {
             }
             
-            void CameraComponent::render(const geometry::Transform& transformation, const graphics::Program& program) const
+            void CameraComponent::render(const TreeTransform& transformation, const graphics::Program& program) const
             {
                 graphics::CameraMatrixUse(program, camera_.viewProjectionMatrix(), camera_.position());
             }

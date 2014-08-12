@@ -7,11 +7,13 @@
 //
 
 #include "camera.h"
+#include <iostream>
 
 namespace lkogl {
     namespace camera {
-        Camera::Camera(int w, int h) : projection_(50.f, 16, 9, 1.f, 100.f)
-        {}
+        Camera::Camera(int w, int h) : projection_(70.f, 16, 9, 0.1f, 100.f)
+        {
+        }
         
         Camera::~Camera()
         {}
@@ -41,6 +43,7 @@ namespace lkogl {
         
         const math::Quat<float>& Camera::rotation() const
         {
+            
             return rotation_;
         }
         
