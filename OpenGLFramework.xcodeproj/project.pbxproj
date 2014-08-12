@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		F21EA81119990FF200D78E1C /* geometry_object.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F21EA80F19990FF200D78E1C /* geometry_object.cpp */; };
 		F21EA814199911F900D78E1C /* program.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F21EA812199911F900D78E1C /* program.cpp */; };
+		F21EA819199A03EF00D78E1C /* index_model.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F21EA817199A03EF00D78E1C /* index_model.cpp */; };
+		F21EA81C199A04AC00D78E1C /* obj_model.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F21EA81A199A04AC00D78E1C /* obj_model.cpp */; };
+		F21EA81E199A091600D78E1C /* test.obj in Resources */ = {isa = PBXBuildFile; fileRef = F21EA81D199A091600D78E1C /* test.obj */; };
+		F21EA820199A257F00D78E1C /* box.obj in Resources */ = {isa = PBXBuildFile; fileRef = F21EA81F199A257F00D78E1C /* box.obj */; };
 		F27044CA1994C2C200C57B6A /* phong.vsh in Resources */ = {isa = PBXBuildFile; fileRef = F27044C91994C2C200C57B6A /* phong.vsh */; };
 		F27044CC1994C2CC00C57B6A /* phong.fsh in Resources */ = {isa = PBXBuildFile; fileRef = F27044CB1994C2CC00C57B6A /* phong.fsh */; };
 		F27044CF1994C36C00C57B6A /* text.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F27044CD1994C36C00C57B6A /* text.cpp */; };
@@ -97,6 +101,12 @@
 		F21EA81019990FF200D78E1C /* geometry_object.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = geometry_object.h; sourceTree = "<group>"; };
 		F21EA812199911F900D78E1C /* program.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = program.cpp; sourceTree = "<group>"; };
 		F21EA813199911F900D78E1C /* program.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = program.h; sourceTree = "<group>"; };
+		F21EA817199A03EF00D78E1C /* index_model.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = index_model.cpp; sourceTree = "<group>"; };
+		F21EA818199A03EF00D78E1C /* index_model.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = index_model.h; sourceTree = "<group>"; };
+		F21EA81A199A04AC00D78E1C /* obj_model.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = obj_model.cpp; sourceTree = "<group>"; };
+		F21EA81B199A04AC00D78E1C /* obj_model.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = obj_model.h; sourceTree = "<group>"; };
+		F21EA81D199A091600D78E1C /* test.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = test.obj; sourceTree = "<group>"; };
+		F21EA81F199A257F00D78E1C /* box.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = box.obj; sourceTree = "<group>"; };
 		F27044C91994C2C200C57B6A /* phong.vsh */ = {isa = PBXFileReference; explicitFileType = sourcecode.glsl; fileEncoding = 4; name = phong.vsh; path = OpenGLFramework/Resources/phong.vsh; sourceTree = SOURCE_ROOT; };
 		F27044CB1994C2CC00C57B6A /* phong.fsh */ = {isa = PBXFileReference; explicitFileType = sourcecode.glsl; fileEncoding = 4; name = phong.fsh; path = OpenGLFramework/Resources/phong.fsh; sourceTree = SOURCE_ROOT; };
 		F27044CD1994C36C00C57B6A /* text.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = text.cpp; sourceTree = "<group>"; };
@@ -211,6 +221,25 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		F21EA815199A039E00D78E1C /* resources */ = {
+			isa = PBXGroup;
+			children = (
+				F21EA816199A03AF00D78E1C /* mesh_loader */,
+			);
+			name = resources;
+			sourceTree = "<group>";
+		};
+		F21EA816199A03AF00D78E1C /* mesh_loader */ = {
+			isa = PBXGroup;
+			children = (
+				F21EA817199A03EF00D78E1C /* index_model.cpp */,
+				F21EA818199A03EF00D78E1C /* index_model.h */,
+				F21EA81A199A04AC00D78E1C /* obj_model.cpp */,
+				F21EA81B199A04AC00D78E1C /* obj_model.h */,
+			);
+			name = mesh_loader;
+			sourceTree = "<group>";
+		};
 		F27044C81994C29600C57B6A /* Shader */ = {
 			isa = PBXGroup;
 			children = (
@@ -277,6 +306,8 @@
 		F297077F19936F8B00D48CE5 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				F21EA81F199A257F00D78E1C /* box.obj */,
+				F21EA81D199A091600D78E1C /* test.obj */,
 				F2DEC6321997DDD300EE31E7 /* pattern.png */,
 				F27044C81994C29600C57B6A /* Shader */,
 				F297076519936C1600D48CE5 /* Images.xcassets */,
@@ -288,6 +319,7 @@
 		F297078019936FDB00D48CE5 /* logl */ = {
 			isa = PBXGroup;
 			children = (
+				F21EA815199A039E00D78E1C /* resources */,
 				F29707B2199378D300D48CE5 /* math */,
 				F297079F1993727500D48CE5 /* loop */,
 				F297079B199371B400D48CE5 /* camera */,
@@ -567,10 +599,12 @@
 				F2A4968319981D4200588B03 /* spot-forward.fsh in Resources */,
 				F2A4967F199811A200588B03 /* point-forward.fsh in Resources */,
 				F27044CA1994C2C200C57B6A /* phong.vsh in Resources */,
+				F21EA81E199A091600D78E1C /* test.obj in Resources */,
 				F2DEC62F1997D4C900EE31E7 /* directional-forward.vsh in Resources */,
 				F27044CC1994C2CC00C57B6A /* phong.fsh in Resources */,
 				F2DEC6331997DDD300EE31E7 /* pattern.png in Resources */,
 				F2DEC6311997D4D600EE31E7 /* directional-forward.fsh in Resources */,
+				F21EA820199A257F00D78E1C /* box.obj in Resources */,
 				F297076619936C1600D48CE5 /* Images.xcassets in Resources */,
 				F2DEC62D1997D4B300EE31E7 /* ambient-forward.fsh in Resources */,
 			);
@@ -592,6 +626,7 @@
 			files = (
 				F2DEC60D1997681E00EE31E7 /* camera_component.cpp in Sources */,
 				F29707871993706C00D48CE5 /* shader.cpp in Sources */,
+				F21EA819199A03EF00D78E1C /* index_model.cpp in Sources */,
 				F27044D21994EC4E00C57B6A /* transform.cpp in Sources */,
 				F29707BE199397FF00D48CE5 /* window.cpp in Sources */,
 				F2DEC6281997C7EA00EE31E7 /* mouse_adapter.cpp in Sources */,
@@ -610,6 +645,7 @@
 				F27044CF1994C36C00C57B6A /* text.cpp in Sources */,
 				F2DEC6371997EA7600EE31E7 /* ambient_light.cpp in Sources */,
 				F297078E199370C400D48CE5 /* mesh.cpp in Sources */,
+				F21EA81C199A04AC00D78E1C /* obj_model.cpp in Sources */,
 				F2DEC61D1997B7AB00EE31E7 /* keyboard_adapter.cpp in Sources */,
 				F2A4967819980EF600588B03 /* attenuation.cpp in Sources */,
 				F29707A21993728300D48CE5 /* game_loop.cpp in Sources */,

@@ -19,7 +19,7 @@ namespace lkogl {
         {
         }
         
-        Model::Model(Model&& m) :geometry_(m.geometry_), material_(std::move(m.material_)) {
+        Model::Model(const Model& m) : geometry_(m.geometry_), material_(m.material_) {
         }
         
         const GeometryObject& Model::geometry() const

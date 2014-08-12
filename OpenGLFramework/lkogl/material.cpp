@@ -14,7 +14,7 @@ namespace lkogl {
         Material::Material(Texture texture, float specInt, float specPow) :
         texture_(texture), specularIntensity_(specInt), specularPower_(specPow) {}
         
-        Material::Material(Material&& mat) :
+        Material::Material(const Material& mat) :
             texture_(mat.texture_), specularIntensity_(mat.specularIntensity_), specularPower_(mat.specularPower_)
         {
         }

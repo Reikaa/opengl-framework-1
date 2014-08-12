@@ -47,7 +47,9 @@ namespace lkogl {
         
         class Texture {
             const std::shared_ptr<TextureResource> resource_;
+            const GLint slot_ = 1;
         public:
+            Texture(const utils::Image&, const GLint slot) throw (TextureException);
             Texture(const utils::Image&) throw (TextureException);
             Texture(const Texture&);
             ~Texture();

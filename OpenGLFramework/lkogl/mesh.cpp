@@ -15,7 +15,6 @@ namespace lkogl {
            vertices(verts), triangles(tris)
         {}
         
-        
         namespace primitives {
             Mesh makeCube() {
                 std::vector<Vertex> vertices = {

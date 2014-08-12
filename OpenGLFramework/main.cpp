@@ -20,6 +20,9 @@
 #include "lkogl/spot_light.h"
 
 
+#include "lkogl/obj_model.h"
+
+
 #include "lkogl/camera_component.h"
 #include "lkogl/render_component.h"
 #include "lkogl/scene_deep_walker.h"
@@ -92,7 +95,6 @@ public:
         glEnable(GL_FRAMEBUFFER_SRGB);
         
         glEnable(GL_DEPTH_CLAMP);
-
         
         try {
             PlainText vshSourceAmbient("ambient-forward.vsh");
@@ -113,17 +115,28 @@ public:
             
             graph = std::make_shared<Node>();
 
-            Mesh mesh = primitives::makePyramid();
-            GeometryObject geo(mesh);
             Texture tex(Image("pattern.png"));
             Material mat(tex, 7, 20);
-            Model modelOne(geo, std::move(mat));
-            std::shared_ptr<Node> node = std::make_shared<Node>();
-            node->addComponent(std::make_shared<RenderComponent>(std::move(modelOne)));
-            //node->transformation.translation = Vec3<GLfloat>(0,0.5,0);
-            node->transformation.rotation = angleAxis<float>(radians(45), {0,1,0});
             
+            Mesh pyramid = primitives::makePyramid();
+            GeometryObject geo(pyramid);
+            std::shared_ptr<Node> node = std::make_shared<Node>();
+            node->addComponent(std::make_shared<RenderComponent>(Model(geo, mat)));
+            node->transformation.translation = Vec3<GLfloat>(0,0.5,0);
+            node->transformation.rotation = angleAxis<float>(radians(45), {0,1,0});
             graph->addChild(node);
+            
+            
+            Mesh cube = lkogl::resources::mesh_loader::obj_from_file("box.obj").toIndexedModel().toMesh();
+            GeometryObject geoCube(cube);
+            std::shared_ptr<Node> node2 = std::make_shared<Node>();
+            node2->addComponent(std::make_shared<RenderComponent>(Model(cube, mat)));
+            node2->transformation.translation = Vec3<GLfloat>(-5,0.5,-2);
+            node2->transformation.rotation = angleAxis<float>(radians(45), {0,1,0});
+            graph->addChild(node2);
+
+            
+            
             auto cam = Camera(screen.width, screen.height);
             cam.setPosition({4,1,5});
             cam.lookAt({0,0,0});
@@ -205,10 +218,8 @@ public:
         glEnable(GL_BLEND);
         glBlendFunc(GL_ONE, GL_ONE);
 
-        // TODO: remove this, use glDepthFunc(GL_GEQUAL); glDepthMask(GL_FALSE);
-        glClear( GL_DEPTH_BUFFER_BIT );
+        glDepthFunc(GL_GEQUAL | GL_LEQUAL);
 
-        
         ProgramUse directional(*programDirectional_);
         DirectionalLight light({0.6,0.7,0.9}, 0.1, {1,-1,1});
         DirectionalLightUse lightuse(*programDirectional_, light);
@@ -216,26 +227,22 @@ public:
         walker.walk(graph, &Component::render, *programDirectional_);
         
         
-        glClear( GL_DEPTH_BUFFER_BIT );
-        
         ProgramUse pointy(*programPoint_);
         PointLight pp({1,0,0}, 0.7, {0,2,2}, Attenuation(0, 0, 1));
         PointLightUse(*programPoint_, pp);
         
         walker.walk(graph, &Component::render, *programPoint_);
         
-        glClear( GL_DEPTH_BUFFER_BIT );
         
         ProgramUse spoty(*programPoint_);
-        SpotLight sp({1,1,0}, 0.7, {2,1,0}, Attenuation(0, 0, 1), {-1,-1,-1}, 4);
+        SpotLight sp({1,1,0}, 0.2, {2,1,0}, Attenuation(0, 0, 1), {-1,-1,-1}, 4);
         SpotLightUse(*programSpot_, sp);
         
         walker.walk(graph, &Component::render, *programPoint_);
-
         
-        //glDepthFunc(GL_LESS);
+        glDepthFunc(GL_LEQUAL);
 
-        glDepthMask(true);
+        glDepthMask(GL_TRUE);
         glDisable(GL_BLEND);
     }
     

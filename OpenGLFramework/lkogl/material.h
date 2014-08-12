@@ -19,8 +19,7 @@ namespace lkogl {
             float specularIntensity_ = 4;
             float specularPower_ = 4;
         public:
-            Material() = delete;
-            Material(Material&& mat);
+            Material(const Material& mat);
             Material(Texture, float specInt, float specPow);
             ~Material();
             

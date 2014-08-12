@@ -27,16 +27,18 @@ namespace lkogl {
         
         TextureResource::~TextureResource() {
             glDeleteTextures(1, &handle_);
-            printf("texture deleted");
         }
         
         Texture::Texture(const utils::Image& img) throw (TextureException) :
-        resource_(std::make_shared<TextureResource>()) {
+            Texture(img, 1) {
             replaceImage(img);
-            printf("new texture");
         }
         
-        Texture::Texture(const Texture& tex) : resource_(tex.resource_) {
+        Texture::Texture(const utils::Image& img, const GLint slot) throw (TextureException) : resource_(std::make_shared<TextureResource>()), slot_(slot) {
+            replaceImage(img);
+        }
+        
+        Texture::Texture(const Texture& tex) : resource_(tex.resource_), slot_(tex.slot_) {
 
         }
         
@@ -54,7 +56,8 @@ namespace lkogl {
                 throw "Invalid texture format";
             }
             
-            TextureResource::Binding b(*resource_.get(), 0);
+            TextureResource::Binding b(*resource_.get(), slot_);
+            
             glTexImage2D(GL_TEXTURE_2D, 0, mode, image.width(), image.height(), 0, modeInternal, GL_UNSIGNED_BYTE, image.pixels());
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
@@ -65,9 +68,9 @@ namespace lkogl {
         }
         
         TextureUse::TextureUse(const Program& p, const Texture& tex) :
-        b_(*tex.resource_.get(), 2)
+        b_(*tex.resource_.get(), tex.slot_)
         {
-            glUniform1i(p.handles().samplerPosition, 2);
+            glUniform1i(p.handles().samplerPosition, tex.slot_);
         }
         
         TextureUse::~TextureUse()
