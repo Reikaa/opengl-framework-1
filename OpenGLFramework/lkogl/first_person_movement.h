@@ -18,8 +18,9 @@ namespace lkogl {
                 const math::Vec3<float> up_{0,1,0};
                 const math::Vec3<float> forward_{0,0,1};
                 const math::Vec3<float> sideward_{1,0,0};
+                bool fly_ = false;
             public:
-                explicit FirstPersonMovement();
+                FirstPersonMovement();
                 
                 void rotateHorizontally(camera::Camera &cam, float rad) const;
                 
@@ -28,6 +29,8 @@ namespace lkogl {
                 void move(camera::Camera &cam, math::Vec2<float> dir2d, float amoun) const;
                 
                 void lookAt(camera::Camera &cam, math::Vec3<float> target) const;
+                
+                void setFly(bool);
             };
         }
     }

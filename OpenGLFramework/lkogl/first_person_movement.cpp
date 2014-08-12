@@ -40,7 +40,10 @@ namespace lkogl {
                 if(math::length(math::normalize(dir2d)) == 0) return;
 
                 auto dir = cam.rotation() * -math::Vec3<float>(dir2d.x, 0, dir2d.y);
-                auto newPos = cam.position() + amount*math::normalize(math::Vec3<float>(dir.x,0,dir.z));
+                if(!fly_) {
+                    dir.y = 0;
+                }
+                auto newPos = cam.position() + amount*math::normalize(dir);
                 cam.setPosition(newPos);
             }
             
@@ -60,6 +63,11 @@ namespace lkogl {
                 math::Vec3<float> newUp = rot1 * up_;
                 math::Quat<float> rot2 = math::rotation(newUp, desiredUp);
                 cam.setRotation(rot2 * rot1);
+            }
+            
+            void FirstPersonMovement::setFly(bool allowFly)
+            {
+                fly_ = allowFly;
             }
             
         }

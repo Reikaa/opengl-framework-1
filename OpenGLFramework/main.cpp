@@ -58,7 +58,7 @@ class MyGame {
     mutable std::shared_ptr<Program> programSpot_;
     mutable std::shared_ptr<CameraComponent> cameraComponent;
     
-    FirstPersonMovement movement;
+    mutable FirstPersonMovement movement;
     mutable float moveDelay = 0.f;
     
     mutable Keyboard keyboard_;
@@ -150,6 +150,7 @@ public:
             node->addChild(node3);
 
             
+            movement.setFly(true);
             
             auto cam = Camera(screen.width, screen.height);
             cam.setPosition({4,1,5});
@@ -202,9 +203,10 @@ public:
             moveDelay-=0.03125;
         }
         
-        movement.move(cameraComponent->camera(), dir, moveDelay/2);
-                
         if(mouseLocked) {
+            movement.move(cameraComponent->camera(), dir, moveDelay/2);
+                
+        
             if(mouse_.delta.x != 0) {
                 movement.rotateHorizontally(cameraComponent->camera(), radians(.25f*mouse_.delta.x));
             }
