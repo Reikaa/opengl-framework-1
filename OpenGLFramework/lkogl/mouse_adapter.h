@@ -23,7 +23,7 @@ namespace lkogl {
                 
                 bool processEvent(const SDL_Event &e) const;
                 
-                Mouse::Button mapButton(const int) const;
+                Mouse::Button mapButton(Uint8) const;
             };
         }
     }

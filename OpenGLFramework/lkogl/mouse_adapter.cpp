@@ -20,10 +20,10 @@ namespace lkogl {
             {
                 switch( e.type ){
                     case SDL_MOUSEBUTTONDOWN:
-                        mouse_.setDown(mapButton(e.button.which));
+                        mouse_.setDown(mapButton(e.button.button));
                         return true;
                     case SDL_MOUSEBUTTONUP:
-                        mouse_.setUp(mapButton(e.button.which));
+                        mouse_.setUp(mapButton(e.button.button));
                         return true;
                     case SDL_MOUSEWHEEL:
                         mouse_.scroll(e.wheel.x, e.wheel.y);
@@ -36,12 +36,12 @@ namespace lkogl {
                 return false;
             }
             
-            Mouse::Button MouseAdapter::mapButton(const int i) const
+            Mouse::Button MouseAdapter::mapButton(Uint8 i) const
             {
                 switch(i) {
-                    case 1: return Mouse::Button::LEFT;
-                    case 2: return Mouse::Button::RIGHT;
-                    case 3: return Mouse::Button::MIDDLE;
+                    case SDL_BUTTON_LEFT: return Mouse::Button::LEFT;
+                    case SDL_BUTTON_RIGHT: return Mouse::Button::RIGHT;
+                    case SDL_BUTTON_MIDDLE: return Mouse::Button::MIDDLE;
                     default: return Mouse::Button::UNKNOWN;
                 }
             };
