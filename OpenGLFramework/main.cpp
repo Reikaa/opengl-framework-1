@@ -72,7 +72,7 @@ class MyGame {
     adapter::MouseAdapter mouseAdapter_;
     
     mutable Screen screen_;
-
+    
 public:
     mutable bool mouseLocked = true;
     
@@ -120,7 +120,7 @@ public:
             programSpot_ = std::make_shared<Program>(vshSourceSpot.content, fshSourceSpot.content);
             
             graph = std::make_shared<Node>();
-
+            
             Texture tex(Image("pattern.png"));
             Material mat(tex, 7, 20);
             
@@ -131,7 +131,7 @@ public:
             std::shared_ptr<Node> node = std::make_shared<Node>();
             node->addComponent(std::make_shared<RenderComponent>(pyramid, mat));
             node->transformation.setTranslation({0,1,0});
-                        
+            
             node->transformation.setRotation(angleAxis<float>(radians(1.0), {1,1,1}));
             graph->addChild(node);
             
@@ -153,7 +153,7 @@ public:
             node3->transformation.setTranslation({5,0.5,-2});
             node3->transformation.setRotation(angleAxis<float>(radians(45), {0,1,0}));
             node->addChild(node3);
-
+            
             
             movement.setFly(true);
             
@@ -251,20 +251,16 @@ public:
         glClearColor(0,0.2,0.3,0);
         glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
         
-        
-        
-        
         ProgramUse ambient(*programAmbient_);
         walker.walk(graph, &Component::render, *programAmbient_);
-        
         
         glEnable( GL_POLYGON_OFFSET_FILL );
         glPolygonOffset( -.1f, -0.1f );
         glEnable(GL_BLEND);
         glBlendFunc(GL_ONE, GL_ONE);
-
+        
         glDepthFunc(GL_LEQUAL);
-
+        
         {
             ProgramUse directional(*programDirectional_);
             DirectionalLight light({0.6,0.7,0.9}, 0.1, {1,-1,1});
@@ -278,10 +274,9 @@ public:
             walker.walk(graph, &Component::render, *programDirectional_);
         }
         
-        if(true /*keyboard_.isDown(Keyboard::Key::SPACE)*/) {
-
+        
         glPolygonOffset( -.2f, -0.2f );
-
+        
         {
             ProgramUse pointy(*programPoint_);
             PointLight pp({1,0,0}, 0.7, {0,2,2}, Attenuation(0, 0, 1));
@@ -289,25 +284,25 @@ public:
             
             walker.walk(graph, &Component::render, *programPoint_);
             
-//            PointLight pp2({1,0,1}, 0.7, {0,2,-2}, Attenuation(0, 0, 1));
-//            PointLightUse(*programPoint_, pp2);
-//            
-//            walker.walk(graph, &Component::render, *programPoint_);
-
-//
-//            PointLight pp3({0,1,1}, 0.7, {-2,2,0}, Attenuation(0, 0, 1));
-//            PointLightUse(*programPoint_, pp3);
-//            
-//            walker.walk(graph, &Component::render, *programPoint_);
-//            
-//            PointLight pp4({1,1,0}, 0.7, {2,2,0}, Attenuation(0, 0, 1));
-//            PointLightUse(*programPoint_, pp4);
-//            
-//            walker.walk(graph, &Component::render, *programPoint_);
+            //            PointLight pp2({1,0,1}, 0.7, {0,2,-2}, Attenuation(0, 0, 1));
+            //            PointLightUse(*programPoint_, pp2);
+            //
+            //            walker.walk(graph, &Component::render, *programPoint_);
+            
+            //
+            //            PointLight pp3({0,1,1}, 0.7, {-2,2,0}, Attenuation(0, 0, 1));
+            //            PointLightUse(*programPoint_, pp3);
+            //
+            //            walker.walk(graph, &Component::render, *programPoint_);
+            //
+            //            PointLight pp4({1,1,0}, 0.7, {2,2,0}, Attenuation(0, 0, 1));
+            //            PointLightUse(*programPoint_, pp4);
+            //
+            //            walker.walk(graph, &Component::render, *programPoint_);
         }
         
         glPolygonOffset( -.3f, -0.3f );
-
+        
         {
             ProgramUse spoty(*programSpot_);
             SpotLight sp({1,1,0}, 0.7, {-3.9,2,-2}, Attenuation(1, 0, 4), {.1,-1,0}, 0.5);
@@ -315,14 +310,11 @@ public:
             
             walker.walk(graph, &Component::render, *programSpot_);
         }
-            
-        }
-        
         
         glDisable( GL_POLYGON_OFFSET_FILL );
-
+        
         glDepthFunc(GL_LEQUAL);
-
+        
         glDepthMask(GL_TRUE);
         glDisable(GL_BLEND);
     }
@@ -344,7 +336,7 @@ public:
     }
     
     ~MyGame() {
-    
+        
     }
 };
 
