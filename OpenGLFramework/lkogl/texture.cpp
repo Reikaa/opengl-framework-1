@@ -7,6 +7,7 @@
 //
 
 #include "texture.h"
+#include <iostream>
 
 namespace lkogl {
     namespace graphics {
@@ -22,7 +23,7 @@ namespace lkogl {
             if(!*handleArray) {
                 throw "Texture could not be created";
             }
-            
+           
             return std::vector<GLuint>(handleArray, handleArray+num);
         }
         
@@ -62,6 +63,17 @@ namespace lkogl {
                     glBindFramebuffer(GL_FRAMEBUFFER, t.frameBuffer);
                 }
                 
+                glBindTexture(GL_TEXTURE_2D, handles_[i]);
+                
+                glTexParameteri(textureTarget_, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+                glTexParameteri(textureTarget_, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+                
+                if(attachments[i] == GL_DEPTH_ATTACHMENT) {
+                     glTexImage2D(textureTarget_, 0, GL_DEPTH_COMPONENT32, width_, height_, 0, GL_DEPTH_COMPONENT, GL_UNSIGNED_BYTE, 0);
+                } else {
+                     glTexImage2D(textureTarget_, 0, GL_RGBA, width_, height_, 0, GL_RGBA, GL_UNSIGNED_BYTE, 0);
+                }
+
                 glFramebufferTexture2D(GL_FRAMEBUFFER, attachments[i], textureTarget_, handles_[i], 0);
             }
             
@@ -79,9 +91,11 @@ namespace lkogl {
             
             glDrawBuffers(numAttachments, drawBuffers);
             
-            if(glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+            GLenum err = glCheckFramebufferStatus(GL_FRAMEBUFFER);
+            if(err != GL_FRAMEBUFFER_COMPLETE)
             {
-                throw "Framebuffer creation failed!";
+                std::cout << err;
+                exit(1);
             }
             
             glBindFramebuffer(GL_FRAMEBUFFER, 0);
@@ -133,16 +147,25 @@ namespace lkogl {
         }
         
         Texture::Texture(int width, int height, GLuint slot) throw(lkogl::graphics::TextureException) :
-            resource_(std::make_shared<TextureResource>(width, height, std::vector<GLenum>{GL_COLOR_ATTACHMENT0})),
-            slot_(slot)
+            Texture(width, height, {GL_NONE}, slot)
         {
-            
         }
         
         Texture::Texture(int width, int height) throw(lkogl::graphics::TextureException) :
             Texture(width, height, 1)
         {
-            
+        }
+        
+        Texture::Texture(int width, int height, std::vector<GLenum> attachements, GLuint slot) throw (TextureException):
+        resource_(std::make_shared<TextureResource>(width, height, attachements)),
+        slot_(slot)
+        {
+        }
+        
+        Texture::Texture(const utils::Image& img, std::vector<GLenum> attachements, GLuint slot) throw (TextureException):
+        Texture(img.width(), img.height(), attachements, slot)
+        {
+            resource_->replaceImage(img);
         }
         
         Texture::Texture(const Texture& tex) : resource_(tex.resource_), slot_(tex.slot_) {
@@ -154,7 +177,12 @@ namespace lkogl {
         }
         
         TextureUse::TextureUse(const Program& p, const Texture& tex) :
-        b_(*tex.resource_.get(), tex.slot_, 0)
+        TextureUse(p, tex, 0)
+        {
+        }
+        
+        TextureUse::TextureUse(const Program& p, const Texture& tex, int num) :
+        b_(*tex.resource_.get(), tex.slot_, num)
         {
             glUniform1i(p.handles().samplerPosition, tex.slot_);
         }

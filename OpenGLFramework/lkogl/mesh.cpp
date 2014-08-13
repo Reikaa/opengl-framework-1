@@ -78,6 +78,26 @@ namespace lkogl {
                 
                 return Mesh(vertices, triangles);
             }
+
+            Mesh makeSquare() {
+                std::vector<Vertex> vertices = {
+                    // Front
+                    {{ 1,-1, 0}, {0,0,1}, {1, 1, 1, 1}, {1,1}},
+                    {{ 1, 1, 0}, {0,0,1}, {1, 1, 1, 1}, {1,0}},
+                    {{-1, 1, 0}, {0,0,1}, {1, 1, 1, 1}, {0,0}},
+                    {{-1,-1, 0}, {0,0,1}, {1, 1, 1, 1}, {0,1}},
+                   
+                };
+                
+                std::vector<Triangle> triangles = {
+                    // Front
+                    {0, 1, 2},
+                    {2, 3, 0}
+                };
+                
+                return Mesh(vertices, triangles);
+            }
+
             
             Mesh makePyramid() {
                 std::vector<Vertex> vertices = {

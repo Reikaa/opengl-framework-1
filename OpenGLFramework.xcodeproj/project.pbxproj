@@ -21,6 +21,10 @@
 		F21EA82C199ABB3600D78E1C /* plain.png in Resources */ = {isa = PBXBuildFile; fileRef = F21EA82B199ABB3600D78E1C /* plain.png */; };
 		F21EA82F199ABD0B00D78E1C /* animation_component.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F21EA82D199ABD0B00D78E1C /* animation_component.cpp */; };
 		F21EA835199B9B9300D78E1C /* render_target.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F21EA833199B9B9300D78E1C /* render_target.cpp */; };
+		F21EA83A199BA82700D78E1C /* deferred-geometry.vsh in Resources */ = {isa = PBXBuildFile; fileRef = F21EA839199BA82700D78E1C /* deferred-geometry.vsh */; };
+		F21EA83C199BA83200D78E1C /* deferred-geometry.fsh in Resources */ = {isa = PBXBuildFile; fileRef = F21EA83B199BA83200D78E1C /* deferred-geometry.fsh */; };
+		F21EA83E199BB45700D78E1C /* deferred-plain.vsh in Resources */ = {isa = PBXBuildFile; fileRef = F21EA83D199BB45700D78E1C /* deferred-plain.vsh */; };
+		F21EA840199BB46200D78E1C /* deferred-plain.fsh in Resources */ = {isa = PBXBuildFile; fileRef = F21EA83F199BB46200D78E1C /* deferred-plain.fsh */; };
 		F27044CA1994C2C200C57B6A /* phong.vsh in Resources */ = {isa = PBXBuildFile; fileRef = F27044C91994C2C200C57B6A /* phong.vsh */; };
 		F27044CC1994C2CC00C57B6A /* phong.fsh in Resources */ = {isa = PBXBuildFile; fileRef = F27044CB1994C2CC00C57B6A /* phong.fsh */; };
 		F27044CF1994C36C00C57B6A /* text.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F27044CD1994C36C00C57B6A /* text.cpp */; };
@@ -134,6 +138,10 @@
 		F21EA82E199ABD0B00D78E1C /* animation_component.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = animation_component.h; sourceTree = "<group>"; };
 		F21EA833199B9B9300D78E1C /* render_target.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = render_target.cpp; sourceTree = "<group>"; };
 		F21EA834199B9B9300D78E1C /* render_target.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = render_target.h; sourceTree = "<group>"; };
+		F21EA839199BA82700D78E1C /* deferred-geometry.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = "deferred-geometry.vsh"; sourceTree = "<group>"; };
+		F21EA83B199BA83200D78E1C /* deferred-geometry.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = "deferred-geometry.fsh"; sourceTree = "<group>"; };
+		F21EA83D199BB45700D78E1C /* deferred-plain.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = "deferred-plain.vsh"; sourceTree = "<group>"; };
+		F21EA83F199BB46200D78E1C /* deferred-plain.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = "deferred-plain.fsh"; sourceTree = "<group>"; };
 		F27044C91994C2C200C57B6A /* phong.vsh */ = {isa = PBXFileReference; explicitFileType = sourcecode.glsl; fileEncoding = 4; name = phong.vsh; path = OpenGLFramework/Resources/phong.vsh; sourceTree = SOURCE_ROOT; };
 		F27044CB1994C2CC00C57B6A /* phong.fsh */ = {isa = PBXFileReference; explicitFileType = sourcecode.glsl; fileEncoding = 4; name = phong.fsh; path = OpenGLFramework/Resources/phong.fsh; sourceTree = SOURCE_ROOT; };
 		F27044CD1994C36C00C57B6A /* text.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = text.cpp; sourceTree = "<group>"; };
@@ -278,6 +286,10 @@
 				F2A4967E199811A200588B03 /* point-forward.fsh */,
 				F2A4968019981D3600588B03 /* spot-forward.vsh */,
 				F2A4968219981D4200588B03 /* spot-forward.fsh */,
+				F21EA839199BA82700D78E1C /* deferred-geometry.vsh */,
+				F21EA83B199BA83200D78E1C /* deferred-geometry.fsh */,
+				F21EA83D199BB45700D78E1C /* deferred-plain.vsh */,
+				F21EA83F199BB46200D78E1C /* deferred-plain.fsh */,
 			);
 			name = Shader;
 			sourceTree = "<group>";
@@ -626,6 +638,7 @@
 			files = (
 				F2DEC62B1997D49300EE31E7 /* ambient-forward.vsh in Resources */,
 				F2A4968119981D3600588B03 /* spot-forward.vsh in Resources */,
+				F21EA840199BB46200D78E1C /* deferred-plain.fsh in Resources */,
 				F2A4967D1998119600588B03 /* point-forward.vsh in Resources */,
 				F2A4968319981D4200588B03 /* spot-forward.fsh in Resources */,
 				F2A4967F199811A200588B03 /* point-forward.fsh in Resources */,
@@ -638,7 +651,10 @@
 				F21EA820199A257F00D78E1C /* box.obj in Resources */,
 				F297076619936C1600D48CE5 /* Images.xcassets in Resources */,
 				F2DEC62D1997D4B300EE31E7 /* ambient-forward.fsh in Resources */,
+				F21EA83A199BA82700D78E1C /* deferred-geometry.vsh in Resources */,
+				F21EA83C199BA83200D78E1C /* deferred-geometry.fsh in Resources */,
 				F21EA82C199ABB3600D78E1C /* plain.png in Resources */,
+				F21EA83E199BB45700D78E1C /* deferred-plain.vsh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

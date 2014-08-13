@@ -54,13 +54,18 @@ class MyGame {
     mutable std::shared_ptr<Node> graph;
     SceneDeepWalker walker;
     
-    mutable std::shared_ptr<Texture> displayTexture;
+    mutable std::shared_ptr<Texture> deferredTexture_;
     
     mutable std::shared_ptr<Program> programAmbient_;
     mutable std::shared_ptr<Program> programDirectional_;
     mutable std::shared_ptr<Program> programPoint_;
     mutable std::shared_ptr<Program> programSpot_;
+    mutable std::shared_ptr<Program> programDeferredGeo_;
+    mutable std::shared_ptr<Program> programDeferredPlain_;
     mutable std::shared_ptr<CameraComponent> cameraComponent;
+    
+    mutable std::shared_ptr<GeometryObject> square_;
+    mutable std::shared_ptr<Texture> texture_;
     
     mutable FirstPersonMovement movement;
     mutable float moveDelay = 0.f;
@@ -101,7 +106,6 @@ public:
         glEnable(GL_DEPTH_CLAMP);
         
         try {
-            displayTexture = std::make_shared<Texture>(400, 400);
             
             PlainText vshSourceAmbient("ambient-forward.vsh");
             PlainText fshSourceAmbient("ambient-forward.fsh");
@@ -119,7 +123,17 @@ public:
             PlainText fshSourceSpot("spot-forward.fsh");
             programSpot_ = std::make_shared<Program>(vshSourceSpot.content, fshSourceSpot.content);
             
+            PlainText vshDefGeo("deferred-geometry.vsh");
+            PlainText fshDefGeo("deferred-geometry.fsh");
+            programDeferredGeo_ = std::make_shared<Program>(vshDefGeo.content, fshDefGeo.content);
+            
+            PlainText vshDefPlain("deferred-plain.vsh");
+            PlainText fshDefPlain("deferred-plain.fsh");
+            programDeferredPlain_ = std::make_shared<Program>(vshDefPlain.content, fshDefPlain.content);
+            
             graph = std::make_shared<Node>();
+            
+            texture_ = std::make_shared<Texture>(Image("pattern.png"));
             
             Texture tex(Image("pattern.png"));
             Material mat(tex, 7, 20);
@@ -129,23 +143,25 @@ public:
             
             Mesh pyramid = primitives::makePyramid();
             std::shared_ptr<Node> node = std::make_shared<Node>();
-            node->addComponent(std::make_shared<RenderComponent>(pyramid, mat));
+            node->addComponent(std::make_shared<RenderComponent>(GeometryObject(pyramid), mat));
             node->transformation.setTranslation({0,1,0});
             
             node->transformation.setRotation(angleAxis<float>(radians(1.0), {1,1,1}));
             graph->addChild(node);
             
             
+            square_ = std::make_shared<GeometryObject>(primitives::makeSquare());
+            
             Mesh cube = lkogl::resources::mesh_loader::obj_from_file("box.obj").toIndexedModel().toMesh();
             std::shared_ptr<Node> node2 = std::make_shared<Node>();
-            node2->addComponent(std::make_shared<RenderComponent>(cube, mat));
+            node2->addComponent(std::make_shared<RenderComponent>(GeometryObject(cube), mat));
             node2->transformation.setTranslation({-5,0.5,-2});
             node2->transformation.setRotation(angleAxis<float>(radians(45), {0,1,0}));
             node->addChild(node2);
             
             Mesh monkey = lkogl::resources::mesh_loader::obj_from_file("monkey.obj").toIndexedModel().toMesh();
             std::shared_ptr<Node> node3 = std::make_shared<Node>();
-            node3->addComponent(std::make_shared<RenderComponent>(monkey, mat2));
+            node3->addComponent(std::make_shared<RenderComponent>(GeometryObject(monkey), mat2));
             Transformation spin;
             spin.rotation = angleAxis(radians(1.0f), {0.0f,1.0f,0.0f});;
             
@@ -243,47 +259,57 @@ public:
     
     void render() const {
         {
-            TextureRendering tr(*displayTexture.get());
+            TextureRendering tr(*deferredTexture_);
+            ScreenRendering s(screen_, 16, 9);
+
+            glClearColor(0,0,0,0);
+            glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
+            
+            ProgramUse defgeo(*programDeferredGeo_);
+            walker.walk(graph, &Component::render, *programDeferredGeo_);
+        }
+        {
+            ScreenRendering s(screen_, 16, 9);
+        
+            glClearColor(0,0.2,0.3,0);
+            glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
+            ProgramUse plain(*programDeferredPlain_);
+            TextureUse tu(*programDeferredPlain_, *deferredTexture_, 0);
+            
+            GeometryObjectUse gu(*square_);
+            gu.render();
         }
         
-        ScreenRendering s(screen_, 16, 9);
+//        glEnable( GL_POLYGON_OFFSET_FILL );
+//        glPolygonOffset( -.1f, -0.1f );
+//        glEnable(GL_BLEND);
+//        glBlendFunc(GL_ONE, GL_ONE);
+//        
+//        glDepthFunc(GL_LEQUAL);
         
-        glClearColor(0,0.2,0.3,0);
-        glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
+//        {
+//            ProgramUse directional(*programDirectional_);
+//            DirectionalLight light({0.6,0.7,0.9}, 0.1, {1,-1,1});
+//            DirectionalLightUse lightuse(*programDirectional_, light);
+//            
+//            walker.walk(graph, &Component::render, *programDirectional_);
+//            
+//            DirectionalLight light2({0.6,0.7,0.9}, 0.1, {-1,-1,-1});
+//            DirectionalLightUse lightuse2(*programDirectional_, light2);
+//            
+//            walker.walk(graph, &Component::render, *programDirectional_);
+//        }
         
-        ProgramUse ambient(*programAmbient_);
-        walker.walk(graph, &Component::render, *programAmbient_);
-        
-        glEnable( GL_POLYGON_OFFSET_FILL );
-        glPolygonOffset( -.1f, -0.1f );
-        glEnable(GL_BLEND);
-        glBlendFunc(GL_ONE, GL_ONE);
-        
-        glDepthFunc(GL_LEQUAL);
-        
-        {
-            ProgramUse directional(*programDirectional_);
-            DirectionalLight light({0.6,0.7,0.9}, 0.1, {1,-1,1});
-            DirectionalLightUse lightuse(*programDirectional_, light);
-            
-            walker.walk(graph, &Component::render, *programDirectional_);
-            
-            DirectionalLight light2({0.6,0.7,0.9}, 0.1, {-1,-1,-1});
-            DirectionalLightUse lightuse2(*programDirectional_, light2);
-            
-            walker.walk(graph, &Component::render, *programDirectional_);
-        }
-        
-        
-        glPolygonOffset( -.2f, -0.2f );
-        
-        {
-            ProgramUse pointy(*programPoint_);
-            PointLight pp({1,0,0}, 0.7, {0,2,2}, Attenuation(0, 0, 1));
-            PointLightUse(*programPoint_, pp);
-            
-            walker.walk(graph, &Component::render, *programPoint_);
-            
+//        
+//        glPolygonOffset( -.2f, -0.2f );
+//        
+//        {
+//            ProgramUse pointy(*programPoint_);
+//            PointLight pp({1,0,0}, 0.7, {0,2,2}, Attenuation(0, 0, 1));
+//            PointLightUse(*programPoint_, pp);
+//            
+//            walker.walk(graph, &Component::render, *programPoint_);
+//            
             //            PointLight pp2({1,0,1}, 0.7, {0,2,-2}, Attenuation(0, 0, 1));
             //            PointLightUse(*programPoint_, pp2);
             //
@@ -299,29 +325,31 @@ public:
             //            PointLightUse(*programPoint_, pp4);
             //
             //            walker.walk(graph, &Component::render, *programPoint_);
-        }
-        
-        glPolygonOffset( -.3f, -0.3f );
-        
-        {
-            ProgramUse spoty(*programSpot_);
-            SpotLight sp({1,1,0}, 0.7, {-3.9,2,-2}, Attenuation(1, 0, 4), {.1,-1,0}, 0.5);
-            SpotLightUse(*programSpot_, sp);
-            
-            walker.walk(graph, &Component::render, *programSpot_);
-        }
-        
-        glDisable( GL_POLYGON_OFFSET_FILL );
-        
-        glDepthFunc(GL_LEQUAL);
-        
-        glDepthMask(GL_TRUE);
-        glDisable(GL_BLEND);
+//        }
+//
+//        glPolygonOffset( -.3f, -0.3f );
+//        
+//        {
+//            ProgramUse spoty(*programSpot_);
+//            SpotLight sp({1,1,0}, 0.7, {-3.9,2,-2}, Attenuation(1, 0, 4), {.1,-1,0}, 0.5);
+//            SpotLightUse(*programSpot_, sp);
+//            
+//            walker.walk(graph, &Component::render, *programSpot_);
+//        }
+//        
+//        glDisable( GL_POLYGON_OFFSET_FILL );
+//        
+//        glDepthFunc(GL_LEQUAL);
+//        
+//        glDepthMask(GL_TRUE);
+//        glDisable(GL_BLEND);
     }
     
     void resize(int width, int height) const {
         screen_.width = width;
         screen_.height = height;
+        
+        deferredTexture_ = std::make_shared<Texture>(screen_.width,screen_.height, std::vector<GLenum>{GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_DEPTH_ATTACHMENT}, 1);
     }
     
     const std::string title() const {

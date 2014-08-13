@@ -70,6 +70,7 @@ namespace lkogl {
             const DELEGATE& delegate_;
         public:
             Looping(const DELEGATE& del) : delegate_(del) {
+                delegate_.resize(900,600);
                 delegate_.setUp();
             }
             

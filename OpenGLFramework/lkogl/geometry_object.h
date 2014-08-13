@@ -44,7 +44,7 @@ namespace lkogl {
             int indexCount_;
         public:
             GeometryObject() = delete;
-            GeometryObject(const geometry::Mesh&);
+            explicit GeometryObject(const geometry::Mesh&);
             GeometryObject(const GeometryObject&);
             ~GeometryObject();
             

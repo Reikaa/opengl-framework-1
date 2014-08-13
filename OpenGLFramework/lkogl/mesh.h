@@ -43,6 +43,7 @@ namespace lkogl {
         
         namespace primitives {
             Mesh makeCube();
+            Mesh makeSquare();
             Mesh makePyramid();
         }
     }
