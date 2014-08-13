@@ -20,7 +20,10 @@ namespace lkogl {
         }
             
         TreeTransformation::~TreeTransformation() {
+        }
         
+        void TreeTransformation::setParent(const TreeTransformation* p) {
+            parent_ = p;
         }
         
         const Vec3& TreeTransformation::translation() const
@@ -70,7 +73,7 @@ namespace lkogl {
         
         bool TreeTransformation::isDirty() const
         {
-            return dirty_ || (parent_!=NULL &&  parent_->isDirty());
+            return dirty_ || (parent_ &&  parent_->isDirty());
         }
         
         const Mat4 TreeTransformation::matrix() const {

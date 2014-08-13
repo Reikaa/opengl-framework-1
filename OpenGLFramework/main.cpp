@@ -12,6 +12,7 @@
 #include "lkogl/material.h"
 #include "lkogl/shader.h"
 #include "lkogl/text.h"
+#include "lkogl/render_target.h"
 
 #include "lkogl/ambient_light.h"
 #include "lkogl/ambient_light_component.h"
@@ -52,6 +53,9 @@ using namespace lkogl::input::movement;
 class MyGame {
     mutable std::shared_ptr<Node> graph;
     SceneDeepWalker walker;
+    
+    mutable std::shared_ptr<Texture> displayTexture;
+    
     mutable std::shared_ptr<Program> programAmbient_;
     mutable std::shared_ptr<Program> programDirectional_;
     mutable std::shared_ptr<Program> programPoint_;
@@ -67,9 +71,8 @@ class MyGame {
     mutable Mouse mouse_;
     adapter::MouseAdapter mouseAdapter_;
     
-    mutable struct {
-        int width, height;
-    } screen;
+    mutable Screen screen_;
+
 public:
     mutable bool mouseLocked = true;
     
@@ -98,6 +101,8 @@ public:
         glEnable(GL_DEPTH_CLAMP);
         
         try {
+            displayTexture = std::make_shared<Texture>(400, 400);
+            
             PlainText vshSourceAmbient("ambient-forward.vsh");
             PlainText fshSourceAmbient("ambient-forward.fsh");
             programAmbient_ = std::make_shared<Program>(vshSourceAmbient.content, fshSourceAmbient.content);
@@ -152,7 +157,7 @@ public:
             
             movement.setFly(true);
             
-            auto cam = Camera(screen.width, screen.height);
+            auto cam = Camera(screen_.width, screen_.height);
             cam.setPosition({4,1,5});
             movement.lookAt(cam, {0,0,0});
             cameraComponent = std::make_shared<CameraComponent>(cam);
@@ -237,10 +242,17 @@ public:
     }
     
     void render() const {
-        adjustViewport();
+        {
+            TextureRendering tr(*displayTexture.get());
+        }
+        
+        ScreenRendering s(screen_, 16, 9);
         
         glClearColor(0,0.2,0.3,0);
         glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
+        
+        
+        
         
         ProgramUse ambient(*programAmbient_);
         walker.walk(graph, &Component::render, *programAmbient_);
@@ -316,22 +328,9 @@ public:
     }
     
     void resize(int width, int height) const {
-        screen.width = width;
-        screen.height = height;
+        screen_.width = width;
+        screen_.height = height;
     }
-    
-    void adjustViewport() const {
-        if (screen.height * 16 > screen.width * 9) {
-            int newWidth = screen.height * 16 / 9;
-            glViewport(-(newWidth - screen.width) / 2, 0, newWidth,
-                       screen.height);
-        } else {
-            int newHeight = screen.width * 9 / 16;
-            glViewport(0, -(newHeight - screen.height) / 2,
-                       screen.width, newHeight);
-        }
-    }
-
     
     const std::string title() const {
         std::stringstream ss;

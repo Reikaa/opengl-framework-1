@@ -30,10 +30,8 @@ namespace lkogl {
             TreeTransformation(const TreeTransformation&);
             ~TreeTransformation();
             
-            void setParent(const TreeTransformation* p) {
-                parent_ = p;
-            }
-                        
+            void setParent(const TreeTransformation* p);
+            
             const Vec3& translation() const;
             const Vec3& scale() const;
             const Quat& rotation() const;

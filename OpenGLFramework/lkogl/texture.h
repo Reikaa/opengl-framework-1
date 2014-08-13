@@ -9,6 +9,7 @@
 #ifndef __OpenGLFramework__texture__
 #define __OpenGLFramework__texture__
 
+#include <vector>
 #include "opengl.h"
 #include "image.h"
 #include "program.h"
@@ -18,52 +19,87 @@ namespace lkogl {
         class TextureException {};
         
         class TextureResource {
-            const GLuint handle_;
+            const GLenum textureTarget_ = GL_TEXTURE_2D;
+            const std::vector<GLuint> handles_;
+            const GLuint numTextures_;
+            const int width_;
+            const int height_;
+            
+            const struct Target {
+                GLuint frameBuffer;
+                GLuint renderBuffer;
+            } targets_;
         public:
-            class Binding {
+            class SlotBinding {
                 const TextureResource& r_;
             public:
-                Binding(const TextureResource& r, GLenum slot) : r_(r) {
+                SlotBinding(const TextureResource& r, GLenum slot, GLuint textureNum) : r_(r) {
                     glActiveTexture(GL_TEXTURE0+slot);
-                    glBindTexture(GL_TEXTURE_2D, r_.handle_);
+                    glBindTexture(r.textureTarget_, r_.handles_[textureNum]);
                 }
                 
-                ~Binding() {
-                    glBindTexture(GL_TEXTURE_2D, 0);
+                ~SlotBinding() {
+                    glBindTexture(r_.textureTarget_, 0);
                     glActiveTexture(GL_TEXTURE0);
+                }
+            };
+            
+            class RenderTargetBinding {
+                const TextureResource& r_;
+            public:
+                RenderTargetBinding(const TextureResource& r) : r_(r) {
+                    glBindTexture(GL_TEXTURE_2D,0);
+                    glBindFramebuffer(GL_FRAMEBUFFER, r.targets_.frameBuffer);
+                    
+                    glViewport(0, 0, r.width_, r.height_);
+                }
+                
+                ~RenderTargetBinding() {
+                    glBindTexture(GL_TEXTURE_2D,0);
+                    glBindFramebuffer(GL_FRAMEBUFFER, 0);
                 }
             };
             
             TextureResource(const TextureResource&) = delete;
             TextureResource(TextureResource&&) = delete;
-            TextureResource();
+            TextureResource(int width, int height, std::vector<GLenum> attachments);
             ~TextureResource();
             
+            void replaceImage(const utils::Image& image) throw (TextureException);
             void use() const;
             
         private:
-            GLuint generate() const;
+            std::vector<GLuint> generateTexture(GLuint num) const;
+            Target generateRenderTarget(std::vector<GLenum>) const;
         };
         
         class Texture {
             const std::shared_ptr<TextureResource> resource_;
             const GLint slot_ = 1;
         public:
-            Texture(const utils::Image&, const GLint slot) throw (TextureException);
+            Texture(const utils::Image&, GLuint slot) throw (TextureException);
             Texture(const utils::Image&) throw (TextureException);
+            Texture(int width, int height, GLuint slot) throw (TextureException);
+            Texture(int width, int height) throw (TextureException);
             Texture(const Texture&);
             ~Texture();
-        private:
-            void replaceImage(const utils::Image& img) throw (TextureException);
-            
+        private:            
             friend class TextureUse;
+            friend class TextureRendering;
         };
         
         class TextureUse {
-            TextureResource::Binding b_;
+            TextureResource::SlotBinding b_;
         public:
             TextureUse(const Program& p, const Texture&);
             ~TextureUse();
+        };
+        
+        class TextureRendering {
+            TextureResource::RenderTargetBinding b_;
+        public:
+            TextureRendering(const Texture&);
+            ~TextureRendering();
         };
     }
 }
