@@ -41,7 +41,6 @@
 		F29707BB199391FD00D48CE5 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F29707A31993734100D48CE5 /* OpenGL.framework */; };
 		F29707BE199397FF00D48CE5 /* window.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F29707BC199397FF00D48CE5 /* window.cpp */; };
 		F29707CB1993BD9700D48CE5 /* scene_deep_walker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F29707C91993BD9700D48CE5 /* scene_deep_walker.cpp */; };
-		F29707CE1994382E00D48CE5 /* model.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F29707CC1994382E00D48CE5 /* model.cpp */; };
 		F2A4967819980EF600588B03 /* attenuation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2A4967619980EF600588B03 /* attenuation.cpp */; };
 		F2A4967B1998102C00588B03 /* point_light.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2A496791998102C00588B03 /* point_light.cpp */; };
 		F2A4967D1998119600588B03 /* point-forward.vsh in Resources */ = {isa = PBXBuildFile; fileRef = F2A4967C1998119600588B03 /* point-forward.vsh */; };
@@ -174,8 +173,6 @@
 		F29707BD199397FF00D48CE5 /* window.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = window.h; sourceTree = "<group>"; };
 		F29707C91993BD9700D48CE5 /* scene_deep_walker.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = scene_deep_walker.cpp; sourceTree = "<group>"; };
 		F29707CA1993BD9700D48CE5 /* scene_deep_walker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = scene_deep_walker.h; sourceTree = "<group>"; };
-		F29707CC1994382E00D48CE5 /* model.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = model.cpp; sourceTree = "<group>"; };
-		F29707CD1994382E00D48CE5 /* model.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = model.h; sourceTree = "<group>"; };
 		F2A4967619980EF600588B03 /* attenuation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = attenuation.cpp; sourceTree = "<group>"; };
 		F2A4967719980EF600588B03 /* attenuation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = attenuation.h; sourceTree = "<group>"; };
 		F2A496791998102C00588B03 /* point_light.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = point_light.cpp; sourceTree = "<group>"; };
@@ -387,8 +384,6 @@
 			isa = PBXGroup;
 			children = (
 				F2DEC6341997EA4000EE31E7 /* lighting */,
-				F29707CC1994382E00D48CE5 /* model.cpp */,
-				F29707CD1994382E00D48CE5 /* model.h */,
 				F29707851993706C00D48CE5 /* shader.cpp */,
 				F29707861993706C00D48CE5 /* shader.h */,
 				F297078F199370D800D48CE5 /* texture.cpp */,
@@ -674,7 +669,6 @@
 				F21EA828199A8C5600D78E1C /* tree_transformation.cpp in Sources */,
 				F297077C19936F4E00D48CE5 /* main.cpp in Sources */,
 				F2DEC6251997C63E00EE31E7 /* mouse.cpp in Sources */,
-				F29707CE1994382E00D48CE5 /* model.cpp in Sources */,
 				F2970794199370EE00D48CE5 /* math.cpp in Sources */,
 				F27044CF1994C36C00C57B6A /* text.cpp in Sources */,
 				F2DEC6371997EA7600EE31E7 /* ambient_light.cpp in Sources */,

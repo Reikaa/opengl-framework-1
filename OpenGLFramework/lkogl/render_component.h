@@ -11,15 +11,17 @@
 
 #include <stdio.h>
 #include "node_component.h"
-#include "model.h"
+#include "geometry_object.h"
+#include "material.h"
 
 namespace lkogl {
     namespace scene {
         namespace components {
             class RenderComponent : public Component {
-                graphics::Model model_;
+                graphics::GeometryObject geometry_;
+                graphics::Material material_;
             public:
-                RenderComponent(graphics::Model m);
+                RenderComponent(graphics::GeometryObject geo, graphics::Material mat);
                 ~RenderComponent();
 
                 void update(TreeTransformation& transformation) const override;

@@ -124,7 +124,7 @@ public:
             
             Mesh pyramid = primitives::makePyramid();
             std::shared_ptr<Node> node = std::make_shared<Node>();
-            node->addComponent(std::make_shared<RenderComponent>(Model(pyramid, mat)));
+            node->addComponent(std::make_shared<RenderComponent>(pyramid, mat));
             node->transformation.setTranslation({0,1,0});
                         
             node->transformation.setRotation(angleAxis<float>(radians(1.0), {1,1,1}));
@@ -133,14 +133,14 @@ public:
             
             Mesh cube = lkogl::resources::mesh_loader::obj_from_file("box.obj").toIndexedModel().toMesh();
             std::shared_ptr<Node> node2 = std::make_shared<Node>();
-            node2->addComponent(std::make_shared<RenderComponent>(Model(cube, mat)));
+            node2->addComponent(std::make_shared<RenderComponent>(cube, mat));
             node2->transformation.setTranslation({-5,0.5,-2});
             node2->transformation.setRotation(angleAxis<float>(radians(45), {0,1,0}));
             node->addChild(node2);
             
             Mesh monkey = lkogl::resources::mesh_loader::obj_from_file("monkey.obj").toIndexedModel().toMesh();
             std::shared_ptr<Node> node3 = std::make_shared<Node>();
-            node3->addComponent(std::make_shared<RenderComponent>(Model(monkey, mat2)));
+            node3->addComponent(std::make_shared<RenderComponent>(monkey, mat2));
             Transformation spin;
             spin.rotation = angleAxis(radians(1.0f), {0.0f,1.0f,0.0f});;
             

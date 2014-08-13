@@ -13,7 +13,8 @@
 namespace lkogl {
     namespace scene {
         namespace components {
-            RenderComponent::RenderComponent(graphics::Model m) : model_(std::move(m))
+            RenderComponent::RenderComponent(graphics::GeometryObject geo, graphics::Material mat) :
+            geometry_(geo), material_(mat)
             {}
             
             void RenderComponent::update(TreeTransformation& transformation) const
@@ -22,8 +23,8 @@ namespace lkogl {
             
             void RenderComponent::render(const TreeTransformation& transformation, const graphics::Program& program) const
             {
-                graphics::MaterialUse mat(program, model_.material());
-                const graphics::GeometryObjectUse geo(model_.geometry());
+                graphics::MaterialUse mat(program, material_);
+                const graphics::GeometryObjectUse geo(geometry_);
                 graphics::ModelMatrixUse matrix(program, transformation.matrix());
                 
                 geo.render();
