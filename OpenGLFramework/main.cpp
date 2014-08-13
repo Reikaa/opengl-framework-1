@@ -95,7 +95,7 @@ public:
         
         glEnable(GL_FRAMEBUFFER_SRGB);
         
-        //glEnable(GL_DEPTH_CLAMP);
+        glEnable(GL_DEPTH_CLAMP);
         
         try {
             PlainText vshSourceAmbient("ambient-forward.vsh");
@@ -203,15 +203,27 @@ public:
             moveDelay-=0.03125;
         }
         
+        if(keyboard_.pressed(Keyboard::Key::LETTER_F)) {
+            if(movement.canFly()) {
+                cameraComponent->camera().setPosition({cameraComponent->camera().position().x,1,cameraComponent->camera().position().z});
+                movement.setFly(false);
+            } else {
+                movement.setFly(true);
+            }
+        }
+        
         if(mouseLocked) {
             movement.move(cameraComponent->camera(), dir, moveDelay/2);
-                
-        
-            if(mouse_.delta.x != 0) {
-                movement.rotateHorizontally(cameraComponent->camera(), radians(.25f*mouse_.delta.x));
-            }
-            if(mouse_.delta.y != 0) {
-                movement.rotateVertically(cameraComponent->camera(), radians(.25f*mouse_.delta.y));
+            
+            if(keyboard_.isDown(Keyboard::Key::LETTER_C)) {
+                movement.lookAt(cameraComponent->camera(), {0,0,0});
+            } else {
+                if(mouse_.delta.x != 0) {
+                    movement.rotateHorizontally(cameraComponent->camera(), radians(.25f*mouse_.delta.x));
+                }
+                if(mouse_.delta.y != 0) {
+                    movement.rotateVertically(cameraComponent->camera(), radians(.25f*mouse_.delta.y));
+                }
             }
         }
         

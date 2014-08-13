@@ -70,6 +70,11 @@ namespace lkogl {
                 fly_ = allowFly;
             }
             
+            bool FirstPersonMovement::canFly() const
+            {
+                return fly_;
+            }
+            
         }
     }
 }

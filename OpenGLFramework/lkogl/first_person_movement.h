@@ -31,6 +31,7 @@ namespace lkogl {
                 void lookAt(camera::Camera &cam, math::Vec3<float> target) const;
                 
                 void setFly(bool);
+                bool canFly() const;
             };
         }
     }
