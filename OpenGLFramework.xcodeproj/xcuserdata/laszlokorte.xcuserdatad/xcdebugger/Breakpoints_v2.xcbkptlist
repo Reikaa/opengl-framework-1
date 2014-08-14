@@ -42,11 +42,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "OpenGLFramework/main.cpp"
-            timestampString = "429723325.373149"
+            timestampString = "429732997.178576"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "165"
-            endingLineNumber = "165"
+            startingLineNumber = "147"
+            endingLineNumber = "147"
             landmarkName = "setUp()"
             landmarkType = "5">
          </BreakpointContent>
@@ -122,22 +122,6 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "OpenGLFramework/lkogl/render_target.cpp"
-            timestampString = "429702711.848099"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "51"
-            endingLineNumber = "51"
-            landmarkName = "FrameBufferResource::generate(std::vector&lt;TargetType&gt; targets)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "OpenGLFramework/lkogl/render_target.cpp"
             timestampString = "429706984.296382"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
@@ -153,13 +137,13 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "OpenGLFramework/lkogl/render_target.cpp"
-            timestampString = "429702287.934643"
+            filePath = "OpenGLFramework/lkogl/deferred_renderer.cpp"
+            timestampString = "429732650.879336"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "46"
-            endingLineNumber = "46"
-            landmarkName = "FrameBufferResource::getTextureResource(int num)"
+            startingLineNumber = "144"
+            endingLineNumber = "144"
+            landmarkName = "DeferredRenderer::resize(int w, int h)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

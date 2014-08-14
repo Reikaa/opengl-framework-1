@@ -20,7 +20,7 @@
 #include "lkogl/directional_light.h"
 #include "lkogl/point_light.h"
 #include "lkogl/spot_light.h"
-
+#include "deferred_renderer.h"
 
 #include "lkogl/obj_model.h"
 
@@ -39,6 +39,7 @@
 
 using namespace lkogl::math;
 using namespace lkogl::graphics;
+using namespace lkogl::graphics::renderign;
 using namespace lkogl::graphics::lighting;
 using namespace lkogl::geometry;
 using namespace lkogl::utils;
@@ -55,12 +56,7 @@ class MyGame {
     mutable std::shared_ptr<Node> graph;
     SceneDeepWalker walker;
     
-    mutable std::shared_ptr<FrameBuffer> deferredTarget_;
-    
-    mutable std::shared_ptr<Program> programDeferredGeo_;
-    mutable std::shared_ptr<Program> programDeferredPlain_;
-    mutable std::shared_ptr<Program> programDeferredStencil_;
-    mutable std::shared_ptr<Program> programDeferredDir_;
+    mutable std::shared_ptr<DeferredRenderer> renderer_;
 
     mutable std::shared_ptr<CameraComponent> cameraComponent;
     
@@ -106,21 +102,7 @@ public:
         
         try {
             
-            PlainText vshDefGeo("deferred-geometry.vsh");
-            PlainText fshDefGeo("deferred-geometry.fsh");
-            programDeferredGeo_ = std::make_shared<Program>(vshDefGeo.content, fshDefGeo.content);
-            
-            PlainText vshDefPlain("deferred-plain.vsh");
-            PlainText fshDefPlain("deferred-plain.fsh");
-            programDeferredPlain_ = std::make_shared<Program>(vshDefPlain.content, fshDefPlain.content);
-            
-            PlainText vshDefStencil("deferred-stencil.vsh");
-            PlainText fshDefStencil("deferred-stencil.fsh");
-            programDeferredStencil_ = std::make_shared<Program>(vshDefStencil.content, fshDefStencil.content);
-            
-            PlainText vshDefDir("deferred-directional.vsh");
-            PlainText fshDefDir("deferred-directional.fsh");
-            programDeferredDir_ = std::make_shared<Program>(vshDefDir.content, fshDefDir.content);
+            renderer_ = std::make_shared<DeferredRenderer>(screen_.width, screen_.height);
             
             graph = std::make_shared<Node>();
             
@@ -249,93 +231,16 @@ public:
     }
     
     void render() const {
-        
-        {
-            BufferTargetUse tr(*deferredTarget_);
-            
-            glEnable(GL_DEPTH_TEST);
-            glDepthMask(GL_TRUE);
-            glDisable(GL_BLEND);
-
-            glClearColor(0,0,0,0);
-            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-            
-            ProgramUse defgeo(*programDeferredGeo_);
-            walker.walk(graph, &Component::render, *programDeferredGeo_);
-            
-            glDepthMask(GL_FALSE);
-            glDisable(GL_DEPTH_TEST);
-        }
-        
-        DirectionalLight light({0.6,0.7,0.9}, 0.9, {1,-1,1});
-        DirectionalLight light2({0.6,0.7,0.9}, 0.9, {-1,-1,-1});
-        
-        glEnable(GL_BLEND);
-        glBlendEquation(GL_FUNC_ADD);
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-        
-        {
-            MainTargetUse s(screen_, 16, 9);
-
-            glClearColor(0,0.7,0.9,1);
-            glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-            
-            glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE);
-            glDepthMask(GL_FALSE);
-            
-            ProgramUse stencil(*programDeferredStencil_);
-            
-            BufferTextureUse tus(programDeferredStencil_->handles().samplerPosition, *deferredTarget_, 2, 2);
-            
-            GeometryObjectUse gu(*square_);
-            
-            {
-                StencilCreation c(true);
-                gu.render();
-            }
-            {
-                StencilUse stnu;
-
-
-                ProgramUse plain(*programDeferredPlain_);
-                
-                BufferTextureUse tuc(programDeferredPlain_->handles().samplerPosition, *deferredTarget_, 2, 2);
-                
-                gu.render();
-                
-
-                glBlendFunc(GL_ONE, GL_ONE);
-                
-                ProgramUse directional(*programDeferredDir_);
-                
-                glUniform3f(programDeferredDir_->handles().eyePosition, cameraComponent->camera().position().x, cameraComponent->camera().position().y, cameraComponent->camera().position().z);
-
-                BufferTextureUse tu1(programDeferredDir_->handles().samplerPosPosition, *deferredTarget_, 0, 0);
-                BufferTextureUse tu2(programDeferredDir_->handles().samplerNormPosition, *deferredTarget_, 1, 1);
-                BufferTextureUse tu3(programDeferredDir_->handles().samplerColPosition, *deferredTarget_, 2, 2);
-                
-                DirectionalLightUse lightuse(*programDeferredDir_, light);
-                
-                gu.render();
-                
-                DirectionalLightUse lightuse2(*programDeferredDir_, light2);
-                
-                gu.render();
-                
-            }
-
-        }
+        renderer_->render(graph, cameraComponent->camera());
     }
     
     void resize(int width, int height) const {
         screen_.width = width;
         screen_.height = height;
         
-        deferredTarget_ = std::make_shared<FrameBuffer>(screen_.width, screen_.height, std::vector<TargetType> {
-            TargetType{GL_COLOR_ATTACHMENT0, GL_RGBA16F},
-            TargetType{GL_COLOR_ATTACHMENT1, GL_RGBA16F},
-            TargetType{GL_COLOR_ATTACHMENT2, GL_RGBA16F},
-        });
+        if(renderer_.get() != 0) {
+            renderer_->resize(width, height);
+        }
     }
     
     const std::string title() const {

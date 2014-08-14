@@ -52,6 +52,7 @@
 		F2B563B6199CFA28007D38D3 /* deferred-stencil.vsh in Resources */ = {isa = PBXBuildFile; fileRef = F2B563B5199CFA28007D38D3 /* deferred-stencil.vsh */; };
 		F2B563B8199CFA37007D38D3 /* deferred-stencil.fsh in Resources */ = {isa = PBXBuildFile; fileRef = F2B563B7199CFA37007D38D3 /* deferred-stencil.fsh */; };
 		F2B563BD199D0CC8007D38D3 /* stencil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2B563BB199D0CC8007D38D3 /* stencil.cpp */; };
+		F2B563C1199D2AA3007D38D3 /* deferred_renderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2B563BF199D2AA3007D38D3 /* deferred_renderer.cpp */; };
 		F2DEC60419975A8700EE31E7 /* node_component.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2DEC60219975A8700EE31E7 /* node_component.cpp */; };
 		F2DEC6081997621400EE31E7 /* render_component.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2DEC6061997621400EE31E7 /* render_component.cpp */; };
 		F2DEC60D1997681E00EE31E7 /* camera_component.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2DEC60B1997681E00EE31E7 /* camera_component.cpp */; };
@@ -189,6 +190,8 @@
 		F2B563B7199CFA37007D38D3 /* deferred-stencil.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = "deferred-stencil.fsh"; sourceTree = "<group>"; };
 		F2B563BB199D0CC8007D38D3 /* stencil.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = stencil.cpp; sourceTree = "<group>"; };
 		F2B563BC199D0CC8007D38D3 /* stencil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stencil.h; sourceTree = "<group>"; };
+		F2B563BF199D2AA3007D38D3 /* deferred_renderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = deferred_renderer.cpp; sourceTree = "<group>"; };
+		F2B563C0199D2AA3007D38D3 /* deferred_renderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = deferred_renderer.h; sourceTree = "<group>"; };
 		F2DEC60219975A8700EE31E7 /* node_component.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = node_component.cpp; sourceTree = "<group>"; };
 		F2DEC60319975A8700EE31E7 /* node_component.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = node_component.h; sourceTree = "<group>"; };
 		F2DEC6061997621400EE31E7 /* render_component.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = render_component.cpp; sourceTree = "<group>"; };
@@ -383,6 +386,7 @@
 		F29707831993704700D48CE5 /* graphics */ = {
 			isa = PBXGroup;
 			children = (
+				F2B563BE199D2A8F007D38D3 /* rendering */,
 				F2DEC6341997EA4000EE31E7 /* lighting */,
 				F29707851993706C00D48CE5 /* shader.cpp */,
 				F29707861993706C00D48CE5 /* shader.h */,
@@ -483,6 +487,15 @@
 				F29707CA1993BD9700D48CE5 /* scene_deep_walker.h */,
 			);
 			name = walker;
+			sourceTree = "<group>";
+		};
+		F2B563BE199D2A8F007D38D3 /* rendering */ = {
+			isa = PBXGroup;
+			children = (
+				F2B563BF199D2AA3007D38D3 /* deferred_renderer.cpp */,
+				F2B563C0199D2AA3007D38D3 /* deferred_renderer.h */,
+			);
+			name = rendering;
 			sourceTree = "<group>";
 		};
 		F2DEC605199761FD00EE31E7 /* components */ = {
@@ -660,6 +673,7 @@
 				F29707BE199397FF00D48CE5 /* window.cpp in Sources */,
 				F2DEC6281997C7EA00EE31E7 /* mouse_adapter.cpp in Sources */,
 				F2A4967B1998102C00588B03 /* point_light.cpp in Sources */,
+				F2B563C1199D2AA3007D38D3 /* deferred_renderer.cpp in Sources */,
 				F21EA81119990FF200D78E1C /* geometry_object.cpp in Sources */,
 				F2DEC613199790A600EE31E7 /* camera.cpp in Sources */,
 				F21EA82F199ABD0B00D78E1C /* animation_component.cpp in Sources */,

@@ -43,7 +43,6 @@ namespace lkogl {
         public:
             FrameBufferResource(int width, int height, std::vector<TargetType> targets);
             ~FrameBufferResource();
-
             
             const TextureResource& getTextureResource(int num) const;
         private:
@@ -68,7 +67,7 @@ namespace lkogl {
             explicit FrameBuffer(int width, int height, std::vector<TargetType>);
             FrameBuffer(const FrameBuffer&);
             ~FrameBuffer();
-            
+                        
             friend class BufferTargetUse;
             friend class BufferTextureUse;
         };

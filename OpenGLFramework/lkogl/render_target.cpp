@@ -147,7 +147,6 @@ namespace lkogl {
         {
         }
         
-        
         BufferTargetUse::BufferTargetUse(const FrameBuffer& tex) :
         b_(*tex.resource_.get())
         {
