@@ -54,12 +54,8 @@ class MyGame {
     mutable std::shared_ptr<Node> graph;
     SceneDeepWalker walker;
     
-    mutable std::shared_ptr<Texture> deferredTexture_;
+    mutable std::shared_ptr<FrameBuffer> deferredTarget_;
     
-    mutable std::shared_ptr<Program> programAmbient_;
-    mutable std::shared_ptr<Program> programDirectional_;
-    mutable std::shared_ptr<Program> programPoint_;
-    mutable std::shared_ptr<Program> programSpot_;
     mutable std::shared_ptr<Program> programDeferredGeo_;
     mutable std::shared_ptr<Program> programDeferredPlain_;
     mutable std::shared_ptr<Program> programDeferredDir_;
@@ -94,7 +90,7 @@ public:
         
         glEnable(GL_TEXTURE_2D);
         glEnable( GL_BLEND );
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        
         
         glFrontFace(GL_CCW);
         glCullFace(GL_BACK);
@@ -104,25 +100,9 @@ public:
         glDepthFunc( GL_LEQUAL );
         
         
-        glEnable(GL_DEPTH_CLAMP);
+        //glEnable(GL_DEPTH_CLAMP);
         
         try {
-            
-            PlainText vshSourceAmbient("ambient-forward.vsh");
-            PlainText fshSourceAmbient("ambient-forward.fsh");
-            programAmbient_ = std::make_shared<Program>(vshSourceAmbient.content, fshSourceAmbient.content);
-            
-            PlainText vshSourceDirectional("directional-forward.vsh");
-            PlainText fshSourceDirectional("directional-forward.fsh");
-            programDirectional_ = std::make_shared<Program>(vshSourceDirectional.content, fshSourceDirectional.content);
-            
-            PlainText vshSourcePoint("point-forward.vsh");
-            PlainText fshSourcePoint("point-forward.fsh");
-            programPoint_ = std::make_shared<Program>(vshSourcePoint.content, fshSourcePoint.content);
-            
-            PlainText vshSourceSpot("spot-forward.vsh");
-            PlainText fshSourceSpot("spot-forward.fsh");
-            programSpot_ = std::make_shared<Program>(vshSourceSpot.content, fshSourceSpot.content);
             
             PlainText vshDefGeo("deferred-geometry.vsh");
             PlainText fshDefGeo("deferred-geometry.fsh");
@@ -263,40 +243,63 @@ public:
     }
     
     void render() const {
+        
         {
-
-            TextureRendering tr(*deferredTexture_);
-            //glEnable( GL_BLEND );
-
+            BufferTargetUse tr(*deferredTarget_);
+            
+            glEnable(GL_DEPTH_TEST);
+            glDepthMask(GL_TRUE);
+            glDisable(GL_BLEND);
 
             glClearColor(0,0,0,0);
-
-
-            glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
+            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
             
             ProgramUse defgeo(*programDeferredGeo_);
             walker.walk(graph, &Component::render, *programDeferredGeo_);
-            //glDisable( GL_BLEND );
-
+            
+            ProgramUse plain(*programDeferredPlain_);
+            GeometryObjectUse gu(*square_);
+            
+            glDepthMask(GL_FALSE);
+            glDisable(GL_DEPTH_TEST);
         }
         
-        DirectionalLight light({0.6,0.7,0.9}, 0.1, {1,-1,1});
-        DirectionalLight light2({0.6,0.7,0.9}, 0.1, {-1,-1,-1});
-
+        DirectionalLight light({0.6,0.7,0.9}, 0.9, {1,-1,1});
+        DirectionalLight light2({0.6,0.7,0.9}, 0.9, {-1,-1,-1});
+        
+        
+        
+        glEnable(GL_BLEND);
+        glBlendEquation(GL_FUNC_ADD);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         
         {
-            ScreenRendering s(screen_, 16, 9);
+            MainTargetUse s(screen_, 16, 9);
 
-            glClearColor(1,1,1,1);
-            glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
-            ProgramUse plain(*programDeferredDir_);
+            glClearColor(0,0.7,0.9,1);
+            glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+            
+            ProgramUse plain(*programDeferredPlain_);
+            
+            BufferTextureUse tu1(programDeferredPlain_->handles().samplerPosition, *deferredTarget_, 2, 2);
+            
+            GeometryObjectUse gu(*square_);
+                        
+            gu.render();
+        }
+        
+        glBlendFunc(GL_ONE, GL_ONE);
+        
+        {
+            MainTargetUse s(screen_, 16, 9);
+            
+            ProgramUse directional(*programDeferredDir_);
+            
             glUniform3f(programDeferredDir_->handles().eyePosition, cameraComponent->camera().position().x, cameraComponent->camera().position().y, cameraComponent->camera().position().z);
 
-            TextureUse tu1(programDeferredDir_->handles().samplerPosPosition, *deferredTexture_, 0, 0);
-            
-            TextureUse tu2(programDeferredDir_->handles().samplerNormPosition, *deferredTexture_, 1, 1);
-                           
-            TextureUse tu3(programDeferredDir_->handles().samplerColPosition, *deferredTexture_, 2, 2);
+            BufferTextureUse tu1(programDeferredDir_->handles().samplerPosPosition, *deferredTarget_, 0, 0);
+            BufferTextureUse tu2(programDeferredDir_->handles().samplerNormPosition, *deferredTarget_, 1, 1);
+            BufferTextureUse tu3(programDeferredDir_->handles().samplerColPosition, *deferredTarget_, 2, 2);
             
             GeometryObjectUse gu(*square_);
             
@@ -308,93 +311,17 @@ public:
             
             gu.render();
         }
-        
-        if(keyboard_.isDown(Keyboard::Key::SPACE)){
-            ScreenRendering(screen_, 16, 9);
-            glClearColor(0,0,0,0);
-            glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
-            ProgramUse directional(*programDirectional_);
-            
-            DirectionalLightUse lightuse(*programDirectional_, light);
-
-            walker.walk(graph, &Component::render, *programDirectional_);
-
-            DirectionalLightUse lightuse2(*programDirectional_, light2);
-            
-            walker.walk(graph, &Component::render, *programDirectional_);
-
-        }
-        
-//        glEnable( GL_POLYGON_OFFSET_FILL );
-//        glPolygonOffset( -.1f, -0.1f );
-//        glEnable(GL_BLEND);
-//        glBlendFunc(GL_ONE, GL_ONE);
-//        
-//        glDepthFunc(GL_LEQUAL);
-        
-//        {
-//            ProgramUse directional(*programDirectional_);
-//            DirectionalLight light({0.6,0.7,0.9}, 0.1, {1,-1,1});
-//            DirectionalLightUse lightuse(*programDirectional_, light);
-//            
-//            walker.walk(graph, &Component::render, *programDirectional_);
-//            
-//            DirectionalLight light2({0.6,0.7,0.9}, 0.1, {-1,-1,-1});
-//            DirectionalLightUse lightuse2(*programDirectional_, light2);
-//            
-//            walker.walk(graph, &Component::render, *programDirectional_);
-//        }
-        
-//        
-//        glPolygonOffset( -.2f, -0.2f );
-//        
-//        {
-//            ProgramUse pointy(*programPoint_);
-//            PointLight pp({1,0,0}, 0.7, {0,2,2}, Attenuation(0, 0, 1));
-//            PointLightUse(*programPoint_, pp);
-//            
-//            walker.walk(graph, &Component::render, *programPoint_);
-//            
-            //            PointLight pp2({1,0,1}, 0.7, {0,2,-2}, Attenuation(0, 0, 1));
-            //            PointLightUse(*programPoint_, pp2);
-            //
-            //            walker.walk(graph, &Component::render, *programPoint_);
-            
-            //
-            //            PointLight pp3({0,1,1}, 0.7, {-2,2,0}, Attenuation(0, 0, 1));
-            //            PointLightUse(*programPoint_, pp3);
-            //
-            //            walker.walk(graph, &Component::render, *programPoint_);
-            //
-            //            PointLight pp4({1,1,0}, 0.7, {2,2,0}, Attenuation(0, 0, 1));
-            //            PointLightUse(*programPoint_, pp4);
-            //
-            //            walker.walk(graph, &Component::render, *programPoint_);
-//        }
-//
-//        glPolygonOffset( -.3f, -0.3f );
-//        
-//        {
-//            ProgramUse spoty(*programSpot_);
-//            SpotLight sp({1,1,0}, 0.7, {-3.9,2,-2}, Attenuation(1, 0, 4), {.1,-1,0}, 0.5);
-//            SpotLightUse(*programSpot_, sp);
-//            
-//            walker.walk(graph, &Component::render, *programSpot_);
-//        }
-//        
-//        glDisable( GL_POLYGON_OFFSET_FILL );
-//        
-//        glDepthFunc(GL_LEQUAL);
-//        
-//        glDepthMask(GL_TRUE);
-//        glDisable(GL_BLEND);
     }
     
     void resize(int width, int height) const {
         screen_.width = width;
         screen_.height = height;
         
-        deferredTexture_ = std::make_shared<Texture>(screen_.width,screen_.height, std::vector<GLenum>{GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2});
+        deferredTarget_ = std::make_shared<FrameBuffer>(screen_.width, screen_.height, std::vector<TargetType> {
+            TargetType{GL_COLOR_ATTACHMENT0, GL_RGBA16F},
+            TargetType{GL_COLOR_ATTACHMENT1, GL_RGBA16F},
+            TargetType{GL_COLOR_ATTACHMENT2, GL_RGBA16F}
+        });
     }
     
     const std::string title() const {

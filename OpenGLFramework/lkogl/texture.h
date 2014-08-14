@@ -20,66 +20,46 @@ namespace lkogl {
         
         class TextureResource {
             const GLenum textureTarget_ = GL_TEXTURE_2D;
-            const std::vector<GLuint> handles_;
-            const GLuint numTextures_;
+            mutable GLuint handle_;
             const int width_;
             const int height_;
-            
-            const struct Target {
-                GLuint frameBuffer;
-                GLuint renderBuffer;
-            } targets_;
+
         public:
-            class SlotBinding {
-                const TextureResource& r_;
-            public:
-                SlotBinding(const TextureResource& r, GLenum slot, GLuint textureNum) : r_(r) {
-                    glActiveTexture(GL_TEXTURE0+slot);
-                    glBindTexture(r.textureTarget_, r_.handles_[textureNum]);
-                }
-                
-                ~SlotBinding() {
-                    glBindTexture(r_.textureTarget_, 0);
-                    glActiveTexture(GL_TEXTURE0);
-                }
-            };
-            
-            class RenderTargetBinding {
-                const TextureResource& r_;
-            public:
-                RenderTargetBinding(const TextureResource& r) : r_(r) {
-                    glBindTexture(GL_TEXTURE_2D,0);
-                    glBindFramebuffer(GL_FRAMEBUFFER, r.targets_.frameBuffer);
-                    
-                    glViewport(0, 0, r.width_, r.height_);
-                }
-                
-                ~RenderTargetBinding() {
-                    glBindTexture(GL_TEXTURE_2D,0);
-                    glBindFramebuffer(GL_FRAMEBUFFER, 0);
-                }
-            };
             
             TextureResource(const TextureResource&) = delete;
-            TextureResource(TextureResource&&) = delete;
-            TextureResource(int width, int height, std::vector<GLenum> attachments);
+            TextureResource(TextureResource&&);
+            TextureResource(int width, int height);
             ~TextureResource();
             
             void replaceImage(const utils::Image& image) throw (TextureException);
-            void use() const;
             
         private:
-            std::vector<GLuint> generateTexture(GLuint num) const;
-            Target generateRenderTarget(std::vector<GLenum>) const;
+            explicit TextureResource(int handle, int w, int h);
+            GLuint generateTexture() const;
+            
+            friend class FrameBufferResource;
+            friend class TextureBinding;
+        };
+        
+        
+        class TextureBinding {
+            const TextureResource& r_;
+        public:
+            TextureBinding(const TextureResource& r, GLenum slot) : r_(r) {
+                glActiveTexture(GL_TEXTURE0+slot);
+                glBindTexture(r.textureTarget_, r_.handle_);
+            }
+            
+            ~TextureBinding() {
+                glBindTexture(r_.textureTarget_, 0);
+                glActiveTexture(GL_TEXTURE0);
+            }
         };
         
         class Texture {
             const std::shared_ptr<TextureResource> resource_;
         public:
             Texture(const utils::Image&) throw (TextureException);
-            Texture(int width, int height) throw (TextureException);
-            explicit Texture(int width, int height, std::vector<GLenum>) throw (TextureException);
-            explicit Texture(const utils::Image&, std::vector<GLenum>) throw (TextureException);
             Texture(const Texture&);
             ~Texture();
         private:            
@@ -88,19 +68,12 @@ namespace lkogl {
         };
         
         class TextureUse {
-            TextureResource::SlotBinding b_;
+            TextureBinding b_;
         public:
             TextureUse(const Program& p, const Texture&);
-            TextureUse(const Program& p, const Texture&, int num, int slto);
-            TextureUse(GLuint loc, const Texture&, int num, int slto);
+            TextureUse(const Program& p, const Texture&, int slto);
+            TextureUse(GLuint loc, const Texture&, int slto);
             ~TextureUse();
-        };
-        
-        class TextureRendering {
-            TextureResource::RenderTargetBinding b_;
-        public:
-            TextureRendering(const Texture&);
-            ~TextureRendering();
         };
     }
 }

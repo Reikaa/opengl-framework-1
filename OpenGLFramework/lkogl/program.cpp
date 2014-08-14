@@ -90,7 +90,6 @@ namespace lkogl {
                 smpPosPosition = glGetUniformLocation(handle, "uSamplerPosition");
                 smpNormPosition = glGetUniformLocation(handle, "uSamplerNormal");
                 smpColPosition = glGetUniformLocation(handle, "uSamplerColor");
-                
             } catch(...) {
                 glDeleteProgram(handle);
                 throw;

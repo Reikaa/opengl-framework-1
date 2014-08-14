@@ -50,9 +50,9 @@ vec4 calcDirectionalLight(DirectionalLight light, vec3 normal, vec3 fPosition) {
 }
 
 void main() {
-    vec3 defPos = texture(uSamplerPosition, fUV).xyz;
+    vec4 defPos = texture(uSamplerPosition, fUV);
     vec3 defNormal = texture(uSamplerNormal, fUV).xyz;
     vec4 defColor = texture(uSamplerColor, fUV);
-    
-    oColor = vec4(0.2*defColor.xyz,defColor.w) + defColor*calcDirectionalLight(uDirectionalLight, normalize(defNormal), defPos);
+        
+    oColor = (defColor*calcDirectionalLight(uDirectionalLight, normalize(defNormal), defPos.xyz));
 }

@@ -11,110 +11,38 @@
 
 namespace lkogl {
     namespace graphics {
-        TextureResource::TextureResource(int width, int height, std::vector<GLenum> attachments) :
-            handles_(generateTexture((GLuint)attachments.size())), targets_(generateRenderTarget(attachments)), width_(width), height_(height), numTextures_((GLuint)attachments.size())
+        TextureResource::TextureResource(int width, int height) :
+        handle_(generateTexture()), width_(width), height_(height)
         {
         }
         
-        std::vector<GLuint> TextureResource::generateTexture(GLuint num) const {
-            GLuint handleArray[num];
-            glGenTextures(num, handleArray);
+        TextureResource::TextureResource(TextureResource&& old) :
+        handle_(old.handle_), width_(old.width_), height_(old.height_)
+        {
+            old.handle_ = 0;
+        }
+        
+        TextureResource::TextureResource(int i, int w, int h) :
+        handle_(i), width_(w), height_(h)
+        {
+        }
+        
+        GLuint TextureResource::generateTexture() const {
+            GLuint handle;
+            glGenTextures(1, &handle);
             
-            if(!*handleArray) {
+            if(!handle) {
                 throw "Texture could not be created";
             }
            
-            return std::vector<GLuint>(handleArray, handleArray+num);
-        }
-        
-        TextureResource::Target TextureResource::generateRenderTarget(std::vector<GLenum> attachments) const
-        {
-            constexpr uint MAX_BOUND = 32; //32 is the max number of bound textures in OpenGL
-            Target t {0,0};
-            GLuint numAttachments = (GLuint)attachments.size();
-            bool hasDepth = false;
-            
-            if(attachments.empty()) {
-                return t;
-            }
-            
-            if(attachments.size() > MAX_BOUND) {
-                throw "too many attachments";
-            }
-            
-            GLenum drawBuffers[MAX_BOUND];
-            
-            for(int i = 0; i < numAttachments; i++)
-            {
-                if(attachments[i] == GL_DEPTH_ATTACHMENT)
-                {
-                    drawBuffers[i] = GL_NONE;
-                    hasDepth = true;
-                }
-                else
-                    drawBuffers[i] = attachments[i];
-                
-                if(attachments[i] == GL_NONE)
-                    continue;
-                
-                if(t.frameBuffer == 0)
-                {
-                    glGenFramebuffers(1, &t.frameBuffer);
-                    glBindFramebuffer(GL_FRAMEBUFFER, t.frameBuffer);
-                }
-                
-                glBindTexture(GL_TEXTURE_2D, handles_[i]);
-                
-                glTexParameterf(textureTarget_, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-                glTexParameterf(textureTarget_, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-                
-                
-                if(attachments[i] == GL_DEPTH_ATTACHMENT) {
-                     glTexImage2D(textureTarget_, 0, GL_DEPTH_COMPONENT32, width_, height_, 0, GL_DEPTH_COMPONENT, GL_UNSIGNED_BYTE, 0);
-                } else {
-                     glTexImage2D(textureTarget_, 0, GL_RGB16F, width_, height_, 0, GL_RGBA, GL_UNSIGNED_BYTE, 0);
-                }
-
-                glFramebufferTexture2D(GL_FRAMEBUFFER, attachments[i], textureTarget_, handles_[i], 0);
-            }
-            
-            if(t.frameBuffer == 0) {
-                return t;
-            }
-            
-            if(!hasDepth)
-            {
-                glGenRenderbuffers(1, &t.renderBuffer);
-                glBindRenderbuffer(GL_RENDERBUFFER, t.renderBuffer);
-                glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, width_, height_);
-                glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, t.renderBuffer);
-            }
-            
-            glDrawBuffers(numAttachments, drawBuffers);
-            
-            GLenum err = glCheckFramebufferStatus(GL_FRAMEBUFFER);
-            if(err != GL_FRAMEBUFFER_COMPLETE)
-            {
-                std::cout << err;
-                exit(1);
-            }
-            
-            glBindFramebuffer(GL_FRAMEBUFFER, 0);
-            
-            return t;
+            return handle;
         }
         
         TextureResource::~TextureResource() {
-            glDeleteTextures(numTextures_, &handles_.front());
-            if(targets_.frameBuffer) {
-                glDeleteFramebuffers(1, &targets_.frameBuffer);
-            }
-            if(targets_.frameBuffer) {
-                glDeleteRenderbuffers(1, &targets_.renderBuffer);
+            if(handle_) {
+                glDeleteTextures(1, &handle_);
             }
         }
-        
-        
         
         void TextureResource::replaceImage(const utils::Image& image) throw (TextureException) {
             int mode;
@@ -130,7 +58,7 @@ namespace lkogl {
                 throw "Invalid texture format";
             }
             
-            TextureResource::SlotBinding b(*this, 1, 0);
+            TextureBinding b(*this, 1);
             
             glTexImage2D(textureTarget_, 0, mode, width_, height_, 0, modeInternal, GL_UNSIGNED_BYTE, image.pixels());
             glTexParameteri(textureTarget_, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
@@ -138,26 +66,10 @@ namespace lkogl {
         }
         
         Texture::Texture(const utils::Image& img) throw (TextureException) :
-        Texture(img.width(), img.height()) {
+        resource_(std::make_shared<TextureResource>(img.width(), img.height())) {
             resource_->replaceImage(img);
         }
-        
-        Texture::Texture(int width, int height) throw(lkogl::graphics::TextureException) :
-            Texture(width, height, {GL_NONE})
-        {
-        }
-        
-        Texture::Texture(int width, int height, std::vector<GLenum> attachements) throw (TextureException):
-        resource_(std::make_shared<TextureResource>(width, height, attachements))
-        {
-        }
-        
-        Texture::Texture(const utils::Image& img, std::vector<GLenum> attachements) throw (TextureException):
-        Texture(img.width(), img.height(), attachements)
-        {
-            resource_->replaceImage(img);
-        }
-        
+    
         Texture::Texture(const Texture& tex) : resource_(tex.resource_) {
 
         }
@@ -167,33 +79,23 @@ namespace lkogl {
         }
         
         TextureUse::TextureUse(const Program& p, const Texture& tex) :
-        TextureUse(p, tex, 0, 0)
+        TextureUse(p, tex, 0)
         {
         }
         
-        TextureUse::TextureUse(const Program& p, const Texture& tex, int num, int slot) :
-        b_(*tex.resource_.get(), slot, num)
+        TextureUse::TextureUse(const Program& p, const Texture& tex, int slot) :
+        b_(*tex.resource_.get(), slot)
         {
             glUniform1i(p.handles().samplerPosition, slot);
         }
         
-        TextureUse::TextureUse(GLuint loc, const Texture& tex, int num, int slot) :
-        b_(*tex.resource_.get(), slot, num)
+        TextureUse::TextureUse(GLuint loc, const Texture& tex, int slot) :
+        b_(*tex.resource_.get(), slot)
         {
             glUniform1i(loc, slot);
         }
         
         TextureUse::~TextureUse()
-        {
-        }
-        
-        TextureRendering::TextureRendering(const Texture& tex) :
-        b_(*tex.resource_.get())
-        {
-            
-        }
-        
-        TextureRendering::~TextureRendering()
         {
         }
     }

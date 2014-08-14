@@ -2,11 +2,11 @@
 
 uniform sampler2D uSampler;
 
-in vec2 fPosition;
+in vec2 fUV;
 
 out vec4 oColor;
 
 void main() {
-    vec2 uv = (vec2(1,1)+fPosition)/2;
-    oColor = texture(uSampler, uv);
+    vec4 col = texture(uSampler, fUV);
+    oColor = vec4(0.3*col.xyz, col.w);
 }

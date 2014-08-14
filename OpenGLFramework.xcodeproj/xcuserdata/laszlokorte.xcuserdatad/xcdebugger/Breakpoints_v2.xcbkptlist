@@ -42,11 +42,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "OpenGLFramework/main.cpp"
-            timestampString = "429669941.463655"
+            timestampString = "429703785.716097"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "179"
-            endingLineNumber = "179"
+            startingLineNumber = "159"
+            endingLineNumber = "159"
             landmarkName = "setUp()"
             landmarkType = "5">
          </BreakpointContent>
@@ -58,12 +58,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "OpenGLFramework/lkogl/texture.cpp"
-            timestampString = "429642897.691951"
+            timestampString = "429702711.848099"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "27"
-            endingLineNumber = "27"
-            landmarkName = "TextureResource::generateTexture(GLuint num)"
+            startingLineNumber = "38"
+            endingLineNumber = "38"
+            landmarkName = "TextureResource::generateTexture()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -74,12 +74,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "OpenGLFramework/lkogl/render_target.cpp"
-            timestampString = "429629667.249371"
+            timestampString = "429699786.538689"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "20"
-            endingLineNumber = "20"
-            landmarkName = "ScreenRendering::ScreenRendering(const Screen&amp; screen, int ratioWidth, int rationHeight)"
+            startingLineNumber = "21"
+            endingLineNumber = "21"
+            landmarkName = "MainTargetUse::MainTargetUse(const Screen&amp; screen, int ratioWidth, int rationHeight)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -95,7 +95,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "15"
             endingLineNumber = "15"
-            landmarkName = "TextureResource::TextureResource(int width, int height, std::vector&lt;GLenum&gt; attachments)"
+            landmarkName = "TextureResource::TextureResource(int width, int height)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -106,12 +106,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "OpenGLFramework/lkogl/texture.cpp"
-            timestampString = "429642030.533111"
+            timestampString = "429702711.848099"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "20"
-            endingLineNumber = "20"
-            landmarkName = "TextureResource::generateTexture(GLuint num)"
+            startingLineNumber = "31"
+            endingLineNumber = "31"
+            landmarkName = "TextureResource::generateTexture()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -121,13 +121,13 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "OpenGLFramework/lkogl/texture.cpp"
-            timestampString = "429642897.691951"
+            filePath = "OpenGLFramework/lkogl/render_target.cpp"
+            timestampString = "429702711.848099"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "33"
-            endingLineNumber = "33"
-            landmarkName = "TextureResource::generateRenderTarget(std::vector&lt;GLenum&gt; attachments)"
+            startingLineNumber = "51"
+            endingLineNumber = "51"
+            landmarkName = "FrameBufferResource::generate(std::vector&lt;TargetType&gt; targets)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -137,13 +137,29 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "OpenGLFramework/lkogl/texture.cpp"
-            timestampString = "429666582.437997"
+            filePath = "OpenGLFramework/lkogl/render_target.cpp"
+            timestampString = "429706984.296382"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "99"
-            endingLineNumber = "99"
-            landmarkName = "TextureResource::generateRenderTarget(std::vector&lt;GLenum&gt; attachments)"
+            startingLineNumber = "147"
+            endingLineNumber = "147"
+            landmarkName = "FrameBuffer::~FrameBuffer()"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "OpenGLFramework/lkogl/render_target.cpp"
+            timestampString = "429702287.934643"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "46"
+            endingLineNumber = "46"
+            landmarkName = "FrameBufferResource::getTextureResource(int num)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

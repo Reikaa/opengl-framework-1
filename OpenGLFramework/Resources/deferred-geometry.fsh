@@ -12,6 +12,6 @@ layout(location = 2) out vec4 oColor;
 
 void main() {
     oPos = vec4(fPosition,1);
-    oNormal = vec4(fNormal,1);
+    oNormal = vec4(fNormal,0);
     oColor = vec4(texture(uSampler, fTexCoord).xyz, 1);
 }
