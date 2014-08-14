@@ -20,20 +20,12 @@ namespace lkogl {
         
         const math::Mat4<float>& Camera::viewMatrix() const
         {
-            if(dirtyView_) {
-                viewMatrix_ = math::inverse(math::translate(math::Mat4<float>(), position_) * math::mat4_cast(rotation_));
-                dirtyView_ = false;
-            }
             return viewMatrix_;
         }
         
-        const math::Mat4<float>& Camera::viewProjectionMatrix() const
+        const Projection& Camera::projection() const
         {
-            if(dirtyView_ || dirtyProjection_) {
-                viewProjectionMatrix_ = projection_.matrix() * viewMatrix();
-                dirtyProjection_ = false;
-            }
-            return viewProjectionMatrix_;
+            return projection_;
         }
         
         const math::Vec3<float>& Camera::position() const
@@ -41,32 +33,25 @@ namespace lkogl {
             return position_;
         }
         
-        const math::Quat<float>& Camera::rotation() const
+        const math::Mat4<float>& Camera::viewProjectionMatrix() const
         {
-            
-            return rotation_;
+            if(dirtyViewProjection_) {
+                viewProjectionMatrix_ = projection_.matrix() * viewMatrix_;
+                dirtyViewProjection_ = false;
+            }
+            return viewProjectionMatrix_;
         }
         
-        void Camera::setPosition(const math::Vec3<float>& p)
-        {
-            position_ = p;
-            dirtyView_ = true;
-        }
-        
-        void Camera::setRotation(const math::Quat<float>& r)
-        {
-            rotation_ = r;
-            dirtyView_ = true;
-        }
-                
         void Camera::setProjection(const Projection& proj)
         {
             projection_ = proj;
         }
         
-        void Camera::lookAt(const math::Vec3<float>& p)
+        void Camera::setViewMatrix(const math::Mat4<float> & matrix)
         {
-            rotation_ = math::rotation(math::Vec3<float>(0,0,-1), math::normalize(p-position_));
+            viewMatrix_ = matrix;
+            position_ = -math::Vec3<float>(matrix[4][0]);
+            dirtyViewProjection_ = true;
         }
         
     }

@@ -17,14 +17,14 @@ namespace lkogl {
             {
             }
             
-            void FirstPersonMovement::rotateHorizontally(camera::Camera &cam, float radians) const
+            void FirstPersonMovement::rotateHorizontally(scene::TreeTransformation& cam, float radians) const
             {
                 auto q = math::angleAxis(-radians, up_);
                 
                 cam.setRotation(math::normalize(q * cam.rotation()));
             }
             
-            void FirstPersonMovement::rotateVertically(camera::Camera &cam, float radians) const
+            void FirstPersonMovement::rotateVertically(scene::TreeTransformation& cam, float radians) const
             {
                 auto q = math::angleAxis(-radians, sideward_);
                 
@@ -35,7 +35,7 @@ namespace lkogl {
                 }
             }
             
-            void FirstPersonMovement::move(camera::Camera &cam, math::Vec2<float> dir2d, float amount) const
+            void FirstPersonMovement::move(scene::TreeTransformation& cam, math::Vec2<float> dir2d, float amount) const
             {
                 if(math::length(math::normalize(dir2d)) == 0) return;
 
@@ -43,13 +43,13 @@ namespace lkogl {
                 if(!fly_) {
                     dir.y = 0;
                 }
-                auto newPos = cam.position() + amount*math::normalize(dir);
-                cam.setPosition(newPos);
+                auto newPos = cam.translation() + amount*math::normalize(dir);
+                cam.setTranslation(newPos);
             }
             
-            void FirstPersonMovement::lookAt(camera::Camera &cam, math::Vec3<float> p) const
+            void FirstPersonMovement::lookAt(scene::TreeTransformation& cam, math::Vec3<float> p) const
             {
-                math::Vec3<float> direction = math::normalize(p - cam.position());
+                math::Vec3<float> direction = math::normalize(p - cam.translation());
                 
                 math::Quat<float> rot1 = math::rotation(-forward_, direction);
                 // Recompute desiredUp so that it's perpendicular to the direction

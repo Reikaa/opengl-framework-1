@@ -19,6 +19,7 @@ namespace lkogl {
             
             void CameraComponent::update(TreeTransformation& transformation) const
             {
+                camera_.setViewMatrix(math::inverse(transformation.matrix()));
             }
             
             void CameraComponent::render(const TreeTransformation& transformation, const graphics::Program& program) const

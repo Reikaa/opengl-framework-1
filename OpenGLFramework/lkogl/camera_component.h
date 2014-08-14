@@ -17,7 +17,7 @@ namespace lkogl {
     namespace scene {
         namespace components {
             class CameraComponent : public Component {
-                camera::Camera camera_;
+                mutable camera::Camera camera_;
             public:
                 CameraComponent(camera::Camera cam);
                 ~CameraComponent();

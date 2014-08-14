@@ -56,6 +56,10 @@ class MyGame {
     SceneDeepWalker walker;
     
     mutable std::shared_ptr<DeferredRenderer> renderer_;
+    
+    mutable std::shared_ptr<Node> camNode_;
+    mutable std::shared_ptr<Node> monkeyNode_;
+    mutable bool exprerimentToggle = false;
 
     mutable std::shared_ptr<CameraComponent> cameraComponent;
     
@@ -145,12 +149,17 @@ public:
             
             movement.setFly(true);
             
-            auto cam = Camera(screen_.width, screen_.height);
-            cam.setPosition({4,1,5});
-            movement.lookAt(cam, {0,0,0});
-            cameraComponent = std::make_shared<CameraComponent>(cam);
+            cameraComponent = std::make_shared<CameraComponent>(Camera(screen_.width, screen_.height));
             
-            graph->addComponent(cameraComponent);
+            camNode_ = std::make_shared<Node>();
+
+            camNode_->addComponent(cameraComponent);
+            camNode_->transformation.setTranslation({8,1,3});
+            node3->addChild(camNode_);
+            monkeyNode_ = node3;
+            
+            //movement.lookAt(camNode->transformation, {0,0,0});
+
             
         } catch(ShaderException e) {
             std::cerr << e.msg << std::endl;
@@ -197,7 +206,7 @@ public:
         
         if(keyboard_.pressed(Keyboard::Key::LETTER_F)) {
             if(movement.canFly()) {
-                cameraComponent->camera().setPosition({cameraComponent->camera().position().x,1,cameraComponent->camera().position().z});
+                camNode_->transformation.setTranslation({camNode_->transformation.translation().x, 0, camNode_->transformation.translation().z});
                 movement.setFly(false);
             } else {
                 movement.setFly(true);
@@ -205,18 +214,29 @@ public:
         }
         
         if(mouseLocked) {
-            movement.move(cameraComponent->camera(), dir, moveDelay/2);
+            movement.move(camNode_->transformation, dir, moveDelay/2);
             
             if(keyboard_.isDown(Keyboard::Key::LETTER_C)) {
-                movement.lookAt(cameraComponent->camera(), {0,0,0});
+                movement.lookAt(camNode_->transformation, {0,0,0});
             } else {
                 if(mouse_.delta.x != 0) {
-                    movement.rotateHorizontally(cameraComponent->camera(), radians(.25f*mouse_.delta.x));
+                    movement.rotateHorizontally(camNode_->transformation, radians(.25f*mouse_.delta.x));
                 }
                 if(mouse_.delta.y != 0) {
-                    movement.rotateVertically(cameraComponent->camera(), radians(.25f*mouse_.delta.y));
+                    movement.rotateVertically(camNode_->transformation, radians(.25f*mouse_.delta.y));
                 }
             }
+        }
+        
+        if(keyboard_.pressed(Keyboard::Key::LETTER_T)) {
+            if(exprerimentToggle) {
+                graph->removeChild(camNode_);
+                monkeyNode_->addChild(camNode_);
+            } else {
+                monkeyNode_->removeChild(camNode_);
+                graph->addChild(camNode_);
+            }
+            exprerimentToggle = !exprerimentToggle;
         }
         
     }

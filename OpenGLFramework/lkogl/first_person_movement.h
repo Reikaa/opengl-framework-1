@@ -10,6 +10,7 @@
 #define __OpenGLFramework__first_person_movement__
 
 #include "camera.h"
+#include "tree_transformation.h"
 
 namespace lkogl {
     namespace input {
@@ -22,13 +23,13 @@ namespace lkogl {
             public:
                 FirstPersonMovement();
                 
-                void rotateHorizontally(camera::Camera &cam, float rad) const;
+                void rotateHorizontally(scene::TreeTransformation& cam, float rad) const;
                 
-                void rotateVertically(camera::Camera &cam, float rad) const;
+                void rotateVertically(scene::TreeTransformation& cam, float rad) const;
                 
-                void move(camera::Camera &cam, math::Vec2<float> dir2d, float amoun) const;
+                void move(scene::TreeTransformation& cam, math::Vec2<float> dir2d, float amoun) const;
                 
-                void lookAt(camera::Camera &cam, math::Vec3<float> target) const;
+                void lookAt(scene::TreeTransformation& cam, math::Vec3<float> target) const;
                 
                 void setFly(bool);
                 bool canFly() const;

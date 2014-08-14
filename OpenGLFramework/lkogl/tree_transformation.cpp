@@ -22,8 +22,27 @@ namespace lkogl {
         TreeTransformation::~TreeTransformation() {
         }
         
-        void TreeTransformation::setParent(const TreeTransformation* p) {
+        void TreeTransformation::setParent(const TreeTransformation* p, bool keepAbsolute) {
+            if(keepAbsolute) {
+                math::Mat4<float> prev;
+                math::Mat4<float> next;
+                math::Mat4<float> self = relativTransform_.matrix();
+                
+                if(parent_ != 0) {
+                    prev = parent_->matrix();
+                }
+                if(p != 0) {
+                    next = p->matrix();
+                }
+                
+                math::Mat4<float> abs = math::inverse(next) * prev * self;
+                relativTransform_.translation = {abs[3][0], abs[3][1], abs[3][2]};
+                relativTransform_.rotation = math::normalize(math::quat_cast(abs));
+                relativTransform_.scale = {math::length(abs[0]),math::length(abs[1]),math::length(abs[2])};
+            }
+            
             parent_ = p;
+            dirty_ = true;
         }
         
         const Vec3& TreeTransformation::translation() const
@@ -46,6 +65,7 @@ namespace lkogl {
         {
             relativTransform_.translation = transl;
             
+            
             dirty_ = true;
         }
         
@@ -59,7 +79,7 @@ namespace lkogl {
         void TreeTransformation::setRotation(const Quat& rot)
         {
             relativTransform_.rotation = rot;
-            
+
             dirty_ = true;
         }
         
