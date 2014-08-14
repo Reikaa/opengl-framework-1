@@ -16,7 +16,6 @@
 #include "lkogl/stencil.h"
 
 #include "lkogl/ambient_light.h"
-#include "lkogl/ambient_light_component.h"
 #include "lkogl/directional_light.h"
 #include "lkogl/point_light.h"
 #include "lkogl/spot_light.h"
@@ -152,7 +151,6 @@ public:
             cameraComponent = std::make_shared<CameraComponent>(cam);
             
             graph->addComponent(cameraComponent);
-            graph->addComponent(std::make_shared<AmbientLightComponent>(AmbientLight({0.1,0.1,0.1})));
             
         } catch(ShaderException e) {
             std::cerr << e.msg << std::endl;

@@ -32,8 +32,8 @@ namespace lkogl {
                 utils::PlainText vshDefGeo("deferred-geometry.vsh");
                 utils::PlainText fshDefGeo("deferred-geometry.fsh");
                 
-                utils::PlainText vshDefPlain("deferred-plain.vsh");
-                utils::PlainText fshDefPlain("deferred-plain.fsh");
+                utils::PlainText vshDefPlain("deferred-ambient.vsh");
+                utils::PlainText fshDefPlain("deferred-ambient.fsh");
                 
                 utils::PlainText vshDefStencil("deferred-stencil.vsh");
                 utils::PlainText fshDefStencil("deferred-stencil.fsh");
@@ -57,6 +57,13 @@ namespace lkogl {
             {
                 scene::walker::SceneDeepWalker walker;
                 
+                std::vector<lighting::DirectionalLight> lights = {
+                    lighting::DirectionalLight({0.6,0.7,0.9}, 0.9, {1,-1,1}),
+                    lighting::DirectionalLight({0.6,0.7,0.9}, 0.9, {-1,-1,-1}),
+                };
+                
+                
+                // Geometry Pass
                 {
                     BufferTargetUse tr(*buffer_);
                     
@@ -68,51 +75,48 @@ namespace lkogl {
                     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
                     
                     ProgramUse defgeo(programs_.deferredGeo_);
+                    
+                    graphics::CameraMatrixUse(programs_.deferredGeo_, cam.viewProjectionMatrix(), cam.position(), cam.projection_.far());
+                    
                     walker.walk(graph, &scene::Component::render, programs_.deferredGeo_);
                     
                     glDepthMask(GL_FALSE);
                     glDisable(GL_DEPTH_TEST);
                 }
                 
-                lighting::DirectionalLight light({0.6,0.7,0.9}, 0.9, {1,-1,1});
-                lighting::DirectionalLight light2({0.6,0.7,0.9}, 0.9, {-1,-1,-1});
+                MainTargetUse s(screen_, 16, 9);
                 
                 glEnable(GL_BLEND);
                 glBlendEquation(GL_FUNC_ADD);
                 glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+                glClearColor(0,0.7,0.9,1);
+                glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+                
+                GeometryObjectUse squareObj(square_);
                 
                 {
-                    MainTargetUse s(screen_, 16, 9);
-                    
-                    glClearColor(0,0.7,0.9,1);
-                    glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-                    
-                    glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE);
-                    glDepthMask(GL_FALSE);
-                    
-                    ProgramUse stencil(programs_.deferredStencil_);
-                    
+                    StencilCreation stencil(true);
+
+                    ProgramUse stencilProg(programs_.deferredStencil_);
                     BufferTextureUse tus(programs_.deferredStencil_.handles().samplerPosition, *buffer_, 2, 2);
                     
-                    GeometryObjectUse gu(square_);
+                    squareObj.render();
+                }
+                { // Lighting pass
+                    StencilUse stencil;
                     
-                    {
-                        StencilCreation c(true);
-                        gu.render();
+                    { // Ambient
+                        ProgramUse ambient(programs_.deferredAmbient_);
+                        
+                        BufferTextureUse diffuse(programs_.deferredAmbient_.handles().samplerPosition, *buffer_, 2, 2);
+                        
+                        squareObj.render();
                     }
-                    {
-                        StencilUse stnu;
-                        
-                        
-                        ProgramUse plain(programs_.deferredPlain_);
-                        
-                        BufferTextureUse tuc(programs_.deferredPlain_.handles().samplerPosition, *buffer_, 2, 2);
-                        
-                        gu.render();
-                        
-                        
-                        glBlendFunc(GL_ONE, GL_ONE);
-                        
+                    
+                    glBlendFunc(GL_ONE, GL_ONE);
+                    
+                    { // Directional
                         ProgramUse directional(programs_.deferredDir_);
                         
                         glUniform3f(programs_.deferredDir_.handles().eyePosition, cam.position().x, cam.position().y, cam.position().z);
@@ -121,14 +125,11 @@ namespace lkogl {
                         BufferTextureUse tu2(programs_.deferredDir_.handles().samplerNormPosition, *buffer_, 1, 1);
                         BufferTextureUse tu3(programs_.deferredDir_.handles().samplerColPosition, *buffer_, 2, 2);
                         
-                        lighting::DirectionalLightUse lightuse(programs_.deferredDir_, light);
-                        
-                        gu.render();
-                        
-                        lighting::DirectionalLightUse lightuse2(programs_.deferredDir_, light2);
-                        
-                        gu.render();
-                        
+                        for(const lighting::DirectionalLight& light : lights) {
+                            lighting::DirectionalLightUse use(programs_.deferredDir_, light);
+                            
+                            squareObj.render();
+                        }
                     }
                     
                 }

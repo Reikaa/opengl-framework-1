@@ -21,7 +21,7 @@ namespace lkogl {
             class DeferredRenderer {
                 struct Programs {
                     Program deferredGeo_;
-                    Program deferredPlain_;
+                    Program deferredAmbient_;
                     Program deferredStencil_;
                     Program deferredDir_;
                 } programs_;
