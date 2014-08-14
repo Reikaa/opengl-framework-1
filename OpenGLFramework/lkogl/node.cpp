@@ -21,6 +21,12 @@ namespace lkogl {
             children_.push_back(n);
         }
         
+        void Node::removeChild(std::shared_ptr<Node> n) {
+            n->transformation.setParent(NULL);
+            
+            children_.remove(n);
+        }
+        
         void Node::addComponent(std::shared_ptr<Component> c) {
             components_.push_back(c);
         }

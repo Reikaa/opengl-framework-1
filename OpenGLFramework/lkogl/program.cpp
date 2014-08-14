@@ -58,7 +58,7 @@ namespace lkogl {
                 mMat = glGetUniformLocation(handle, "uModelMatrix");
                 vpMat = glGetUniformLocation(handle, "uViewProjMatrix");
                 samplerPos = glGetUniformLocation(handle, "uSampler");
-                ambientPos = glGetUniformLocation(handle, "uAmbientIntensity");
+                ambientPos = glGetUniformLocation(handle, "uAmbient");
                 
                 eysPos = glGetUniformLocation(handle, "uEyePosition");
                 specIntPos = glGetUniformLocation(handle, "uMaterial.specularIntensity");

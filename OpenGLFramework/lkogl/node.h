@@ -33,6 +33,7 @@ namespace lkogl {
             ~Node();
             
             void addChild(std::shared_ptr<Node>);
+            void removeChild(std::shared_ptr<Node>);
             void addComponent(std::shared_ptr<Component>);
             
             friend class walker::SceneDeepWalker;

@@ -10,6 +10,7 @@
 #include "text.h"
 #include "render_target.h"
 #include "directional_light.h"
+#include "ambient_light.h"
 #include "scene_deep_walker.h"
 #include "stencil.h"
 #include "mesh.h"
@@ -18,12 +19,12 @@ namespace lkogl {
     namespace graphics {
         namespace renderign {
             
-            DeferredRenderer::DeferredRenderer(int w, int h) :
-            programs_(initPrograms()), buffer_(new FrameBuffer(w, h, std::vector<TargetType> {
+            DeferredRenderer::DeferredRenderer(const Screen& s, int ratioWidth, int ratioHeight) :
+            programs_(initPrograms()), buffer_(new FrameBuffer(s.width, s.height, std::vector<TargetType> {
                 TargetType{GL_COLOR_ATTACHMENT0, GL_RGBA16F},
                 TargetType{GL_COLOR_ATTACHMENT1, GL_RGBA16F},
                 TargetType{GL_COLOR_ATTACHMENT2, GL_RGBA16F},
-            })), screen_{w,h}, square_(geometry::primitives::makeSquare())
+            })), square_(geometry::primitives::makeSquare()), ratioWidth_(ratioWidth), ratioHeight_(ratioHeight)
             {
             }
             
@@ -57,10 +58,12 @@ namespace lkogl {
             {
                 scene::walker::SceneDeepWalker walker;
                 
-                std::vector<lighting::DirectionalLight> lights = {
+                std::vector<lighting::DirectionalLight> directionalLights = {
                     lighting::DirectionalLight({0.6,0.7,0.9}, 0.9, {1,-1,1}),
                     lighting::DirectionalLight({0.6,0.7,0.9}, 0.9, {-1,-1,-1}),
                 };
+                
+                lighting::AmbientLight ambientLight({0.2,0.2,0.2});
                 
                 
                 // Geometry Pass
@@ -71,7 +74,7 @@ namespace lkogl {
                     glDepthMask(GL_TRUE);
                     glDisable(GL_BLEND);
                     
-                    glClearColor(0,0,0,0);
+                    glClearColor(1,0,0,0);
                     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
                     
                     ProgramUse defgeo(programs_.deferredGeo_);
@@ -84,7 +87,8 @@ namespace lkogl {
                     glDisable(GL_DEPTH_TEST);
                 }
                 
-                MainTargetUse s(screen_, 16, 9);
+                MainTargetUse s;
+                glViewport(viewport_.x, viewport_.y, viewport_.width, viewport_.height);
                 
                 glEnable(GL_BLEND);
                 glBlendEquation(GL_FUNC_ADD);
@@ -110,6 +114,7 @@ namespace lkogl {
                         ProgramUse ambient(programs_.deferredAmbient_);
                         
                         BufferTextureUse diffuse(programs_.deferredAmbient_.handles().samplerPosition, *buffer_, 2, 2);
+                        lighting::AmbientLightUse(programs_.deferredAmbient_, ambientLight);
                         
                         squareObj.render();
                     }
@@ -125,7 +130,7 @@ namespace lkogl {
                         BufferTextureUse tu2(programs_.deferredDir_.handles().samplerNormPosition, *buffer_, 1, 1);
                         BufferTextureUse tu3(programs_.deferredDir_.handles().samplerColPosition, *buffer_, 2, 2);
                         
-                        for(const lighting::DirectionalLight& light : lights) {
+                        for(const lighting::DirectionalLight& light : directionalLights) {
                             lighting::DirectionalLightUse use(programs_.deferredDir_, light);
                             
                             squareObj.render();
@@ -136,11 +141,19 @@ namespace lkogl {
                 
             }
             
-            
             void DeferredRenderer::resize(int w, int h)
             {
-                screen_.width = w;
-                screen_.height = h;
+                if (h * ratioWidth_ > w * ratioHeight_) {
+                    int newWidth = h * ratioWidth_ / ratioHeight_;
+                    viewport_ = {
+                        -(newWidth - w) / 2, 0, newWidth, h
+                    };
+                } else {
+                    int newHeight = w * ratioHeight_ / ratioWidth_;
+                    viewport_ = {
+                        0, -(newHeight - h) / 2, w, newHeight
+                    };
+                }
                 
                 buffer_.reset(new FrameBuffer(w, h, std::vector<TargetType> {
                     TargetType{GL_COLOR_ATTACHMENT0, GL_RGBA16F},

@@ -26,11 +26,14 @@ namespace lkogl {
                     Program deferredDir_;
                 } programs_;
                 std::unique_ptr<FrameBuffer> buffer_;
-                Screen screen_;
+                struct {
+                    int x, y, width, height;
+                } viewport_;
+                int ratioWidth_, ratioHeight_;
                 GeometryObject square_;
                 
             public:
-                DeferredRenderer(int w, int h);
+                DeferredRenderer(const Screen& screen, int ratioW, int ratioH);
                 ~DeferredRenderer();
                 
                 void render(std::shared_ptr<scene::Node> graph, const camera::Camera& cam) const;

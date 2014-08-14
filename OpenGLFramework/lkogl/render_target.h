@@ -20,7 +20,7 @@ namespace lkogl {
         
         class MainTargetUse {
         public:
-            MainTargetUse(const Screen&, int rw, int rh);
+            MainTargetUse();
             ~MainTargetUse();
         };
         

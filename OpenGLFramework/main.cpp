@@ -101,7 +101,7 @@ public:
         
         try {
             
-            renderer_ = std::make_shared<DeferredRenderer>(screen_.width, screen_.height);
+            renderer_ = std::make_shared<DeferredRenderer>(screen_, 16, 9);
             
             graph = std::make_shared<Node>();
             
