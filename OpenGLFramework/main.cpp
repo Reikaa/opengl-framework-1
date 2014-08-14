@@ -58,6 +58,7 @@ class MyGame {
     
     mutable std::shared_ptr<Program> programDeferredGeo_;
     mutable std::shared_ptr<Program> programDeferredPlain_;
+    mutable std::shared_ptr<Program> programDeferredStencil_;
     mutable std::shared_ptr<Program> programDeferredDir_;
 
     mutable std::shared_ptr<CameraComponent> cameraComponent;
@@ -111,6 +112,10 @@ public:
             PlainText vshDefPlain("deferred-plain.vsh");
             PlainText fshDefPlain("deferred-plain.fsh");
             programDeferredPlain_ = std::make_shared<Program>(vshDefPlain.content, fshDefPlain.content);
+            
+            PlainText vshDefStencil("deferred-stencil.vsh");
+            PlainText fshDefStencil("deferred-stencil.fsh");
+            programDeferredStencil_ = std::make_shared<Program>(vshDefStencil.content, fshDefStencil.content);
             
             PlainText vshDefDir("deferred-directional.vsh");
             PlainText fshDefDir("deferred-directional.fsh");
@@ -257,9 +262,6 @@ public:
             ProgramUse defgeo(*programDeferredGeo_);
             walker.walk(graph, &Component::render, *programDeferredGeo_);
             
-            ProgramUse plain(*programDeferredPlain_);
-            GeometryObjectUse gu(*square_);
-            
             glDepthMask(GL_FALSE);
             glDisable(GL_DEPTH_TEST);
         }
@@ -276,22 +278,38 @@ public:
         {
             MainTargetUse s(screen_, 16, 9);
 
+            glEnable(GL_STENCIL_TEST);
             glClearColor(0,0.7,0.9,1);
-            glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+            glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
             
-            ProgramUse plain(*programDeferredPlain_);
+            glClearStencil(0);
+            glStencilFunc(GL_ALWAYS, 1, 1);
+            glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
             
-            BufferTextureUse tu1(programDeferredPlain_->handles().samplerPosition, *deferredTarget_, 2, 2);
+            ProgramUse stencil(*programDeferredStencil_);
+            
+            BufferTextureUse tus(programDeferredStencil_->handles().samplerPosition, *deferredTarget_, 2, 2);
             
             GeometryObjectUse gu(*square_);
-                        
+            
+            glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE);
+            glDepthMask(GL_FALSE);
             gu.render();
-        }
-        
-        glBlendFunc(GL_ONE, GL_ONE);
-        
-        {
-            MainTargetUse s(screen_, 16, 9);
+            glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
+            glDepthMask(GL_TRUE);
+
+
+            glStencilFunc(GL_EQUAL, 1, 1);
+            glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
+
+            ProgramUse plain(*programDeferredPlain_);
+            
+            BufferTextureUse tuc(programDeferredPlain_->handles().samplerPosition, *deferredTarget_, 2, 2);
+            
+            gu.render();
+            
+
+            glBlendFunc(GL_ONE, GL_ONE);
             
             ProgramUse directional(*programDeferredDir_);
             
@@ -301,8 +319,6 @@ public:
             BufferTextureUse tu2(programDeferredDir_->handles().samplerNormPosition, *deferredTarget_, 1, 1);
             BufferTextureUse tu3(programDeferredDir_->handles().samplerColPosition, *deferredTarget_, 2, 2);
             
-            GeometryObjectUse gu(*square_);
-            
             DirectionalLightUse lightuse(*programDeferredDir_, light);
             
             gu.render();
@@ -310,6 +326,9 @@ public:
             DirectionalLightUse lightuse2(*programDeferredDir_, light2);
             
             gu.render();
+            
+            glDisable(GL_STENCIL_TEST);
+
         }
     }
     
@@ -320,7 +339,7 @@ public:
         deferredTarget_ = std::make_shared<FrameBuffer>(screen_.width, screen_.height, std::vector<TargetType> {
             TargetType{GL_COLOR_ATTACHMENT0, GL_RGBA16F},
             TargetType{GL_COLOR_ATTACHMENT1, GL_RGBA16F},
-            TargetType{GL_COLOR_ATTACHMENT2, GL_RGBA16F}
+            TargetType{GL_COLOR_ATTACHMENT2, GL_RGBA16F},
         });
     }
     

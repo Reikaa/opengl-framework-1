@@ -31,6 +31,8 @@ namespace lkogl {
             
             const math::Mat4<float>& matrix() const;
             void setSize(int width, int height);
+            
+            float far() const { return far_; }
         };
     }
 }

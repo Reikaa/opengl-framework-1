@@ -21,7 +21,7 @@ namespace lkogl {
         
         Program::ProgramHandles Program::link(const Shader& vsh, const Shader& fsh) throw (ShaderException) {
             GLuint handle = glCreateProgram();
-            GLint mMat, vpMat, samplerPos, ambientPos, eysPos, specIntPos, specPowPos, dirLightColPos, dirLightIntPos, dirLightDirPos,
+            GLint far, mMat, vpMat, samplerPos, ambientPos, eysPos, specIntPos, specPowPos, dirLightColPos, dirLightIntPos, dirLightDirPos,
             pntLightColPos, pntLightIntPos, pntLightPosPos, pntLightRangePos,
             pntLightAttCPos, pntLightAttLPos, pntLightAttQPos,
             
@@ -54,7 +54,7 @@ namespace lkogl {
                     glGetProgramInfoLog(handle, errLength, &errLength, errMsg);
                     throw ShaderException(errMsg);
                 }
-                
+                far = glGetUniformLocation(handle, "uFar");
                 mMat = glGetUniformLocation(handle, "uModelMatrix");
                 vpMat = glGetUniformLocation(handle, "uViewProjMatrix");
                 samplerPos = glGetUniformLocation(handle, "uSampler");
@@ -96,7 +96,9 @@ namespace lkogl {
             }
             
             return Program::ProgramHandles{
-                handle, mMat, vpMat, samplerPos, ambientPos,
+                handle,
+                far,
+                mMat, vpMat, samplerPos, ambientPos,
                 eysPos, specIntPos, specPowPos, dirLightColPos, dirLightIntPos, dirLightDirPos,
                 pntLightColPos, pntLightIntPos, pntLightPosPos, pntLightRangePos,
                 pntLightAttCPos, pntLightAttLPos, pntLightAttQPos,
@@ -139,9 +141,10 @@ namespace lkogl {
         
         CameraMatrixUse::CameraMatrixUse(const Program& prog,
                                          const math::Mat4<GLfloat>& viewProjectionMat,
-                                         const math::Vec3<GLfloat>& cameraPosition) {
+                                         const math::Vec3<GLfloat>& cameraPosition, float far) {
             glUniformMatrix4fv(prog.handles().viewProjectionMatrixPosition, 1, GL_FALSE, &viewProjectionMat[0][0]);
             glUniform3f(prog.handles().eyePosition, cameraPosition.x, cameraPosition.y, cameraPosition.z);
+            glUniform1f(prog.handles().farPosition, far);
         }
         
         CameraMatrixUse::~CameraMatrixUse() {

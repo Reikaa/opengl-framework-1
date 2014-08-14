@@ -21,7 +21,8 @@ namespace lkogl {
             SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
             SDL_GL_SetAttribute(SDL_GL_FRAMEBUFFER_SRGB_CAPABLE, 1);
             SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
-            
+            SDL_GL_SetAttribute( SDL_GL_STENCIL_SIZE, 1 );
+
             int windowOptions = SDL_WINDOW_OPENGL|SDL_WINDOW_RESIZABLE|SDL_WINDOW_SHOWN;
             
             SDL_CreateWindowAndRenderer(width, height, windowOptions, &displayWindow_, &displayRenderer_);

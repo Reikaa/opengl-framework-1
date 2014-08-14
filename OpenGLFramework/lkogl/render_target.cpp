@@ -95,7 +95,7 @@ namespace lkogl {
                 
                 
                 if(targets[i].attachment == GL_DEPTH_ATTACHMENT) {
-                    glTexImage2D(textureTarget_, 0, GL_DEPTH_COMPONENT32, width_, height_, 0, GL_DEPTH_COMPONENT, GL_UNSIGNED_BYTE, 0);
+                    glTexImage2D(textureTarget_, 0, GL_DEPTH_COMPONENT24, width_, height_, 0, GL_DEPTH_COMPONENT, GL_UNSIGNED_BYTE, 0);
                 } else {
                     glTexImage2D(textureTarget_, 0, targets[i].format, width_, height_, 0, GL_RGBA, GL_UNSIGNED_BYTE, 0);
                 }

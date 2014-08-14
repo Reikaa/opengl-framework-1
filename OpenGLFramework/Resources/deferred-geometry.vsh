@@ -2,6 +2,7 @@
 
 uniform mat4 uModelMatrix;
 uniform mat4 uViewProjMatrix;
+uniform float uFar;
 
 in vec3 vPosition;
 in vec3 vNormal;
@@ -10,6 +11,7 @@ in vec2 vTexCoord;
 out vec3 fPosition;
 out vec3 fNormal;
 out vec2 fTexCoord;
+out float fDepth;
 
 void main() {
     vec4 worldPos = uModelMatrix * vec4(vPosition, 1);
@@ -21,4 +23,5 @@ void main() {
     fTexCoord = vTexCoord;
     
     gl_Position = camPos;
+    fDepth = gl_Position.z / uFar;
 }

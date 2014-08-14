@@ -23,7 +23,7 @@ namespace lkogl {
             
             void CameraComponent::render(const TreeTransformation& transformation, const graphics::Program& program) const
             {
-                graphics::CameraMatrixUse(program, camera_.viewProjectionMatrix(), camera_.position());
+                graphics::CameraMatrixUse(program, camera_.viewProjectionMatrix(), camera_.position(), camera_.projection_.far());
             }
             
             camera::Camera& CameraComponent::camera()
