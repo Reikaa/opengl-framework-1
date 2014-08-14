@@ -75,14 +75,11 @@ namespace lkogl {
         
         class Texture {
             const std::shared_ptr<TextureResource> resource_;
-            const GLuint slot_ = 1;
         public:
-            Texture(const utils::Image&, GLuint slot) throw (TextureException);
             Texture(const utils::Image&) throw (TextureException);
-            Texture(int width, int height, GLuint slot) throw (TextureException);
             Texture(int width, int height) throw (TextureException);
-            explicit Texture(int width, int height, std::vector<GLenum>, GLuint slot) throw (TextureException);
-            explicit Texture(const utils::Image&, std::vector<GLenum>, GLuint slot) throw (TextureException);
+            explicit Texture(int width, int height, std::vector<GLenum>) throw (TextureException);
+            explicit Texture(const utils::Image&, std::vector<GLenum>) throw (TextureException);
             Texture(const Texture&);
             ~Texture();
         private:            
@@ -94,7 +91,8 @@ namespace lkogl {
             TextureResource::SlotBinding b_;
         public:
             TextureUse(const Program& p, const Texture&);
-            TextureUse(const Program& p, const Texture&, int num);
+            TextureUse(const Program& p, const Texture&, int num, int slto);
+            TextureUse(GLuint loc, const Texture&, int num, int slto);
             ~TextureUse();
         };
         

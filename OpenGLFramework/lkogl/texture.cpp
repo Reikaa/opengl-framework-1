@@ -65,13 +65,14 @@ namespace lkogl {
                 
                 glBindTexture(GL_TEXTURE_2D, handles_[i]);
                 
-                glTexParameteri(textureTarget_, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-                glTexParameteri(textureTarget_, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+                glTexParameterf(textureTarget_, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+                glTexParameterf(textureTarget_, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+                
                 
                 if(attachments[i] == GL_DEPTH_ATTACHMENT) {
                      glTexImage2D(textureTarget_, 0, GL_DEPTH_COMPONENT32, width_, height_, 0, GL_DEPTH_COMPONENT, GL_UNSIGNED_BYTE, 0);
                 } else {
-                     glTexImage2D(textureTarget_, 0, GL_RGBA, width_, height_, 0, GL_RGBA, GL_UNSIGNED_BYTE, 0);
+                     glTexImage2D(textureTarget_, 0, GL_RGB16F, width_, height_, 0, GL_RGBA, GL_UNSIGNED_BYTE, 0);
                 }
 
                 glFramebufferTexture2D(GL_FRAMEBUFFER, attachments[i], textureTarget_, handles_[i], 0);
@@ -132,43 +133,32 @@ namespace lkogl {
             TextureResource::SlotBinding b(*this, 1, 0);
             
             glTexImage2D(textureTarget_, 0, mode, width_, height_, 0, modeInternal, GL_UNSIGNED_BYTE, image.pixels());
-            glTexParameteri(textureTarget_, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-            glTexParameteri(textureTarget_, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+            glTexParameteri(textureTarget_, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+            glTexParameteri(textureTarget_, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
         }
         
         Texture::Texture(const utils::Image& img) throw (TextureException) :
-        Texture(img, 1) {
+        Texture(img.width(), img.height()) {
             resource_->replaceImage(img);
-        }
-        
-        Texture::Texture(const utils::Image& img, GLuint slot) throw (TextureException) :
-        Texture(img.width(), img.height(), slot) {
-            resource_->replaceImage(img);
-        }
-        
-        Texture::Texture(int width, int height, GLuint slot) throw(lkogl::graphics::TextureException) :
-            Texture(width, height, {GL_NONE}, slot)
-        {
         }
         
         Texture::Texture(int width, int height) throw(lkogl::graphics::TextureException) :
-            Texture(width, height, 1)
+            Texture(width, height, {GL_NONE})
         {
         }
         
-        Texture::Texture(int width, int height, std::vector<GLenum> attachements, GLuint slot) throw (TextureException):
-        resource_(std::make_shared<TextureResource>(width, height, attachements)),
-        slot_(slot)
+        Texture::Texture(int width, int height, std::vector<GLenum> attachements) throw (TextureException):
+        resource_(std::make_shared<TextureResource>(width, height, attachements))
         {
         }
         
-        Texture::Texture(const utils::Image& img, std::vector<GLenum> attachements, GLuint slot) throw (TextureException):
-        Texture(img.width(), img.height(), attachements, slot)
+        Texture::Texture(const utils::Image& img, std::vector<GLenum> attachements) throw (TextureException):
+        Texture(img.width(), img.height(), attachements)
         {
             resource_->replaceImage(img);
         }
         
-        Texture::Texture(const Texture& tex) : resource_(tex.resource_), slot_(tex.slot_) {
+        Texture::Texture(const Texture& tex) : resource_(tex.resource_) {
 
         }
         
@@ -177,14 +167,20 @@ namespace lkogl {
         }
         
         TextureUse::TextureUse(const Program& p, const Texture& tex) :
-        TextureUse(p, tex, 0)
+        TextureUse(p, tex, 0, 0)
         {
         }
         
-        TextureUse::TextureUse(const Program& p, const Texture& tex, int num) :
-        b_(*tex.resource_.get(), tex.slot_, num)
+        TextureUse::TextureUse(const Program& p, const Texture& tex, int num, int slot) :
+        b_(*tex.resource_.get(), slot, num)
         {
-            glUniform1i(p.handles().samplerPosition, tex.slot_);
+            glUniform1i(p.handles().samplerPosition, slot);
+        }
+        
+        TextureUse::TextureUse(GLuint loc, const Texture& tex, int num, int slot) :
+        b_(*tex.resource_.get(), slot, num)
+        {
+            glUniform1i(loc, slot);
         }
         
         TextureUse::~TextureUse()

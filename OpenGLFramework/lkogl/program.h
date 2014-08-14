@@ -49,6 +49,10 @@ namespace lkogl {
                 GLint spotLightAttenuationQPosition;
                 GLint spotLightDirectionPosition;
                 GLint spotLightCutoffPosition;
+                
+                GLint samplerPosPosition;
+                GLint samplerNormPosition;
+                GLint samplerColPosition;
             } handles_;
             
         public:

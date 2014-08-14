@@ -62,6 +62,8 @@ class MyGame {
     mutable std::shared_ptr<Program> programSpot_;
     mutable std::shared_ptr<Program> programDeferredGeo_;
     mutable std::shared_ptr<Program> programDeferredPlain_;
+    mutable std::shared_ptr<Program> programDeferredDir_;
+
     mutable std::shared_ptr<CameraComponent> cameraComponent;
     
     mutable std::shared_ptr<GeometryObject> square_;
@@ -101,7 +103,6 @@ public:
         glEnable( GL_DEPTH_TEST );
         glDepthFunc( GL_LEQUAL );
         
-        glEnable(GL_FRAMEBUFFER_SRGB);
         
         glEnable(GL_DEPTH_CLAMP);
         
@@ -130,6 +131,10 @@ public:
             PlainText vshDefPlain("deferred-plain.vsh");
             PlainText fshDefPlain("deferred-plain.fsh");
             programDeferredPlain_ = std::make_shared<Program>(vshDefPlain.content, fshDefPlain.content);
+            
+            PlainText vshDefDir("deferred-directional.vsh");
+            PlainText fshDefDir("deferred-directional.fsh");
+            programDeferredDir_ = std::make_shared<Program>(vshDefDir.content, fshDefDir.content);
             
             graph = std::make_shared<Node>();
             
@@ -161,12 +166,12 @@ public:
             
             Mesh monkey = lkogl::resources::mesh_loader::obj_from_file("monkey.obj").toIndexedModel().toMesh();
             std::shared_ptr<Node> node3 = std::make_shared<Node>();
-            node3->addComponent(std::make_shared<RenderComponent>(GeometryObject(monkey), mat2));
+            node3->addComponent(std::make_shared<RenderComponent>(GeometryObject(monkey), mat));
             Transformation spin;
             spin.rotation = angleAxis(radians(1.0f), {0.0f,1.0f,0.0f});;
             
             node3->addComponent(std::make_shared<AnimationComponent>(spin));
-            node3->transformation.setTranslation({5,0.5,-2});
+            node3->transformation.setTranslation({5,1,-2});
             node3->transformation.setRotation(angleAxis<float>(radians(45), {0,1,0}));
             node->addChild(node3);
             
@@ -259,25 +264,65 @@ public:
     
     void render() const {
         {
+
             TextureRendering tr(*deferredTexture_);
-            ScreenRendering s(screen_, 16, 9);
+            //glEnable( GL_BLEND );
+
 
             glClearColor(0,0,0,0);
+
+
             glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
             
             ProgramUse defgeo(*programDeferredGeo_);
             walker.walk(graph, &Component::render, *programDeferredGeo_);
+            //glDisable( GL_BLEND );
+
         }
+        
+        DirectionalLight light({0.6,0.7,0.9}, 0.1, {1,-1,1});
+        DirectionalLight light2({0.6,0.7,0.9}, 0.1, {-1,-1,-1});
+
+        
         {
             ScreenRendering s(screen_, 16, 9);
-        
-            glClearColor(0,0.2,0.3,0);
+
+            glClearColor(1,1,1,1);
             glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
-            ProgramUse plain(*programDeferredPlain_);
-            TextureUse tu(*programDeferredPlain_, *deferredTexture_, 0);
+            ProgramUse plain(*programDeferredDir_);
+            glUniform3f(programDeferredDir_->handles().eyePosition, cameraComponent->camera().position().x, cameraComponent->camera().position().y, cameraComponent->camera().position().z);
+
+            TextureUse tu1(programDeferredDir_->handles().samplerPosPosition, *deferredTexture_, 0, 0);
+            
+            TextureUse tu2(programDeferredDir_->handles().samplerNormPosition, *deferredTexture_, 1, 1);
+                           
+            TextureUse tu3(programDeferredDir_->handles().samplerColPosition, *deferredTexture_, 2, 2);
             
             GeometryObjectUse gu(*square_);
+            
+            DirectionalLightUse lightuse(*programDeferredDir_, light);
+            
             gu.render();
+            
+            DirectionalLightUse lightuse2(*programDeferredDir_, light2);
+            
+            gu.render();
+        }
+        
+        if(keyboard_.isDown(Keyboard::Key::SPACE)){
+            ScreenRendering(screen_, 16, 9);
+            glClearColor(0,0,0,0);
+            glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
+            ProgramUse directional(*programDirectional_);
+            
+            DirectionalLightUse lightuse(*programDirectional_, light);
+
+            walker.walk(graph, &Component::render, *programDirectional_);
+
+            DirectionalLightUse lightuse2(*programDirectional_, light2);
+            
+            walker.walk(graph, &Component::render, *programDirectional_);
+
         }
         
 //        glEnable( GL_POLYGON_OFFSET_FILL );
@@ -349,7 +394,7 @@ public:
         screen_.width = width;
         screen_.height = height;
         
-        deferredTexture_ = std::make_shared<Texture>(screen_.width,screen_.height, std::vector<GLenum>{GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_DEPTH_ATTACHMENT}, 1);
+        deferredTexture_ = std::make_shared<Texture>(screen_.width,screen_.height, std::vector<GLenum>{GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2});
     }
     
     const std::string title() const {

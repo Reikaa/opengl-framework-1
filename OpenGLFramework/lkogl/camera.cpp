@@ -11,7 +11,7 @@
 
 namespace lkogl {
     namespace camera {
-        Camera::Camera(int w, int h) : projection_(70.f, 16, 9, .8f, 100.f)
+        Camera::Camera(int w, int h) : projection_(70.f, 16, 9, 1.f, 30.f)
         {
         }
         

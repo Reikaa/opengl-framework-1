@@ -27,8 +27,11 @@ namespace lkogl {
             
             sptLightColPos, sptLightIntPos, sptLightPosPos, sptLightRangePos,
             sptLightAttCPos, sptLightAttLPos, sptLightAttQPos,
-            sptDirectionPos, sptLightCutoffPos;
+            sptDirectionPos, sptLightCutoffPos,
             
+            smpPosPosition,
+            smpNormPosition,
+            smpColPosition;
             
             try {
                 GLint compileOk;
@@ -84,6 +87,10 @@ namespace lkogl {
                 sptDirectionPos = glGetUniformLocation(handle, "uSpotLight.direction");
                 sptLightCutoffPos = glGetUniformLocation(handle, "uSpotLight.cutoff");
                 
+                smpPosPosition = glGetUniformLocation(handle, "uSamplerPosition");
+                smpNormPosition = glGetUniformLocation(handle, "uSamplerNormal");
+                smpColPosition = glGetUniformLocation(handle, "uSamplerColor");
+                
             } catch(...) {
                 glDeleteProgram(handle);
                 throw;
@@ -97,7 +104,11 @@ namespace lkogl {
                 
                 sptLightColPos, sptLightIntPos, sptLightPosPos, sptLightRangePos,
                 sptLightAttCPos, sptLightAttLPos, sptLightAttQPos,
-                sptDirectionPos, sptLightCutoffPos
+                sptDirectionPos, sptLightCutoffPos,
+                
+                smpPosPosition,
+                smpNormPosition,
+                smpColPosition
             };
         }
         

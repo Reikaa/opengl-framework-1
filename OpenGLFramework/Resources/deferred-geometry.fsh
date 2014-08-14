@@ -6,11 +6,12 @@ in vec3 fPosition;
 in vec2 fTexCoord;
 in vec3 fNormal;
 
-out vec4 oColor;
-out vec3 oNormal;
-
+layout(location = 0) out vec4 oPos;
+layout(location = 1) out vec4 oNormal;
+layout(location = 2) out vec4 oColor;
 
 void main() {
-    oNormal = fNormal;
-    oColor = texture(uSampler, fTexCoord);
+    oPos = vec4(fPosition,1);
+    oNormal = vec4(fNormal,1);
+    oColor = vec4(texture(uSampler, fTexCoord).xyz, 1);
 }
