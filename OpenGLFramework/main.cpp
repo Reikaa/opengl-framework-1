@@ -13,6 +13,7 @@
 #include "lkogl/shader.h"
 #include "lkogl/text.h"
 #include "lkogl/render_target.h"
+#include "lkogl/stencil.h"
 
 #include "lkogl/ambient_light.h"
 #include "lkogl/ambient_light_component.h"
@@ -269,8 +270,6 @@ public:
         DirectionalLight light({0.6,0.7,0.9}, 0.9, {1,-1,1});
         DirectionalLight light2({0.6,0.7,0.9}, 0.9, {-1,-1,-1});
         
-        
-        
         glEnable(GL_BLEND);
         glBlendEquation(GL_FUNC_ADD);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -278,13 +277,11 @@ public:
         {
             MainTargetUse s(screen_, 16, 9);
 
-            glEnable(GL_STENCIL_TEST);
             glClearColor(0,0.7,0.9,1);
-            glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+            glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
             
-            glClearStencil(0);
-            glStencilFunc(GL_ALWAYS, 1, 1);
-            glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
+            glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE);
+            glDepthMask(GL_FALSE);
             
             ProgramUse stencil(*programDeferredStencil_);
             
@@ -292,42 +289,40 @@ public:
             
             GeometryObjectUse gu(*square_);
             
-            glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE);
-            glDepthMask(GL_FALSE);
-            gu.render();
-            glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
-            glDepthMask(GL_TRUE);
+            {
+                StencilCreation c(true);
+                gu.render();
+            }
+            {
+                StencilUse stnu;
 
 
-            glStencilFunc(GL_EQUAL, 1, 1);
-            glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
+                ProgramUse plain(*programDeferredPlain_);
+                
+                BufferTextureUse tuc(programDeferredPlain_->handles().samplerPosition, *deferredTarget_, 2, 2);
+                
+                gu.render();
+                
 
-            ProgramUse plain(*programDeferredPlain_);
-            
-            BufferTextureUse tuc(programDeferredPlain_->handles().samplerPosition, *deferredTarget_, 2, 2);
-            
-            gu.render();
-            
+                glBlendFunc(GL_ONE, GL_ONE);
+                
+                ProgramUse directional(*programDeferredDir_);
+                
+                glUniform3f(programDeferredDir_->handles().eyePosition, cameraComponent->camera().position().x, cameraComponent->camera().position().y, cameraComponent->camera().position().z);
 
-            glBlendFunc(GL_ONE, GL_ONE);
-            
-            ProgramUse directional(*programDeferredDir_);
-            
-            glUniform3f(programDeferredDir_->handles().eyePosition, cameraComponent->camera().position().x, cameraComponent->camera().position().y, cameraComponent->camera().position().z);
-
-            BufferTextureUse tu1(programDeferredDir_->handles().samplerPosPosition, *deferredTarget_, 0, 0);
-            BufferTextureUse tu2(programDeferredDir_->handles().samplerNormPosition, *deferredTarget_, 1, 1);
-            BufferTextureUse tu3(programDeferredDir_->handles().samplerColPosition, *deferredTarget_, 2, 2);
-            
-            DirectionalLightUse lightuse(*programDeferredDir_, light);
-            
-            gu.render();
-            
-            DirectionalLightUse lightuse2(*programDeferredDir_, light2);
-            
-            gu.render();
-            
-            glDisable(GL_STENCIL_TEST);
+                BufferTextureUse tu1(programDeferredDir_->handles().samplerPosPosition, *deferredTarget_, 0, 0);
+                BufferTextureUse tu2(programDeferredDir_->handles().samplerNormPosition, *deferredTarget_, 1, 1);
+                BufferTextureUse tu3(programDeferredDir_->handles().samplerColPosition, *deferredTarget_, 2, 2);
+                
+                DirectionalLightUse lightuse(*programDeferredDir_, light);
+                
+                gu.render();
+                
+                DirectionalLightUse lightuse2(*programDeferredDir_, light2);
+                
+                gu.render();
+                
+            }
 
         }
     }

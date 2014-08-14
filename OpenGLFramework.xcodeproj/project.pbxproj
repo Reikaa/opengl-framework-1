@@ -51,6 +51,7 @@
 		F2A4968619981F1600588B03 /* spot_light.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2A4968419981F1600588B03 /* spot_light.cpp */; };
 		F2B563B6199CFA28007D38D3 /* deferred-stencil.vsh in Resources */ = {isa = PBXBuildFile; fileRef = F2B563B5199CFA28007D38D3 /* deferred-stencil.vsh */; };
 		F2B563B8199CFA37007D38D3 /* deferred-stencil.fsh in Resources */ = {isa = PBXBuildFile; fileRef = F2B563B7199CFA37007D38D3 /* deferred-stencil.fsh */; };
+		F2B563BD199D0CC8007D38D3 /* stencil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2B563BB199D0CC8007D38D3 /* stencil.cpp */; };
 		F2DEC60419975A8700EE31E7 /* node_component.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2DEC60219975A8700EE31E7 /* node_component.cpp */; };
 		F2DEC6081997621400EE31E7 /* render_component.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2DEC6061997621400EE31E7 /* render_component.cpp */; };
 		F2DEC60D1997681E00EE31E7 /* camera_component.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2DEC60B1997681E00EE31E7 /* camera_component.cpp */; };
@@ -186,6 +187,8 @@
 		F2A4968519981F1600588B03 /* spot_light.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = spot_light.h; sourceTree = "<group>"; };
 		F2B563B5199CFA28007D38D3 /* deferred-stencil.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = "deferred-stencil.vsh"; sourceTree = "<group>"; };
 		F2B563B7199CFA37007D38D3 /* deferred-stencil.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = "deferred-stencil.fsh"; sourceTree = "<group>"; };
+		F2B563BB199D0CC8007D38D3 /* stencil.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = stencil.cpp; sourceTree = "<group>"; };
+		F2B563BC199D0CC8007D38D3 /* stencil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stencil.h; sourceTree = "<group>"; };
 		F2DEC60219975A8700EE31E7 /* node_component.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = node_component.cpp; sourceTree = "<group>"; };
 		F2DEC60319975A8700EE31E7 /* node_component.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = node_component.h; sourceTree = "<group>"; };
 		F2DEC6061997621400EE31E7 /* render_component.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = render_component.cpp; sourceTree = "<group>"; };
@@ -393,6 +396,8 @@
 				F21EA813199911F900D78E1C /* program.h */,
 				F21EA833199B9B9300D78E1C /* render_target.cpp */,
 				F21EA834199B9B9300D78E1C /* render_target.h */,
+				F2B563BB199D0CC8007D38D3 /* stencil.cpp */,
+				F2B563BC199D0CC8007D38D3 /* stencil.h */,
 			);
 			name = graphics;
 			sourceTree = "<group>";
@@ -668,6 +673,7 @@
 				F2DEC6251997C63E00EE31E7 /* mouse.cpp in Sources */,
 				F2970794199370EE00D48CE5 /* math.cpp in Sources */,
 				F27044CF1994C36C00C57B6A /* text.cpp in Sources */,
+				F2B563BD199D0CC8007D38D3 /* stencil.cpp in Sources */,
 				F2DEC6371997EA7600EE31E7 /* ambient_light.cpp in Sources */,
 				F297078E199370C400D48CE5 /* mesh.cpp in Sources */,
 				F21EA81C199A04AC00D78E1C /* obj_model.cpp in Sources */,
