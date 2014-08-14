@@ -26,7 +26,7 @@ namespace lkogl {
             Camera(int w, int h);
             ~Camera();
             
-            void setViewMatrix(const math::Mat4<float>&);
+            void setViewMatrixAndPos(const math::Mat4<float>&, const math::Vec3<float>& pos);
 
             const math::Mat4<float>& viewMatrix() const;
             const math::Vec3<float>& position() const;

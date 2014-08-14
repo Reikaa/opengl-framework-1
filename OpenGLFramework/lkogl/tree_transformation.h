@@ -23,7 +23,8 @@ namespace lkogl {
             const TreeTransformation* parent_;
             mutable Mat4 selfMat_;
             mutable Mat4 mat_;
-            mutable bool dirty_;
+            mutable Mat4 inverse_;
+            mutable bool dirty_ = true;
             
         public:
             TreeTransformation();
@@ -43,6 +44,7 @@ namespace lkogl {
             void add(const geometry::Transformation& t);
             
             const Mat4 matrix() const;
+            const Mat4 inverseMatrix() const;
         
             
         private:

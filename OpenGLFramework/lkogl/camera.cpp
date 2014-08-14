@@ -47,10 +47,10 @@ namespace lkogl {
             projection_ = proj;
         }
         
-        void Camera::setViewMatrix(const math::Mat4<float> & matrix)
+        void Camera::setViewMatrixAndPos(const math::Mat4<float> & matrix, const math::Vec3<float>& pos)
         {
             viewMatrix_ = matrix;
-            position_ = -math::Vec3<float>(matrix[4][0]);
+            position_ = pos;
             dirtyViewProjection_ = true;
         }
         

@@ -107,9 +107,17 @@ namespace lkogl {
                 } else {
                     mat_ = selfMat_;
                 }
+                inverse_ = math::inverse(mat_);
             }
             
             return mat_;
+        }
+        
+        const Mat4 TreeTransformation::inverseMatrix() const {
+            if(isDirty()) {
+                matrix();
+            }
+            return inverse_;
         }
     }
 }

@@ -126,7 +126,7 @@ namespace lkogl {
                 col[1] *= s;
                 col[2] *= s;
                 col[3] *= s;
-                
+                                
                 return *this;
             }
             

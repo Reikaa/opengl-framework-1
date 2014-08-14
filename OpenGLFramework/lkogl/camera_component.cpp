@@ -19,7 +19,12 @@ namespace lkogl {
             
             void CameraComponent::update(TreeTransformation& transformation) const
             {
-                camera_.setViewMatrix(math::inverse(transformation.matrix()));
+                auto mat = transformation.matrix();
+                camera_.setViewMatrixAndPos(transformation.inverseMatrix(), {
+                    mat[3][0],
+                    mat[3][1],
+                    mat[3][2]
+                });
             }
             
             void CameraComponent::render(const TreeTransformation& transformation, const graphics::Program& program) const
