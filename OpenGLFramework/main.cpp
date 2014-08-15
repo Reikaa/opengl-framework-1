@@ -134,6 +134,8 @@ public:
             node2->transformation.setTranslation({-5,0.5,-2});
             node2->transformation.setRotation(angleAxis<float>(radians(45), {0,1,0}));
             node->addChild(node2);
+            node2->transformation.setRotation(angleAxis<float>(radians(45.0), {0,1,0}));
+            graph->addChild(node2);
             
             Mesh monkey = lkogl::resources::mesh_loader::obj_from_file("monkey.obj").toIndexedModel().toMesh();
             std::shared_ptr<Node> node3 = std::make_shared<Node>();
