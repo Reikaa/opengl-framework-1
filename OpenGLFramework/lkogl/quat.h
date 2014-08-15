@@ -91,8 +91,9 @@ namespace lkogl {
                 y /= s;
                 z /= s;
                 w /= s;
+                
+                return *this;
             }
-            
             
         };
         
