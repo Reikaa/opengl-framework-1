@@ -14,9 +14,9 @@ namespace lkogl {
         const Transformation::Mat4 Transformation::matrix() const
         {
             Mat4 result = math::translate(Mat4(), translation);
-            result = math::scale(result, scale);
             result = math::rotate(result, rotation);
-            
+            result = math::scale(result, scale);
+
             return result;
         }
     }
