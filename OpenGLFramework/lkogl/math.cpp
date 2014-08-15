@@ -10,5 +10,8 @@
 
 namespace lkogl {
     namespace math {
+        float radians(const int& deg) {
+            return deg * 2 * M_PI / 360.f;
+        }
     }
 }

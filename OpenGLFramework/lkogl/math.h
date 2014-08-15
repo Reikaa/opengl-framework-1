@@ -37,11 +37,14 @@ namespace lkogl {
             return result;
         }
         
+        
         template<typename T>
         T radians(const T& deg) {
             static_assert(std::numeric_limits<T>::is_iec559, "'radians' only accept floating-point input");
             return deg * 2 * M_PI / 360.f;
         }
+        
+        float radians(const int& deg);
     }
 }
 
