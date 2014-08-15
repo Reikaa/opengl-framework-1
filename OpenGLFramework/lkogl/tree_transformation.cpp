@@ -78,7 +78,7 @@ namespace lkogl {
         
         void TreeTransformation::setRotation(const Quat& rot)
         {
-            relativTransform_.rotation = rot;
+            relativTransform_.rotation = math::normalize(rot);
 
             dirty_ = true;
         }
