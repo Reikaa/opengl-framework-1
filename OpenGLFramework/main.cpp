@@ -132,7 +132,7 @@ public:
             std::shared_ptr<Node> node2 = std::make_shared<Node>();
             node2->addComponent(std::make_shared<RenderComponent>(GeometryObject(cube), mat));
             node2->transformation.setTranslation({-5,0.5,-2});
-            node2->transformation.setRotation(angleAxis<float>(radians(45), {0,1,0}));
+            node2->transformation.setRotation(angleAxis<float>(radians(45.0), {0,1,0}));
             node->addChild(node2);
             node2->transformation.setRotation(angleAxis<float>(radians(45.0), {0,1,0}));
             graph->addChild(node2);
