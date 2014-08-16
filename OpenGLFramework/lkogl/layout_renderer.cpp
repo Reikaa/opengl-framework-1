@@ -8,6 +8,9 @@
 
 #include "layout_renderer.h"
 #include "text.h"
+#include "scissor.h"
+
+#include <queue>
 
 namespace lkogl {
     namespace ui {
@@ -29,27 +32,56 @@ namespace lkogl {
         
         void LayoutRenderer::render(const Element& e, const graphics::Screen& screen)
         {
-            graphics::MainTargetUse s;
-            
             glClearColor(0, 0, 0, 0);
             glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+            
+            glViewport(0, 0, screen.width, screen.height);
+            
+            math::Mat4<float> projection = math::ortho<float>(0,screen.width, 0, screen.height);
             
             graphics::ProgramUse pru(program_);
             glUniform4f(program_.handles().colorPosition, 0.1, 0.1, 0.1, 0.6);
             
             graphics::GeometryObjectUse sq(square_);
             
-            auto rect = e.layout().rectangle();
-            if(rect.width() > 0 && rect.height() > 0) {
-                glViewport(rect.left(), screen.height-rect.bottom(), rect.width(), rect.height());
-                sq.render();
-                for(auto c : e.children()) {
-                    auto rect = c->layout().rectangle();
-                    
-                    if(rect.width() > 0 && rect.height() > 0) {
-                        glViewport(rect.left(), screen.height-rect.bottom(), rect.width(), rect.height());
-                        sq.render();
+            graphics::MainTargetUse s;
+            std::queue<std::pair<Element, Rectangle>> elements;
+            
+            elements.push({e, e.layout().rectangle()});
+
+            graphics::ScissorUse scissor;
+            
+            while(!elements.empty()) {
+                const std::pair<Element, Rectangle> current = elements.front();
+                elements.pop();
+                
+                auto rect = current.first.layout().rectangle();
+                if(rect.width() > 0 && rect.height() > 0) {
+                    math::Mat4<float> modelView(1);
+                    math::Mat4<float> modelViewProj = projection;
+
+                    for(auto c : current.first.children()) {
+                        elements.push({*c.get(), rect});
                     }
+
+                    modelView = math::translate(modelView, {
+                        rect.center().x,
+                        screen.height-rect.center().y,
+                        0.0
+                    });
+                    
+                    modelView = math::scale(modelView, {rect.width()/2, rect.height()/2, 0.0});
+                    
+                    modelViewProj *= modelView;
+                    
+                    scissor.clip(current.second.left(),
+                              screen.height-current.second.bottom(),
+                              current.second.width(),
+                              current.second.height());
+                    
+                    glUniformMatrix4fv(program_.handles().viewProjectionMatrixPosition, 1, 0, &modelViewProj[0][0]);
+                    sq.render();
+
                 }
             }
         }

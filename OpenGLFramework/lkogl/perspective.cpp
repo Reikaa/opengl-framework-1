@@ -6,20 +6,20 @@
 //  Copyright (c) 2014 Laszlo Korte. All rights reserved.
 //
 
-#include "projection.h"
+#include "perspective.h"
 
 namespace lkogl {
     namespace camera {
 
-        Projection::Projection(float fov, int w, int h, float near, float far) :
+        Perspective::Perspective(float fov, int w, int h, float near, float far) :
          fov_(fov), width_(w), height_(h), near_(near), far_(far)
         {
         }
-        Projection::~Projection()
+        Perspective::~Perspective()
         {
         }
             
-        const math::Mat4<float>& Projection::matrix() const
+        const math::Mat4<float>& Perspective::matrix() const
         {
             if(dirty_) {
                 matrix_ = math::perspective(math::radians(fov_), width_/float(height_), near_, far_);
@@ -27,13 +27,6 @@ namespace lkogl {
             }
             
             return matrix_;
-        }
-        
-        void Projection::setSize(int width, int height)
-        {
-            width_ = width;
-            height_ = height;
-            dirty_ = true;
         }
         
         

@@ -36,6 +36,25 @@ namespace lkogl {
             return result;
         }
         
+        template<typename T>
+        Mat4<T> ortho
+        (
+         T const & left,
+         T const & right,
+         T const & bottom,
+         T const & top
+         )
+        {
+            Mat4<T> result(1);
+            result[0][0] = static_cast<T>(2) / (right - left);
+            result[1][1] = static_cast<T>(2) / (top - bottom);
+            result[2][2] = - static_cast<T>(1);
+            result[3][0] = - (right + left) / (right - left);
+            result[3][1] = - (top + bottom) / (top - bottom);
+            
+            return result;
+        }
+        
         
         template<typename T>
         T radians(const T& deg) {

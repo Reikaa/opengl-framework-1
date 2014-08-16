@@ -80,7 +80,7 @@ namespace lkogl {
                     ProgramUse defgeo(programs_.deferredGeo_);
                     
                     auto matrix = cam.viewProjectionMatrix();
-                    graphics::CameraMatrixUse(programs_.deferredGeo_, matrix, cam.position(), cam.projection().far());
+                    graphics::CameraMatrixUse(programs_.deferredGeo_, matrix, cam.position(), cam.perspective().far());
                     
                     walker.walk(graph, &scene::components::Component::render, programs_.deferredGeo_);
                     

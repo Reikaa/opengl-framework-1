@@ -10,7 +10,7 @@
 
 namespace lkogl {
     namespace camera {
-        Camera::Camera(int w, int h) : projection_(70.f, 16, 9, 0.1f, 100.f)
+        Camera::Camera(int w, int h) : perspective_(70.f, 16, 9, 0.1f, 100.f)
         {
         }
         
@@ -22,9 +22,9 @@ namespace lkogl {
             return viewMatrix_;
         }
         
-        const Projection& Camera::projection() const
+        const Perspective& Camera::perspective() const
         {
-            return projection_;
+            return perspective_;
         }
         
         const math::Vec3<float>& Camera::position() const
@@ -35,15 +35,15 @@ namespace lkogl {
         const math::Mat4<float>& Camera::viewProjectionMatrix() const
         {
             if(dirtyViewProjection_) {
-                viewProjectionMatrix_ = projection_.matrix() * viewMatrix_;
+                viewProjectionMatrix_ = perspective_.matrix() * viewMatrix_;
                 dirtyViewProjection_ = false;
             }
             return viewProjectionMatrix_;
         }
         
-        void Camera::setProjection(const Projection& proj)
+        void Camera::setProjection(const Perspective& persp)
         {
-            projection_ = proj;
+            perspective_ = persp;
         }
         
         void Camera::setViewMatrixAndPos(const math::Mat4<float> & matrix, const math::Vec3<float>& pos)

@@ -14,6 +14,12 @@ namespace lkogl {
         {
         }
         
+        Rectangle::Rectangle(int width, int height)
+        {
+            min_ = {0,0};
+            max_ = {width, height};
+         }
+        
         Rectangle::~Rectangle()
         {
         }

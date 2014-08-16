@@ -34,6 +34,16 @@ namespace lkogl {
             {
             }
             
+            Mat4(const Vec4<T>& scale) :
+            col{
+                Vec4<T>(scale[0], 0, 0, 0),
+                Vec4<T>(0, scale[1], 0, 0),
+                Vec4<T>(0, 0, scale[2], 0),
+                Vec4<T>(0, 0, 0, scale[3])
+            }
+            {
+            }
+            
             Mat4(const Mat4<T>& o) :
             col{
                 Vec4<T>(o[0]),

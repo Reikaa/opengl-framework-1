@@ -25,6 +25,7 @@ namespace lkogl {
             
         public:
             Rectangle();
+            Rectangle(int width, int height);
             ~Rectangle();
             
             const Position center() const;

@@ -82,7 +82,7 @@ class MyGame {
     mutable Screen screen_;
     
     
-    mutable Element uiElement_ = Element(px(400), px(200));
+    mutable Element uiRoot_ = Element(px(400), px(400));
     mutable std::shared_ptr<LayoutRenderer> uiRenderer_;
     
 public:
@@ -116,14 +116,14 @@ public:
             renderer_ = std::make_shared<DeferredRenderer>(screen_, 16, 9);
             uiRenderer_ = std::make_shared<LayoutRenderer>();
             
-            auto e1 = std::make_shared<Element>(percent(30), px(20));
-            auto e2 = std::make_shared<Element>(percent(40), px(35));
-            e1->layout().setMargin({10});
-            e2->layout().setAlignment({Weight::Right, Weight::Bottom});
-            e2->layout().setMargin({10});
-            uiElement_.layout().setMargin({30});
-            uiElement_.addChild(e1);
-            uiElement_.addChild(e2);
+            auto e1 = std::make_shared<Element>(px(50), px(40));
+            auto e2 = std::make_shared<Element>();
+            e2->layout().setMargin({percent(8)});
+            e1->layout().setMargin({percent(8)});
+            e1->layout().setAlignment({WeightLinear::Right, WeightLinear::Bottom});
+            e2->layout().setAlignment({WeightLinear::Center, WeightLinear::Center});
+            uiRoot_.addChild(e1);
+            uiRoot_.addChild(e2);
             
             graph = std::make_shared<Node>();
             
@@ -272,7 +272,7 @@ public:
         renderer_->render(graph, cameraComponent->camera());
         
         if(!mouseLocked) {
-            uiRenderer_->render(uiElement_, screen_);
+            uiRenderer_->render(uiRoot_, screen_);
         }
     }
     
@@ -283,6 +283,9 @@ public:
         if(renderer_.get() != 0) {
             renderer_->resize(width, height);
         }
+        
+        uiRoot_.layout().setWidth(width);
+        uiRoot_.layout().setHeight(height);
     }
     
     const std::string title() const {

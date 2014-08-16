@@ -10,13 +10,13 @@
 #define __OpenGLFramework__camera__
 
 #include "math.h"
-#include "projection.h"
+#include "perspective.h"
 
 namespace lkogl {
     namespace camera {
         class Camera {
             math::Mat4<float> viewMatrix_;
-            Projection projection_;
+            Perspective perspective_;
 
             mutable bool dirtyViewProjection_ = true;
             mutable math::Mat4<float> viewProjectionMatrix_;
@@ -30,9 +30,9 @@ namespace lkogl {
 
             const math::Mat4<float>& viewMatrix() const;
             const math::Vec3<float>& position() const;
-            const Projection& projection() const;
+            const Perspective& perspective() const;
             const math::Mat4<float>& viewProjectionMatrix() const;
-            void setProjection(const Projection& proj);
+            void setProjection(const Perspective& perspective);
         };
     }
 }

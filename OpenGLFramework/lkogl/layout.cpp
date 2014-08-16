@@ -10,18 +10,6 @@
 
 namespace lkogl {
     namespace ui {
-        
-        Weight Weight::Center{1,1};
-        Weight Weight::Left{1,0};
-        Weight Weight::Right{0,1};
-        
-        Weight Weight::Top{1,0};
-        Weight Weight::Bottom{0,1};
-        
-        const Length px(int p) { return Length(p, 0); }
-        const Length percent(int p) { return Length(0, 0.01*p); }
-        const Length fill(int p) { return Length(-p, 1); }
-        
         Layout::Layout()
         {
         }
@@ -38,13 +26,25 @@ namespace lkogl {
         
         void Layout::setMargin(const Space& space)
         {
-            alignment_.margin = space;
+            margin_ = space;
             dirty_ = true;
         }
         
-        void Layout::setAlignment(const Weight2D& weight)
+        void Layout::setAlignment(const WeightPlanar& weight)
         {
-            alignment_.weight = weight;
+            alignment_ = weight;
+            dirty_ = true;
+        }
+        
+        void Layout::setWidth(Length w)
+        {
+            width_ = w;
+            dirty_ = true;
+        }
+        
+        void Layout::setHeight(Length h)
+        {
+            height_ = h;
             dirty_ = true;
         }
         
@@ -54,10 +54,10 @@ namespace lkogl {
                 Rectangle parentRect;
                 if(parent_ != 0) parentRect = parent_->rectangle();
                 
-                int mT = alignment_.margin.top.calc(parentRect.height());
-                int mR = alignment_.margin.right.calc(parentRect.width());
-                int mB = alignment_.margin.bottom.calc(parentRect.height());
-                int mL = alignment_.margin.left.calc(parentRect.width());
+                int mT = margin_.top.calc(parentRect.height());
+                int mR = margin_.right.calc(parentRect.width());
+                int mB = margin_.bottom.calc(parentRect.height());
+                int mL = margin_.left.calc(parentRect.width());
                 
                 rectangle_.setSize(width_.calc(parentRect.width()-mR-mL), height_.calc(parentRect.height()-mT-mB));
                 
@@ -73,14 +73,14 @@ namespace lkogl {
         
         Rectangle::Position Layout::calcCenter(const Rectangle::Position& selfSize, const Rectangle::Position& parentSize, int mT, int mR, int mB, int mL) const {
             return {
-                (alignment_.weight.left_ * mL
-                 + alignment_.weight.right_ * (parentSize.x - (selfSize.x + mR)))
-                / (alignment_.weight.left_+alignment_.weight.right_)
+                (alignment_.left_ * mL
+                 + alignment_.right_ * (parentSize.x - (selfSize.x + mR)))
+                / (alignment_.left_+alignment_.right_)
                 + selfSize.x/2,
                 
-                (alignment_.weight.top_ * mT
-                 + alignment_.weight.bottom_ * (parentSize.y - (selfSize.y + mB)))
-                / (alignment_.weight.top_+alignment_.weight.bottom_)
+                (alignment_.top_ * mT
+                 + alignment_.bottom_ * (parentSize.y - (selfSize.y + mB)))
+                / (alignment_.top_+alignment_.bottom_)
                 + selfSize.y/2
             };
         }

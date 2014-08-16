@@ -13,7 +13,7 @@
 
 namespace lkogl {
     namespace camera {
-        class Projection {
+        class Perspective {
             mutable math::Mat4<float> matrix_;
             mutable bool dirty_ = true;
             
@@ -25,11 +25,10 @@ namespace lkogl {
             
         public:
             
-            Projection(float fov, int w, int h, float near, float far);
-            ~Projection();
+            Perspective(float fov, int w, int h, float near, float far);
+            ~Perspective();
             
             const math::Mat4<float>& matrix() const;
-            void setSize(int width, int height);
             
             float far() const { return far_; }
         };
