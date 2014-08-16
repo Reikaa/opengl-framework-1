@@ -61,8 +61,8 @@ namespace lkogl {
             TextureBinding b(*this, 1);
             
             glTexImage2D(textureTarget_, 0, mode, width_, height_, 0, modeInternal, GL_UNSIGNED_BYTE, image.pixels());
-            glTexParameteri(textureTarget_, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-            glTexParameteri(textureTarget_, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+            glTexParameteri(textureTarget_, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+            glTexParameteri(textureTarget_, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
         }
         
         Texture::Texture(const utils::Image& img) throw (TextureException) :

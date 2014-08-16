@@ -24,6 +24,7 @@ namespace lkogl {
                 
                 GLint samplerPosition;
                 GLint ambientIntensityPosition;
+                GLint colorPosition;
                 GLint eyePosition;
                 
                 GLint specularIntensityPosition;

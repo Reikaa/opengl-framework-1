@@ -21,7 +21,7 @@ namespace lkogl {
         
         Program::ProgramHandles Program::link(const Shader& vsh, const Shader& fsh) throw (ShaderException) {
             GLuint handle = glCreateProgram();
-            GLint far, mMat, vpMat, samplerPos, ambientPos, eysPos, specIntPos, specPowPos, dirLightColPos, dirLightIntPos, dirLightDirPos,
+            GLint far, mMat, vpMat, samplerPos, ambientPos, colorPos, eysPos, specIntPos, specPowPos, dirLightColPos, dirLightIntPos, dirLightDirPos,
             pntLightColPos, pntLightIntPos, pntLightPosPos, pntLightRangePos,
             pntLightAttCPos, pntLightAttLPos, pntLightAttQPos,
             
@@ -59,6 +59,7 @@ namespace lkogl {
                 vpMat = glGetUniformLocation(handle, "uViewProjMatrix");
                 samplerPos = glGetUniformLocation(handle, "uSampler");
                 ambientPos = glGetUniformLocation(handle, "uAmbient");
+                colorPos = glGetUniformLocation(handle, "uColor");
                 
                 eysPos = glGetUniformLocation(handle, "uEyePosition");
                 specIntPos = glGetUniformLocation(handle, "uMaterial.specularIntensity");
@@ -98,7 +99,7 @@ namespace lkogl {
             return Program::ProgramHandles{
                 handle,
                 far,
-                mMat, vpMat, samplerPos, ambientPos,
+                mMat, vpMat, samplerPos, ambientPos, colorPos,
                 eysPos, specIntPos, specPowPos, dirLightColPos, dirLightIntPos, dirLightDirPos,
                 pntLightColPos, pntLightIntPos, pntLightPosPos, pntLightRangePos,
                 pntLightAttCPos, pntLightAttLPos, pntLightAttQPos,

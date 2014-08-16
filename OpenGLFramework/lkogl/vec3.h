@@ -345,6 +345,16 @@ namespace lkogl {
         }
         
         template <typename T>
+        Vec3<T> max(const Vec3<T>& a, const Vec3<T>& b)
+        {
+            return {
+                std::max(a.x, b.x),
+                std::max(a.y, b.y),
+                std::max(a.z, b.z)
+            };
+        }
+        
+        template <typename T>
         std::string toString(const Vec3<T>& v)
         {
             std::string result;

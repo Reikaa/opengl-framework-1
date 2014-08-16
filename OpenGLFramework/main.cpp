@@ -15,6 +15,9 @@
 #include "lkogl/render_target.h"
 #include "lkogl/stencil.h"
 
+#include "lkogl/element.h"
+#include "lkogl/layout_renderer.h"
+
 #include "lkogl/ambient_light.h"
 #include "lkogl/directional_light.h"
 #include "lkogl/point_light.h"
@@ -36,6 +39,7 @@
 
 #include "lkogl/first_person_movement.h"
 
+using namespace lkogl::ui;
 using namespace lkogl::math;
 using namespace lkogl::graphics;
 using namespace lkogl::graphics::renderign;
@@ -77,6 +81,10 @@ class MyGame {
     
     mutable Screen screen_;
     
+    
+    mutable Element uiElement_ = Element(px(400), px(200));
+    mutable std::shared_ptr<LayoutRenderer> uiRenderer_;
+    
 public:
     mutable bool mouseLocked = true;
     
@@ -106,6 +114,16 @@ public:
         try {
             
             renderer_ = std::make_shared<DeferredRenderer>(screen_, 16, 9);
+            uiRenderer_ = std::make_shared<LayoutRenderer>();
+            
+            auto e1 = std::make_shared<Element>(percent(30), px(20));
+            auto e2 = std::make_shared<Element>(percent(40), px(35));
+            e1->layout().setMargin({10});
+            e2->layout().setAlignment({Weight::Right, Weight::Bottom});
+            e2->layout().setMargin({10});
+            uiElement_.layout().setMargin({30});
+            uiElement_.addChild(e1);
+            uiElement_.addChild(e2);
             
             graph = std::make_shared<Node>();
             
@@ -145,7 +163,7 @@ public:
             
             node3->addComponent(std::make_shared<AnimationComponent>(spin));
             node3->transformation.setTranslation({5,1,-2});
-            node3->transformation.setRotation(angleAxis<float>(radians(45), {0,1,0}));
+            node3->transformation.setRotation(angleAxis<float>(radians(45), {0.1,1,0.3}));
             node->addChild(node3);
             
             
@@ -156,8 +174,8 @@ public:
             camNode_ = std::make_shared<Node>();
 
             camNode_->addComponent(cameraComponent);
-            camNode_->transformation.setTranslation({8,1,3});
-            node3->addChild(camNode_);
+            camNode_->transformation.setTranslation({-4,1,-6});
+            graph->addChild(camNode_);
             monkeyNode_ = node3;
             
             //movement.lookAt(camNode->transformation, {0,0,0});
@@ -232,11 +250,11 @@ public:
         
         if(keyboard_.pressed(Keyboard::Key::LETTER_T)) {
             if(exprerimentToggle) {
-                graph->removeChild(camNode_);
-                monkeyNode_->addChild(camNode_);
-            } else {
                 monkeyNode_->removeChild(camNode_);
                 graph->addChild(camNode_);
+            } else {
+                graph->removeChild(camNode_);
+                monkeyNode_->addChild(camNode_);
             }
             exprerimentToggle = !exprerimentToggle;
         }
@@ -252,6 +270,10 @@ public:
     
     void render() const {
         renderer_->render(graph, cameraComponent->camera());
+        
+        if(!mouseLocked) {
+            uiRenderer_->render(uiElement_, screen_);
+        }
     }
     
     void resize(int width, int height) const {

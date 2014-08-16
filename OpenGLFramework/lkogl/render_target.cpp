@@ -82,8 +82,10 @@ namespace lkogl {
                 
                 glBindTexture(GL_TEXTURE_2D, texturesRaw[i]);
                 
-                glTexParameterf(textureTarget_, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-                glTexParameterf(textureTarget_, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+                glTexParameteri(textureTarget_, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+                glTexParameteri(textureTarget_, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+                glTexParameteri(textureTarget_, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
+                glTexParameteri(textureTarget_, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
                 
                 
                 if(targets[i].attachment == GL_DEPTH_ATTACHMENT) {

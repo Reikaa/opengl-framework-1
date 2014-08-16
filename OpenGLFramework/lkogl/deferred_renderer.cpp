@@ -82,7 +82,7 @@ namespace lkogl {
                     auto matrix = cam.viewProjectionMatrix();
                     graphics::CameraMatrixUse(programs_.deferredGeo_, matrix, cam.position(), cam.projection().far());
                     
-                    walker.walk(graph, &scene::Component::render, programs_.deferredGeo_);
+                    walker.walk(graph, &scene::components::Component::render, programs_.deferredGeo_);
                     
                     glDepthMask(GL_FALSE);
                     glDisable(GL_DEPTH_TEST);

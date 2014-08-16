@@ -12,7 +12,7 @@
 #include "math.h"
 #include "opengl.h"
 
-#include "node_component.h"
+#include "base_component.h"
 #include "node.h"
 
 namespace lkogl {
@@ -24,8 +24,8 @@ namespace lkogl {
                 SceneDeepWalker();
                 ~SceneDeepWalker();
            
-                void walk(const std::shared_ptr<Node>, Component::ComponentUpdateMethod) const;
-                void walk(const std::shared_ptr<Node>, Component::ComponentRenderMethod, const graphics::Program&) const;
+                void walk(const std::shared_ptr<Node>, components::Component::ComponentUpdateMethod) const;
+                void walk(const std::shared_ptr<Node>, components::Component::ComponentRenderMethod, const graphics::Program&) const;
             };
             
         }

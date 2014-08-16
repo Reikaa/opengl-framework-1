@@ -13,7 +13,7 @@
 #include <list>
 #include <vector>
 #include "tree_transformation.h"
-#include "node_component.h"
+#include "base_component.h"
 
 namespace lkogl {
     namespace scene {
@@ -24,7 +24,7 @@ namespace lkogl {
         
         class Node {
             mutable std::list<std::shared_ptr<Node>> children_;
-            mutable std::vector<std::shared_ptr<Component>> components_;
+            mutable std::vector<std::shared_ptr<components::Component>> components_;
 
         public:
             TreeTransformation transformation;
@@ -34,7 +34,7 @@ namespace lkogl {
             
             void addChild(std::shared_ptr<Node>);
             void removeChild(std::shared_ptr<Node>);
-            void addComponent(std::shared_ptr<Component>);
+            void addComponent(std::shared_ptr<components::Component>);
             
             friend class walker::SceneDeepWalker;
         };

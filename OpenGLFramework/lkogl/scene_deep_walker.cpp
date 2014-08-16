@@ -22,9 +22,9 @@ namespace lkogl {
             {
             }
             
-            void SceneDeepWalker::walk(const std::shared_ptr<Node> node, Component::ComponentUpdateMethod m) const
+            void SceneDeepWalker::walk(const std::shared_ptr<Node> node, components::Component::ComponentUpdateMethod m) const
             {
-                for(const std::shared_ptr<Component> c : node->components_) {
+                for(const std::shared_ptr<components::Component> c : node->components_) {
                     (&*c->*m)(node->transformation);
                 }
                 
@@ -33,9 +33,9 @@ namespace lkogl {
                 }
             }
             
-            void SceneDeepWalker::walk(const std::shared_ptr<Node> node, Component::ComponentRenderMethod m, const graphics::Program& program) const
+            void SceneDeepWalker::walk(const std::shared_ptr<Node> node, components::Component::ComponentRenderMethod m, const graphics::Program& program) const
             {
-                for(const std::shared_ptr<Component> c : node->components_) {
+                for(const std::shared_ptr<components::Component> c : node->components_) {
                     (&*c->*m)(node->transformation, program);
                 }
                 

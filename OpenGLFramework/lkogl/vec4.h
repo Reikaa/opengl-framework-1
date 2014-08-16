@@ -352,6 +352,17 @@ namespace lkogl {
         }
         
         template <typename T>
+        Vec4<T> max(const Vec4<T>& a, const Vec4<T>& b)
+        {
+            return {
+                std::max(a.x, b.x),
+                std::max(a.y, b.y),
+                std::max(a.z, b.z),
+                std::max(a.w, b.w)
+            };
+        }
+        
+        template <typename T>
         std::string toString(const Vec4<T>& v)
         {
             std::string result;

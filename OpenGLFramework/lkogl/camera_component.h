@@ -9,7 +9,7 @@
 #ifndef __OpenGLFramework__camera_component__
 #define __OpenGLFramework__camera_component__
 
-#include "node_component.h"
+#include "base_component.h"
 #include "camera.h"
 
 
