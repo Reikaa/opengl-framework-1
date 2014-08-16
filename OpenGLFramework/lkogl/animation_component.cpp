@@ -8,8 +8,6 @@
 
 #include "animation_component.h"
 
-#include <iostream>
-
 namespace lkogl {
     namespace scene {
         namespace components {

@@ -12,7 +12,6 @@
 #include <string>
 #include <exception>
 
-#include "opengl.h"
 #include "mesh.h"
 #include "math.h"
 

@@ -11,6 +11,7 @@
 
 #include <string>
 #include <vector>
+
 #include "math.h"
 #include "index_model.h"
 

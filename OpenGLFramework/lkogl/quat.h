@@ -395,9 +395,8 @@ namespace lkogl {
                     Result.z = biggestVal;
                     break;
                     
-                default:					// Silence a -Wswitch-default warning in GCC. Should never actually get here. Assert is just for sanity.
+                default:
                     assert(false);
-                    break;
             }
             return Result;
         }

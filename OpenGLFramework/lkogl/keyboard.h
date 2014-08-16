@@ -10,7 +10,6 @@
 #define __OpenGLFramework__keyboard__
 
 #include <set>
-#include <stdio.h>
 
 namespace lkogl {
     namespace input {

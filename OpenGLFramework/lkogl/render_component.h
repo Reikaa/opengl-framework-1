@@ -9,7 +9,6 @@
 #ifndef __OpenGLFramework__render_component__
 #define __OpenGLFramework__render_component__
 
-#include <stdio.h>
 #include "base_component.h"
 #include "geometry_object.h"
 #include "material.h"

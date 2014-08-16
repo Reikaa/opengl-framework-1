@@ -10,6 +10,7 @@
 #define __OpenGLFramework__game_loop__
 
 #include <vector>
+
 #include "window.h"
 
 constexpr long operator "" _fps(unsigned long long int fps) {

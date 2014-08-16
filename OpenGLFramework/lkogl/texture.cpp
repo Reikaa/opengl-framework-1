@@ -7,7 +7,6 @@
 //
 
 #include "texture.h"
-#include <iostream>
 
 namespace lkogl {
     namespace graphics {

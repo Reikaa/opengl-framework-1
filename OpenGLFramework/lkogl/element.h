@@ -9,7 +9,6 @@
 #ifndef __OpenGLFramework__element__
 #define __OpenGLFramework__element__
 
-#include <stdio.h>
 #include <list>
 
 #include "layout.h"

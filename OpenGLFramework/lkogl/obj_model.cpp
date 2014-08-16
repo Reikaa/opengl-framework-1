@@ -11,7 +11,7 @@
 #include <unordered_map>
 #include <fstream>
 #include <sstream>
-#include <iostream>
+
 #include "sdl.h"
 
 namespace lkogl {

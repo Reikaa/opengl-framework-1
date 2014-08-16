@@ -9,7 +9,6 @@
 #ifndef __OpenGLFramework__projection__
 #define __OpenGLFramework__projection__
 
-#include <stdio.h>
 #include "math.h"
 
 namespace lkogl {

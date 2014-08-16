@@ -10,6 +10,7 @@
 #define __OpenGLFramework__index_model__
 
 #include <vector>
+
 #include "math.h"
 #include "mesh.h"
 

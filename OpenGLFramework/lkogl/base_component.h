@@ -9,7 +9,6 @@
 #ifndef __OpenGLFramework__node_component__
 #define __OpenGLFramework__node_component__
 
-#include <stdio.h>
 #include "tree_transformation.h"
 #include "program.h"
 

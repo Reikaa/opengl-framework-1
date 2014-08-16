@@ -10,6 +10,7 @@
 #define __OpenGLFramework__image__
 
 #include <string>
+
 #include "sdl.h"
 
 namespace lkogl {

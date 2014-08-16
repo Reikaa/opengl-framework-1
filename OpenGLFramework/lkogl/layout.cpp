@@ -6,7 +6,6 @@
 //  Copyright (c) 2014 Laszlo Korte. All rights reserved.
 //
 
-#include <iostream>
 #include "layout.h"
 
 namespace lkogl {
@@ -63,8 +62,6 @@ namespace lkogl {
                 rectangle_.setSize(width_.calc(parentRect.width()-mR-mL), height_.calc(parentRect.height()-mT-mB));
                 
                 math::Vec2<int> parentSize = math::max(parentRect.size(), rectangle_.size());
-                
-                std::cout << math::toString(parentSize) << std::endl;
                 
                 rectangle_.setCenter(parentRect.topLeft() + calcCenter({rectangle_.width(), rectangle_.height()}, {parentSize.x,parentSize.y}, mT, mR, mB, mL));
                 

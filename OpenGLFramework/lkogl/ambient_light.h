@@ -9,7 +9,6 @@
 #ifndef __OpenGLFramework__ambient_light__
 #define __OpenGLFramework__ambient_light__
 
-#include <stdio.h>
 #include "math.h"
 #include "program.h"
 

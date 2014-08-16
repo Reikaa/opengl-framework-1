@@ -7,7 +7,6 @@
 //
 
 #include "camera.h"
-#include <iostream>
 
 namespace lkogl {
     namespace camera {

@@ -6,9 +6,9 @@
 //  Copyright (c) 2014 Laszlo Korte. All rights reserved.
 //
 
-#include "attenuation.h"
 #include <math.h>
-#include <stdio.h>
+
+#include "attenuation.h"
 
 namespace lkogl {
     namespace graphics {

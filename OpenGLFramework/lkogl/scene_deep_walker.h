@@ -9,9 +9,6 @@
 #ifndef __OpenGLFramework__scene_renderer__
 #define __OpenGLFramework__scene_renderer__
 
-#include "math.h"
-#include "opengl.h"
-
 #include "base_component.h"
 #include "node.h"
 

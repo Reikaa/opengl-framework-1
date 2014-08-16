@@ -10,6 +10,7 @@
 #define __OpenGLFramework__render_target__
 
 #include <vector>
+
 #include "texture.h"
 
 namespace lkogl {

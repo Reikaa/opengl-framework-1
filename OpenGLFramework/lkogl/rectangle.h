@@ -9,7 +9,6 @@
 #ifndef __OpenGLFramework__rectangle__
 #define __OpenGLFramework__rectangle__
 
-#include <stdio.h>
 #include "math.h"
 
 namespace lkogl {

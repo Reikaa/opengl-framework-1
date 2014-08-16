@@ -8,6 +8,7 @@
 
 #include <iostream>
 #include <sstream>
+
 #include "lkogl/game_loop.h"
 #include "lkogl/material.h"
 #include "lkogl/shader.h"
@@ -25,7 +26,6 @@
 #include "deferred_renderer.h"
 
 #include "lkogl/obj_model.h"
-
 
 #include "lkogl/animation_component.h"
 #include "lkogl/camera_component.h"

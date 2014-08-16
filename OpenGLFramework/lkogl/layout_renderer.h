@@ -9,7 +9,6 @@
 #ifndef __OpenGLFramework__layout_renderer__
 #define __OpenGLFramework__layout_renderer__
 
-#include <stdio.h>
 #include "element.h"
 #include "program.h"
 #include "render_target.h"

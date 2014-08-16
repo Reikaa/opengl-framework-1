@@ -9,7 +9,6 @@
 #ifndef __OpenGLFramework__program__
 #define __OpenGLFramework__program__
 
-#include "opengl.h"
 #include "shader.h"
 
 namespace lkogl {

@@ -10,7 +10,7 @@
 #define __OpenGLFramework__texture__
 
 #include <vector>
-#include "opengl.h"
+
 #include "image.h"
 #include "program.h"
 

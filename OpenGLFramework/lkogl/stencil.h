@@ -9,8 +9,6 @@
 #ifndef __OpenGLFramework__stencil__
 #define __OpenGLFramework__stencil__
 
-#include <stdio.h>
-
 namespace lkogl {
     namespace graphics {
         
