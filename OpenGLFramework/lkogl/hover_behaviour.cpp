@@ -24,7 +24,6 @@ namespace lkogl {
             void HoverBehaviour::onInit(Element& el)
             {
                 
-                el.layout().setSize(40, 40);
             }
             
             bool HoverBehaviour::onFocus(Element& el)
@@ -32,7 +31,6 @@ namespace lkogl {
                 if(++focus > 0) {
                     el.style().setBackground({0,0,0,0.7});
                 }
-                el.layout().setSize(50, 50);
                 
                 return true;
             }
@@ -42,7 +40,6 @@ namespace lkogl {
                 if(--focus == 0) {
                     el.style().setBackground({0,0,0,0.3});
                 }
-                el.layout().setSize(40, 40);
                 
                 return true;
             }
