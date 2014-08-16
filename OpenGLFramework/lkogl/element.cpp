@@ -19,21 +19,97 @@ namespace lkogl {
             layout_.setHeight(h);
         }
         
-        Element::~Element() {
+        Element::Element(const std::shared_ptr<Behaviour> b) : behaviour_(b)
+        {
+            behaviour_->onInit(*this);
         }
         
-        void Element::addChild(std::shared_ptr<Element> n) {
+        Element::~Element()
+        {
+        }
+        
+        void Element::addChild(std::shared_ptr<Element> n)
+        {
             n->layout_.setParent(&layout_);
             children_.push_back(n);
         }
         
-        void Element::removeChild(std::shared_ptr<Element> n) {
+        void Element::removeChild(std::shared_ptr<Element> n)
+        {
             children_.remove(n);
         }
         
         const std::list<std::shared_ptr<Element>>& Element::children() const
         {
             return children_;
+        }
+        
+        Layout& Element::layout()
+        {
+            return layout_;
+        }
+        
+        const Layout& Element::layout() const
+        {
+            return layout_;
+        }
+        
+        const Style& Element::style() const
+        {
+            return style_;
+        }
+        
+        Style& Element::style()
+        {
+            return style_;
+        }
+        
+        bool Element::onFocus()
+        {
+            if(behaviour_.get() != 0) {
+                return behaviour_->onFocus(*this);
+            }
+            return true;
+        }
+        
+        bool Element::onBlur()
+        {
+            if(behaviour_.get() != 0) {
+                return behaviour_->onBlur(*this);
+            }
+            return true;
+        }
+        
+        bool Element::onContactBegin()
+        {
+            if(behaviour_.get() != 0) {
+                return behaviour_->onContactBegin(*this);
+            }
+            return true;
+        }
+        
+        bool Element::onContactEnd()
+        {
+            if(behaviour_.get() != 0) {
+                return behaviour_->onContactEnd(*this);
+            }
+            return true;
+        }
+        
+        bool Element::onContactMove()
+        {
+            if(behaviour_.get() != 0) {
+                return behaviour_->onContactMove(*this);
+            }
+            return true;
+        }
+        
+        bool Element::onContactCancel()
+        {
+            if(behaviour_.get() != 0) {
+                return behaviour_->onContactCancel(*this);
+            }
+            return true;
         }
     }
 }

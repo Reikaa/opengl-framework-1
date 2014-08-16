@@ -18,12 +18,16 @@
 
 #include "lkogl/element.h"
 #include "lkogl/layout_renderer.h"
+#include "lkogl/pointer_tracking.h"
+#include "lkogl/layout_invalidator.h"
+#include "lkogl/hover_behaviour.h"
+
 
 #include "lkogl/ambient_light.h"
 #include "lkogl/directional_light.h"
 #include "lkogl/point_light.h"
 #include "lkogl/spot_light.h"
-#include "deferred_renderer.h"
+#include "lkogl/deferred_renderer.h"
 
 #include "lkogl/obj_model.h"
 
@@ -80,9 +84,10 @@ class MyGame {
     adapter::MouseAdapter mouseAdapter_;
     
     mutable Screen screen_;
-    
-    
-    mutable Element uiRoot_ = Element(px(400), px(400));
+
+    LayoutInvalidator layoutInvalidator_;
+    mutable std::shared_ptr<PointerTracking> pointerTracking_;
+    mutable std::shared_ptr<Element> uiRoot_ = std::make_shared<Element>();
     mutable std::shared_ptr<LayoutRenderer> uiRenderer_;
     
 public:
@@ -116,14 +121,17 @@ public:
             renderer_ = std::make_shared<DeferredRenderer>(screen_, 16, 9);
             uiRenderer_ = std::make_shared<LayoutRenderer>();
             
-            auto e1 = std::make_shared<Element>(px(50), px(40));
-            auto e2 = std::make_shared<Element>();
-            e2->layout().setMargin({percent(8)});
+            auto e1 = std::make_shared<Element>();
+            auto e2 = std::make_shared<Element>(std::make_shared<behaviour::HoverBehaviour>());
+            e2->layout().setSize(px(50), px(40));
             e1->layout().setMargin({percent(8)});
-            e1->layout().setAlignment({WeightLinear::Right, WeightLinear::Bottom});
-            e2->layout().setAlignment({WeightLinear::Center, WeightLinear::Center});
-            uiRoot_.addChild(e1);
-            uiRoot_.addChild(e2);
+            e1->layout().setAlignment({WeightLinear::Center, WeightLinear::Center});
+            e2->layout().setMargin({px(20)});
+            e2->layout().setAlignment({WeightLinear::Right, WeightLinear::Bottom});
+            uiRoot_->addChild(e1);
+            e1->addChild(e2);
+            
+            pointerTracking_ = std::make_shared<PointerTracking>(uiRoot_);
             
             graph = std::make_shared<Node>();
             
@@ -178,7 +186,7 @@ public:
             graph->addChild(camNode_);
             monkeyNode_ = node3;
             
-            //movement.lookAt(camNode->transformation, {0,0,0});
+            movement.lookAt(camNode_->transformation, {0,0,0});
 
             
         } catch(ShaderException e) {
@@ -259,6 +267,19 @@ public:
             exprerimentToggle = !exprerimentToggle;
         }
         
+
+        if(!mouseLocked) {
+            pointerTracking_->track(mouse_.position);
+            if(mouse_.pressed(Mouse::Button::LEFT))
+            {
+                pointerTracking_->beginPointing(mouse_.position);
+            }
+            
+            if(mouse_.released(Mouse::Button::LEFT))
+            {
+                pointerTracking_->endPointing(mouse_.position);
+            }
+        }
     }
     
     void update() const {
@@ -284,8 +305,10 @@ public:
             renderer_->resize(width, height);
         }
         
-        uiRoot_.layout().setWidth(width);
-        uiRoot_.layout().setHeight(height);
+        uiRoot_->layout().setWidth(width);
+        uiRoot_->layout().setHeight(height);
+        
+        layoutInvalidator_.invalidate(uiRoot_);
     }
     
     const std::string title() const {

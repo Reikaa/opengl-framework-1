@@ -33,10 +33,14 @@ namespace lkogl {
             
             void setParent(const Layout*);
             
+            bool dirty() const;
+            void invalidate();
+            
             const Rectangle& rectangle() const;
             
-            void setWidth(Length w);
-            void setHeight(Length h);
+            void setWidth(const Length& w);
+            void setHeight(const Length& h);
+            void setSize(const Length& w, const Length& h);
             
             void setMargin(const Space& space);
             void setAlignment(const WeightPlanar& w);

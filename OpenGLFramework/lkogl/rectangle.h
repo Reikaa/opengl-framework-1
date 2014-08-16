@@ -48,6 +48,8 @@ namespace lkogl {
             
             void setSize(const ScalarType& width, const ScalarType& height);
             void setTopLeft(const Position& p);
+            
+            bool contains(const Position& p) const;
         };
     }
 }

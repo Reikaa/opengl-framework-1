@@ -113,5 +113,11 @@ namespace lkogl {
             return max_ - min_;
         }
         
+        bool Rectangle::contains(const Position &p) const
+        {
+            return p.x >= min_.x && p.y >= min_.y
+                && p.x <= max_.x && p.y <= max_.y;
+        }
+        
     }
 }

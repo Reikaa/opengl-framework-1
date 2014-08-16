@@ -12,24 +12,43 @@
 #include <list>
 
 #include "layout.h"
+#include "style.h"
+#include "behaviour.h"
 
 namespace lkogl {
     namespace ui {
+        
         class Element
         {
             mutable std::list<std::shared_ptr<Element>> children_;
             Layout layout_;
+            Style style_;
+            const std::shared_ptr<Behaviour> behaviour_;
         public:
+            bool hover = false;
+            
             Element();
             Element(Length w, Length h);
+            Element(const std::shared_ptr<Behaviour> b);
             ~Element();
             
             void addChild(std::shared_ptr<Element>);
             void removeChild(std::shared_ptr<Element>);
             const std::list<std::shared_ptr<Element>>& children() const;
             
-            Layout& layout() { return layout_; }
-            const Layout& layout() const { return layout_; }
+            Layout& layout();
+            const Layout& layout() const;
+            
+            const Style& style() const;
+            Style& style();
+            
+            bool onFocus();
+            bool onBlur();
+            
+            bool onContactBegin();
+            bool onContactEnd();
+            bool onContactMove();
+            bool onContactCancel();
         };
     }
 }

@@ -10,6 +10,7 @@
 #define __OpenGLFramework__mouse__
 
 #include <set>
+#include "math.h"
 
 namespace lkogl {
     namespace input {
@@ -30,20 +31,11 @@ namespace lkogl {
             std::set<Button> keySet_;
             std::set<Button> prevKeySet_;
         public:
-            struct {
-                int x;
-                int y;
-            } position;
+            math::Vec2<int> position;
             
-            struct {
-                int x;
-                int y;
-            } delta;
+            math::Vec2<int> delta;
             
-            struct {
-                int x;
-                int y;
-            } wheel;
+            math::Vec2<int> wheel;
             
             Mouse();
             ~Mouse();
@@ -52,10 +44,12 @@ namespace lkogl {
             bool isUp(Button k) const;
             bool pressed(Button k) const;
             bool released(Button k) const;
-            
+                        
             void update();
         private:
             void move(int x, int y);
+            
+            void setPosition(int x, int y);
             
             void scroll(int x, int y);
             

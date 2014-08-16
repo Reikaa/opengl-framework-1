@@ -30,38 +30,37 @@ namespace lkogl {
             return graphics::Program(vshDefGeo.content, fshDefGeo.content);
         }
         
-        void LayoutRenderer::render(const Element& e, const graphics::Screen& screen)
+        void LayoutRenderer::render(std::shared_ptr<Element> e, const graphics::Screen& screen)
         {
             glClearColor(0, 0, 0, 0);
             glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
             
             glViewport(0, 0, screen.width, screen.height);
-            
+                        
             math::Mat4<float> projection = math::ortho<float>(0,screen.width, 0, screen.height);
             
             graphics::ProgramUse pru(program_);
-            glUniform4f(program_.handles().colorPosition, 0.1, 0.1, 0.1, 0.6);
             
             graphics::GeometryObjectUse sq(square_);
             
             graphics::MainTargetUse s;
-            std::queue<std::pair<Element, Rectangle>> elements;
+            std::queue<std::pair<std::shared_ptr<Element>, Rectangle>> elements;
             
-            elements.push({e, e.layout().rectangle()});
+            elements.push({e, e->layout().rectangle()});
 
             graphics::ScissorUse scissor;
             
             while(!elements.empty()) {
-                const std::pair<Element, Rectangle> current = elements.front();
+                const std::pair<std::shared_ptr<Element>, Rectangle> current = elements.front();
                 elements.pop();
                 
-                auto rect = current.first.layout().rectangle();
+                auto rect = current.first->layout().rectangle();
                 if(rect.width() > 0 && rect.height() > 0) {
                     math::Mat4<float> modelView(1);
                     math::Mat4<float> modelViewProj = projection;
 
-                    for(auto c : current.first.children()) {
-                        elements.push({*c.get(), rect});
+                    for(auto c : current.first->children()) {
+                        elements.push({c, rect});
                     }
 
                     modelView = math::translate(modelView, {
@@ -80,6 +79,12 @@ namespace lkogl {
                               current.second.height());
                     
                     glUniformMatrix4fv(program_.handles().viewProjectionMatrixPosition, 1, 0, &modelViewProj[0][0]);
+                    
+                    Style stl = current.first->style();
+                    Color bg = stl.background();
+                                        
+                    glUniform4f(program_.handles().colorPosition, bg.x, bg.y, bg.z, bg.w);
+
                     sq.render();
 
                 }

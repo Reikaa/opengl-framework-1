@@ -302,7 +302,7 @@ namespace lkogl {
         {
             return !(v1==v2);
         }
-        
+
         
         ////////////////////////////
         /// Unary constant operators

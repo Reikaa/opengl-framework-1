@@ -33,6 +33,7 @@
 		F279E245199F47970001BBBF /* weight.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F279E243199F47970001BBBF /* weight.cpp */; };
 		F279E248199F48030001BBBF /* space.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F279E246199F48030001BBBF /* space.cpp */; };
 		F279E24E199F60240001BBBF /* scissor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F279E24C199F60240001BBBF /* scissor.cpp */; };
+		F279E251199F66200001BBBF /* hittester.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F279E24F199F66200001BBBF /* hittester.cpp */; };
 		F297076619936C1600D48CE5 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F297076519936C1600D48CE5 /* Images.xcassets */; };
 		F297077C19936F4E00D48CE5 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F297072A1993682F00D48CE5 /* main.cpp */; };
 		F297077E19936F7D00D48CE5 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F297077D19936F7D00D48CE5 /* main.cpp */; };
@@ -59,6 +60,11 @@
 		F2A4967819980EF600588B03 /* attenuation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2A4967619980EF600588B03 /* attenuation.cpp */; };
 		F2A4967B1998102C00588B03 /* point_light.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2A496791998102C00588B03 /* point_light.cpp */; };
 		F2A4968619981F1600588B03 /* spot_light.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2A4968419981F1600588B03 /* spot_light.cpp */; };
+		F2B0C3F3199F9EE4008AC975 /* style.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2B0C3F1199F9EE4008AC975 /* style.cpp */; };
+		F2B0C3F9199FCE19008AC975 /* pointer_tracking.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2B0C3F7199FCE19008AC975 /* pointer_tracking.cpp */; };
+		F2B0C3FC199FE247008AC975 /* behaviour.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2B0C3FA199FE247008AC975 /* behaviour.cpp */; };
+		F2B0C400199FE7F8008AC975 /* hover_behaviour.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2B0C3FE199FE7F8008AC975 /* hover_behaviour.cpp */; };
+		F2B0C403199FF4A1008AC975 /* layout_invalidator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2B0C401199FF4A1008AC975 /* layout_invalidator.cpp */; };
 		F2B563B6199CFA28007D38D3 /* deferred-stencil.vsh in Resources */ = {isa = PBXBuildFile; fileRef = F2B563B5199CFA28007D38D3 /* deferred-stencil.vsh */; };
 		F2B563B8199CFA37007D38D3 /* deferred-stencil.fsh in Resources */ = {isa = PBXBuildFile; fileRef = F2B563B7199CFA37007D38D3 /* deferred-stencil.fsh */; };
 		F2B563BD199D0CC8007D38D3 /* stencil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2B563BB199D0CC8007D38D3 /* stencil.cpp */; };
@@ -165,6 +171,8 @@
 		F279E247199F48030001BBBF /* space.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = space.h; sourceTree = "<group>"; };
 		F279E24C199F60240001BBBF /* scissor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = scissor.cpp; sourceTree = "<group>"; };
 		F279E24D199F60240001BBBF /* scissor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = scissor.h; sourceTree = "<group>"; };
+		F279E24F199F66200001BBBF /* hittester.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = hittester.cpp; sourceTree = "<group>"; };
+		F279E250199F66200001BBBF /* hittester.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = hittester.h; sourceTree = "<group>"; };
 		F297072A1993682F00D48CE5 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		F297075619936A9A00D48CE5 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F297075C19936C1600D48CE5 /* OpenGLFramework.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OpenGLFramework.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -213,6 +221,16 @@
 		F2A4967A1998102C00588B03 /* point_light.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = point_light.h; sourceTree = "<group>"; };
 		F2A4968419981F1600588B03 /* spot_light.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = spot_light.cpp; sourceTree = "<group>"; };
 		F2A4968519981F1600588B03 /* spot_light.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = spot_light.h; sourceTree = "<group>"; };
+		F2B0C3F1199F9EE4008AC975 /* style.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = style.cpp; sourceTree = "<group>"; };
+		F2B0C3F2199F9EE4008AC975 /* style.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = style.h; sourceTree = "<group>"; };
+		F2B0C3F7199FCE19008AC975 /* pointer_tracking.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = pointer_tracking.cpp; sourceTree = "<group>"; };
+		F2B0C3F8199FCE19008AC975 /* pointer_tracking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pointer_tracking.h; sourceTree = "<group>"; };
+		F2B0C3FA199FE247008AC975 /* behaviour.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = behaviour.cpp; sourceTree = "<group>"; };
+		F2B0C3FB199FE247008AC975 /* behaviour.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = behaviour.h; sourceTree = "<group>"; };
+		F2B0C3FE199FE7F8008AC975 /* hover_behaviour.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = hover_behaviour.cpp; sourceTree = "<group>"; };
+		F2B0C3FF199FE7F8008AC975 /* hover_behaviour.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = hover_behaviour.h; sourceTree = "<group>"; };
+		F2B0C401199FF4A1008AC975 /* layout_invalidator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = layout_invalidator.cpp; sourceTree = "<group>"; };
+		F2B0C402199FF4A1008AC975 /* layout_invalidator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = layout_invalidator.h; sourceTree = "<group>"; };
 		F2B563B5199CFA28007D38D3 /* deferred-stencil.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = "deferred-stencil.vsh"; sourceTree = "<group>"; };
 		F2B563B7199CFA37007D38D3 /* deferred-stencil.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = "deferred-stencil.fsh"; sourceTree = "<group>"; };
 		F2B563BB199D0CC8007D38D3 /* stencil.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = stencil.cpp; sourceTree = "<group>"; };
@@ -512,6 +530,7 @@
 		F29B1F50199E29D300F17051 /* ui */ = {
 			isa = PBXGroup;
 			children = (
+				F2B0C3FD199FE7E6008AC975 /* behaviours */,
 				F29B1F51199E2A4E00F17051 /* element.cpp */,
 				F29B1F52199E2A4E00F17051 /* element.h */,
 				F29B1F54199E2B1800F17051 /* layout.cpp */,
@@ -526,6 +545,16 @@
 				F279E244199F47970001BBBF /* weight.h */,
 				F279E246199F48030001BBBF /* space.cpp */,
 				F279E247199F48030001BBBF /* space.h */,
+				F279E24F199F66200001BBBF /* hittester.cpp */,
+				F279E250199F66200001BBBF /* hittester.h */,
+				F2B0C3F1199F9EE4008AC975 /* style.cpp */,
+				F2B0C3F2199F9EE4008AC975 /* style.h */,
+				F2B0C3F7199FCE19008AC975 /* pointer_tracking.cpp */,
+				F2B0C3F8199FCE19008AC975 /* pointer_tracking.h */,
+				F2B0C3FA199FE247008AC975 /* behaviour.cpp */,
+				F2B0C3FB199FE247008AC975 /* behaviour.h */,
+				F2B0C401199FF4A1008AC975 /* layout_invalidator.cpp */,
+				F2B0C402199FF4A1008AC975 /* layout_invalidator.h */,
 			);
 			name = ui;
 			sourceTree = "<group>";
@@ -537,6 +566,15 @@
 				F29B1F60199E6C9100F17051 /* ui-element.fsh */,
 			);
 			name = "ui-shaders";
+			sourceTree = "<group>";
+		};
+		F2B0C3FD199FE7E6008AC975 /* behaviours */ = {
+			isa = PBXGroup;
+			children = (
+				F2B0C3FE199FE7F8008AC975 /* hover_behaviour.cpp */,
+				F2B0C3FF199FE7F8008AC975 /* hover_behaviour.h */,
+			);
+			name = behaviours;
 			sourceTree = "<group>";
 		};
 		F2B563BE199D2A8F007D38D3 /* rendering */ = {
@@ -740,17 +778,21 @@
 				F29707BE199397FF00D48CE5 /* window.cpp in Sources */,
 				F29B1F59199E2B9600F17051 /* rectangle.cpp in Sources */,
 				F2DEC6281997C7EA00EE31E7 /* mouse_adapter.cpp in Sources */,
+				F279E251199F66200001BBBF /* hittester.cpp in Sources */,
 				F2A4967B1998102C00588B03 /* point_light.cpp in Sources */,
 				F29B1F53199E2A4E00F17051 /* element.cpp in Sources */,
 				F2B563C1199D2AA3007D38D3 /* deferred_renderer.cpp in Sources */,
+				F2B0C3FC199FE247008AC975 /* behaviour.cpp in Sources */,
 				F279E248199F48030001BBBF /* space.cpp in Sources */,
 				F21EA81119990FF200D78E1C /* geometry_object.cpp in Sources */,
 				F2DEC613199790A600EE31E7 /* camera.cpp in Sources */,
 				F21EA82F199ABD0B00D78E1C /* animation_component.cpp in Sources */,
 				F2970791199370D800D48CE5 /* texture.cpp in Sources */,
+				F2B0C403199FF4A1008AC975 /* layout_invalidator.cpp in Sources */,
 				F2DEC63D1997F4E000EE31E7 /* directional_light.cpp in Sources */,
 				F279E242199F476E0001BBBF /* length.cpp in Sources */,
 				F29707CB1993BD9700D48CE5 /* scene_deep_walker.cpp in Sources */,
+				F2B0C400199FE7F8008AC975 /* hover_behaviour.cpp in Sources */,
 				F29707B5199379DC00D48CE5 /* material.cpp in Sources */,
 				F2DEC60419975A8700EE31E7 /* base_component.cpp in Sources */,
 				F21EA828199A8C5600D78E1C /* tree_transformation.cpp in Sources */,
@@ -770,11 +812,13 @@
 				F2A4967819980EF600588B03 /* attenuation.cpp in Sources */,
 				F29707A21993728300D48CE5 /* game_loop.cpp in Sources */,
 				F2DEC616199793A100EE31E7 /* perspective.cpp in Sources */,
+				F2B0C3F9199FCE19008AC975 /* pointer_tracking.cpp in Sources */,
 				F279E245199F47970001BBBF /* weight.cpp in Sources */,
 				F2DEC6211997BFA700EE31E7 /* first_person_movement.cpp in Sources */,
 				F29707B11993786600D48CE5 /* image.cpp in Sources */,
 				F29707971993716300D48CE5 /* node.cpp in Sources */,
 				F2DEC6191997B59A00EE31E7 /* keyboard.cpp in Sources */,
+				F2B0C3F3199F9EE4008AC975 /* style.cpp in Sources */,
 				F21EA814199911F900D78E1C /* program.cpp in Sources */,
 				F2DEC6401997F4F800EE31E7 /* base_light.cpp in Sources */,
 				F2DEC6081997621400EE31E7 /* render_component.cpp in Sources */,

@@ -36,21 +36,38 @@ namespace lkogl {
             dirty_ = true;
         }
         
-        void Layout::setWidth(Length w)
+        void Layout::setWidth(const Length& w)
         {
             width_ = w;
             dirty_ = true;
         }
         
-        void Layout::setHeight(Length h)
+        void Layout::setHeight(const Length& h)
         {
             height_ = h;
             dirty_ = true;
         }
         
+        void Layout::setSize(const lkogl::ui::Length &w, const lkogl::ui::Length &h)
+        {
+            height_ = h;
+            width_ = w;
+            dirty_ = true;
+        }
+        
+        bool Layout::dirty() const
+        {
+            return dirty_ || (parent_!=0 && parent_->dirty());
+        }
+        
+        void Layout::invalidate()
+        {
+            dirty_ = true;
+        }
+        
         const Rectangle& Layout::rectangle() const
         {
-            if(dirty_) {
+            if(dirty()) {
                 Rectangle parentRect;
                 if(parent_ != 0) parentRect = parent_->rectangle();
                 

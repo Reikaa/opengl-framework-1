@@ -37,10 +37,7 @@ namespace lkogl {
         }
         
         void Mouse::update()
-        {
-            position.x += delta.x;
-            position.y += delta.y;
-            
+        {            
             delta.x = delta.y = 0;
             prevKeySet_.clear();
             prevKeySet_.insert(keySet_.begin(), keySet_.end());
@@ -50,6 +47,12 @@ namespace lkogl {
         {
             delta.x += x;
             delta.y += y;
+        }
+        
+        void Mouse::setPosition(int x, int y)
+        {
+            position.x = x;
+            position.y = y;
         }
         
         void Mouse::scroll(int x, int y)

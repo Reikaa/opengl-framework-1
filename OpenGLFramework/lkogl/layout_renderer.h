@@ -23,7 +23,7 @@ namespace lkogl {
             LayoutRenderer();
             ~LayoutRenderer();
             
-            void render(const Element& e, const graphics::Screen& screen);
+            void render(std::shared_ptr<Element> e, const graphics::Screen& screen);
         private:
             graphics::Program createProgram() const;
         };

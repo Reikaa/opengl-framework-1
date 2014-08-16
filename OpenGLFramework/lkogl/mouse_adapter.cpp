@@ -30,7 +30,12 @@ namespace lkogl {
                         return true;
                     case SDL_MOUSEMOTION:
                         mouse_.move(e.motion.xrel, e.motion.yrel);
+                        mouse_.setPosition(e.motion.x, e.motion.y);
                         return true;
+                    case SDL_WINDOWEVENT:
+                        if(e.window.event == SDL_WINDOWEVENT_LEAVE) {
+                            mouse_.setPosition(-1, -1);
+                        }
                 }
                 
                 return false;
