@@ -70,6 +70,8 @@ namespace lkogl {
                 {
                     BufferTargetUse tr(*buffer_);
                     
+                    glViewport(viewport_.x, viewport_.y, viewport_.width, viewport_.height);
+                    
                     glEnable(GL_DEPTH_TEST);
                     glDepthMask(GL_TRUE);
                     glDisable(GL_BLEND);
@@ -89,7 +91,7 @@ namespace lkogl {
                 }
                 
                 MainTargetUse s;
-                glViewport(viewport_.x, viewport_.y, viewport_.width, viewport_.height);
+                glViewport(0, 0, screen_.width, screen_.height);
                 
                 glEnable(GL_BLEND);
                 glBlendEquation(GL_FUNC_ADD);
@@ -155,6 +157,8 @@ namespace lkogl {
                         0, -(newHeight - h) / 2, w, newHeight
                     };
                 }
+                screen_.width = w;
+                screen_.height = h;
                 
                 buffer_.reset(new FrameBuffer(w, h, std::vector<TargetType> {
                     TargetType{GL_COLOR_ATTACHMENT0, GL_RGBA16F},

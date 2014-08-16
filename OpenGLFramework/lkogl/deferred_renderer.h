@@ -29,6 +29,7 @@ namespace lkogl {
                 struct {
                     int x, y, width, height;
                 } viewport_;
+                Screen screen_;
                 int ratioWidth_, ratioHeight_;
                 GeometryObject square_;
                 

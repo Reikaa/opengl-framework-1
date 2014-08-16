@@ -122,8 +122,6 @@ namespace lkogl {
         FrameBufferBinding::FrameBufferBinding(const FrameBufferResource& r) : r_(r) {
             glBindTexture(GL_TEXTURE_2D,0);
             glBindFramebuffer(GL_FRAMEBUFFER, r.handles_.frameBuffer);
-            
-            glViewport(0,0,r.width_, r.height_);
         }
         
         FrameBufferBinding::~FrameBufferBinding() {
