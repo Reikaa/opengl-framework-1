@@ -42,6 +42,8 @@ namespace lkogl {
             const Style& style() const;
             Style& style();
             
+            bool render() const;
+            
             bool onFocus();
             bool onBlur();
             

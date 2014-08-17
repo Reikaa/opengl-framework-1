@@ -64,6 +64,11 @@ namespace lkogl {
             return style_;
         }
         
+        bool Element::render() const
+        {
+            return true;
+        }
+        
         bool Element::onFocus()
         {
             if(behaviour_.get() != 0) {

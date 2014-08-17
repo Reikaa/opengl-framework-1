@@ -78,15 +78,17 @@ namespace lkogl {
                               current.second.width(),
                               current.second.height());
                     
-                    glUniformMatrix4fv(program_.handles().viewProjectionMatrixPosition, 1, 0, &modelViewProj[0][0]);
-                    
-                    Style stl = current.first->style();
-                    Color bg = stl.background();
-                    
-                    if(bg.w) {
-                        glUniform4f(program_.handles().colorPosition, bg.x, bg.y, bg.z, bg.w);
+                    if(current.first->render()) {
+                        glUniformMatrix4fv(program_.handles().viewProjectionMatrixPosition, 1, 0, &modelViewProj[0][0]);
                         
-                        sq.render();
+                        Style stl = current.first->style();
+                        Color bg = stl.background();
+                        
+                        if(bg.w) {
+                            glUniform4f(program_.handles().colorPosition, bg.x, bg.y, bg.z, bg.w);
+                            
+                            sq.render();
+                        }
                     }
                 }
             }
