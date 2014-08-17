@@ -64,9 +64,10 @@ namespace std {
             hash = MULTIPL * hash + k.texCoordIndex;
             hash = MULTIPL * hash + k.normalIndex;
             
-            return k.vertexIndex;
+            return hash;
         }
     };
+    
     
 }
 
