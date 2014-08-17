@@ -15,7 +15,7 @@
 namespace lkogl {
     namespace utils {
         class Path {
-            char* path_;
+            char* const path_;
             
         public:
             Path();
