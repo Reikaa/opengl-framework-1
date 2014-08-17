@@ -9,7 +9,7 @@
 #include<fstream>
 
 #include "text.h"
-#include "sdl.h"
+#include "file_path.h"
 
 namespace lkogl {
     namespace utils {
@@ -21,7 +21,7 @@ namespace lkogl {
         const std::string PlainText::read(const std::string name) const {
             std::ifstream file;
             std::string result = "";
-            file.open(basePath() + name);
+            file.open(Path().relative(name));
             if (file.is_open()) {
                 std::string line;
                 while(std::getline(file, line))
@@ -37,10 +37,6 @@ namespace lkogl {
         }
 
         PlainText::~PlainText() {}
-        
-        const std::string PlainText::basePath() const {
-            return SDL_GetBasePath();
-        }
 
     }
 }

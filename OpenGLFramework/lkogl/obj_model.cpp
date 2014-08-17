@@ -12,7 +12,7 @@
 #include <fstream>
 #include <sstream>
 
-#include "sdl.h"
+#include "file_path.h"
 
 namespace lkogl {
     namespace resources {
@@ -55,7 +55,7 @@ namespace lkogl {
                 bool hasTexCoords = false;
                 bool hasNormals = false;
                 
-                std::ifstream infile(SDL_GetBasePath() + filename);
+                std::ifstream infile(utils::Path().relative(filename));
                 std::string line;
                 float fa, fb, fc, fd;
                 int lineNumber = 0;

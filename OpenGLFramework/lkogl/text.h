@@ -21,7 +21,6 @@ namespace lkogl {
             PlainText(const std::string name) throw (FileException);
             ~PlainText();
         private:
-            const std::string basePath() const;
             const std::string read(const std::string name) const;
         };
     }

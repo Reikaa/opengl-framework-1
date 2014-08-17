@@ -7,11 +7,12 @@
 //
 
 #include "image.h"
+#include "file_path.h"
 
 namespace lkogl {
     namespace utils {
         Image::Image(const std::string& name) throw (ImageException)
-        : surface_(load(std::string(SDL_GetBasePath())+name))
+        : surface_(load(Path().relative(name)))
         {
         
         }
