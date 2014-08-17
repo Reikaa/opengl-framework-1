@@ -82,11 +82,12 @@ namespace lkogl {
                     
                     Style stl = current.first->style();
                     Color bg = stl.background();
-                                        
-                    glUniform4f(program_.handles().colorPosition, bg.x, bg.y, bg.z, bg.w);
-
-                    sq.render();
-
+                    
+                    if(bg.w) {
+                        glUniform4f(program_.handles().colorPosition, bg.x, bg.y, bg.z, bg.w);
+                        
+                        sq.render();
+                    }
                 }
             }
         }

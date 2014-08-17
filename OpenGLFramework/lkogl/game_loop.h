@@ -53,7 +53,7 @@ namespace lkogl {
             void resize(int width, int height) const {
             }
             
-            void report(int frameCount, int updateCount) const {
+            void report(int frameCount, int updateCount, long frameTimeAvg) const {
             }
             
             const std::string title() const {
@@ -117,9 +117,11 @@ namespace lkogl {
                 SDL_Event e;
                 long time = lowrestime();
                 int frames = 0;
+                long renderTimeSum = 0;
                 int updates = 0;
                 state_.running = true;
                 int mouseLocked = false;
+                int updated = false;
                 
                 while(state_.running)
                 {
@@ -162,22 +164,32 @@ namespace lkogl {
                         update();
                         
                         updates++;
+                        updated = true;
                     }
                     
                     if(lowrestime() - time >= 1) {
-                        delegate_.report(frames, updates);
+                        delegate_.report(frames, updates, renderTimeSum/frames);
                         time = lowrestime();
                         frames = 0;
                         updates = 0;
+                        renderTimeSum = 0;
+                        window_.setTitle(delegate_.title());
                     }
                     
-                    long beforeRender = hirestime();
+                    if(updated) {
+                        long beforeRender = hirestime();
+                        
+                        render();
+                        
+                        state_.renderTime = hirestime()-beforeRender;
+                        window_.refreshDisplay();
+                        frames++;
+                        renderTimeSum += state_.renderTime;
+                        updated = false;
+                    } else {
+                        SDL_Delay(1);
+                    }
                     
-                    render();
-                    
-                    state_.renderTime = hirestime()-beforeRender;
-                    window_.refreshDisplay();
-                    frames++;
                 }
                 
             }

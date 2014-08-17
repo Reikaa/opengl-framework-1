@@ -9,6 +9,7 @@
 #include <iostream>
 #include <sstream>
 
+
 #include "lkogl/game_loop.h"
 #include "lkogl/material.h"
 #include "lkogl/shader.h"
@@ -60,6 +61,9 @@ using namespace lkogl::input;
 using namespace lkogl::input::movement;
 
 class MyGame {
+    
+    mutable std::string extraTitle_;
+    
     mutable std::shared_ptr<Node> graph;
     SceneDeepWalker walker;
     
@@ -128,6 +132,9 @@ public:
             e1->layout().setAlignment({WeightLinear::Center, WeightLinear::Center});
             e2->layout().setMargin({px(20)});
             e2->layout().setAlignment({WeightLinear::Right, WeightLinear::Bottom});
+            
+            uiRoot_->style().setBackground({0,0,0,0});
+            
             uiRoot_->addChild(e1);
             e1->addChild(e2);
             
@@ -313,13 +320,23 @@ public:
     
     const std::string title() const {
         std::stringstream ss;
-        ss << "My Game" << "  (" << "OpenGL " << glGetString(GL_VERSION) << ")";
+        ss
+        << "My Game"
+        << " (" << "OpenGL " << glGetString(GL_VERSION) << ")"
+        << " " << extraTitle_;
         
         return ss.str();
     }
     
-    void report(int frameCount, int updateCount) const {
-        std::cout << "fps:" << frameCount << ", ups: " << updateCount << std::endl;
+    void report(int frameCount, int updateCount, long frameTimeAvg) const {
+        std::ostringstream ss;
+        
+        ss << "f: " << frameCount << "/s, "
+        << "u: " << updateCount << "/s, "
+        << "rt: ~" << updateCount/1000.0 << "ms"
+        ;
+        
+        extraTitle_ = ss.str();
     }
     
     ~MyGame() {
