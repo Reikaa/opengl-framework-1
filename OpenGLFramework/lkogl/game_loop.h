@@ -168,7 +168,8 @@ namespace lkogl {
                     }
                     
                     if(lowrestime() - time >= 1) {
-                        delegate_.report(frames, updates, renderTimeSum/frames);
+                        long avgRender = frames==0 ? renderTimeSum : renderTimeSum/frames;
+                        delegate_.report(frames, updates, avgRender);
                         time = lowrestime();
                         frames = 0;
                         updates = 0;
