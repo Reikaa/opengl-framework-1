@@ -15,7 +15,6 @@ namespace lkogl {
     namespace ui {
         namespace behaviour {
             class HoverBehaviour : public Behaviour {
-                char focus = 0;
             public:
                 HoverBehaviour();
                 ~HoverBehaviour();

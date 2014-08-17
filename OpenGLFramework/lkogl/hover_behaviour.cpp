@@ -9,6 +9,8 @@
 #include "hover_behaviour.h"
 #include "element.h"
 
+#include <iostream>
+
 namespace lkogl {
     namespace ui {
         namespace behaviour {
@@ -28,35 +30,32 @@ namespace lkogl {
             
             bool HoverBehaviour::onFocus(Element& el)
             {
-                if(++focus > 0) {
-                    el.style().setBackground({0,0,0,0.7});
-                }
+                el.style().setBackground(el.style().background() + math::Vec4<float>{0,0,0,0.2});
                 
                 return true;
             }
             
             bool HoverBehaviour::onBlur(Element& el)
             {
-                if(--focus == 0) {
-                    el.style().setBackground({0,0,0,0.3});
-                }
+                el.style().setBackground(el.style().background() - math::Vec4<float>{0,0,0,0.2});
                 
                 return true;
             }
             
             bool HoverBehaviour::onContactBegin(Element& el)
             {
-                if(++focus > 0) {
-                    el.style().setBackground({0,0,0,0.7});
-                }
+                el.style().setBackground(el.style().background() + math::Vec4<float>{0,0,0,0.2});
+                                
                 return true;
             }
             
             bool HoverBehaviour::onContactEnd(Element& el)
             {
-                if(--focus == 0) {
-                    el.style().setBackground({0,0,0,0.3});
-                }
+                el.style().setBackground(el.style().background() - math::Vec4<float>{0,0,0,0.2});
+                
+                std::cout << "clicked!" << std::endl;
+                
+                
                 return true;
             }
             
@@ -68,9 +67,8 @@ namespace lkogl {
             
             bool HoverBehaviour::onContactCancel(Element& el)
             {
-                if(--focus == 0) {
-                    el.style().setBackground({0,0,0,0.3});
-                }
+                el.style().setBackground(el.style().background() - math::Vec4<float>{0,0,0,0.2});
+                
                 return true;
             }
             
