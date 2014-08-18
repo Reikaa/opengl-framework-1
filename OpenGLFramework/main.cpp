@@ -120,7 +120,7 @@ public:
         glDepthFunc( GL_LEQUAL );
         
         
-        //glEnable(GL_DEPTH_CLAMP);
+        glEnable(GL_DEPTH_CLAMP);
         
         try {
             
