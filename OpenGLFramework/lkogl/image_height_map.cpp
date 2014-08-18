@@ -31,12 +31,12 @@ namespace lkogl {
                 int vertexCount = width_*height_;
                 int triangleCount = 0;
                 std::multimap<unsigned int, math::Vec3<float>> normalMap;
-                float scale = 0.375;
+                float scale = 1;
                 
                 for(int x=0;x<width_;x++) {
                     for(int y=0;y<height_;y++) {
                         float vx = (x-width_/2)*scale;
-                        float vy = (points_[y + width_*x])*scale-10;
+                        float vy = (points_[y + width_*x])*scale;
                         float vz = (y-height_/2)*scale;
                         float tu = 0;
                         float tv = 0;
@@ -112,15 +112,15 @@ namespace lkogl {
                 for(int x=0;x<resWidth;x++) {
                     for(int y=0;y<resWidth;y++) {
                         float heightSum = 0;
-                        for(short fx=0;fx<=filterLength;fx++) {
-                            for(short fy=0;fy<=filterLength;fy++) {
+                        for(short fx=0;fx<filterLength;fx++) {
+                            for(short fy=0;fy<filterLength;fy++) {
                                 Uint32 p = pixels[ ( (y+fy) * width ) + x+fx ];
-                                float h = ((p&0xff)+((p>>8)&0xff)+((p>>16)&0xff))/20;
+                                float h = (p&0xff);
                                 
                                 heightSum += h;
                             }
                         }
-                        result.setHeightAt(x, y, heightSum/filterPxCount);
+                        result.setHeightAt(x, y, (heightSum/filterPxCount)-0x88);
                     }
                 }
                 

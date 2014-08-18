@@ -195,6 +195,8 @@ public:
             
             std::shared_ptr<Node> node4 = std::make_shared<Node>();
             node4->addComponent(std::make_shared<RenderComponent>(GeometryObject(terrainMesh), mat));
+            node4->transformation.setScale({0.5f,0.5f,0.5f});
+            node4->transformation.setTranslation({0,-10,0});
             graph->addChild(node4);
 
 
