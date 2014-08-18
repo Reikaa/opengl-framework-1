@@ -12,12 +12,13 @@
 #include <string>
 
 #include "sdl.h"
+#include "opengl.h"
 
 namespace lkogl {
     namespace loop {
         class Window {
             SDL_Window* displayWindow_;
-            SDL_Renderer* displayRenderer_;
+            SDL_GLContext glContext_;
         public:
             Window(int width, int height, std::string title);
             ~Window();

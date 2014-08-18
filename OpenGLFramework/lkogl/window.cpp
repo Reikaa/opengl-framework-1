@@ -10,9 +10,15 @@
 namespace lkogl {
     namespace loop {
         Window::Window(int width, int height, std::string title) {
-            SDL_RendererInfo displayRendererInfo;
-            
             SDL_Init(SDL_INIT_VIDEO);
+            int imgFlags = IMG_INIT_PNG;
+            
+            if((IMG_Init(imgFlags) & imgFlags) != imgFlags) {
+                SDL_Quit();
+                IMG_Quit();
+                throw 1;
+            }
+            
             
             SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
             SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
@@ -25,12 +31,11 @@ namespace lkogl {
 
             int windowOptions = SDL_WINDOW_OPENGL|SDL_WINDOW_RESIZABLE|SDL_WINDOW_SHOWN;
             
-            SDL_CreateWindowAndRenderer(width, height, windowOptions, &displayWindow_, &displayRenderer_);
-            SDL_SetWindowTitle(displayWindow_, title.c_str());
+            displayWindow_ = SDL_CreateWindow(title.c_str(), 0,0, width, height, windowOptions);
             
-            SDL_GetRendererInfo(displayRenderer_, &displayRendererInfo);
+            SDL_GLContext glContext_ = SDL_GL_CreateContext(displayWindow_);
             
-            if ((displayRendererInfo.flags & SDL_RENDERER_ACCELERATED) == 0)
+            if (!glContext_)
             {
                 SDL_DestroyWindow(displayWindow_);
                 SDL_Quit();
@@ -39,7 +44,7 @@ namespace lkogl {
         }
         
         void Window::refreshDisplay() const {
-            SDL_RenderPresent(displayRenderer_);
+            SDL_GL_SwapWindow(displayWindow_);
         }
         
         int Window::width() const
@@ -66,8 +71,9 @@ namespace lkogl {
         }
         
         Window::~Window() {
-            SDL_DestroyRenderer(displayRenderer_);
+            SDL_GL_DeleteContext(glContext_);
             SDL_DestroyWindow(displayWindow_);
+            IMG_Quit();
             SDL_Quit();
         }
     }
