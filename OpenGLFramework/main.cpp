@@ -31,6 +31,7 @@
 #include "lkogl/deferred_renderer.h"
 
 #include "lkogl/obj_model.h"
+#include "lkogl/image_height_map.h"
 
 #include "lkogl/animation_component.h"
 #include "lkogl/camera_component.h"
@@ -51,6 +52,7 @@ using namespace lkogl::graphics::renderign;
 using namespace lkogl::graphics::lighting;
 using namespace lkogl::geometry;
 using namespace lkogl::utils;
+using namespace lkogl::resources::mesh_loader;
 using namespace lkogl::scene;
 using namespace lkogl::loop;
 using namespace lkogl::math;
@@ -161,7 +163,7 @@ public:
             
             square_ = std::make_shared<GeometryObject>(primitives::makeSquare());
             
-            Mesh cube = lkogl::resources::mesh_loader::obj_from_file("box.obj").toIndexedModel().toMesh();
+            Mesh cube = ::obj_from_file("box.obj").toIndexedModel().toMesh();
             std::shared_ptr<Node> node2 = std::make_shared<Node>();
             node2->addComponent(std::make_shared<RenderComponent>(GeometryObject(cube), mat));
             node2->transformation.setTranslation({-5,0.5,-2});
@@ -170,7 +172,11 @@ public:
             node2->transformation.setRotation(angleAxis<float>(radians(45), {0,1,0}));
             graph->addChild(node2);
             
-            Mesh monkey = lkogl::resources::mesh_loader::obj_from_file("monkey.obj").toIndexedModel().toMesh();
+            
+
+            
+            
+            Mesh monkey = obj_from_file("monkey.obj").toIndexedModel().toMesh();
             std::shared_ptr<Node> node3 = std::make_shared<Node>();
             node3->addComponent(std::make_shared<RenderComponent>(GeometryObject(monkey), mat));
             Transformation spin;
@@ -181,6 +187,17 @@ public:
             node3->transformation.setRotation(angleAxis<float>(radians(45), {0.1,1,0.3}));
             node->addChild(node3);
             
+            
+            
+            Image terrainImage("terrain.png");
+            ImageHeightMap terrainMap = heigh_map_from_image(terrainImage);
+            Mesh terrainMesh = terrainMap.toIndexedModel().toMesh();
+            
+            std::shared_ptr<Node> node4 = std::make_shared<Node>();
+            node4->addComponent(std::make_shared<RenderComponent>(GeometryObject(terrainMesh), mat));
+            graph->addChild(node4);
+
+
             
             movement.setFly(true);
             
