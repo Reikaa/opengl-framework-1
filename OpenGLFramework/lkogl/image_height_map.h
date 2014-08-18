@@ -29,7 +29,7 @@ namespace lkogl {
                 IndexModel toIndexedModel() const;
             };
             
-            ImageHeightMap heigh_map_from_image(const utils::Image& img);
+            ImageHeightMap heigh_map_from_image(const utils::Image& img, unsigned short filterRadius = 3);
         }
     }
 }

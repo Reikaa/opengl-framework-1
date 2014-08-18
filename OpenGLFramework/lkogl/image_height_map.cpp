@@ -32,12 +32,11 @@ namespace lkogl {
                 int triangleCount = 0;
                 std::multimap<unsigned int, math::Vec3<float>> normalMap;
                 float scale = 0.375;
-                float scaleHeight = 0.5;
                 
                 for(int x=0;x<width_;x++) {
                     for(int y=0;y<height_;y++) {
                         float vx = (x-width_/2)*scale;
-                        float vy = ((points_[y + width_*x])*scale-8)*scaleHeight;
+                        float vy = (points_[y + width_*x])*scale-10;
                         float vz = (y-height_/2)*scale;
                         float tu = 0;
                         float tv = 0;
@@ -96,18 +95,32 @@ namespace lkogl {
                 return result;
             }
             
-            ImageHeightMap heigh_map_from_image(const utils::Image& img)
+            ImageHeightMap heigh_map_from_image(const utils::Image& img, unsigned short filterRadius)
             {
+                unsigned short filterLength = 2*filterRadius + 1;
+                unsigned short filterPxCount = filterLength*filterLength;
+                
                 int width = img.width();
                 int height = img.height();
-                Uint32 * pixels = (Uint32 *)img.pixels();
-                ImageHeightMap result(width, height);
                 
-                for(int x=0;x<width;x++) {
-                    for(int y=0;y<height;y++) {
-                        Uint32 p = pixels[ ( y * width ) + x ];
-                        float h = (p&0xff)/1E1;
-                        result.setHeightAt(x, y, h);
+                int resWidth = width - filterRadius*2;
+                int resHeight = height - filterRadius*2;
+                
+                Uint32 * pixels = (Uint32 *)img.pixels();
+                ImageHeightMap result(resWidth, resHeight);
+                
+                for(int x=0;x<resWidth;x++) {
+                    for(int y=0;y<resWidth;y++) {
+                        float heightSum = 0;
+                        for(short fx=0;fx<=filterLength;fx++) {
+                            for(short fy=0;fy<=filterLength;fy++) {
+                                Uint32 p = pixels[ ( (y+fy) * width ) + x+fx ];
+                                float h = ((p&0xff)+((p>>8)&0xff)+((p>>16)&0xff))/20;
+                                
+                                heightSum += h;
+                            }
+                        }
+                        result.setHeightAt(x, y, heightSum/filterPxCount);
                     }
                 }
                 
