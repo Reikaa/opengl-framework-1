@@ -10,7 +10,7 @@
 
 namespace lkogl {
     namespace camera {
-        Camera::Camera(int w, int h) : perspective_(70.f, 16, 9, 0.1f, 100.f)
+        Camera::Camera(int w, int h) : perspective_(70.f, 16, 9, 0.1f, 500.f)
         {
         }
         
