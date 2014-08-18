@@ -38,7 +38,7 @@ vec4 calcLight(BaseLight light, vec3 direction, vec3 normal, vec3 fPosition) {
         float specularFactor = pow(specularBase, 160.0);
         
         if(specularFactor > 0) {
-            specularColor = vec4(light.color, 1) * specularFactor * 7;
+            specularColor = vec4(light.color, 1) * specularFactor * 1;
         }
     }
     
