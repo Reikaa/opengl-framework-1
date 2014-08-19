@@ -38,8 +38,8 @@ namespace lkogl {
                         float vx = (x-width_/2)*scale;
                         float vy = (points_[y + width_*x])*scale;
                         float vz = (y-height_/2)*scale;
-                        float tu = 0;
-                        float tv = 0;
+                        float tu = (float)x/width_*0.25+0.4;
+                        float tv = (float)y/width_*0.25+0.4;
                         result.positions_.push_back(math::Vec3<float>(vx,vy,vz));
                         result.texCoords_.push_back({tu,tv});
                     }

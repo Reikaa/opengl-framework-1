@@ -86,7 +86,7 @@ namespace lkogl {
                     auto matrix = cam.viewProjectionMatrix();
                     defgeo.setUniform("uViewProjMatrix", matrix);
                     defgeo.setUniformf("uFar", cam.perspective().far());
-                                        
+
                     walker.walk(graph, &scene::components::Component::render, defgeo);
                     
                     glDepthMask(GL_FALSE);

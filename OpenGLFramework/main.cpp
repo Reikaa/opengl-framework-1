@@ -155,8 +155,8 @@ public:
             Mesh pyramid = primitives::makePyramid();
             std::shared_ptr<Node> node = std::make_shared<Node>();
             node->addComponent(std::make_shared<RenderComponent>(GeometryObject(pyramid), mat));
-            node->transformation.setTranslation({-4,-4,-4});
-            node->transformation.setScale({8,8,8});
+            node->transformation.setTranslation({-1.f,-1.f,-1.f});
+            node->transformation.setScale({4,4,4});
             
             node->transformation.setRotation(angleAxis<float>(radians(1), {1,1,1}));
             graph->addChild(node);
@@ -174,9 +174,6 @@ public:
             graph->addChild(node2);
             
             
-
-            
-            
             Mesh monkey = obj_from_file("monkey.obj").toIndexedModel().toMesh();
             std::shared_ptr<Node> node3 = std::make_shared<Node>();
             node3->addComponent(std::make_shared<RenderComponent>(GeometryObject(monkey), mat));
@@ -186,7 +183,7 @@ public:
             node3->addComponent(std::make_shared<AnimationComponent>(spin));
             node3->transformation.setTranslation({5,1,-2});
             node3->transformation.setRotation(angleAxis<float>(radians(45), {0.1,1,0.3}));
-            node->addChild(node3);
+            graph->addChild(node3);
             
             
             
@@ -197,8 +194,8 @@ public:
             std::shared_ptr<Node> node4 = std::make_shared<Node>();
             node4->addComponent(std::make_shared<RenderComponent>(GeometryObject(terrainMesh), mat));
             node4->transformation.setScale({0.5f,0.5f,0.5f});
-            node4->transformation.setTranslation({0,-10,0});
-            graph->addChild(node4);
+            node4->transformation.setTranslation({0,0,0});
+            node->addChild(node4);
 
 
             
