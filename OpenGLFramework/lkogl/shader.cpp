@@ -17,11 +17,11 @@ namespace lkogl {
         ShaderException::ShaderException(const std::string& s): msg(s) {}
         ShaderException::~ShaderException() {}
         
-        Shader::Shader(ShaderType type, const std::string& source) throw(lkogl::graphics::ShaderException) : handle_(compile(type, source)), uniforms_(extractUniforms(source)) {
+        Shader::Shader(ShaderType type, const std::string& source) throw(lkogl::graphics::ShaderException) : handle_(compile(type, source)), variables_(extractVariables(source)) {
             
         }
         
-        Shader::Shader(const Shader&& s) throw() : handle_(s.handle_), uniforms_(std::move(s.uniforms_)) {
+        Shader::Shader(const Shader&& s) throw() : handle_(s.handle_), variables_(std::move(s.variables_)) {
             s.handle_ = 0;
         }
         
@@ -61,24 +61,43 @@ namespace lkogl {
         }
         
         
-        std::set<Uniform> Shader::extractUniforms(const std::string& source)
+        Shader::Variables Shader::extractVariables(const std::string& source) const
         {
-            std::set<Uniform> result;
-
-            const std::string UNIFORM_KEYWORD = "uniform";
-            const std::string whitespaces (" \t\f\v\n\r;");
+            
+            std::multimap<std::string, Shader::VariableDefinition> structs = extractStructs(source);
+            
+            return Variables{
+                extractDeclaration(source, "uniform", structs),
+                extractDeclaration(source, "in", structs),
+                extractDeclaration(source, "out", structs)
+            };
+        }
+        
+        std::vector<VariableDeclaration> Shader::extractDeclaration(const std::string& source, const std::string& keyword, const StructMap& structs) const
+        {
+            std::vector<VariableDeclaration> result;
+            
+            const std::string whitespaces (" \t\f\v\n\r");
+            const std::string statementEnd (";");
             
             size_t startPos = 0;
             size_t findPos = 0;
             
-            std::multimap<std::string, Shader::VariableDefinition> structs = extractStructs(source);
             std::queue<VariableDefinition> vars;
             
-            while ((findPos = source.find(UNIFORM_KEYWORD, startPos)) != std::string::npos) {
-                size_t typeStart = source.find_first_not_of(whitespaces, findPos + UNIFORM_KEYWORD.length());
+            while ((findPos = source.find(keyword, startPos)) != std::string::npos) {
+                if(findPos>0 && (whitespaces.find(source[findPos-1]) == std::string::npos)) {
+                    startPos+=keyword.length();
+                    continue;
+                }
+                if((whitespaces.find(source[findPos+keyword.length()]) == std::string::npos)) {
+                    startPos+=keyword.length();
+                    continue;
+                }
+                size_t typeStart = source.find_first_not_of(whitespaces, findPos + keyword.length());
                 size_t typeEnd = source.find_first_of(whitespaces, typeStart);
                 size_t nameStart = source.find_first_not_of(whitespaces, typeEnd);
-                size_t nameEnd = source.find_first_of(whitespaces, nameStart);
+                size_t nameEnd = source.find_first_of(statementEnd+whitespaces, nameStart);
                 
                 VariableDefinition var {
                     source.substr(typeStart, typeEnd-typeStart),
@@ -87,7 +106,7 @@ namespace lkogl {
                 
                 vars.push(var);
                 
-                startPos = nameEnd;
+                startPos = source.find(statementEnd, findPos);
             }
             
             while(!vars.empty()) {
@@ -105,33 +124,31 @@ namespace lkogl {
                         });
                     }
                 } else {
-                    Uniform::Type type;
+                    VariableDeclaration::Type type;
                     if(current.type=="float") {
-                        type=Uniform::Type::FLOAT;
+                        type=VariableDeclaration::Type::FLOAT;
                     } else if(current.type=="vec2") {
-                        type=Uniform::Type::VEC2;
+                        type=VariableDeclaration::Type::VEC2;
                     } else if(current.type=="vec3") {
-                        type=Uniform::Type::VEC3;
+                        type=VariableDeclaration::Type::VEC3;
                     } else if(current.type=="vec4") {
-                        type=Uniform::Type::VEC4;
+                        type=VariableDeclaration::Type::VEC4;
                     } else if(current.type=="mat4") {
-                        type=Uniform::Type::MAT4;
+                        type=VariableDeclaration::Type::MAT4;
                     } else if(current.type=="sampler2D") {
-                        type=Uniform::Type::SAMPLER2D;
+                        type=VariableDeclaration::Type::SAMPLER2D;
                     } else {
                         std::cerr << "invalid type: " << current.type<<": " << current.name << std::endl;
                         throw 1;
                     }
-                    result.insert(Uniform(current.name, type));
+                    result.push_back(VariableDeclaration(current.name, type));
                 }
-                
-                
             }
             
             return result;
         }
         
-        std::multimap<std::string, Shader::VariableDefinition> Shader::extractStructs(const std::string& source)
+        std::multimap<std::string, Shader::VariableDefinition> Shader::extractStructs(const std::string& source) const
         {
             
             const std::string STRUCT_KEYWORD = "struct";

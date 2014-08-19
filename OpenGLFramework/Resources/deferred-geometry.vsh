@@ -6,6 +6,7 @@ uniform float uFar;
 
 in vec3 vPosition;
 in vec3 vNormal;
+in vec3 vColor;
 in vec2 vTexCoord;
 
 out vec3 fPosition;

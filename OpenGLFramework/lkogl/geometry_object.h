@@ -39,6 +39,13 @@ namespace lkogl {
         };
         
         class GeometryObject {
+            enum PointerLocation {
+                POSITION,
+                NORMAL,
+                COLOR,
+                TEXTURE_COORDS
+            };
+            
             std::shared_ptr<GeometryObjectResource> resource_;
             int indexCount_;
         public:

@@ -12,14 +12,15 @@
 #include <map>
 
 #include "shader.h"
-#include "uniform.h"
+#include "variable_declaration.h"
 
 namespace lkogl {
     namespace graphics {
         class Program {
             struct ProgramHandles {
                 mutable GLuint programId;
-                std::map<Uniform, GLuint> uniforms;
+                std::map<VariableDeclaration, GLuint> uniforms;
+                std::map<VariableDeclaration, GLuint> inputs;
             } handles_;
         public:
             Program(const std::string& vsh, const std::string& fsh) throw (ShaderException);
@@ -28,7 +29,7 @@ namespace lkogl {
             ~Program();
             
             const ProgramHandles& handles() const { return handles_; }
-            const GLuint uniformLocation(const Uniform& u) const;
+            const GLuint uniformLocation(const VariableDeclaration& u) const;
         private:
             ProgramHandles link(const Shader& vsh, const Shader& fsh) throw (ShaderException);
             

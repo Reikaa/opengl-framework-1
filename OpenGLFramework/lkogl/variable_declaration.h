@@ -16,7 +16,7 @@
 
 namespace lkogl {
     namespace graphics {
-        class Uniform {
+        class VariableDeclaration {
         public:
             enum class Type {
                 FLOAT,
@@ -30,14 +30,14 @@ namespace lkogl {
             std::string name_;
             Type type_;
         public:
-            Uniform(const std::string& name, Type type);
-            ~Uniform();
+            VariableDeclaration(const std::string& name, Type type);
+            ~VariableDeclaration();
             
             const std::string& name() const;
             const Type type() const;
         };
         
-        inline bool operator<(const Uniform& lhs, const Uniform& rhs)
+        inline bool operator<(const VariableDeclaration& lhs, const VariableDeclaration& rhs)
         {
             return lhs.name() < rhs.name();
         }

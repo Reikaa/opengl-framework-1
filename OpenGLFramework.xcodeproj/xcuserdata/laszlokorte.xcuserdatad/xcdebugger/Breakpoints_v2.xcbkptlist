@@ -9,13 +9,13 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "OpenGLFramework/lkogl/uniform.h"
+            filePath = "OpenGLFramework/lkogl/variable_declaration.h"
             timestampString = "430134235.867551"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "21"
             endingLineNumber = "21"
-            landmarkName = "class Uniform"
+            landmarkName = "class VariableDeclaration"
             landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
@@ -32,6 +32,22 @@
             startingLineNumber = "153"
             endingLineNumber = "153"
             landmarkName = "BufferTextureUse::BufferTextureUse(const ProgramUse&amp; p, const std::string&amp; uniform, const FrameBuffer&amp; r, GLuint num, GLuint slot)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "OpenGLFramework/lkogl/shader.cpp"
+            timestampString = "430155196.932347"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "76"
+            endingLineNumber = "76"
+            landmarkName = "Shader::extractDeclaration(const std::string&amp; source, const std::string&amp; keyword, const StructMap&amp; structs)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

@@ -14,7 +14,7 @@
 #include <set>
 #include <exception>
 
-#include "uniform.h"
+#include "variable_declaration.h"
 #include "mesh.h"
 #include "math.h"
 
@@ -33,24 +33,22 @@ namespace lkogl {
             FRAGMENT = GL_FRAGMENT_SHADER
         };
         
-        enum PointerLocation {
-            LOCATION_POSITION,
-            LOCATION_NORMAL,
-            LOCATION_COLOR,
-            LOCATION_TEXTURE_COORDS
-        };
-        
         class Shader {
             mutable GLuint handle_;
-            mutable std::set<Uniform> uniforms_;
+            mutable struct Variables {
+                std::vector<VariableDeclaration> uniforms;
+                std::vector<VariableDeclaration> input;
+                std::vector<VariableDeclaration> output;
+            } variables_;
         public:
             Shader(ShaderType, const std::string&) throw (ShaderException);
             Shader(const Shader&&) throw ();
 
             ~Shader();
             const GLuint& handle() const { return handle_; }
-            const std::set<Uniform>& uniforms() const { return uniforms_; }
-
+            const std::vector<VariableDeclaration>& uniforms() const { return variables_.uniforms; }
+            const std::vector<VariableDeclaration>& inputs() const { return variables_.input; }
+            const std::vector<VariableDeclaration>& outputs() const { return variables_.output; }
         private:
             struct VariableDefinition {
                 std::string type;
@@ -58,8 +56,11 @@ namespace lkogl {
             };
             
             GLuint compile(ShaderType, const std::string&) throw (ShaderException);
-            std::set<Uniform> extractUniforms(const std::string& source);
-            std::multimap<std::string, VariableDefinition> extractStructs(const std::string& source);
+            
+            typedef std::multimap<std::string, VariableDefinition> StructMap;
+            Variables extractVariables(const std::string& source) const;
+            std::vector<VariableDeclaration> extractDeclaration(const std::string& source, const std::string& keyword, const StructMap& structs) const;
+            StructMap extractStructs(const std::string& source) const;
         };
         
         

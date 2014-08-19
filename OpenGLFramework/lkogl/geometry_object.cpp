@@ -44,17 +44,17 @@ namespace lkogl {
             glBufferData(GL_ELEMENT_ARRAY_BUFFER, mesh.triangles.size() * sizeof(geometry::Triangle), &mesh.triangles[0], GL_STATIC_DRAW);
             
             // Enable vertex attributes
-            glEnableVertexAttribArray(PointerLocation::LOCATION_POSITION);
-            glVertexAttribPointer(PointerLocation::LOCATION_POSITION, 3, GL_FLOAT, GL_FALSE, sizeof(geometry::Vertex), (const GLvoid *) offsetof(geometry::Vertex, position));
+            glEnableVertexAttribArray(PointerLocation::POSITION);
+            glVertexAttribPointer(PointerLocation::POSITION, 3, GL_FLOAT, GL_FALSE, sizeof(geometry::Vertex), (const GLvoid *) offsetof(geometry::Vertex, position));
             
-            glEnableVertexAttribArray(PointerLocation::LOCATION_NORMAL);
-            glVertexAttribPointer(PointerLocation::LOCATION_NORMAL, 3, GL_FLOAT, GL_FALSE, sizeof(geometry::Vertex), (const GLvoid *) offsetof(geometry::Vertex, normal));
+            glEnableVertexAttribArray(PointerLocation::NORMAL);
+            glVertexAttribPointer(PointerLocation::NORMAL, 3, GL_FLOAT, GL_FALSE, sizeof(geometry::Vertex), (const GLvoid *) offsetof(geometry::Vertex, normal));
             
-            glEnableVertexAttribArray(LOCATION_COLOR);
-            glVertexAttribPointer(PointerLocation::LOCATION_COLOR, 4, GL_FLOAT, GL_FALSE, sizeof(geometry::Vertex), (const GLvoid *) offsetof(geometry::Vertex, color));
+            glEnableVertexAttribArray(COLOR);
+            glVertexAttribPointer(PointerLocation::COLOR, 4, GL_FLOAT, GL_FALSE, sizeof(geometry::Vertex), (const GLvoid *) offsetof(geometry::Vertex, color));
             
-            glEnableVertexAttribArray(PointerLocation::LOCATION_TEXTURE_COORDS);
-            glVertexAttribPointer(PointerLocation::LOCATION_TEXTURE_COORDS, 4, GL_FLOAT, GL_FALSE, sizeof(geometry::Vertex), (const GLvoid *) offsetof(geometry::Vertex, textureCoord));
+            glEnableVertexAttribArray(PointerLocation::TEXTURE_COORDS);
+            glVertexAttribPointer(PointerLocation::TEXTURE_COORDS, 4, GL_FLOAT, GL_FALSE, sizeof(geometry::Vertex), (const GLvoid *) offsetof(geometry::Vertex, textureCoord));
         }
         
         GeometryObjectUse::GeometryObjectUse(const GeometryObject& geo) : binding_(*geo.resource_.get()), geometry_(geo) {

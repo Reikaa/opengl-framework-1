@@ -86,7 +86,7 @@
 		F2DEC6371997EA7600EE31E7 /* ambient_light.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2DEC6351997EA7600EE31E7 /* ambient_light.cpp */; };
 		F2DEC63D1997F4E000EE31E7 /* directional_light.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2DEC63B1997F4E000EE31E7 /* directional_light.cpp */; };
 		F2DEC6401997F4F800EE31E7 /* base_light.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2DEC63E1997F4F800EE31E7 /* base_light.cpp */; };
-		F2FC464519A34D4800EFCEF5 /* uniform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2FC464319A34D4800EFCEF5 /* uniform.cpp */; };
+		F2FC464519A34D4800EFCEF5 /* variable_declaration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2FC464319A34D4800EFCEF5 /* variable_declaration.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -274,8 +274,8 @@
 		F2DEC63C1997F4E000EE31E7 /* directional_light.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = directional_light.h; sourceTree = "<group>"; };
 		F2DEC63E1997F4F800EE31E7 /* base_light.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = base_light.cpp; sourceTree = "<group>"; };
 		F2DEC63F1997F4F800EE31E7 /* base_light.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = base_light.h; sourceTree = "<group>"; };
-		F2FC464319A34D4800EFCEF5 /* uniform.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = uniform.cpp; sourceTree = "<group>"; };
-		F2FC464419A34D4800EFCEF5 /* uniform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = uniform.h; sourceTree = "<group>"; };
+		F2FC464319A34D4800EFCEF5 /* variable_declaration.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = variable_declaration.cpp; sourceTree = "<group>"; };
+		F2FC464419A34D4800EFCEF5 /* variable_declaration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = variable_declaration.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -458,8 +458,8 @@
 				F2B563BC199D0CC8007D38D3 /* stencil.h */,
 				F279E24C199F60240001BBBF /* scissor.cpp */,
 				F279E24D199F60240001BBBF /* scissor.h */,
-				F2FC464319A34D4800EFCEF5 /* uniform.cpp */,
-				F2FC464419A34D4800EFCEF5 /* uniform.h */,
+				F2FC464319A34D4800EFCEF5 /* variable_declaration.cpp */,
+				F2FC464419A34D4800EFCEF5 /* variable_declaration.h */,
 			);
 			name = graphics;
 			sourceTree = "<group>";
@@ -812,7 +812,7 @@
 				F279E242199F476E0001BBBF /* length.cpp in Sources */,
 				F29707CB1993BD9700D48CE5 /* scene_deep_walker.cpp in Sources */,
 				F2B0C400199FE7F8008AC975 /* hover_behaviour.cpp in Sources */,
-				F2FC464519A34D4800EFCEF5 /* uniform.cpp in Sources */,
+				F2FC464519A34D4800EFCEF5 /* variable_declaration.cpp in Sources */,
 				F29707B5199379DC00D48CE5 /* material.cpp in Sources */,
 				F2DEC60419975A8700EE31E7 /* base_component.cpp in Sources */,
 				F21EA828199A8C5600D78E1C /* tree_transformation.cpp in Sources */,

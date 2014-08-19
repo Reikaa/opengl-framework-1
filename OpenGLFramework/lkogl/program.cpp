@@ -22,7 +22,7 @@ namespace lkogl {
         
         Program::ProgramHandles Program::link(const Shader& vsh, const Shader& fsh) throw (ShaderException) {
             GLuint handle = glCreateProgram();
-            std::map<Uniform, GLuint> uniformMapping;
+            std::map<VariableDeclaration, GLuint> uniformMapping;
             
             try {
                 GLint compileOk;
@@ -32,10 +32,11 @@ namespace lkogl {
                 glAttachShader(handle, vsh.handle());
                 glAttachShader(handle, fsh.handle());
                 
-                glBindAttribLocation(handle, LOCATION_POSITION, "vPosition");
-                glBindAttribLocation(handle, LOCATION_NORMAL, "vNormal");
-                glBindAttribLocation(handle, LOCATION_COLOR, "vColor");
-                glBindAttribLocation(handle, LOCATION_TEXTURE_COORDS, "vTexCoord");
+                int inputLoc = 0;
+                for(VariableDeclaration v : vsh.inputs()) {
+                    glBindAttribLocation(handle, inputLoc++, v.name().c_str());
+                }
+                
                 
                 glLinkProgram(handle);
                 glGetProgramiv(handle, GL_LINK_STATUS, &compileOk);
@@ -46,12 +47,12 @@ namespace lkogl {
                     throw ShaderException(errMsg);
                 }
                 
-                for(Uniform u : vsh.uniforms()) {
+                for(VariableDeclaration u : vsh.uniforms()) {
                     GLuint loc = glGetUniformLocation(handle, u.name().c_str());
                     uniformMapping[u] = loc;
                 }
                 
-                for(Uniform u : fsh.uniforms()) {
+                for(VariableDeclaration u : fsh.uniforms()) {
                     GLuint loc = glGetUniformLocation(handle, u.name().c_str());
                     uniformMapping[u] = loc;
                 }
@@ -67,7 +68,7 @@ namespace lkogl {
             };
         }
         
-        const GLuint Program::uniformLocation(const Uniform& u) const
+        const GLuint Program::uniformLocation(const VariableDeclaration& u) const
         {
             auto it = handles_.uniforms.find(u);
             if(it == handles_.uniforms.end()) {
@@ -99,33 +100,33 @@ namespace lkogl {
         
         void ProgramUse::setUniformf(const std::string& name, GLfloat value) const
         {
-            glUniform1f(program_.uniformLocation(Uniform(name, Uniform::Type::FLOAT)), value);
+            glUniform1f(program_.uniformLocation(VariableDeclaration(name, VariableDeclaration::Type::FLOAT)), value);
         }
         
         
         void ProgramUse::setUniformi(const std::string& name, GLuint value) const
         {
-            glUniform1i(program_.uniformLocation(Uniform(name, Uniform::Type::SAMPLER2D)), value);
+            glUniform1i(program_.uniformLocation(VariableDeclaration(name, VariableDeclaration::Type::SAMPLER2D)), value);
         }
         
         void ProgramUse::setUniform(const std::string& name, const math::Vec2<GLfloat>& value) const
         {
-            glUniform2f(program_.uniformLocation(Uniform(name, Uniform::Type::VEC2)), value.x, value.y);
+            glUniform2f(program_.uniformLocation(VariableDeclaration(name, VariableDeclaration::Type::VEC2)), value.x, value.y);
         }
         
         void ProgramUse::setUniform(const std::string& name, const math::Vec3<GLfloat>& value) const
         {
-            glUniform3f(program_.uniformLocation(Uniform(name, Uniform::Type::VEC3)), value.x, value.y, value.z);
+            glUniform3f(program_.uniformLocation(VariableDeclaration(name, VariableDeclaration::Type::VEC3)), value.x, value.y, value.z);
         }
         
         void ProgramUse::setUniform(const std::string& name, const math::Vec4<GLfloat>& value) const
         {
-            glUniform4f(program_.uniformLocation(Uniform(name, Uniform::Type::VEC4)), value.x, value.y, value.z, value.w);
+            glUniform4f(program_.uniformLocation(VariableDeclaration(name, VariableDeclaration::Type::VEC4)), value.x, value.y, value.z, value.w);
         }
         
         void ProgramUse::setUniform(const std::string& name, const math::Mat4<GLfloat>& value) const
         {
-            glUniformMatrix4fv(program_.uniformLocation(Uniform(name, Uniform::Type::MAT4)), 1, GL_FALSE, &value[0][0]);
+            glUniformMatrix4fv(program_.uniformLocation(VariableDeclaration(name, VariableDeclaration::Type::MAT4)), 1, GL_FALSE, &value[0][0]);
         }
     }
 }

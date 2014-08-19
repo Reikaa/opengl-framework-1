@@ -6,26 +6,26 @@
 //  Copyright (c) 2014 Laszlo Korte. All rights reserved.
 //
 
-#include "uniform.h"
+#include "variable_declaration.h"
 
 namespace lkogl {
     namespace graphics {
         
-        Uniform::Uniform(const std::string& name, Type type) :
+        VariableDeclaration::VariableDeclaration(const std::string& name, Type type) :
         name_(name), type_(type)
         {
         }
         
-        Uniform::~Uniform()
+        VariableDeclaration::~VariableDeclaration()
         {
         }
         
-        const std::string& Uniform::name() const
+        const std::string& VariableDeclaration::name() const
         {
             return name_;
         }
         
-        const Uniform::Type Uniform::type() const
+        const VariableDeclaration::Type VariableDeclaration::type() const
         {
             return type_;
         }
