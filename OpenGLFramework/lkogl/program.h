@@ -30,7 +30,7 @@ namespace lkogl {
                     Exception() {}
                 };
                 
-                Program(const std::string& vsh, const std::string& fsh) throw (Exception);
+                Program(const std::string& vsh, const std::string& fsh) throw (Exception, Shader::Exception);
                 Program(const Shader& vsh, const Shader& fsh) throw (Exception);
                 Program(const Program&&) throw();
                 ~Program();

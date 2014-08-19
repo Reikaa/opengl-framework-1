@@ -16,7 +16,7 @@ namespace lkogl {
             {
             }
             
-            Program::Program(const std::string& vsh, const std::string& fsh) throw(Exception) :
+            Program::Program(const std::string& vsh, const std::string& fsh) throw(Exception, Shader::Exception) :
             handles_(link(Shader(ShaderType::VERTEX, vsh), Shader(shader::ShaderType::FRAGMENT, fsh)))
             {
             }
