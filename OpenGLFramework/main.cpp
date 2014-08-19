@@ -155,7 +155,8 @@ public:
             Mesh pyramid = primitives::makePyramid();
             std::shared_ptr<Node> node = std::make_shared<Node>();
             node->addComponent(std::make_shared<RenderComponent>(GeometryObject(pyramid), mat));
-            node->transformation.setTranslation({0,1,0});
+            node->transformation.setTranslation({-4,-4,-4});
+            node->transformation.setScale({8,8,8});
             
             node->transformation.setRotation(angleAxis<float>(radians(1), {1,1,1}));
             graph->addChild(node);
