@@ -61,8 +61,8 @@ namespace lkogl {
                 scene::walker::SceneDeepWalker walker;
                 
                 std::vector<lighting::DirectionalLight> directionalLights = {
-                    lighting::DirectionalLight({0.6,0.7,0.9}, 0.9, {1,-1,1}),
-                    lighting::DirectionalLight({0.6,0.7,0.9}, 0.9, {-1,-1,-1}),
+                    lighting::DirectionalLight({0.6,0.7,0.9}, 1.1, {1,-1,1}),
+                    lighting::DirectionalLight({0.6,0.7,0.9}, 1.1, {-1,-1,-1}),
                 };
                 
                 lighting::AmbientLight ambientLight({0.2,0.2,0.2});
@@ -109,7 +109,7 @@ namespace lkogl {
                     StencilCreation stencil(true);
 
                     shader::ProgramUse stencilProg(programs_.deferredStencil_);
-                    BufferTextureUse tus(stencilProg, "uSampler", *buffer_, 2, 2);
+                    BufferTextureUse tus(stencilProg, "uSampler", *buffer_, 0, 0);
                     
                     squareObj.render();
                 }

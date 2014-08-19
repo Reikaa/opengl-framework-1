@@ -146,15 +146,12 @@ public:
             
             texture_ = std::make_shared<Texture>(Image("pattern.png"));
             
-            Texture tex(Image("pattern.png"));
-            Material mat(tex, 7, 20);
-            
-            Texture tex2(Image("plain.png"));
-            Material mat2(tex2, 7, 20);
+            Material colorful(Image("pattern.png"), 7, 10);
+            Material sand(Image("sand.png"), 0, 0);
             
             Mesh pyramid = primitives::makePyramid();
             std::shared_ptr<Node> node = std::make_shared<Node>();
-            node->addComponent(std::make_shared<RenderComponent>(GeometryObject(pyramid), mat));
+            node->addComponent(std::make_shared<RenderComponent>(GeometryObject(pyramid), colorful));
             node->transformation.setTranslation({-1.f,-1.f,-1.f});
             node->transformation.setScale({4,4,4});
             
@@ -166,7 +163,7 @@ public:
             
             Mesh cube = ::obj_from_file("box.obj").toIndexedModel().toMesh();
             std::shared_ptr<Node> node2 = std::make_shared<Node>();
-            node2->addComponent(std::make_shared<RenderComponent>(GeometryObject(cube), mat));
+            node2->addComponent(std::make_shared<RenderComponent>(GeometryObject(cube), colorful));
             node2->transformation.setTranslation({-5,0.5,-2});
             node2->transformation.setRotation(angleAxis<float>(radians(45), {0,1,0}));
             node->addChild(node2);
@@ -176,7 +173,7 @@ public:
             
             Mesh monkey = obj_from_file("monkey.obj").toIndexedModel().toMesh();
             std::shared_ptr<Node> node3 = std::make_shared<Node>();
-            node3->addComponent(std::make_shared<RenderComponent>(GeometryObject(monkey), mat));
+            node3->addComponent(std::make_shared<RenderComponent>(GeometryObject(monkey), colorful));
             Transformation spin;
             spin.rotation = angleAxis(radians(1.0f), {0.0f,1.0f,0.0f});;
             
@@ -192,7 +189,7 @@ public:
             Mesh terrainMesh = terrainMap.toIndexedModel().toMesh();
             
             std::shared_ptr<Node> node4 = std::make_shared<Node>();
-            node4->addComponent(std::make_shared<RenderComponent>(GeometryObject(terrainMesh), mat));
+            node4->addComponent(std::make_shared<RenderComponent>(GeometryObject(terrainMesh), sand));
             node4->transformation.setScale({0.5f,0.5f,0.5f});
             node4->transformation.setTranslation({0,0,0});
             node->addChild(node4);

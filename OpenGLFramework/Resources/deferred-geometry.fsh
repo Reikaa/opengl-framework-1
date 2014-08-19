@@ -21,5 +21,5 @@ layout(location = 2) out vec4 oColor;
 void main() {
     oPos = vec4(fPosition,1);
     oNormal = vec4(fNormal,fDepth);
-    oColor = vec4(texture(material.sampler, fTexCoord).xyz, 1);
+    oColor = vec4(texture(material.sampler, fTexCoord).xyz, material.specularIntensity);
 }

@@ -27,6 +27,7 @@
 		F21EA840199BB46200D78E1C /* deferred-ambient.fsh in Resources */ = {isa = PBXBuildFile; fileRef = F21EA83F199BB46200D78E1C /* deferred-ambient.fsh */; };
 		F21EA842199BE7C000D78E1C /* deferred-directional.vsh in Resources */ = {isa = PBXBuildFile; fileRef = F21EA841199BE7C000D78E1C /* deferred-directional.vsh */; };
 		F21EA844199BE7D100D78E1C /* deferred-directional.fsh in Resources */ = {isa = PBXBuildFile; fileRef = F21EA843199BE7D100D78E1C /* deferred-directional.fsh */; };
+		F24DA04919A3D4AF005F5F32 /* sand.png in Resources */ = {isa = PBXBuildFile; fileRef = F24DA04819A3D4AF005F5F32 /* sand.png */; };
 		F258801F19A0CA1200AC7A3C /* file_path.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F258801D19A0CA1200AC7A3C /* file_path.cpp */; };
 		F258802219A0E6C800AC7A3C /* image_height_map.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F258802019A0E6C800AC7A3C /* image_height_map.cpp */; };
 		F258802419A10B6B00AC7A3C /* terrain.png in Resources */ = {isa = PBXBuildFile; fileRef = F258802319A10B6B00AC7A3C /* terrain.png */; };
@@ -159,6 +160,7 @@
 		F21EA83F199BB46200D78E1C /* deferred-ambient.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = "deferred-ambient.fsh"; sourceTree = "<group>"; };
 		F21EA841199BE7C000D78E1C /* deferred-directional.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = "deferred-directional.vsh"; sourceTree = "<group>"; };
 		F21EA843199BE7D100D78E1C /* deferred-directional.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = "deferred-directional.fsh"; sourceTree = "<group>"; };
+		F24DA04819A3D4AF005F5F32 /* sand.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sand.png; sourceTree = "<group>"; };
 		F258801D19A0CA1200AC7A3C /* file_path.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = file_path.cpp; sourceTree = "<group>"; };
 		F258801E19A0CA1200AC7A3C /* file_path.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = file_path.h; sourceTree = "<group>"; };
 		F258802019A0E6C800AC7A3C /* image_height_map.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = image_height_map.cpp; sourceTree = "<group>"; };
@@ -394,6 +396,7 @@
 		F297077F19936F8B00D48CE5 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				F24DA04819A3D4AF005F5F32 /* sand.png */,
 				F258802319A10B6B00AC7A3C /* terrain.png */,
 				F21EA82B199ABB3600D78E1C /* plain.png */,
 				F21EA829199AB97100D78E1C /* monkey.obj */,
@@ -775,6 +778,7 @@
 				F21EA844199BE7D100D78E1C /* deferred-directional.fsh in Resources */,
 				F297076619936C1600D48CE5 /* Images.xcassets in Resources */,
 				F21EA83A199BA82700D78E1C /* deferred-geometry.vsh in Resources */,
+				F24DA04919A3D4AF005F5F32 /* sand.png in Resources */,
 				F21EA83C199BA83200D78E1C /* deferred-geometry.fsh in Resources */,
 				F21EA82C199ABB3600D78E1C /* plain.png in Resources */,
 				F29B1F5F199E6C8800F17051 /* ui-element.vsh in Resources */,
