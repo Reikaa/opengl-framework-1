@@ -23,7 +23,6 @@ namespace lkogl {
             Length height_ = percent(100);
             WeightPlanar alignment_;
             Space margin_;
-            bool isCage_ = true;
 
             const Layout* parent_ = NULL;
             mutable bool dirty_ = true;
@@ -38,7 +37,6 @@ namespace lkogl {
             void invalidate();
             
             const Rectangle& rectangle() const;
-            bool isCage() const;
 
             void setWidth(const Length& w);
             void setHeight(const Length& h);
@@ -46,6 +44,7 @@ namespace lkogl {
             
             const Space& margin() const;
             void setMargin(const Space& space);
+            void clampMargin();
             void setAlignment(const WeightPlanar& w);
             
         private:

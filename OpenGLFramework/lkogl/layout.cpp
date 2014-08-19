@@ -35,6 +35,32 @@ namespace lkogl {
             dirty_ = true;
         }
         
+        void Layout::clampMargin()
+        {
+            Rectangle parentRect;
+            if(parent_ != 0) parentRect = parent_->rectangle();
+            
+            int maxHMargin = parentRect.width() - width_.calc(parentRect.width());
+            int maxVMargin = parentRect.height() - height_.calc(parentRect.height());
+            
+            int mTop = margin_.top.calc(parentRect.height());
+            int mRight = margin_.right.calc(parentRect.width());
+            int mBottom = margin_.bottom.calc(parentRect.height());
+            int mLeft = margin_.left.calc(parentRect.width());
+            
+            if(mTop < 0) margin_.top = 0;
+            else if (mTop > maxVMargin) margin_.top = maxVMargin;
+            
+            if(mRight < 0) margin_.right = 0;
+            else if (mRight > maxHMargin) margin_.right = maxHMargin;
+            
+            if(mBottom < 0) margin_.bottom = 0;
+            else if (mTop > maxVMargin) margin_.bottom = maxVMargin;
+            
+            if(mLeft < 0) margin_.left = 0;
+            else if (mLeft > maxHMargin) margin_.left = maxHMargin;
+        }
+        
         void Layout::setAlignment(const WeightPlanar& weight)
         {
             alignment_ = weight;
@@ -70,11 +96,6 @@ namespace lkogl {
             dirty_ = true;
         }
         
-        bool Layout::isCage() const
-        {
-            return isCage_;
-        }
-        
         const Rectangle& Layout::rectangle() const
         {
             if(dirty()) {
@@ -91,11 +112,7 @@ namespace lkogl {
                 math::Vec2<int> parentSize = math::max(parentRect.size(), rectangle_.size());
                 
                 rectangle_.setCenter(parentRect.topLeft() + calcCenter({rectangle_.width(), rectangle_.height()}, {parentSize.x,parentSize.y}, mT, mR, mB, mL));
-                
-                if(parent_ && parent_->isCage()) {
-                    rectangle_.clamp(parentRect);
-                }
-                
+
                 dirty_ = false;
             }
             

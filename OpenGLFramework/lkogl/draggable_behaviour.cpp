@@ -59,7 +59,8 @@ namespace lkogl {
             bool DraggableBehaviour::onContactMove(Element& el, const math::Vec2<int>& pos)
             {
                 math::Vec2<int> diff = pos - basePos_;
-                el.layout().setMargin(baseSpacing_ + Space{diff.y, 0, 0, diff.x});
+                el.layout().setMargin((baseSpacing_ + Space{diff.y, 0, 0, diff.x}));
+                el.layout().clampMargin();
                 
                 return true;
             }
