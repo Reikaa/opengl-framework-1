@@ -50,7 +50,7 @@ namespace lkogl {
                 }
                 
                 if(capturedElement_.get()) {
-                    capturedElement_->onContactMove();
+                    capturedElement_->onContactMove(pos);
                 }
                 
                 
@@ -64,7 +64,7 @@ namespace lkogl {
         {
             for(auto ri=recentElementList_.rbegin();ri!=recentElementList_.rend();++ri)
             {
-                if(!(*ri)->onContactBegin()) {
+                if(!(*ri)->onContactBegin(pos)) {
                     capturedElement_ = *ri;
                     break;
                 } else {
@@ -79,12 +79,12 @@ namespace lkogl {
             
             for(auto ri=contactedElementSet_.rbegin();ri!=contactedElementSet_.rend();ri++)
             {
-                (*ri)->onContactEnd();
+                (*ri)->onContactEnd(pos);
             }
             contactedElementSet_.clear();
             
             if(capturedElement_.get()) {
-                capturedElement_->onContactEnd();
+                capturedElement_->onContactEnd(pos);
             }
             capturedElement_.reset();
         }

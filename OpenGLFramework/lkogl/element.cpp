@@ -85,26 +85,26 @@ namespace lkogl {
             return true;
         }
         
-        bool Element::onContactBegin()
+        bool Element::onContactBegin(const math::Vec2<int>& pos)
         {
             if(behaviour_.get() != 0) {
-                return behaviour_->onContactBegin(*this);
+                return behaviour_->onContactBegin(*this, pos);
             }
             return true;
         }
         
-        bool Element::onContactEnd()
+        bool Element::onContactEnd(const math::Vec2<int>& pos)
         {
             if(behaviour_.get() != 0) {
-                return behaviour_->onContactEnd(*this);
+                return behaviour_->onContactEnd(*this, pos);
             }
             return true;
         }
         
-        bool Element::onContactMove()
+        bool Element::onContactMove(const math::Vec2<int>& pos)
         {
             if(behaviour_.get() != 0) {
-                return behaviour_->onContactMove(*this);
+                return behaviour_->onContactMove(*this, pos);
             }
             return true;
         }

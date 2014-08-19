@@ -10,15 +10,14 @@
 #define __OpenGLFramework__game_loop__
 
 #include <vector>
+#include <iostream>
 
 #include "window.h"
 
-constexpr long operator "" _fps(unsigned long long int fps) {
-    return 1000000000 / fps;
-}
-
 namespace lkogl {
     namespace loop {
+        long fps(long fps);
+        
         long hirestime();
         
         long lowrestime();
@@ -30,6 +29,8 @@ namespace lkogl {
         
         class DefaultDelegate {
         public:
+            
+            const bool stopped = false;
             
             bool mouseLocked = true;
             
@@ -91,7 +92,7 @@ namespace lkogl {
                 long nanoDelta = 0;
                 long renderTime = 0;
                 bool running = false;
-                const long updateDuration = 60_fps;
+                const long updateDuration = fps(60);
             } state_;
         public:
             class Exception {
@@ -130,7 +131,7 @@ namespace lkogl {
                 int mouseLocked = false;
                 int updated = false;
                 
-                while(state_.running)
+                while(state_.running && !delegate_.stopped)
                 {
                     
                     state_.lastTime = currentTime;
@@ -188,17 +189,17 @@ namespace lkogl {
                         long beforeRender = hirestime();
                         
                         render();
-                        
                         state_.renderTime = hirestime()-beforeRender;
                         window_.refreshDisplay();
+                        
                         frames++;
                         renderTimeSum += state_.renderTime;
+                        
                         updated = false;
-                    } else {
-                        SDL_Delay(2);
                     }
-                    
                 }
+                
+                state_.running = false;
                 
             }
 

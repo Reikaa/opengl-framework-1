@@ -29,11 +29,23 @@ namespace lkogl {
             friend const Length px(int p);
             friend const Length percent(int p);
             friend const Length fill(int p);
+            
+        public:            
+            // operators
+            
+            Length operator+= (const Length& b);
+            
+            Length operator-= (const Length& b);
         };
         
         const Length px(int p);
         const Length percent(int p);
         const Length fill(int p);
+        
+        Length operator+ (const Length& a, const Length& b);
+        
+        Length operator- (const Length& a, const Length& b);
+        
     }
 }
 

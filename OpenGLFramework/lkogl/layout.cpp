@@ -24,6 +24,11 @@ namespace lkogl {
             dirty_ = true;
         }
         
+        const Space& Layout::margin() const
+        {
+            return margin_;
+        }
+        
         void Layout::setMargin(const Space& space)
         {
             margin_ = space;
@@ -65,6 +70,11 @@ namespace lkogl {
             dirty_ = true;
         }
         
+        bool Layout::isCage() const
+        {
+            return isCage_;
+        }
+        
         const Rectangle& Layout::rectangle() const
         {
             if(dirty()) {
@@ -81,6 +91,10 @@ namespace lkogl {
                 math::Vec2<int> parentSize = math::max(parentRect.size(), rectangle_.size());
                 
                 rectangle_.setCenter(parentRect.topLeft() + calcCenter({rectangle_.width(), rectangle_.height()}, {parentSize.x,parentSize.y}, mT, mR, mB, mL));
+                
+                if(parent_ && parent_->isCage()) {
+                    rectangle_.clamp(parentRect);
+                }
                 
                 dirty_ = false;
             }

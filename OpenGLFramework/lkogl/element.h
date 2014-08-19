@@ -47,9 +47,9 @@ namespace lkogl {
             bool onFocus();
             bool onBlur();
             
-            bool onContactBegin();
-            bool onContactEnd();
-            bool onContactMove();
+            bool onContactBegin(const math::Vec2<int>& pos);
+            bool onContactEnd(const math::Vec2<int>& pos);
+            bool onContactMove(const math::Vec2<int>& pos);
             bool onContactCancel();
         };
     }

@@ -28,6 +28,7 @@
 		F21EA842199BE7C000D78E1C /* deferred-directional.vsh in Resources */ = {isa = PBXBuildFile; fileRef = F21EA841199BE7C000D78E1C /* deferred-directional.vsh */; };
 		F21EA844199BE7D100D78E1C /* deferred-directional.fsh in Resources */ = {isa = PBXBuildFile; fileRef = F21EA843199BE7D100D78E1C /* deferred-directional.fsh */; };
 		F24DA04919A3D4AF005F5F32 /* sand.png in Resources */ = {isa = PBXBuildFile; fileRef = F24DA04819A3D4AF005F5F32 /* sand.png */; };
+		F24DA04C19A3F06F005F5F32 /* draggable_behaviour.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F24DA04A19A3F06F005F5F32 /* draggable_behaviour.cpp */; };
 		F258801F19A0CA1200AC7A3C /* file_path.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F258801D19A0CA1200AC7A3C /* file_path.cpp */; };
 		F258802219A0E6C800AC7A3C /* image_height_map.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F258802019A0E6C800AC7A3C /* image_height_map.cpp */; };
 		F258802419A10B6B00AC7A3C /* terrain.png in Resources */ = {isa = PBXBuildFile; fileRef = F258802319A10B6B00AC7A3C /* terrain.png */; };
@@ -67,7 +68,7 @@
 		F2B0C3F3199F9EE4008AC975 /* style.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2B0C3F1199F9EE4008AC975 /* style.cpp */; };
 		F2B0C3F9199FCE19008AC975 /* pointer_tracking.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2B0C3F7199FCE19008AC975 /* pointer_tracking.cpp */; };
 		F2B0C3FC199FE247008AC975 /* behaviour.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2B0C3FA199FE247008AC975 /* behaviour.cpp */; };
-		F2B0C400199FE7F8008AC975 /* hover_behaviour.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2B0C3FE199FE7F8008AC975 /* hover_behaviour.cpp */; };
+		F2B0C400199FE7F8008AC975 /* clickable_behaviour.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2B0C3FE199FE7F8008AC975 /* clickable_behaviour.cpp */; };
 		F2B0C403199FF4A1008AC975 /* layout_invalidator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2B0C401199FF4A1008AC975 /* layout_invalidator.cpp */; };
 		F2B563B6199CFA28007D38D3 /* deferred-stencil.vsh in Resources */ = {isa = PBXBuildFile; fileRef = F2B563B5199CFA28007D38D3 /* deferred-stencil.vsh */; };
 		F2B563B8199CFA37007D38D3 /* deferred-stencil.fsh in Resources */ = {isa = PBXBuildFile; fileRef = F2B563B7199CFA37007D38D3 /* deferred-stencil.fsh */; };
@@ -161,6 +162,8 @@
 		F21EA841199BE7C000D78E1C /* deferred-directional.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = "deferred-directional.vsh"; sourceTree = "<group>"; };
 		F21EA843199BE7D100D78E1C /* deferred-directional.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = "deferred-directional.fsh"; sourceTree = "<group>"; };
 		F24DA04819A3D4AF005F5F32 /* sand.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sand.png; sourceTree = "<group>"; };
+		F24DA04A19A3F06F005F5F32 /* draggable_behaviour.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = draggable_behaviour.cpp; sourceTree = "<group>"; };
+		F24DA04B19A3F06F005F5F32 /* draggable_behaviour.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = draggable_behaviour.h; sourceTree = "<group>"; };
 		F258801D19A0CA1200AC7A3C /* file_path.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = file_path.cpp; sourceTree = "<group>"; };
 		F258801E19A0CA1200AC7A3C /* file_path.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = file_path.h; sourceTree = "<group>"; };
 		F258802019A0E6C800AC7A3C /* image_height_map.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = image_height_map.cpp; sourceTree = "<group>"; };
@@ -238,8 +241,8 @@
 		F2B0C3F8199FCE19008AC975 /* pointer_tracking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pointer_tracking.h; sourceTree = "<group>"; };
 		F2B0C3FA199FE247008AC975 /* behaviour.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = behaviour.cpp; sourceTree = "<group>"; };
 		F2B0C3FB199FE247008AC975 /* behaviour.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = behaviour.h; sourceTree = "<group>"; };
-		F2B0C3FE199FE7F8008AC975 /* hover_behaviour.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = hover_behaviour.cpp; sourceTree = "<group>"; };
-		F2B0C3FF199FE7F8008AC975 /* hover_behaviour.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = hover_behaviour.h; sourceTree = "<group>"; };
+		F2B0C3FE199FE7F8008AC975 /* clickable_behaviour.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = clickable_behaviour.cpp; sourceTree = "<group>"; };
+		F2B0C3FF199FE7F8008AC975 /* clickable_behaviour.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = clickable_behaviour.h; sourceTree = "<group>"; };
 		F2B0C401199FF4A1008AC975 /* layout_invalidator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = layout_invalidator.cpp; sourceTree = "<group>"; };
 		F2B0C402199FF4A1008AC975 /* layout_invalidator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = layout_invalidator.h; sourceTree = "<group>"; };
 		F2B563B5199CFA28007D38D3 /* deferred-stencil.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = "deferred-stencil.vsh"; sourceTree = "<group>"; };
@@ -600,8 +603,10 @@
 		F2B0C3FD199FE7E6008AC975 /* behaviours */ = {
 			isa = PBXGroup;
 			children = (
-				F2B0C3FE199FE7F8008AC975 /* hover_behaviour.cpp */,
-				F2B0C3FF199FE7F8008AC975 /* hover_behaviour.h */,
+				F2B0C3FE199FE7F8008AC975 /* clickable_behaviour.cpp */,
+				F2B0C3FF199FE7F8008AC975 /* clickable_behaviour.h */,
+				F24DA04A19A3F06F005F5F32 /* draggable_behaviour.cpp */,
+				F24DA04B19A3F06F005F5F32 /* draggable_behaviour.h */,
 			);
 			name = behaviours;
 			sourceTree = "<group>";
@@ -823,7 +828,7 @@
 				F2DEC63D1997F4E000EE31E7 /* directional_light.cpp in Sources */,
 				F279E242199F476E0001BBBF /* length.cpp in Sources */,
 				F29707CB1993BD9700D48CE5 /* scene_deep_walker.cpp in Sources */,
-				F2B0C400199FE7F8008AC975 /* hover_behaviour.cpp in Sources */,
+				F2B0C400199FE7F8008AC975 /* clickable_behaviour.cpp in Sources */,
 				F2FC464519A34D4800EFCEF5 /* variable_declaration.cpp in Sources */,
 				F29707B5199379DC00D48CE5 /* material.cpp in Sources */,
 				F2DEC60419975A8700EE31E7 /* base_component.cpp in Sources */,
@@ -855,6 +860,7 @@
 				F2B0C3F3199F9EE4008AC975 /* style.cpp in Sources */,
 				F21EA814199911F900D78E1C /* program.cpp in Sources */,
 				F2DEC6401997F4F800EE31E7 /* base_light.cpp in Sources */,
+				F24DA04C19A3F06F005F5F32 /* draggable_behaviour.cpp in Sources */,
 				F2DEC6081997621400EE31E7 /* render_component.cpp in Sources */,
 				F2A4968619981F1600588B03 /* spot_light.cpp in Sources */,
 			);

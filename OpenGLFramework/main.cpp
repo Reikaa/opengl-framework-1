@@ -21,7 +21,8 @@
 #include "lkogl/layout_renderer.h"
 #include "lkogl/pointer_tracking.h"
 #include "lkogl/layout_invalidator.h"
-#include "lkogl/hover_behaviour.h"
+#include "lkogl/clickable_behaviour.h"
+#include "lkogl/draggable_behaviour.h"
 
 
 #include "lkogl/ambient_light.h"
@@ -99,6 +100,8 @@ class MyGame {
 public:
     mutable bool mouseLocked = true;
     
+    mutable bool stopped = false;
+    
     MyGame() : kbAdapter_(keyboard_), mouseAdapter_(mouse_)
     {}
     
@@ -128,17 +131,27 @@ public:
             uiRenderer_ = std::make_shared<LayoutRenderer>();
             
             auto e1 = std::make_shared<Element>();
-            auto e2 = std::make_shared<Element>(std::make_shared<behaviour::HoverBehaviour>());
-            e2->layout().setSize(px(50), px(40));
             e1->layout().setMargin({percent(8)});
             e1->layout().setAlignment({WeightLinear::Center, WeightLinear::Center});
+            
+            
+            auto e2 = std::make_shared<Element>(std::make_shared<behaviour::ClickableBehaviour>([this](void){
+                stopped = true;
+            }));
+            e2->layout().setSize(px(50), px(40));
             e2->layout().setMargin({px(20)});
             e2->layout().setAlignment({WeightLinear::Right, WeightLinear::Bottom});
+            
+            auto e3 = std::make_shared<Element>(std::make_shared<behaviour::DraggableBehaviour>());
+            e3->layout().setSize(px(100), px(100));
+            e3->layout().setMargin({px(0)});
+            e3->layout().setAlignment({WeightLinear::Left, WeightLinear::Top});
             
             uiRoot_->style().setBackground({0,0,0,0});
             
             uiRoot_->addChild(e1);
             e1->addChild(e2);
+            e1->addChild(e3);
             
             pointerTracking_ = std::make_shared<PointerTracking>(uiRoot_);
             
@@ -347,7 +360,7 @@ public:
         
         ss << "f: " << frameCount << "/s, "
         << "u: " << updateCount << "/s, "
-        << "rt: ~" << updateCount/1000.0 << "ms"
+        << "rt: ~" << frameTimeAvg/1000000.0 << "ms"
         ;
         
         extraTitle_ = ss.str();

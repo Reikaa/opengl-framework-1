@@ -26,7 +26,17 @@ namespace lkogl {
             Space(const Length& one, const Length& two) : top(one),right(two), bottom(one), left(two) {}
             Space(const Length& one, const Length& two, const Length& three) : top(one),right(two), bottom(three), left(two) {}
             Space(const Length& one, const Length& two, const Length& three, const Length& four) : top(one),right(two), bottom(three), left(four) {}
+                        
+            // operators
+            
+            Space operator+= (const Space& b);
+            
+            Space operator-= (const Space& b);
         };
+        
+        Space operator+(const Space& a, const Space& b);
+        
+        Space operator-(const Space& a, const Space& b);
         
     }
 }

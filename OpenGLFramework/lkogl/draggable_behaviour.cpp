@@ -1,12 +1,12 @@
 //
-//  hover_behaviour.cpp
+//  draggable_behaviour.cpp
 //  OpenGLFramework
 //
-//  Created by Laszlo Korte on 16.08.14.
+//  Created by Laszlo Korte on 19.08.14.
 //  Copyright (c) 2014 Laszlo Korte. All rights reserved.
 //
 
-#include "hover_behaviour.h"
+#include "draggable_behaviour.h"
 #include "element.h"
 
 #include <iostream>
@@ -14,58 +14,58 @@
 namespace lkogl {
     namespace ui {
         namespace behaviour {
-            HoverBehaviour::HoverBehaviour()
+            DraggableBehaviour::DraggableBehaviour()
             {
             }
             
-            HoverBehaviour::~HoverBehaviour()
+            DraggableBehaviour::~DraggableBehaviour()
             {
             }
             
             
-            void HoverBehaviour::onInit(Element& el)
+            void DraggableBehaviour::onInit(Element& el)
             {
-                
+                el.style().setBackground(math::Vec4<float>{1,1,1,1});
             }
             
-            bool HoverBehaviour::onFocus(Element& el)
+            bool DraggableBehaviour::onFocus(Element& el)
             {
-                el.style().setBackground(el.style().background() + math::Vec4<float>{0,0,0,0.2});
                 
                 return true;
             }
             
-            bool HoverBehaviour::onBlur(Element& el)
+            bool DraggableBehaviour::onBlur(Element& el)
+            {
+                
+                return true;
+            }
+            
+            bool DraggableBehaviour::onContactBegin(Element& el, const math::Vec2<int>& pos)
+            {
+                el.style().setBackground(el.style().background() + math::Vec4<float>{0,0,0,0.2});
+                baseSpacing_ = el.layout().margin();
+                basePos_ = pos;
+                
+                return false;
+            }
+            
+            bool DraggableBehaviour::onContactEnd(Element& el, const math::Vec2<int>& pos)
             {
                 el.style().setBackground(el.style().background() - math::Vec4<float>{0,0,0,0.2});
                 
                 return true;
             }
             
-            bool HoverBehaviour::onContactBegin(Element& el)
+            bool DraggableBehaviour::onContactMove(Element& el, const math::Vec2<int>& pos)
             {
-                el.style().setBackground(el.style().background() + math::Vec4<float>{0,0,0,0.2});
-                                
-                return true;
-            }
-            
-            bool HoverBehaviour::onContactEnd(Element& el)
-            {
-                el.style().setBackground(el.style().background() - math::Vec4<float>{0,0,0,0.2});
-                
-                std::cout << "clicked!" << std::endl;
-                
+                math::Vec2<int> diff = pos - basePos_;
+                el.layout().setMargin(baseSpacing_ + Space{diff.y, 0, 0, diff.x});
                 
                 return true;
             }
             
-            bool HoverBehaviour::onContactMove(Element& el)
-            {
-                return true;
-            }
             
-            
-            bool HoverBehaviour::onContactCancel(Element& el)
+            bool DraggableBehaviour::onContactCancel(Element& el)
             {
                 el.style().setBackground(el.style().background() - math::Vec4<float>{0,0,0,0.2});
                 

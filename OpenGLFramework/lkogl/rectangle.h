@@ -50,6 +50,8 @@ namespace lkogl {
             void setTopLeft(const Position& p);
             
             bool contains(const Position& p) const;
+            
+            void clamp(const Rectangle& other);
         };
     }
 }

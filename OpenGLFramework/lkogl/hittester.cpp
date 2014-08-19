@@ -36,8 +36,10 @@ namespace lkogl {
                     std::queue<std::shared_ptr<Element>> empty;
                     elements.swap(empty);
                     
-                    for(const auto c : current->children()) {
-                        elements.push(c);
+                    auto children = current->children();
+                    
+                    for(auto i=children.crbegin();i!=children.crend();i++) {
+                        elements.push(*i);
                     }
                 }
             }

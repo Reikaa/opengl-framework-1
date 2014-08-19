@@ -119,5 +119,34 @@ namespace lkogl {
                 && p.x <= max_.x && p.y <= max_.y;
         }
         
+        void Rectangle::clamp(const Rectangle& other)
+        {
+            int difXmin = other.min_.x - min_.x;
+            int difYmin = other.min_.y - min_.y;
+
+            if(difXmin > 0) {
+                min_.x += difXmin;
+                max_.x += difXmin;
+            }
+            
+            if(difYmin > 0) {
+                min_.y += difYmin;
+                max_.y += difYmin;
+            }
+            
+            int difXmax = other.max_.x - max_.x;
+            int difYmax = other.max_.y - max_.y;
+            
+            if(difXmax < 0) {
+                min_.x += difXmax;
+                max_.x += difXmax;
+            }
+            
+            if(difYmax < 0) {
+                min_.y += difYmax;
+                max_.y += difYmax;
+            }
+        }
+        
     }
 }

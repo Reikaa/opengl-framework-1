@@ -9,6 +9,8 @@
 #ifndef __OpenGLFramework__behaviour__
 #define __OpenGLFramework__behaviour__
 
+#include "math.h"
+
 namespace lkogl {
     namespace ui {
         
@@ -22,9 +24,9 @@ namespace lkogl {
             virtual void onInit(Element& el) = 0;
             virtual bool onFocus(Element& el) = 0;
             virtual bool onBlur(Element& el) = 0;
-            virtual bool onContactBegin(Element& el) = 0;
-            virtual bool onContactEnd(Element& el) = 0;
-            virtual bool onContactMove(Element& el) = 0;
+            virtual bool onContactBegin(Element& el, const math::Vec2<int>& pos) = 0;
+            virtual bool onContactEnd(Element& el, const math::Vec2<int>& pos) = 0;
+            virtual bool onContactMove(Element& el, const math::Vec2<int>& pos) = 0;
             virtual bool onContactCancel(Element& el) = 0;
         };
         
