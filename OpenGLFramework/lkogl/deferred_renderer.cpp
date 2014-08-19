@@ -15,6 +15,8 @@
 #include "stencil.h"
 #include "mesh.h"
 
+#include <iostream>
+
 namespace lkogl {
     namespace graphics {
         namespace renderign {
@@ -82,8 +84,9 @@ namespace lkogl {
                     ProgramUse defgeo(programs_.deferredGeo_);
                     
                     auto matrix = cam.viewProjectionMatrix();
-                    graphics::CameraMatrixUse(programs_.deferredGeo_, matrix, cam.position(), cam.perspective().far());
-                    
+                    defgeo.setUniform("uViewProjMatrix", matrix);
+                    defgeo.setUniformf("uFar", cam.perspective().far());
+                                        
                     walker.walk(graph, &scene::components::Component::render, programs_.deferredGeo_);
                     
                     glDepthMask(GL_FALSE);
@@ -106,18 +109,19 @@ namespace lkogl {
                     StencilCreation stencil(true);
 
                     ProgramUse stencilProg(programs_.deferredStencil_);
-                    BufferTextureUse tus(programs_.deferredStencil_.handles().samplerPosition, *buffer_, 2, 2);
+                    BufferTextureUse tus(stencilProg, "uSampler", *buffer_, 2, 2);
                     
                     squareObj.render();
                 }
+                
                 { // Lighting pass
                     StencilUse stencil;
                     
                     { // Ambient
                         ProgramUse ambient(programs_.deferredAmbient_);
                         
-                        BufferTextureUse diffuse(programs_.deferredAmbient_.handles().samplerPosition, *buffer_, 2, 2);
-                        lighting::AmbientLightUse(programs_.deferredAmbient_, ambientLight);
+                        BufferTextureUse tus(ambient, "uSampler", *buffer_, 2, 2);
+                        lighting::AmbientLightUse(ambient, ambientLight);
                         
                         squareObj.render();
                     }
@@ -127,14 +131,14 @@ namespace lkogl {
                     { // Directional
                         ProgramUse directional(programs_.deferredDir_);
                         
-                        glUniform3f(programs_.deferredDir_.handles().eyePosition, cam.position().x, cam.position().y, cam.position().z);
+                        directional.setUniform("uEyePosition", cam.position());
                         
-                        BufferTextureUse tu1(programs_.deferredDir_.handles().samplerPosPosition, *buffer_, 0, 0);
-                        BufferTextureUse tu2(programs_.deferredDir_.handles().samplerNormPosition, *buffer_, 1, 1);
-                        BufferTextureUse tu3(programs_.deferredDir_.handles().samplerColPosition, *buffer_, 2, 2);
-                        
+                        BufferTextureUse tu1(directional, "uSamplerPosition", *buffer_, 0, 0);
+                        BufferTextureUse tu2(directional, "uSamplerNormal", *buffer_, 1, 1);
+                        BufferTextureUse tu3(directional, "uSamplerColor", *buffer_, 2, 2);
+
                         for(const lighting::DirectionalLight& light : directionalLights) {
-                            lighting::DirectionalLightUse use(programs_.deferredDir_, light);
+                            lighting::DirectionalLightUse use(directional, light);
                             
                             squareObj.render();
                         }

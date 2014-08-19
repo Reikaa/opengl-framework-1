@@ -25,7 +25,7 @@ namespace lkogl {
                 });
             }
             
-            void CameraComponent::render(const TreeTransformation& transformation, const graphics::Program& program) const
+            void CameraComponent::render(const TreeTransformation& transformation, const graphics::ProgramUse& program) const
             {
             }
             

@@ -29,7 +29,7 @@ namespace lkogl {
         class MaterialUse {
             TextureUse _texUse;
         public:
-            MaterialUse(const Program& p, const Material&);
+            MaterialUse(const ProgramUse& p, const Material&);
             ~MaterialUse();
         };
     }

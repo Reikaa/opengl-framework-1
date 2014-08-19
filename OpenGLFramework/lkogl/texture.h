@@ -70,8 +70,8 @@ namespace lkogl {
         class TextureUse {
             TextureBinding b_;
         public:
-            TextureUse(const Program& p, const Texture&);
-            TextureUse(const Program& p, const Texture&, int slto);
+            TextureUse(const ProgramUse& p, const Texture&);
+            TextureUse(const ProgramUse& p, const Texture&, int slto);
             TextureUse(GLuint loc, const Texture&, int slto);
             ~TextureUse();
         };

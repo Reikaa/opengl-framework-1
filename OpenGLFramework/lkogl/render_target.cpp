@@ -147,10 +147,10 @@ namespace lkogl {
         {
         }
         
-        BufferTextureUse::BufferTextureUse(GLuint loc, const FrameBuffer& r, GLuint num, GLuint slot) :
+        BufferTextureUse::BufferTextureUse(const ProgramUse& p, const std::string& uniform, const FrameBuffer& r, GLuint num, GLuint slot) :
         b_(r.resource_->getTextureResource(num), slot)
         {
-            glUniform1i(loc, slot);
+            p.setUniformi(uniform, slot);
         }
         
         BufferTextureUse::~BufferTextureUse()

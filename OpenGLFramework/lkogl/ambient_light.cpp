@@ -19,9 +19,9 @@ namespace lkogl {
             {}
 
             
-            AmbientLightUse::AmbientLightUse(const Program& program, const AmbientLight& amb)
+            AmbientLightUse::AmbientLightUse(const ProgramUse& program, const AmbientLight& amb)
             {
-                glUniform3f(program.handles().ambientIntensityPosition, amb.intensity_.x, amb.intensity_.y, amb.intensity_.z);
+                program.setUniform("uAmbientIntensity", amb.intensity_);
             }
             
             AmbientLightUse::~AmbientLightUse()

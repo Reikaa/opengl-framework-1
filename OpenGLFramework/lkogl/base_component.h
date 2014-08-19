@@ -19,11 +19,11 @@ namespace lkogl {
             {
             public:
                 typedef void (Component::*ComponentUpdateMethod)(TreeTransformation& transformation) const;
-                typedef void (Component::*ComponentRenderMethod)(const TreeTransformation& transformation, const graphics::Program&) const;
+                typedef void (Component::*ComponentRenderMethod)(const TreeTransformation& transformation, const graphics::ProgramUse&) const;
                 
                 virtual void update(TreeTransformation& transformation) const = 0;
                 
-                virtual void render(const TreeTransformation& transformation, const graphics::Program&) const = 0;
+                virtual void render(const TreeTransformation& transformation, const graphics::ProgramUse&) const = 0;
                 
                 virtual ~Component();
             };

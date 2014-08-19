@@ -22,10 +22,10 @@ namespace lkogl {
         Material::~Material() {}
 
 
-        MaterialUse::MaterialUse(const Program& p, const Material& mat) : _texUse(p, mat.texture_)
+        MaterialUse::MaterialUse(const ProgramUse& p, const Material& mat) : _texUse(p, mat.texture_)
         {
-            glUniform1f(p.handles().specularIntensityPosition, mat.specularIntensity_);
-            glUniform1f(p.handles().specularPowerPosition, mat.specularPower_);
+            p.setUniformf("material.specularIntensity", mat.specularIntensity_);
+            p.setUniformf("material.specularPower", mat.specularPower_);
         }
         
         MaterialUse::~MaterialUse() {}

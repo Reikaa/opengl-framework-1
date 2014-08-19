@@ -31,7 +31,7 @@ namespace lkogl {
             
             class PointLightUse {
             public:
-                PointLightUse(const Program&, const PointLight&);
+                PointLightUse(const ProgramUse&, const PointLight&);
                 ~PointLightUse();
             };
         }

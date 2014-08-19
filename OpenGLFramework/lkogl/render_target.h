@@ -83,7 +83,7 @@ namespace lkogl {
         class BufferTextureUse {
             TextureBinding b_;
         public:
-            BufferTextureUse(GLuint loc, const FrameBuffer&, GLuint num, GLuint slot);
+            BufferTextureUse(const ProgramUse& loc, const std::string& uniform, const FrameBuffer&, GLuint num, GLuint slot);
             ~BufferTextureUse();
         };
     }

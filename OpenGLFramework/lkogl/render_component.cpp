@@ -19,11 +19,11 @@ namespace lkogl {
             {
             }
             
-            void RenderComponent::render(const TreeTransformation& transformation, const graphics::Program& program) const
+            void RenderComponent::render(const TreeTransformation& transformation, const graphics::ProgramUse& program) const
             {
                 graphics::MaterialUse mat(program, material_);
                 const graphics::GeometryObjectUse geo(geometry_);
-                graphics::ModelMatrixUse matrix(program, transformation.matrix());
+                program.setUniform("uModelMatrix", transformation.matrix());
                 
                 geo.render();
             }

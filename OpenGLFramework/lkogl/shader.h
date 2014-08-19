@@ -10,8 +10,11 @@
 #define __OpenGLFramework__shader__
 
 #include <string>
+#include <map>
+#include <set>
 #include <exception>
 
+#include "uniform.h"
 #include "mesh.h"
 #include "math.h"
 
@@ -39,15 +42,24 @@ namespace lkogl {
         
         class Shader {
             mutable GLuint handle_;
+            mutable std::set<Uniform> uniforms_;
         public:
             Shader(ShaderType, const std::string&) throw (ShaderException);
             Shader(const Shader&&) throw ();
 
             ~Shader();
             const GLuint& handle() const { return handle_; }
+            const std::set<Uniform>& uniforms() const { return uniforms_; }
 
         private:
+            struct VariableDefinition {
+                std::string type;
+                std::string name;
+            };
+            
             GLuint compile(ShaderType, const std::string&) throw (ShaderException);
+            std::set<Uniform> extractUniforms(const std::string& source);
+            std::multimap<std::string, VariableDefinition> extractStructs(const std::string& source);
         };
         
         

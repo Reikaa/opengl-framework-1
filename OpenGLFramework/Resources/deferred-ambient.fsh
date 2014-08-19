@@ -1,7 +1,7 @@
 #version 330
 
 uniform sampler2D uSampler;
-uniform vec3 uAmbient;
+uniform vec3 uAmbientIntensity;
 
 in vec2 fUV;
 
@@ -9,5 +9,5 @@ out vec4 oColor;
 
 void main() {
     vec4 col = texture(uSampler, fUV);
-    oColor = vec4(uAmbient,1) * col;
+    oColor = vec4(uAmbientIntensity,1) * col;
 }

@@ -7,6 +7,7 @@
 //
 
 #include "program.h"
+#include <iostream>
 
 namespace lkogl {
     namespace graphics {
@@ -21,17 +22,7 @@ namespace lkogl {
         
         Program::ProgramHandles Program::link(const Shader& vsh, const Shader& fsh) throw (ShaderException) {
             GLuint handle = glCreateProgram();
-            GLint far, mMat, vpMat, samplerPos, ambientPos, colorPos, eysPos, specIntPos, specPowPos, dirLightColPos, dirLightIntPos, dirLightDirPos,
-            pntLightColPos, pntLightIntPos, pntLightPosPos, pntLightRangePos,
-            pntLightAttCPos, pntLightAttLPos, pntLightAttQPos,
-            
-            sptLightColPos, sptLightIntPos, sptLightPosPos, sptLightRangePos,
-            sptLightAttCPos, sptLightAttLPos, sptLightAttQPos,
-            sptDirectionPos, sptLightCutoffPos,
-            
-            smpPosPosition,
-            smpNormPosition,
-            smpColPosition;
+            std::map<Uniform, GLuint> uniformMapping;
             
             try {
                 GLint compileOk;
@@ -54,43 +45,17 @@ namespace lkogl {
                     glGetProgramInfoLog(handle, errLength, &errLength, errMsg);
                     throw ShaderException(errMsg);
                 }
-                far = glGetUniformLocation(handle, "uFar");
-                mMat = glGetUniformLocation(handle, "uModelMatrix");
-                vpMat = glGetUniformLocation(handle, "uViewProjMatrix");
-                samplerPos = glGetUniformLocation(handle, "uSampler");
-                ambientPos = glGetUniformLocation(handle, "uAmbient");
-                colorPos = glGetUniformLocation(handle, "uColor");
                 
-                eysPos = glGetUniformLocation(handle, "uEyePosition");
-                specIntPos = glGetUniformLocation(handle, "uMaterial.specularIntensity");
-                specPowPos = glGetUniformLocation(handle, "uMaterial.specularPower");
-                dirLightColPos = glGetUniformLocation(handle, "uDirectionalLight.base.color");
-                dirLightIntPos = glGetUniformLocation(handle, "uDirectionalLight.base.intensity");
-                dirLightDirPos = glGetUniformLocation(handle, "uDirectionalLight.direction");
+                for(Uniform u : vsh.uniforms()) {
+                    GLuint loc = glGetUniformLocation(handle, u.name().c_str());
+                    uniformMapping[u] = loc;
+                }
                 
+                for(Uniform u : fsh.uniforms()) {
+                    GLuint loc = glGetUniformLocation(handle, u.name().c_str());
+                    uniformMapping[u] = loc;
+                }
                 
-                
-                pntLightColPos = glGetUniformLocation(handle, "uPointLight.base.color");
-                pntLightIntPos = glGetUniformLocation(handle, "uPointLight.base.intensity");
-                pntLightPosPos = glGetUniformLocation(handle, "uPointLight.position");
-                pntLightRangePos = glGetUniformLocation(handle, "uPointLight.range");
-                pntLightAttCPos = glGetUniformLocation(handle, "uPointLight.attenuation.constant");
-                pntLightAttLPos = glGetUniformLocation(handle, "uPointLight.attenuation.linear");
-                pntLightAttQPos = glGetUniformLocation(handle, "uPointLight.attenuation.quadratic");
-                
-                sptLightColPos = glGetUniformLocation(handle, "uSpotLight.pointLight.base.color");
-                sptLightIntPos = glGetUniformLocation(handle, "uSpotLight.pointLight.base.intensity");
-                sptLightPosPos = glGetUniformLocation(handle, "uSpotLight.pointLight.position");
-                sptLightRangePos = glGetUniformLocation(handle, "uSpotLight.pointLight.range");
-                sptLightAttCPos = glGetUniformLocation(handle, "uSpotLight.pointLight.attenuation.constant");
-                sptLightAttLPos = glGetUniformLocation(handle, "uSpotLight.pointLight.attenuation.linear");
-                sptLightAttQPos = glGetUniformLocation(handle, "uSpotLight.pointLight.attenuation.quadratic");
-                sptDirectionPos = glGetUniformLocation(handle, "uSpotLight.direction");
-                sptLightCutoffPos = glGetUniformLocation(handle, "uSpotLight.cutoff");
-                
-                smpPosPosition = glGetUniformLocation(handle, "uSamplerPosition");
-                smpNormPosition = glGetUniformLocation(handle, "uSamplerNormal");
-                smpColPosition = glGetUniformLocation(handle, "uSamplerColor");
             } catch(...) {
                 glDeleteProgram(handle);
                 throw;
@@ -98,21 +63,21 @@ namespace lkogl {
             
             return Program::ProgramHandles{
                 handle,
-                far,
-                mMat, vpMat, samplerPos, ambientPos, colorPos,
-                eysPos, specIntPos, specPowPos, dirLightColPos, dirLightIntPos, dirLightDirPos,
-                pntLightColPos, pntLightIntPos, pntLightPosPos, pntLightRangePos,
-                pntLightAttCPos, pntLightAttLPos, pntLightAttQPos,
-                
-                sptLightColPos, sptLightIntPos, sptLightPosPos, sptLightRangePos,
-                sptLightAttCPos, sptLightAttLPos, sptLightAttQPos,
-                sptDirectionPos, sptLightCutoffPos,
-                
-                smpPosPosition,
-                smpNormPosition,
-                smpColPosition
+                uniformMapping
             };
         }
+        
+        const GLuint Program::uniformLocation(const Uniform& u) const
+        {
+            auto it = handles_.uniforms.find(u);
+            if(it == handles_.uniforms.end()) {
+                std::cerr << u.name() << std::endl;
+                throw "unknown uniform";
+            } else {
+                return it->second;
+            }
+        }
+
         
         Program::Program(const Program&& p) throw() : handles_(p.handles_) {
             p.handles_.programId = 0;
@@ -132,23 +97,35 @@ namespace lkogl {
             glUseProgram(0);
         }
         
-        ModelMatrixUse::ModelMatrixUse(const Program& prog,
-                                       const math::Mat4<GLfloat>& modelMat) {
-            glUniformMatrix4fv(prog.handles().modelMatrixPosition, 1, GL_FALSE, &modelMat[0][0]);
+        void ProgramUse::setUniformf(const std::string& name, GLfloat value) const
+        {
+            glUniform1f(program_.uniformLocation(Uniform(name, Uniform::Type::FLOAT)), value);
         }
         
-        ModelMatrixUse::~ModelMatrixUse() {
+        
+        void ProgramUse::setUniformi(const std::string& name, GLuint value) const
+        {
+            glUniform1i(program_.uniformLocation(Uniform(name, Uniform::Type::SAMPLER2D)), value);
         }
         
-        CameraMatrixUse::CameraMatrixUse(const Program& prog,
-                                         const math::Mat4<GLfloat>& viewProjectionMat,
-                                         const math::Vec3<GLfloat>& cameraPosition, float far) {
-            glUniformMatrix4fv(prog.handles().viewProjectionMatrixPosition, 1, GL_FALSE, &viewProjectionMat[0][0]);
-            glUniform3f(prog.handles().eyePosition, cameraPosition.x, cameraPosition.y, cameraPosition.z);
-            glUniform1f(prog.handles().farPosition, far);
+        void ProgramUse::setUniform(const std::string& name, const math::Vec2<GLfloat>& value) const
+        {
+            glUniform2f(program_.uniformLocation(Uniform(name, Uniform::Type::VEC2)), value.x, value.y);
         }
         
-        CameraMatrixUse::~CameraMatrixUse() {
+        void ProgramUse::setUniform(const std::string& name, const math::Vec3<GLfloat>& value) const
+        {
+            glUniform3f(program_.uniformLocation(Uniform(name, Uniform::Type::VEC3)), value.x, value.y, value.z);
+        }
+        
+        void ProgramUse::setUniform(const std::string& name, const math::Vec4<GLfloat>& value) const
+        {
+            glUniform4f(program_.uniformLocation(Uniform(name, Uniform::Type::VEC4)), value.x, value.y, value.z, value.w);
+        }
+        
+        void ProgramUse::setUniform(const std::string& name, const math::Mat4<GLfloat>& value) const
+        {
+            glUniformMatrix4fv(program_.uniformLocation(Uniform(name, Uniform::Type::MAT4)), 1, GL_FALSE, &value[0][0]);
         }
     }
 }

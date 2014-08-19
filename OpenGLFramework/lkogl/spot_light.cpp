@@ -19,20 +19,19 @@ namespace lkogl {
             {}
             
             
-            SpotLightUse::SpotLightUse(const Program& program, const SpotLight& l)
+            SpotLightUse::SpotLightUse(const ProgramUse& program, const SpotLight& l)
             {
-                glUniform3f(program.handles().spotLightColorPosition, l.pointLight_.baseLight_.color_.x, l.pointLight_.baseLight_.color_.y, l.pointLight_.baseLight_.color_.z);
-                glUniform1f(program.handles().spotLightIntensityPosition, l.pointLight_.baseLight_.intensity_);
+                program.setUniform("", l.pointLight_.baseLight_.color_);
+                program.setUniformf("", l.pointLight_.baseLight_.intensity_);
+                program.setUniform("", l.pointLight_.position_);
+                program.setUniformf("", l.pointLight_.range_);
                 
-                glUniform3f(program.handles().spotLightPositionPosition, l.pointLight_.position_.x, l.pointLight_.position_.y, l.pointLight_.position_.z);
-                glUniform1f(program.handles().spotLightRangePosition, l.pointLight_.range_);
-                
-                glUniform1f(program.handles().spotLightAttenuationCPosition, l.pointLight_.attenuation_.constant_);
-                glUniform1f(program.handles().spotLightAttenuationLPosition, l.pointLight_.attenuation_.linear_);
-                glUniform1f(program.handles().spotLightAttenuationQPosition, l.pointLight_.attenuation_.quadratic_);
-                
-                glUniform3f(program.handles().spotLightDirectionPosition, l.direction_.x, l.direction_.y, l.direction_.z);
-                glUniform1f(program.handles().spotLightCutoffPosition, l.cutoff_);
+                program.setUniformf("", l.pointLight_.attenuation_.constant_);
+                program.setUniformf("", l.pointLight_.attenuation_.linear_);
+                program.setUniformf("", l.pointLight_.attenuation_.quadratic_);
+
+                program.setUniform("", l.direction_);
+                program.setUniformf("", l.cutoff_);
             }
             
             SpotLightUse::~SpotLightUse()

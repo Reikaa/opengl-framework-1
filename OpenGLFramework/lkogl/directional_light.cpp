@@ -19,11 +19,11 @@ namespace lkogl {
             DirectionalLight::~DirectionalLight()
             {}
             
-            DirectionalLightUse::DirectionalLightUse(const Program& program, const DirectionalLight& l)
+            DirectionalLightUse::DirectionalLightUse(const ProgramUse& program, const DirectionalLight& l)
             {
-                glUniform3f(program.handles().directionalLightColorPosition, l.baseLight_.color_.x, l.baseLight_.color_.y, l.baseLight_.color_.z);
-                glUniform1f(program.handles().directionalLightIntensityPosition, l.baseLight_.intensity_);
-                glUniform3f(program.handles().directionalLightDirectionPosition, l.direction_.x, l.direction_.y, l.direction_.z);
+                program.setUniform("uDirectionalLight.base.color", l.baseLight_.color_);
+                program.setUniformf("uDirectionalLight.base.intensity", l.baseLight_.intensity_);
+                program.setUniform("uDirectionalLight.direction", l.direction_);
             }
             
             DirectionalLightUse::~DirectionalLightUse() {}

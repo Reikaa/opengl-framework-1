@@ -9,53 +9,18 @@
 #ifndef __OpenGLFramework__program__
 #define __OpenGLFramework__program__
 
+#include <map>
+
 #include "shader.h"
+#include "uniform.h"
 
 namespace lkogl {
     namespace graphics {
         class Program {
             struct ProgramHandles {
                 mutable GLuint programId;
-                
-                GLint farPosition;
-                GLint modelMatrixPosition;
-                GLint viewProjectionMatrixPosition;
-                
-                GLint samplerPosition;
-                GLint ambientIntensityPosition;
-                GLint colorPosition;
-                GLint eyePosition;
-                
-                GLint specularIntensityPosition;
-                GLint specularPowerPosition;
-                
-                GLint directionalLightColorPosition;
-                GLint directionalLightIntensityPosition;
-                GLint directionalLightDirectionPosition;
-                
-                GLint pointLightColorPosition;
-                GLint pointLightIntensityPosition;
-                GLint pointLightPositionPosition;
-                GLint pointLightRangePosition;
-                GLint pointLightAttenuationCPosition;
-                GLint pointLightAttenuationLPosition;
-                GLint pointLightAttenuationQPosition;
-                
-                GLint spotLightColorPosition;
-                GLint spotLightIntensityPosition;
-                GLint spotLightPositionPosition;
-                GLint spotLightRangePosition;
-                GLint spotLightAttenuationCPosition;
-                GLint spotLightAttenuationLPosition;
-                GLint spotLightAttenuationQPosition;
-                GLint spotLightDirectionPosition;
-                GLint spotLightCutoffPosition;
-                
-                GLint samplerPosPosition;
-                GLint samplerNormPosition;
-                GLint samplerColPosition;
+                std::map<Uniform, GLuint> uniforms;
             } handles_;
-            
         public:
             Program(const std::string& vsh, const std::string& fsh) throw (ShaderException);
             Program(const Shader& vsh, const Shader& fsh) throw (ShaderException);
@@ -63,6 +28,7 @@ namespace lkogl {
             ~Program();
             
             const ProgramHandles& handles() const { return handles_; }
+            const GLuint uniformLocation(const Uniform& u) const;
         private:
             ProgramHandles link(const Shader& vsh, const Shader& fsh) throw (ShaderException);
             
@@ -71,24 +37,16 @@ namespace lkogl {
         class ProgramUse {
             const Program& program_;
         public:
-            ProgramUse(const Program&);
+            explicit ProgramUse(const Program&);
+            
+            void setUniformf(const std::string& name, GLfloat value) const;
+            void setUniformi(const std::string& name, GLuint value) const;
+            void setUniform(const std::string& name, const math::Vec2<GLfloat>& value) const;
+            void setUniform(const std::string& name, const math::Vec3<GLfloat>& value) const;
+            void setUniform(const std::string& name, const math::Vec4<GLfloat>& value) const;
+            void setUniform(const std::string& name, const math::Mat4<GLfloat>& value) const;
+            
             ~ProgramUse();
-        };
-        
-        class ModelMatrixUse {
-        public:
-            ModelMatrixUse(const Program&,
-                           const math::Mat4<GLfloat>& modelMat);
-            ~ModelMatrixUse();
-        };
-        
-        class CameraMatrixUse {
-        public:
-            CameraMatrixUse(const Program&,
-                            const math::Mat4<GLfloat>& viewProjectionMat,
-                            const math::Vec3<GLfloat>& cameraPosition,
-                            float far);
-            ~CameraMatrixUse();
         };
     }
 }
