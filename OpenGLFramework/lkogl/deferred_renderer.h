@@ -17,13 +17,13 @@
 
 namespace lkogl {
     namespace graphics {
-        namespace renderign {
+        namespace rendering {
             class DeferredRenderer {
                 struct Programs {
-                    Program deferredGeo_;
-                    Program deferredAmbient_;
-                    Program deferredStencil_;
-                    Program deferredDir_;
+                    shader::Program deferredGeo_;
+                    shader::Program deferredAmbient_;
+                    shader::Program deferredStencil_;
+                    shader::Program deferredDir_;
                 } programs_;
                 std::unique_ptr<FrameBuffer> buffer_;
                 struct {

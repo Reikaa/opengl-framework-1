@@ -19,7 +19,7 @@ namespace lkogl {
             {
             }
             
-            void RenderComponent::render(const TreeTransformation& transformation, const graphics::ProgramUse& program) const
+            void RenderComponent::render(const TreeTransformation& transformation, const graphics::shader::ProgramUse& program) const
             {
                 graphics::MaterialUse mat(program, material_);
                 const graphics::GeometryObjectUse geo(geometry_);

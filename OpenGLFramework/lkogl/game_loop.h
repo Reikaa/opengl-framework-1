@@ -30,6 +30,7 @@ namespace lkogl {
         
         class DefaultDelegate {
         public:
+            
             bool mouseLocked = true;
             
             void setUp() const {
@@ -93,6 +94,12 @@ namespace lkogl {
                 const long updateDuration = 60_fps;
             } state_;
         public:
+            class Exception {
+            public:
+                Exception(const std::string& msg) {}
+                Exception() {}
+            };
+            
             Loop(const DELEGATE& del) : delegate_(del), window_(900,600, "Loading...") {
                 window_.setTitle(del.title());
             }
@@ -103,7 +110,7 @@ namespace lkogl {
             
             void start() const  {
                 if(state_.running) {
-                    throw "already running";
+                    throw Exception("already running");
                 }
                 
                 Looping<DELEGATE> l(delegate_);

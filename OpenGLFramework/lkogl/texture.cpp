@@ -31,7 +31,7 @@ namespace lkogl {
             glGenTextures(1, &handle);
             
             if(!handle) {
-                throw "Texture could not be created";
+                throw Exception("Texture could not be created");
             }
            
             return handle;
@@ -43,7 +43,7 @@ namespace lkogl {
             }
         }
         
-        void TextureResource::replaceImage(const utils::Image& image) throw (TextureException) {
+        void TextureResource::replaceImage(const utils::Image& image) throw (Exception) {
             int mode;
             int modeInternal;
             
@@ -54,7 +54,7 @@ namespace lkogl {
                 mode = GL_RGB;
                 modeInternal = GL_BGR;
             } else {
-                throw "Invalid texture format";
+                throw Exception("Invalid texture format");
             }
             
             TextureBinding b(*this, 1);
@@ -64,7 +64,7 @@ namespace lkogl {
             glTexParameteri(textureTarget_, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
         }
         
-        Texture::Texture(const utils::Image& img) throw (TextureException) :
+        Texture::Texture(const utils::Image& img) throw (Exception) :
         resource_(std::make_shared<TextureResource>(img.width(), img.height())) {
             resource_->replaceImage(img);
         }
@@ -77,12 +77,12 @@ namespace lkogl {
         {
         }
         
-        TextureUse::TextureUse(const ProgramUse& p, const Texture& tex) :
+        TextureUse::TextureUse(const shader::ProgramUse& p, const Texture& tex) :
         TextureUse(p, tex, 0)
         {
         }
         
-        TextureUse::TextureUse(const ProgramUse& p, const Texture& tex, int slot) :
+        TextureUse::TextureUse(const shader::ProgramUse& p, const Texture& tex, int slot) :
         b_(*tex.resource_.get(), slot)
         {
             p.setUniformi("material.sampler", slot);

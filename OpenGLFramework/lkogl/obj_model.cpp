@@ -85,7 +85,7 @@ namespace lkogl {
                                             if(iss >> fa >> fb >> fc) {
                                                 model.normals_.push_back({fa, fb, fc});
                                             } else {
-                                                throw "exptected 3 normal coords";
+                                                throw OBJModel::Exception("exptected 3 normal coords");
                                             }
                                             break;
                                         case 't':
@@ -95,7 +95,7 @@ namespace lkogl {
                                                 }
                                                 model.texCoords_.push_back({fa, fb, fc});
                                             } else {
-                                                throw "exptected 2 texture coords";
+                                                throw OBJModel::Exception("exptected 2 texture coords");
                                             }
                                             break;
                                         default:
@@ -106,7 +106,7 @@ namespace lkogl {
                                                 }
                                                 model.positions_.push_back({fa, fb, fc, fd});
                                             } else {
-                                                throw "exptected 3 vertex coords";
+                                                throw OBJModel::Exception("exptected 3 vertex coords");
                                             }
                                     }
                                 }
@@ -151,7 +151,7 @@ namespace lkogl {
 
                                 
                                 if(polygonVertices.size() < 3) {
-                                    throw "faces must have at least 3 vertices";
+                                    throw OBJModel::Exception("faces must have at least 3 vertices");
                                 }
                                 
                                 for(size_t i=0,j=polygonVertices.size()-2;i<j; i++) {
@@ -171,7 +171,7 @@ namespace lkogl {
                                 } else if(def == "usemtl") {
                                     
                                 } else {
-                                    throw "unexpected definition";
+                                    throw OBJModel::Exception("unexpected definition");
                                 }
                             }
                         }

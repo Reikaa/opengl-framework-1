@@ -323,6 +323,19 @@
 			name = mesh_loader;
 			sourceTree = "<group>";
 		};
+		F2660ABC19A3ACE3000AD4EE /* shader */ = {
+			isa = PBXGroup;
+			children = (
+				F29707851993706C00D48CE5 /* shader.cpp */,
+				F29707861993706C00D48CE5 /* shader.h */,
+				F21EA812199911F900D78E1C /* program.cpp */,
+				F21EA813199911F900D78E1C /* program.h */,
+				F2FC464319A34D4800EFCEF5 /* variable_declaration.cpp */,
+				F2FC464419A34D4800EFCEF5 /* variable_declaration.h */,
+			);
+			name = shader;
+			sourceTree = "<group>";
+		};
 		F27044C81994C29600C57B6A /* shaders */ = {
 			isa = PBXGroup;
 			children = (
@@ -440,26 +453,21 @@
 		F29707831993704700D48CE5 /* graphics */ = {
 			isa = PBXGroup;
 			children = (
+				F2660ABC19A3ACE3000AD4EE /* shader */,
 				F2B563BE199D2A8F007D38D3 /* rendering */,
 				F2DEC6341997EA4000EE31E7 /* lighting */,
-				F29707851993706C00D48CE5 /* shader.cpp */,
-				F29707861993706C00D48CE5 /* shader.h */,
 				F297078F199370D800D48CE5 /* texture.cpp */,
 				F2970790199370D800D48CE5 /* texture.h */,
 				F29707B3199379DC00D48CE5 /* material.cpp */,
 				F29707B4199379DC00D48CE5 /* material.h */,
 				F21EA80F19990FF200D78E1C /* geometry_object.cpp */,
 				F21EA81019990FF200D78E1C /* geometry_object.h */,
-				F21EA812199911F900D78E1C /* program.cpp */,
-				F21EA813199911F900D78E1C /* program.h */,
 				F21EA833199B9B9300D78E1C /* render_target.cpp */,
 				F21EA834199B9B9300D78E1C /* render_target.h */,
 				F2B563BB199D0CC8007D38D3 /* stencil.cpp */,
 				F2B563BC199D0CC8007D38D3 /* stencil.h */,
 				F279E24C199F60240001BBBF /* scissor.cpp */,
 				F279E24D199F60240001BBBF /* scissor.h */,
-				F2FC464319A34D4800EFCEF5 /* variable_declaration.cpp */,
-				F2FC464419A34D4800EFCEF5 /* variable_declaration.h */,
 			);
 			name = graphics;
 			sourceTree = "<group>";

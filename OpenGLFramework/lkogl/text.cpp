@@ -14,7 +14,7 @@
 namespace lkogl {
     namespace utils {
 
-        PlainText::PlainText(const std::string name) throw (FileException) : content(read(name)) {
+        PlainText::PlainText(const std::string name) throw (Exception) : content(read(name)) {
             
         }
         
@@ -29,7 +29,7 @@ namespace lkogl {
                     result.append(line).append("\n");
                 }
             } else {
-                throw FileException();
+                throw Exception("File not found");
             }
             file.close();
             

@@ -19,7 +19,7 @@ namespace lkogl {
             DirectionalLight::~DirectionalLight()
             {}
             
-            DirectionalLightUse::DirectionalLightUse(const ProgramUse& program, const DirectionalLight& l)
+            DirectionalLightUse::DirectionalLightUse(const shader::ProgramUse& program, const DirectionalLight& l)
             {
                 program.setUniform("uDirectionalLight.base.color", l.baseLight_.color_);
                 program.setUniformf("uDirectionalLight.base.intensity", l.baseLight_.intensity_);

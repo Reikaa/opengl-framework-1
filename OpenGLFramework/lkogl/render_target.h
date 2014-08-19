@@ -42,12 +42,17 @@ namespace lkogl {
             } handles_;
             
         public:
-            FrameBufferResource(int width, int height, std::vector<TargetType> targets);
+            class Exception {
+            public:
+                Exception(const std::string& m) {}
+                ~Exception() {}
+            };
+            FrameBufferResource(int width, int height, std::vector<TargetType> targets) throw(Exception);
             ~FrameBufferResource();
             
             const TextureResource& getTextureResource(int num) const;
         private:
-            Handle generate(std::vector<TargetType> targets) const;
+            Handle generate(std::vector<TargetType> targets) const throw (Exception);
             
             friend class FrameBufferBinding;
         };
@@ -83,7 +88,7 @@ namespace lkogl {
         class BufferTextureUse {
             TextureBinding b_;
         public:
-            BufferTextureUse(const ProgramUse& loc, const std::string& uniform, const FrameBuffer&, GLuint num, GLuint slot);
+            BufferTextureUse(const shader::ProgramUse& loc, const std::string& uniform, const FrameBuffer&, GLuint num, GLuint slot);
             ~BufferTextureUse();
         };
     }

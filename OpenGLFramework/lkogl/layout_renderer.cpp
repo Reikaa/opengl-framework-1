@@ -22,12 +22,12 @@ namespace lkogl {
         LayoutRenderer::~LayoutRenderer()
         {}
         
-        graphics::Program LayoutRenderer::createProgram() const
+        graphics::shader::Program LayoutRenderer::createProgram() const
         {
             utils::PlainText vshDefGeo("ui-element.vsh");
             utils::PlainText fshDefGeo("ui-element.fsh");
             
-            return graphics::Program(vshDefGeo.content, fshDefGeo.content);
+            return graphics::shader::Program(vshDefGeo.content, fshDefGeo.content);
         }
         
         void LayoutRenderer::render(std::shared_ptr<Element> e, const graphics::Screen& screen)
@@ -39,7 +39,7 @@ namespace lkogl {
                         
             math::Mat4<float> projection = math::ortho<float>(0,screen.width, 0, screen.height);
             
-            graphics::ProgramUse pru(program_);
+            graphics::shader::ProgramUse pru(program_);
             
             graphics::GeometryObjectUse sq(square_);
             

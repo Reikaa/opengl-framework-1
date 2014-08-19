@@ -26,12 +26,18 @@ namespace lkogl {
 
         public:
             
+            class Exception {
+            public:
+                Exception(const std::string&) {}
+                ~Exception() {}
+            };
+            
             TextureResource(const TextureResource&) = delete;
             TextureResource(TextureResource&&);
             TextureResource(int width, int height);
             ~TextureResource();
             
-            void replaceImage(const utils::Image& image) throw (TextureException);
+            void replaceImage(const utils::Image& image) throw (Exception);
             
         private:
             explicit TextureResource(int handle, int w, int h);
@@ -59,7 +65,13 @@ namespace lkogl {
         class Texture {
             const std::shared_ptr<TextureResource> resource_;
         public:
-            Texture(const utils::Image&) throw (TextureException);
+            class Exception {
+            public:
+                Exception(const std::string&) {}
+                ~Exception() {}
+            };
+            
+            Texture(const utils::Image&) throw (Exception);
             Texture(const Texture&);
             ~Texture();
         private:            
@@ -70,8 +82,8 @@ namespace lkogl {
         class TextureUse {
             TextureBinding b_;
         public:
-            TextureUse(const ProgramUse& p, const Texture&);
-            TextureUse(const ProgramUse& p, const Texture&, int slto);
+            TextureUse(const shader::ProgramUse& p, const Texture&);
+            TextureUse(const shader::ProgramUse& p, const Texture&, int slto);
             TextureUse(GLuint loc, const Texture&, int slto);
             ~TextureUse();
         };

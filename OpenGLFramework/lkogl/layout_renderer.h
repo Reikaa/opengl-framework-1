@@ -17,7 +17,7 @@
 namespace lkogl {
     namespace ui {
         class LayoutRenderer {
-            graphics::Program program_;
+            graphics::shader::Program program_;
             graphics::GeometryObject square_;
         public:
             LayoutRenderer();
@@ -25,7 +25,7 @@ namespace lkogl {
             
             void render(std::shared_ptr<Element> e, const graphics::Screen& screen);
         private:
-            graphics::Program createProgram() const;
+            graphics::shader::Program createProgram() const;
         };
     }
 }

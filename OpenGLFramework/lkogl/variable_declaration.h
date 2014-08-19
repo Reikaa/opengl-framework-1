@@ -16,30 +16,32 @@
 
 namespace lkogl {
     namespace graphics {
-        class VariableDeclaration {
-        public:
-            enum class Type {
-                FLOAT,
-                VEC2,
-                VEC3,
-                VEC4,
-                MAT4,
-                SAMPLER2D
+        namespace shader {
+            class VariableDeclaration {
+            public:
+                enum class Type {
+                    FLOAT,
+                    VEC2,
+                    VEC3,
+                    VEC4,
+                    MAT4,
+                    SAMPLER2D
+                };
+            private:
+                std::string name_;
+                Type type_;
+            public:
+                VariableDeclaration(const std::string& name, Type type);
+                ~VariableDeclaration();
+                
+                const std::string& name() const;
+                const Type type() const;
             };
-        private:
-            std::string name_;
-            Type type_;
-        public:
-            VariableDeclaration(const std::string& name, Type type);
-            ~VariableDeclaration();
             
-            const std::string& name() const;
-            const Type type() const;
-        };
-        
-        inline bool operator<(const VariableDeclaration& lhs, const VariableDeclaration& rhs)
-        {
-            return lhs.name() < rhs.name();
+            inline bool operator<(const VariableDeclaration& lhs, const VariableDeclaration& rhs)
+            {
+                return lhs.name() < rhs.name();
+            }
         }
     }
 }

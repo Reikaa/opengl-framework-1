@@ -10,24 +10,25 @@
 
 namespace lkogl {
     namespace graphics {
-        
-        VariableDeclaration::VariableDeclaration(const std::string& name, Type type) :
-        name_(name), type_(type)
-        {
-        }
-        
-        VariableDeclaration::~VariableDeclaration()
-        {
-        }
-        
-        const std::string& VariableDeclaration::name() const
-        {
-            return name_;
-        }
-        
-        const VariableDeclaration::Type VariableDeclaration::type() const
-        {
-            return type_;
+        namespace shader {
+            VariableDeclaration::VariableDeclaration(const std::string& name, Type type) :
+            name_(name), type_(type)
+            {
+            }
+            
+            VariableDeclaration::~VariableDeclaration()
+            {
+            }
+            
+            const std::string& VariableDeclaration::name() const
+            {
+                return name_;
+            }
+            
+            const VariableDeclaration::Type VariableDeclaration::type() const
+            {
+                return type_;
+            }
         }
     }
 }

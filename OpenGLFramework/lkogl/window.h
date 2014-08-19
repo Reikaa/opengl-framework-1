@@ -20,7 +20,12 @@ namespace lkogl {
             SDL_Window* displayWindow_;
             SDL_GLContext glContext_;
         public:
-            Window(int width, int height, std::string title);
+            class Exception {
+            public:
+                Exception(const std::string&) {}
+                ~Exception() {}
+            };
+            Window(int width, int height, std::string title) throw (Exception);
             ~Window();
             
             int width() const;

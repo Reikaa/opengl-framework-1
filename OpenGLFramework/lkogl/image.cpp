@@ -11,17 +11,17 @@
 
 namespace lkogl {
     namespace utils {
-        Image::Image(const std::string& name) throw (ImageException)
+        Image::Image(const std::string& name) throw (Exception)
         : surface_(load(Path().relative(name)))
         {
         
         }
         
-        SDL_Surface* Image::load(const std::string& path) throw (ImageException)
+        SDL_Surface* Image::load(const std::string& path) throw (Exception)
         {
             SDL_Surface *image = IMG_Load(path.c_str());
             if(!image) {
-                throw ImageException();
+                throw Exception("Image not found");
             }
             
             return image;

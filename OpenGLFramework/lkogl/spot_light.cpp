@@ -19,7 +19,7 @@ namespace lkogl {
             {}
             
             
-            SpotLightUse::SpotLightUse(const ProgramUse& program, const SpotLight& l)
+            SpotLightUse::SpotLightUse(const shader::ProgramUse& program, const SpotLight& l)
             {
                 program.setUniform("", l.pointLight_.baseLight_.color_);
                 program.setUniformf("", l.pointLight_.baseLight_.intensity_);

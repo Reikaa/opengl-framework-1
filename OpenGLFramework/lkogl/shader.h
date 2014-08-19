@@ -20,50 +20,49 @@
 
 namespace lkogl {
     namespace graphics {
-        class ShaderException : std::exception {
-            public:
-            const std::string msg;
-
-            ShaderException(const std::string& m);
-            ~ShaderException();
-        };
-        
-        enum class ShaderType {
-            VERTEX = GL_VERTEX_SHADER,
-            FRAGMENT = GL_FRAGMENT_SHADER
-        };
-        
-        class Shader {
-            mutable GLuint handle_;
-            mutable struct Variables {
-                std::vector<VariableDeclaration> uniforms;
-                std::vector<VariableDeclaration> input;
-                std::vector<VariableDeclaration> output;
-            } variables_;
-        public:
-            Shader(ShaderType, const std::string&) throw (ShaderException);
-            Shader(const Shader&&) throw ();
-
-            ~Shader();
-            const GLuint& handle() const { return handle_; }
-            const std::vector<VariableDeclaration>& uniforms() const { return variables_.uniforms; }
-            const std::vector<VariableDeclaration>& inputs() const { return variables_.input; }
-            const std::vector<VariableDeclaration>& outputs() const { return variables_.output; }
-        private:
-            struct VariableDefinition {
-                std::string type;
-                std::string name;
+        namespace shader {
+            enum class ShaderType {
+                VERTEX = GL_VERTEX_SHADER,
+                FRAGMENT = GL_FRAGMENT_SHADER
             };
             
-            GLuint compile(ShaderType, const std::string&) throw (ShaderException);
+            class Shader {
+                mutable GLuint handle_;
+                mutable struct Variables {
+                    std::vector<VariableDeclaration> uniforms;
+                    std::vector<VariableDeclaration> input;
+                    std::vector<VariableDeclaration> output;
+                } variables_;
+            public:
+                class Exception {
+                public:
+                    const std::string msg;
+                    Exception(const std::string& m) : msg(m) {};
+                    ~Exception() {};
+                };
+                Shader(ShaderType, const std::string&) throw (Exception);
+                Shader(const Shader&&) throw ();
+
+                ~Shader();
+                const GLuint& handle() const { return handle_; }
+                const std::vector<VariableDeclaration>& uniforms() const { return variables_.uniforms; }
+                const std::vector<VariableDeclaration>& inputs() const { return variables_.input; }
+                const std::vector<VariableDeclaration>& outputs() const { return variables_.output; }
+            private:
+                struct VariableDefinition {
+                    std::string type;
+                    std::string name;
+                };
+                
+                GLuint compile(ShaderType, const std::string&) throw (Exception);
+                
+                typedef std::multimap<std::string, VariableDefinition> StructMap;
+                Variables extractVariables(const std::string& source) const;
+                std::vector<VariableDeclaration> extractDeclaration(const std::string& source, const std::string& keyword, const StructMap& structs) const;
+                StructMap extractStructs(const std::string& source) const;
+            };
             
-            typedef std::multimap<std::string, VariableDefinition> StructMap;
-            Variables extractVariables(const std::string& source) const;
-            std::vector<VariableDeclaration> extractDeclaration(const std::string& source, const std::string& keyword, const StructMap& structs) const;
-            StructMap extractStructs(const std::string& source) const;
-        };
-        
-        
+        }
     }
 }
 

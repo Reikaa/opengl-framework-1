@@ -32,6 +32,11 @@ namespace lkogl {
             
             class OBJModel {
             public:
+                class Exception {
+                public:
+                    Exception(const std::string& msg) {}
+                    Exception() {}
+                };
                 std::vector<math::Vec4<float>> positions_;
                 std::vector<math::Vec3<float>> texCoords_;
                 std::vector<math::Vec3<float>> normals_;

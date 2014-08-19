@@ -25,7 +25,7 @@ namespace lkogl {
                 camera::Camera& camera();
                 
                 void update(TreeTransformation& transformation) const override;
-                void render(const TreeTransformation& transformation, const graphics::ProgramUse&) const override;
+                void render(const TreeTransformation& transformation, const graphics::shader::ProgramUse&) const override;
             };
         }
     }

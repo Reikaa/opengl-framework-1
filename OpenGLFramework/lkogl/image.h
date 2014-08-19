@@ -15,12 +15,16 @@
 
 namespace lkogl {
     namespace utils {
-        class ImageException {};
-        
         class Image {
         public:
+            class Exception {
+            public:
+                Exception(const std::string& msg) {}
+                Exception() {}
+            };
+            
             SDL_Surface* surface_;
-            Image(const std::string& name) throw (ImageException);
+            Image(const std::string& name) throw (Exception);
             ~Image();
             
             int width() const;
@@ -28,7 +32,7 @@ namespace lkogl {
             int bytesPerPixel() const;
             const void* pixels() const;
         private:
-            SDL_Surface* load(const std::string& path) throw (ImageException);
+            SDL_Surface* load(const std::string& path) throw (Exception);
         };
     }
 }

@@ -27,7 +27,7 @@ namespace lkogl {
             
             class DirectionalLightUse {
             public:
-                DirectionalLightUse(const ProgramUse&, const DirectionalLight&);
+                DirectionalLightUse(const shader::ProgramUse&, const DirectionalLight&);
                 ~DirectionalLightUse();
             };
         }

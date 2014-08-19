@@ -9,14 +9,14 @@
 
 namespace lkogl {
     namespace loop {
-        Window::Window(int width, int height, std::string title) {
+        Window::Window(int width, int height, std::string title) throw (Exception) {
             SDL_Init(SDL_INIT_VIDEO);
             int imgFlags = IMG_INIT_PNG;
             
             if((IMG_Init(imgFlags) & imgFlags) != imgFlags) {
                 SDL_Quit();
                 IMG_Quit();
-                throw 1;
+                throw Exception("Image Loader could not be initialized.");
             }
             
             
@@ -39,7 +39,7 @@ namespace lkogl {
             {
                 SDL_DestroyWindow(displayWindow_);
                 SDL_Quit();
-                throw 0;
+                throw Exception("OpenGL context could not be created.");
             }
         }
         

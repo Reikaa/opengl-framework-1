@@ -25,7 +25,7 @@ namespace lkogl {
             
             class AmbientLightUse {
             public:
-                AmbientLightUse(const ProgramUse&, const AmbientLight&);
+                AmbientLightUse(const shader::ProgramUse&, const AmbientLight&);
                 ~AmbientLightUse();
             
             };

@@ -24,7 +24,7 @@ namespace lkogl {
             {}
             
 
-            PointLightUse::PointLightUse(const ProgramUse& program, const PointLight& l)
+            PointLightUse::PointLightUse(const shader::ProgramUse& program, const PointLight& l)
             {
                 
                 program.setUniform("", l.baseLight_.color_);

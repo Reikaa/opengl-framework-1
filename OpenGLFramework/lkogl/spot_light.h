@@ -28,7 +28,7 @@ namespace lkogl {
             
             class SpotLightUse {
             public:
-                SpotLightUse(const ProgramUse&, const SpotLight&);
+                SpotLightUse(const shader::ProgramUse&, const SpotLight&);
                 ~SpotLightUse();
             };
         }

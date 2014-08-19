@@ -16,39 +16,47 @@
 
 namespace lkogl {
     namespace graphics {
-        class Program {
-            struct ProgramHandles {
-                mutable GLuint programId;
-                std::map<VariableDeclaration, GLuint> uniforms;
-                std::map<VariableDeclaration, GLuint> inputs;
-            } handles_;
-        public:
-            Program(const std::string& vsh, const std::string& fsh) throw (ShaderException);
-            Program(const Shader& vsh, const Shader& fsh) throw (ShaderException);
-            Program(const Program&&) throw();
-            ~Program();
+        namespace shader {
+            class Program {
+                struct ProgramHandles {
+                    mutable GLuint programId;
+                    std::map<VariableDeclaration, GLuint> uniforms;
+                    std::map<VariableDeclaration, GLuint> inputs;
+                } handles_;
+            public:
+                class Exception {
+                public:
+                    Exception(const std::string& msg) {}
+                    Exception() {}
+                };
+                
+                Program(const std::string& vsh, const std::string& fsh) throw (Exception);
+                Program(const Shader& vsh, const Shader& fsh) throw (Exception);
+                Program(const Program&&) throw();
+                ~Program();
+                
+                const ProgramHandles& handles() const { return handles_; }
+                const GLuint uniformLocation(const VariableDeclaration& u) const;
+            private:
+                ProgramHandles link(const Shader& vsh, const Shader& fsh) throw (Exception);
+                
+            };
             
-            const ProgramHandles& handles() const { return handles_; }
-            const GLuint uniformLocation(const VariableDeclaration& u) const;
-        private:
-            ProgramHandles link(const Shader& vsh, const Shader& fsh) throw (ShaderException);
-            
-        };
-        
-        class ProgramUse {
-            const Program& program_;
-        public:
-            explicit ProgramUse(const Program&);
-            
-            void setUniformf(const std::string& name, GLfloat value) const;
-            void setUniformi(const std::string& name, GLuint value) const;
-            void setUniform(const std::string& name, const math::Vec2<GLfloat>& value) const;
-            void setUniform(const std::string& name, const math::Vec3<GLfloat>& value) const;
-            void setUniform(const std::string& name, const math::Vec4<GLfloat>& value) const;
-            void setUniform(const std::string& name, const math::Mat4<GLfloat>& value) const;
-            
-            ~ProgramUse();
-        };
+            class ProgramUse {
+                const Program& program_;
+            public:
+                explicit ProgramUse(const Program&);
+                
+                void setUniformf(const std::string& name, GLfloat value) const;
+                void setUniformi(const std::string& name, GLuint value) const;
+                void setUniform(const std::string& name, const math::Vec2<GLfloat>& value) const;
+                void setUniform(const std::string& name, const math::Vec3<GLfloat>& value) const;
+                void setUniform(const std::string& name, const math::Vec4<GLfloat>& value) const;
+                void setUniform(const std::string& name, const math::Mat4<GLfloat>& value) const;
+                
+                ~ProgramUse();
+            };
+        }
     }
 }
 

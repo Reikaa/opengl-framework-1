@@ -19,7 +19,7 @@
 
 namespace lkogl {
     namespace graphics {
-        namespace renderign {
+        namespace rendering {
             
             DeferredRenderer::DeferredRenderer(const Screen& s, int ratioWidth, int ratioHeight) :
             programs_(initPrograms()), buffer_(new FrameBuffer(s.width, s.height, std::vector<TargetType> {
@@ -45,10 +45,10 @@ namespace lkogl {
                 utils::PlainText fshDefDir("deferred-directional.fsh");
                 
                 return {
-                    Program(vshDefGeo.content, fshDefGeo.content),
-                    Program(vshDefPlain.content, fshDefPlain.content),
-                    Program(vshDefStencil.content, fshDefStencil.content),
-                    Program(vshDefDir.content, fshDefDir.content)
+                    shader::Program(vshDefGeo.content, fshDefGeo.content),
+                    shader::Program(vshDefPlain.content, fshDefPlain.content),
+                    shader::Program(vshDefStencil.content, fshDefStencil.content),
+                    shader::Program(vshDefDir.content, fshDefDir.content)
                 };
             }
             
@@ -81,7 +81,7 @@ namespace lkogl {
                     glClearColor(1,0,0,0);
                     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
                     
-                    ProgramUse defgeo(programs_.deferredGeo_);
+                    shader::ProgramUse defgeo(programs_.deferredGeo_);
                     
                     auto matrix = cam.viewProjectionMatrix();
                     defgeo.setUniform("uViewProjMatrix", matrix);
@@ -108,7 +108,7 @@ namespace lkogl {
                 {
                     StencilCreation stencil(true);
 
-                    ProgramUse stencilProg(programs_.deferredStencil_);
+                    shader::ProgramUse stencilProg(programs_.deferredStencil_);
                     BufferTextureUse tus(stencilProg, "uSampler", *buffer_, 2, 2);
                     
                     squareObj.render();
@@ -118,7 +118,7 @@ namespace lkogl {
                     StencilUse stencil;
                     
                     { // Ambient
-                        ProgramUse ambient(programs_.deferredAmbient_);
+                        shader::ProgramUse ambient(programs_.deferredAmbient_);
                         
                         BufferTextureUse tus(ambient, "uSampler", *buffer_, 2, 2);
                         lighting::AmbientLightUse(ambient, ambientLight);
@@ -129,7 +129,7 @@ namespace lkogl {
                     glBlendFunc(GL_ONE, GL_ONE);
                     
                     { // Directional
-                        ProgramUse directional(programs_.deferredDir_);
+                        shader::ProgramUse directional(programs_.deferredDir_);
                         
                         directional.setUniform("uEyePosition", cam.position());
                         

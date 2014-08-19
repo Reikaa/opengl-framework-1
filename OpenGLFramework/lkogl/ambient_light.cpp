@@ -19,7 +19,7 @@ namespace lkogl {
             {}
 
             
-            AmbientLightUse::AmbientLightUse(const ProgramUse& program, const AmbientLight& amb)
+            AmbientLightUse::AmbientLightUse(const shader::ProgramUse& program, const AmbientLight& amb)
             {
                 program.setUniform("uAmbientIntensity", amb.intensity_);
             }

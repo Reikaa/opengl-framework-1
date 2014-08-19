@@ -13,12 +13,15 @@
 
 namespace lkogl {
     namespace utils {
-        class FileException {};
-        
         class PlainText {
         public:
+            class Exception {
+            public:
+                Exception(const std::string&) {}
+                ~Exception() {}
+            };
             const std::string content;
-            PlainText(const std::string name) throw (FileException);
+            PlainText(const std::string name) throw (Exception);
             ~PlainText();
         private:
             const std::string read(const std::string name) const;

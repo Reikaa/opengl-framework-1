@@ -10,8 +10,6 @@
 
 namespace lkogl {
     namespace graphics {
-        
-        
         MainTargetUse::MainTargetUse()
         {
             glBindFramebuffer(GL_FRAMEBUFFER, 0);
@@ -21,7 +19,7 @@ namespace lkogl {
         {
         }
         
-        FrameBufferResource::FrameBufferResource(int width, int height, std::vector<TargetType> targets) :
+        FrameBufferResource::FrameBufferResource(int width, int height, std::vector<TargetType> targets) throw (Exception) :
         handles_(generate(targets)), width_(width), height_(height)
         {
         }
@@ -38,7 +36,7 @@ namespace lkogl {
             return handles_.textures_[num];
         }
         
-        FrameBufferResource::Handle FrameBufferResource::generate(std::vector<TargetType> targets) const
+        FrameBufferResource::Handle FrameBufferResource::generate(std::vector<TargetType> targets) const throw (Exception)
         {
             Handle h;
             GLuint texturesRaw[targets.size()];
@@ -48,11 +46,11 @@ namespace lkogl {
             bool hasDepth = false;
             
             if(targets.empty()) {
-                throw "attachment type must be given";
+                throw Exception("attachment type must be given");
             }
             
             if(numTargets > MAX_BOUND) {
-                throw "too many attachments";
+                throw Exception("too many attachments");
             }
             GLenum drawBuffers[targets.size()];
             
@@ -147,7 +145,7 @@ namespace lkogl {
         {
         }
         
-        BufferTextureUse::BufferTextureUse(const ProgramUse& p, const std::string& uniform, const FrameBuffer& r, GLuint num, GLuint slot) :
+        BufferTextureUse::BufferTextureUse(const shader::ProgramUse& p, const std::string& uniform, const FrameBuffer& r, GLuint num, GLuint slot) :
         b_(r.resource_->getTextureResource(num), slot)
         {
             p.setUniformi(uniform, slot);

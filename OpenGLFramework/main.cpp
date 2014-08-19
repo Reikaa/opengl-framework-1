@@ -48,7 +48,7 @@
 using namespace lkogl::ui;
 using namespace lkogl::math;
 using namespace lkogl::graphics;
-using namespace lkogl::graphics::renderign;
+using namespace lkogl::graphics::rendering;
 using namespace lkogl::graphics::lighting;
 using namespace lkogl::geometry;
 using namespace lkogl::utils;
@@ -216,7 +216,7 @@ public:
             movement.lookAt(camNode_->transformation, {0,0,0});
 
             
-        } catch(ShaderException e) {
+        } catch(lkogl::graphics::shader::Shader::Exception e) {
             std::cerr << e.msg << std::endl;
             exit(1);
         }

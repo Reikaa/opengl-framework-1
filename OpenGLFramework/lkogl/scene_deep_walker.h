@@ -22,7 +22,7 @@ namespace lkogl {
                 ~SceneDeepWalker();
            
                 void walk(const std::shared_ptr<Node>, components::Component::ComponentUpdateMethod) const;
-                void walk(const std::shared_ptr<Node>, components::Component::ComponentRenderMethod, const graphics::ProgramUse&) const;
+                void walk(const std::shared_ptr<Node>, components::Component::ComponentRenderMethod, const graphics::shader::ProgramUse&) const;
             };
             
         }
