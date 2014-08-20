@@ -46,7 +46,7 @@ namespace lkogl {
 
             int windowOptions = SDL_WINDOW_OPENGL|SDL_WINDOW_RESIZABLE|SDL_WINDOW_SHOWN;
             
-            displayWindow_ = SDL_CreateWindow(title.c_str(), 0,0, width, height, windowOptions);
+            displayWindow_ = SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_CENTERED,SDL_WINDOWPOS_CENTERED, width, height, windowOptions);
             
             SDL_GLContext glContext_ = SDL_GL_CreateContext(displayWindow_);
             
