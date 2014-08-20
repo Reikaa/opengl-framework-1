@@ -85,12 +85,14 @@
 		F2DEC6211997BFA700EE31E7 /* first_person_movement.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2DEC61F1997BFA700EE31E7 /* first_person_movement.cpp */; };
 		F2DEC6251997C63E00EE31E7 /* mouse.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2DEC6231997C63E00EE31E7 /* mouse.cpp */; };
 		F2DEC6281997C7EA00EE31E7 /* mouse_adapter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2DEC6261997C7EA00EE31E7 /* mouse_adapter.cpp */; };
-		F2DEC6331997DDD300EE31E7 /* pattern.png in Resources */ = {isa = PBXBuildFile; fileRef = F2DEC6321997DDD300EE31E7 /* pattern.png */; };
+		F2DEC6331997DDD300EE31E7 /* rainbow.png in Resources */ = {isa = PBXBuildFile; fileRef = F2DEC6321997DDD300EE31E7 /* rainbow.png */; };
 		F2DEC6371997EA7600EE31E7 /* ambient_light.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2DEC6351997EA7600EE31E7 /* ambient_light.cpp */; };
 		F2DEC63D1997F4E000EE31E7 /* directional_light.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2DEC63B1997F4E000EE31E7 /* directional_light.cpp */; };
 		F2DEC6401997F4F800EE31E7 /* base_light.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2DEC63E1997F4F800EE31E7 /* base_light.cpp */; };
 		F2F0DB0219A4828000BD63E9 /* sampler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2F0DB0019A4828000BD63E9 /* sampler.cpp */; };
 		F2F0DB0519A487E900BD63E9 /* double_click_mouse_over.wav in Resources */ = {isa = PBXBuildFile; fileRef = F2F0DB0419A487E900BD63E9 /* double_click_mouse_over.wav */; };
+		F2F0DB0919A4AB0500BD63E9 /* steel_box.png in Resources */ = {isa = PBXBuildFile; fileRef = F2F0DB0819A4AB0500BD63E9 /* steel_box.png */; };
+		F2F0DB0B19A4B46A00BD63E9 /* pyramid_gold.png in Resources */ = {isa = PBXBuildFile; fileRef = F2F0DB0A19A4B46A00BD63E9 /* pyramid_gold.png */; };
 		F2FC464519A34D4800EFCEF5 /* variable_declaration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2FC464319A34D4800EFCEF5 /* variable_declaration.cpp */; };
 /* End PBXBuildFile section */
 
@@ -276,7 +278,7 @@
 		F2DEC6241997C63E00EE31E7 /* mouse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mouse.h; sourceTree = "<group>"; };
 		F2DEC6261997C7EA00EE31E7 /* mouse_adapter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = mouse_adapter.cpp; sourceTree = "<group>"; };
 		F2DEC6271997C7EA00EE31E7 /* mouse_adapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mouse_adapter.h; sourceTree = "<group>"; };
-		F2DEC6321997DDD300EE31E7 /* pattern.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pattern.png; sourceTree = "<group>"; };
+		F2DEC6321997DDD300EE31E7 /* rainbow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rainbow.png; sourceTree = "<group>"; };
 		F2DEC6351997EA7600EE31E7 /* ambient_light.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = ambient_light.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		F2DEC6361997EA7600EE31E7 /* ambient_light.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = ambient_light.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		F2DEC63B1997F4E000EE31E7 /* directional_light.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = directional_light.cpp; sourceTree = "<group>"; };
@@ -286,6 +288,8 @@
 		F2F0DB0019A4828000BD63E9 /* sampler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sampler.cpp; sourceTree = "<group>"; };
 		F2F0DB0119A4828000BD63E9 /* sampler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sampler.h; sourceTree = "<group>"; };
 		F2F0DB0419A487E900BD63E9 /* double_click_mouse_over.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = double_click_mouse_over.wav; sourceTree = "<group>"; };
+		F2F0DB0819A4AB0500BD63E9 /* steel_box.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = steel_box.png; sourceTree = "<group>"; };
+		F2F0DB0A19A4B46A00BD63E9 /* pyramid_gold.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pyramid_gold.png; sourceTree = "<group>"; };
 		F2FC464319A34D4800EFCEF5 /* variable_declaration.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = variable_declaration.cpp; sourceTree = "<group>"; };
 		F2FC464419A34D4800EFCEF5 /* variable_declaration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = variable_declaration.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -358,9 +362,11 @@
 		F238E4B919A422D300DF8601 /* textures */ = {
 			isa = PBXGroup;
 			children = (
+				F2F0DB0A19A4B46A00BD63E9 /* pyramid_gold.png */,
+				F2F0DB0819A4AB0500BD63E9 /* steel_box.png */,
 				F24DA04819A3D4AF005F5F32 /* sand.png */,
 				F258802319A10B6B00AC7A3C /* terrain.png */,
-				F2DEC6321997DDD300EE31E7 /* pattern.png */,
+				F2DEC6321997DDD300EE31E7 /* rainbow.png */,
 			);
 			path = textures;
 			sourceTree = "<group>";
@@ -825,10 +831,12 @@
 			files = (
 				F21EA840199BB46200D78E1C /* deferred-ambient.fsh in Resources */,
 				F21EA842199BE7C000D78E1C /* deferred-directional.vsh in Resources */,
+				F2F0DB0B19A4B46A00BD63E9 /* pyramid_gold.png in Resources */,
 				F21EA82A199AB97100D78E1C /* monkey.obj in Resources */,
 				F258802419A10B6B00AC7A3C /* terrain.png in Resources */,
+				F2F0DB0919A4AB0500BD63E9 /* steel_box.png in Resources */,
 				F29B1F61199E6C9100F17051 /* ui-element.fsh in Resources */,
-				F2DEC6331997DDD300EE31E7 /* pattern.png in Resources */,
+				F2DEC6331997DDD300EE31E7 /* rainbow.png in Resources */,
 				F21EA820199A257F00D78E1C /* box.obj in Resources */,
 				F21EA844199BE7D100D78E1C /* deferred-directional.fsh in Resources */,
 				F297076619936C1600D48CE5 /* Images.xcassets in Resources */,

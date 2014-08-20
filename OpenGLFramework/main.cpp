@@ -80,8 +80,6 @@ class MyGame {
 
     mutable std::shared_ptr<CameraComponent> cameraComponent;
     
-    mutable std::shared_ptr<GeometryObject> square_;
-    mutable std::shared_ptr<Texture> texture_;
     mutable std::shared_ptr<Sampler> sampler_;
     
     mutable FirstPersonMovement movement;
@@ -145,10 +143,14 @@ public:
             e2->layout().setMargin({px(20)});
             e2->layout().setAlignment({WeightLinear::Right, WeightLinear::Bottom});
             
-            auto e3 = std::make_shared<Element>(std::make_shared<behaviour::DraggableBehaviour>(uiRoot_->layout()));
+            auto e3 = std::make_shared<Element>(std::make_shared<behaviour::DraggableBehaviour>(uiRoot_->layout(), [this](const Vec2<int> o) {
+                monkeyNode_->transformation.setTranslation(
+                    monkeyNode_->transformation.translation()-Vec3<float>{0.05f*o.x, 0,0.05f*o.y}
+                );
+            }));
             e3->layout().setSize(px(100), px(100));
             e3->layout().setMargin({px(0)});
-            e3->layout().setAlignment({WeightLinear::Left, WeightLinear::Top});
+            e3->layout().setAlignment({WeightLinear::Center, WeightLinear::Center});
             
             uiRoot_->style().setBackground({0,0,0,0});
             
@@ -160,31 +162,40 @@ public:
             
             graph = std::make_shared<Node>();
             
-            texture_ = std::make_shared<Texture>(Image("pattern.png"));
-            
-            Material colorful(Image("pattern.png"), 7, 10);
+            Material colorful(Image("rainbow.png"), 7, 10);
+            Material golden(Image("pyramid_gold.png"), 150, 2);
+            Material wood(Image("steel_box.png"), 1, 0.8);
             Material sand(Image("sand.png"), 0, 0);
             
             Mesh pyramid = primitives::makePyramid();
             std::shared_ptr<Node> node = std::make_shared<Node>();
-            node->addComponent(std::make_shared<RenderComponent>(GeometryObject(pyramid), colorful));
-            node->transformation.setTranslation({-1.f,-1.f,-1.f});
-            node->transformation.setScale({4,4,4});
+            node->addComponent(std::make_shared<RenderComponent>(GeometryObject(pyramid), golden));
+            node->transformation.setScale({2,2,2});
+            node->transformation.setTranslation({0,3,0});
             
             node->transformation.setRotation(angleAxis<float>(radians(1), {1,1,1}));
             graph->addChild(node);
             
-            
-            square_ = std::make_shared<GeometryObject>(primitives::makeSquare());
-            
+
             Mesh cube = ::obj_from_file("box.obj").toIndexedModel().toMesh();
             std::shared_ptr<Node> node2 = std::make_shared<Node>();
-            node2->addComponent(std::make_shared<RenderComponent>(GeometryObject(cube), colorful));
-            node2->transformation.setTranslation({-5,0.5,-2});
-            node2->transformation.setRotation(angleAxis<float>(radians(45), {0,1,0}));
-            node->addChild(node2);
-            node2->transformation.setRotation(angleAxis<float>(radians(45), {0,1,0}));
+            node2->addComponent(std::make_shared<RenderComponent>(GeometryObject(cube), wood));
+            node2->transformation.setTranslation({-9,-4.5,2});
+            //node2->transformation.setRotation(angleAxis<float>(radians(90), {1,0,0}));
             graph->addChild(node2);
+            
+            std::shared_ptr<Node> nodeBox2 = std::make_shared<Node>();
+            nodeBox2->addComponent(std::make_shared<RenderComponent>(GeometryObject(cube), wood));
+            nodeBox2->transformation.setRotation(angleAxis<float>(radians(21), {0,1,0}));
+            node2->addChild(nodeBox2);
+            nodeBox2->transformation.setTranslation({-1.5,0,-1.9});
+            
+            std::shared_ptr<Node> nodeBox3 = std::make_shared<Node>();
+            nodeBox3->addComponent(std::make_shared<RenderComponent>(GeometryObject(cube), wood));
+            nodeBox3->transformation.setRotation(angleAxis<float>(radians(-17), {0,1,0}));
+            node2->addChild(nodeBox3);
+            nodeBox3->transformation.setTranslation({-0.5,2,-0.8});
+
             
             
             Mesh monkey = obj_from_file("monkey.obj").toIndexedModel().toMesh();
@@ -194,7 +205,7 @@ public:
             spin.rotation = angleAxis(radians(1.0f), {0.0f,1.0f,0.0f});;
             
             node3->addComponent(std::make_shared<AnimationComponent>(spin));
-            node3->transformation.setTranslation({5,1,-2});
+            node3->transformation.setTranslation({0,6,0});
             node3->transformation.setRotation(angleAxis<float>(radians(45), {0.1,1,0.3}));
             graph->addChild(node3);
             
@@ -207,7 +218,7 @@ public:
             std::shared_ptr<Node> node4 = std::make_shared<Node>();
             node4->addComponent(std::make_shared<RenderComponent>(GeometryObject(terrainMesh), sand));
             node4->transformation.setScale({0.5f,0.5f,0.5f});
-            node4->transformation.setTranslation({0,0,0});
+            node4->transformation.setTranslation({5,0,5});
             node->addChild(node4);
 
 
@@ -219,7 +230,7 @@ public:
             camNode_ = std::make_shared<Node>();
 
             camNode_->addComponent(cameraComponent);
-            camNode_->transformation.setTranslation({-4,1,-6});
+            camNode_->transformation.setTranslation({-4,2,-6});
             graph->addChild(camNode_);
             monkeyNode_ = node3;
             

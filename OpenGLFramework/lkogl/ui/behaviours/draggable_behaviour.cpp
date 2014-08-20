@@ -14,7 +14,7 @@
 namespace lkogl {
     namespace ui {
         namespace behaviour {
-            DraggableBehaviour::DraggableBehaviour(const Layout& clamp) : clamp_(clamp)
+            DraggableBehaviour::DraggableBehaviour(const Layout& clamp, const std::function< void(const math::Vec2<int>&) >& callback) : clamp_(clamp), callback_(callback)
             {
             }
             
@@ -45,6 +45,7 @@ namespace lkogl {
                 el.style().setBackground(el.style().background() + math::Vec4<float>{0,0,0,0.2});
                 baseOffset_ = el.layout().offset();
                 basePos_ = pos;
+                prevPos_ = basePos_;
                 
                 return false;
             }
@@ -60,7 +61,10 @@ namespace lkogl {
             {
                 math::Vec2<int> diff = pos - basePos_;
                 el.layout().setOffset(baseOffset_ + diff, clamp_.rectangle());
-                                
+                
+                callback_(pos-prevPos_);
+                
+                prevPos_ = pos;
                 return true;
             }
             

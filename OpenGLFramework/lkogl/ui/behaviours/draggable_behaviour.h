@@ -19,9 +19,11 @@ namespace lkogl {
             class DraggableBehaviour : public Behaviour {
                 math::Vec2<int> baseOffset_;
                 math::Vec2<int> basePos_;
+                math::Vec2<int> prevPos_;
                 const Layout& clamp_;
+                const std::function< void(const math::Vec2<int>&) > callback_;
             public:
-                DraggableBehaviour(const Layout&);
+                DraggableBehaviour(const Layout&, const std::function< void(const math::Vec2<int>&) >& callback = [](const math::Vec2<int>&){});
                 ~DraggableBehaviour();
                 
                 virtual void onInit(Element& el);
