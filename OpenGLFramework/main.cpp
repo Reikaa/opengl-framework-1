@@ -134,7 +134,7 @@ public:
             uiRenderer_ = std::make_shared<LayoutRenderer>();
             
             auto e1 = std::make_shared<Element>();
-            e1->layout().setMargin({percent(8)});
+            e1->layout().setMargin({px(50)});
             e1->layout().setAlignment({WeightLinear::Center, WeightLinear::Center});
             e1->layout().setOverflow(true);
             
