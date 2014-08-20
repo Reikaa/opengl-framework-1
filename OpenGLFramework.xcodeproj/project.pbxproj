@@ -18,7 +18,6 @@
 		F21EA824199A870900D78E1C /* SDL2_image.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F29707A61993735D00D48CE5 /* SDL2_image.framework */; };
 		F21EA828199A8C5600D78E1C /* tree_transformation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F21EA826199A8C5600D78E1C /* tree_transformation.cpp */; };
 		F21EA82A199AB97100D78E1C /* monkey.obj in Resources */ = {isa = PBXBuildFile; fileRef = F21EA829199AB97100D78E1C /* monkey.obj */; };
-		F21EA82C199ABB3600D78E1C /* plain.png in Resources */ = {isa = PBXBuildFile; fileRef = F21EA82B199ABB3600D78E1C /* plain.png */; };
 		F21EA82F199ABD0B00D78E1C /* animation_component.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F21EA82D199ABD0B00D78E1C /* animation_component.cpp */; };
 		F21EA835199B9B9300D78E1C /* render_target.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F21EA833199B9B9300D78E1C /* render_target.cpp */; };
 		F21EA83A199BA82700D78E1C /* deferred-geometry.vsh in Resources */ = {isa = PBXBuildFile; fileRef = F21EA839199BA82700D78E1C /* deferred-geometry.vsh */; };
@@ -153,7 +152,6 @@
 		F21EA826199A8C5600D78E1C /* tree_transformation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tree_transformation.cpp; sourceTree = "<group>"; };
 		F21EA827199A8C5600D78E1C /* tree_transformation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tree_transformation.h; sourceTree = "<group>"; };
 		F21EA829199AB97100D78E1C /* monkey.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = monkey.obj; sourceTree = "<group>"; };
-		F21EA82B199ABB3600D78E1C /* plain.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = plain.png; sourceTree = "<group>"; };
 		F21EA82D199ABD0B00D78E1C /* animation_component.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = animation_component.cpp; sourceTree = "<group>"; };
 		F21EA82E199ABD0B00D78E1C /* animation_component.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = animation_component.h; sourceTree = "<group>"; };
 		F21EA833199B9B9300D78E1C /* render_target.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = render_target.cpp; sourceTree = "<group>"; };
@@ -340,6 +338,25 @@
 			name = audio;
 			sourceTree = "<group>";
 		};
+		F238E4B819A422C800DF8601 /* meshes */ = {
+			isa = PBXGroup;
+			children = (
+				F21EA829199AB97100D78E1C /* monkey.obj */,
+				F21EA81F199A257F00D78E1C /* box.obj */,
+			);
+			name = meshes;
+			sourceTree = "<group>";
+		};
+		F238E4B919A422D300DF8601 /* textures */ = {
+			isa = PBXGroup;
+			children = (
+				F24DA04819A3D4AF005F5F32 /* sand.png */,
+				F258802319A10B6B00AC7A3C /* terrain.png */,
+				F2DEC6321997DDD300EE31E7 /* pattern.png */,
+			);
+			name = textures;
+			sourceTree = "<group>";
+		};
 		F2660ABC19A3ACE3000AD4EE /* shader */ = {
 			isa = PBXGroup;
 			children = (
@@ -411,12 +428,8 @@
 		F297077F19936F8B00D48CE5 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				F24DA04819A3D4AF005F5F32 /* sand.png */,
-				F258802319A10B6B00AC7A3C /* terrain.png */,
-				F21EA82B199ABB3600D78E1C /* plain.png */,
-				F21EA829199AB97100D78E1C /* monkey.obj */,
-				F21EA81F199A257F00D78E1C /* box.obj */,
-				F2DEC6321997DDD300EE31E7 /* pattern.png */,
+				F238E4B919A422D300DF8601 /* textures */,
+				F238E4B819A422C800DF8601 /* meshes */,
 				F27044C81994C29600C57B6A /* shaders */,
 				F297076519936C1600D48CE5 /* Images.xcassets */,
 				F297075619936A9A00D48CE5 /* Info.plist */,
@@ -798,7 +811,6 @@
 				F21EA83A199BA82700D78E1C /* deferred-geometry.vsh in Resources */,
 				F24DA04919A3D4AF005F5F32 /* sand.png in Resources */,
 				F21EA83C199BA83200D78E1C /* deferred-geometry.fsh in Resources */,
-				F21EA82C199ABB3600D78E1C /* plain.png in Resources */,
 				F29B1F5F199E6C8800F17051 /* ui-element.vsh in Resources */,
 				F2B563B8199CFA37007D38D3 /* deferred-stencil.fsh in Resources */,
 				F21EA83E199BB45700D78E1C /* deferred-ambient.vsh in Resources */,
