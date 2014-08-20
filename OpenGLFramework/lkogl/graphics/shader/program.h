@@ -27,7 +27,7 @@ namespace lkogl {
                 class Exception {
                 public:
                     Exception(const std::string& msg) {}
-                    Exception() {}
+                    ~Exception() {}
                 };
                 
                 Program(const std::string& vsh, const std::string& fsh) throw (Exception, Shader::Exception);

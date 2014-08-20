@@ -35,7 +35,7 @@ namespace lkogl {
                 class Exception {
                 public:
                     Exception(const std::string& msg) {}
-                    Exception() {}
+                    ~Exception() {}
                 };
                 std::vector<math::Vec4<float>> positions_;
                 std::vector<math::Vec3<float>> texCoords_;

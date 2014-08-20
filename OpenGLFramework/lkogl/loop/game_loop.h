@@ -98,7 +98,7 @@ namespace lkogl {
             class Exception {
             public:
                 Exception(const std::string& msg) {}
-                Exception() {}
+                ~Exception() {}
             };
             
             Loop(const DELEGATE& del) : delegate_(del), window_(900,600, "Loading...") {

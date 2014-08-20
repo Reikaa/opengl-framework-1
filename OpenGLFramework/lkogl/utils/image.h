@@ -20,7 +20,7 @@ namespace lkogl {
             class Exception {
             public:
                 Exception(const std::string& msg) {}
-                Exception() {}
+                ~Exception() {}
             };
             
             SDL_Surface* surface_;
