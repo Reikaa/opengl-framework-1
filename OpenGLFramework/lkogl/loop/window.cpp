@@ -16,7 +16,22 @@ namespace lkogl {
             if((IMG_Init(imgFlags) & imgFlags) != imgFlags) {
                 SDL_Quit();
                 IMG_Quit();
-                throw Exception("Image Loader could not be initialized.");
+                throw Exception(std::string("Image Loader could not be initialized: ") + IMG_GetError());
+            }
+            
+            int audioFlags = MIX_INIT_MP3;
+            if((Mix_Init(audioFlags) & audioFlags) != audioFlags) {
+                SDL_Quit();
+                IMG_Quit();
+                Mix_Quit();
+                throw Exception(std::string("Audio module could not be initialized: ") + Mix_GetError());
+            }
+            
+            if(Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 1024)==-1) {
+                SDL_Quit();
+                IMG_Quit();
+                Mix_Quit();
+                throw Exception(std::string("Audio module could not be initialized: ") + Mix_GetError());
             }
             
             
@@ -74,6 +89,10 @@ namespace lkogl {
             SDL_GL_DeleteContext(glContext_);
             SDL_DestroyWindow(displayWindow_);
             IMG_Quit();
+            Mix_CloseAudio();
+            while(Mix_Init(0)) {
+                Mix_Quit();
+            }
             SDL_Quit();
         }
     }

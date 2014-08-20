@@ -9,6 +9,7 @@
 #include <iostream>
 #include <sstream>
 
+#include "./lkogl/audio/sampler.h"
 
 #include "./lkogl/loop/game_loop.h"
 #include "./lkogl/graphics/material.h"
@@ -46,6 +47,7 @@
 
 #include "./lkogl/input/movement/first_person_movement.h"
 
+using namespace lkogl::audio;
 using namespace lkogl::ui;
 using namespace lkogl::math;
 using namespace lkogl::graphics;
@@ -80,6 +82,7 @@ class MyGame {
     
     mutable std::shared_ptr<GeometryObject> square_;
     mutable std::shared_ptr<Texture> texture_;
+    mutable std::shared_ptr<Sampler> sampler_;
     
     mutable FirstPersonMovement movement;
     mutable float moveDelay = 0.f;
@@ -223,6 +226,8 @@ public:
             movement.lookAt(camNode_->transformation, {0,0,0});
 
             
+            sampler_ = std::make_shared<Sampler>("double_click_mouse_over.wav");
+            
         } catch(lkogl::graphics::shader::Shader::Exception e) {
             std::cerr << e.msg << std::endl;
             exit(1);
@@ -242,6 +247,7 @@ public:
         
         if(keyboard_.pressed(Keyboard::Key::ESCAPE)) {
             mouseLocked = !mouseLocked;
+            sampler_->play();
         }
         
         if(keyboard_.isDown(Keyboard::Key::LEFT_ARROW) || keyboard_.isDown(Keyboard::Key::LETTER_A)) {
