@@ -130,7 +130,7 @@ namespace lkogl {
                 state_.running = true;
                 int mouseLocked = false;
                 int updated = false;
-                bool lockChanged = false;
+                bool lockChanged = true;
 
                 
                 while(state_.running && !delegate_.stopped)
@@ -167,6 +167,10 @@ namespace lkogl {
                                     }
                                     break;
                                 case SDL_MOUSEMOTION:
+                                    // skip the first motion event after the
+                                    // mouse lock has been toggled to prevent
+                                    // SDL from reporting a huge relative position
+                                    // change
                                     if(lockChanged) {
                                         lockChanged = false;
                                         continue;
