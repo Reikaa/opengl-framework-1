@@ -162,8 +162,8 @@ public:
             
             graph = std::make_shared<Node>();
             
-            Material colorful(Image("rainbow.png"), 7, 10);
-            Material golden(Image("pyramid_gold.png"), 150, 2);
+            Material colorful(Image("rainbow.png"), 1, 160);
+            Material golden(Image("pyramid_gold.png"), 1, 10);
             Material wood(Image("steel_box.png"), 1, 0.8);
             Material sand(Image("sand.png"), 0, 0);
             
@@ -230,7 +230,7 @@ public:
             camNode_ = std::make_shared<Node>();
 
             camNode_->addComponent(cameraComponent);
-            camNode_->transformation.setTranslation({-4,2,-6});
+            camNode_->transformation.setTranslation({-4,1,-10});
             graph->addChild(camNode_);
             monkeyNode_ = node3;
             
