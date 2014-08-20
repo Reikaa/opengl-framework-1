@@ -6,10 +6,10 @@
 //  Copyright (c) 2014 Laszlo Korte. All rights reserved.
 //
 
-#include "draggable_behaviour.h"
-#include "element.h"
-
 #include <iostream>
+
+#include "./draggable_behaviour.h"
+#include "../element.h"
 
 namespace lkogl {
     namespace ui {

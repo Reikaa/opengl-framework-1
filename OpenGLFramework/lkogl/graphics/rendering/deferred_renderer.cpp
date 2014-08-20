@@ -6,14 +6,14 @@
 //  Copyright (c) 2014 Laszlo Korte. All rights reserved.
 //
 
-#include "deferred_renderer.h"
-#include "text.h"
-#include "render_target.h"
-#include "directional_light.h"
-#include "ambient_light.h"
-#include "scene_deep_walker.h"
-#include "stencil.h"
-#include "mesh.h"
+#include "./deferred_renderer.h"
+#include "../../utils/text.h"
+#include "../render_target.h"
+#include "../lighting/directional_light.h"
+#include "../lighting/ambient_light.h"
+#include "../../scene/walker/scene_deep_walker.h"
+#include "../stencil.h"
+#include "../../geometry/mesh.h"
 
 #include <iostream>
 

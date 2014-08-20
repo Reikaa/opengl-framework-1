@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Laszlo Korte. All rights reserved.
 //
 
-#include "mouse_adapter.h"
+#include "./mouse_adapter.h"
 
 namespace lkogl {
     namespace input {

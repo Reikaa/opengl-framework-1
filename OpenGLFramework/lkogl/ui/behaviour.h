@@ -9,7 +9,7 @@
 #ifndef __OpenGLFramework__behaviour__
 #define __OpenGLFramework__behaviour__
 
-#include "math.h"
+#include "../math/math.h"
 
 namespace lkogl {
     namespace ui {

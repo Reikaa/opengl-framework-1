@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Laszlo Korte. All rights reserved.
 //
 
-#include "first_person_movement.h"
+#include "./first_person_movement.h"
 
 namespace lkogl {
     namespace input {

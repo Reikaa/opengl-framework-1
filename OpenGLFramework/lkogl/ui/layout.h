@@ -9,10 +9,10 @@
 #ifndef __OpenGLFramework__layout__
 #define __OpenGLFramework__layout__
 
-#include "rectangle.h"
-#include "length.h"
-#include "weight.h"
-#include "space.h"
+#include "./rectangle.h"
+#include "./length.h"
+#include "./weight.h"
+#include "./space.h"
 
 namespace lkogl {
     namespace ui {

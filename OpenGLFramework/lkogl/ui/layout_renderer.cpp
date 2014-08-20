@@ -6,9 +6,9 @@
 //  Copyright (c) 2014 Laszlo Korte. All rights reserved.
 //
 
-#include "layout_renderer.h"
-#include "text.h"
-#include "scissor.h"
+#include "./layout_renderer.h"
+#include "../utils/text.h"
+#include "../graphics/scissor.h"
 
 #include <queue>
 

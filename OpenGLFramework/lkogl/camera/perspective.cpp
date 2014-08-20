@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Laszlo Korte. All rights reserved.
 //
 
-#include "perspective.h"
+#include "./perspective.h"
 
 namespace lkogl {
     namespace camera {

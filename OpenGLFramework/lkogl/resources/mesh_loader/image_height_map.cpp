@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Laszlo Korte. All rights reserved.
 //
 
-#include "image_height_map.h"
+#include "./image_height_map.h"
 #include <map>
 
 namespace lkogl {

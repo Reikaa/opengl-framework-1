@@ -9,11 +9,11 @@
 #ifndef __OpenGLFramework__deferred_renderer__
 #define __OpenGLFramework__deferred_renderer__
 
-#include "program.h"
-#include "node.h"
-#include "render_target.h"
-#include "geometry_object.h"
-#include "camera.h"
+#include "../shader/program.h"
+#include "../../scene/node.h"
+#include "../render_target.h"
+#include "../geometry_object.h"
+#include "../../camera/camera.h"
 
 namespace lkogl {
     namespace graphics {

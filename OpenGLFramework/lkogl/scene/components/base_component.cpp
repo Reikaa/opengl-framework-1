@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Laszlo Korte. All rights reserved.
 //
 
-#include "base_component.h"
+#include "./base_component.h"
 
 namespace lkogl {
     namespace scene {

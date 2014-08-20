@@ -6,13 +6,13 @@
 //  Copyright (c) 2014 Laszlo Korte. All rights reserved.
 //
 
-#include "obj_model.h"
+#include "./obj_model.h"
 
 #include <unordered_map>
 #include <fstream>
 #include <sstream>
 
-#include "file_path.h"
+#include "../../utils/file_path.h"
 
 namespace lkogl {
     namespace resources {

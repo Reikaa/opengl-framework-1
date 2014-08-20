@@ -9,9 +9,9 @@
 #ifndef __OpenGLFramework__point_light__
 #define __OpenGLFramework__point_light__
 
-#include "base_light.h"
-#include "attenuation.h"
-#include "program.h"
+#include "./base_light.h"
+#include "./attenuation.h"
+#include "../shader/program.h"
 
 namespace lkogl {
     namespace graphics {

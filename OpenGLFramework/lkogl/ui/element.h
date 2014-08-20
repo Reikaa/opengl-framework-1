@@ -11,9 +11,9 @@
 
 #include <list>
 
-#include "layout.h"
-#include "style.h"
-#include "behaviour.h"
+#include "./layout.h"
+#include "./style.h"
+#include "./behaviour.h"
 
 namespace lkogl {
     namespace ui {

@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Laszlo Korte. All rights reserved.
 //
 
-#include "behaviour.h"
+#include "./behaviour.h"
 
 namespace lkogl {
     namespace ui {

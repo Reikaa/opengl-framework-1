@@ -9,7 +9,7 @@
 #ifndef __OpenGLFramework__rectangle__
 #define __OpenGLFramework__rectangle__
 
-#include "math.h"
+#include "../math/math.h"
 
 namespace lkogl {
     namespace ui {

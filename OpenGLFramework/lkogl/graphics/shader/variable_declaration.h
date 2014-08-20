@@ -11,7 +11,7 @@
 
 #include <string>
 
-#include "opengl.h"
+#include "../../opengl.h"
 
 
 namespace lkogl {

@@ -14,9 +14,9 @@
 #include <set>
 #include <exception>
 
-#include "variable_declaration.h"
-#include "mesh.h"
-#include "math.h"
+#include "./variable_declaration.h"
+#include "../../geometry/mesh.h"
+#include "../../math/math.h"
 
 namespace lkogl {
     namespace graphics {

@@ -6,8 +6,8 @@
 //  Copyright (c) 2014 Laszlo Korte. All rights reserved.
 //
 
-#include "image.h"
-#include "file_path.h"
+#include "./image.h"
+#include "./file_path.h"
 
 namespace lkogl {
     namespace utils {

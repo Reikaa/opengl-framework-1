@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Laszlo Korte. All rights reserved.
 //
 
-#include "animation_component.h"
+#include "./animation_component.h"
 
 namespace lkogl {
     namespace scene {

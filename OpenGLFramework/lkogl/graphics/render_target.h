@@ -11,7 +11,7 @@
 
 #include <vector>
 
-#include "texture.h"
+#include "./texture.h"
 
 namespace lkogl {
     namespace graphics {

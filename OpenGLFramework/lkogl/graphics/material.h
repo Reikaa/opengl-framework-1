@@ -9,8 +9,8 @@
 #ifndef __OpenGLFramework__material__
 #define __OpenGLFramework__material__
 
-#include "texture.h"
-#include "shader.h"
+#include "./texture.h"
+#include "./shader/shader.h"
 
 namespace lkogl {
     namespace graphics {

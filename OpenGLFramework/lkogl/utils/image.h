@@ -11,7 +11,7 @@
 
 #include <string>
 
-#include "sdl.h"
+#include "../sdl.h"
 
 namespace lkogl {
     namespace utils {

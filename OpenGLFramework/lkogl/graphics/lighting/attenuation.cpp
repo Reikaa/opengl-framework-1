@@ -8,7 +8,7 @@
 
 #include <math.h>
 
-#include "attenuation.h"
+#include "./attenuation.h"
 
 namespace lkogl {
     namespace graphics {

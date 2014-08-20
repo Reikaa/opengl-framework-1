@@ -11,8 +11,8 @@
 
 #include <set>
 
-#include "element.h"
-#include "hittester.h"
+#include "./element.h"
+#include "./hittester.h"
 
 namespace lkogl {
     namespace ui {

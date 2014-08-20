@@ -9,7 +9,7 @@
 #ifndef __OpenGLFramework__transform__
 #define __OpenGLFramework__transform__
 
-#include "mesh.h"
+#include "./mesh.h"
 
 namespace lkogl {
     namespace geometry {

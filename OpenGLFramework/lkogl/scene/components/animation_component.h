@@ -9,7 +9,7 @@
 #ifndef __OpenGLFramework__animation_component__
 #define __OpenGLFramework__animation_component__
 
-#include "base_component.h"
+#include "./base_component.h"
 
 namespace lkogl {
     namespace scene {

@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Laszlo Korte. All rights reserved.
 //
 
-#include "transformation.h"
+#include "./transformation.h"
 
 namespace lkogl {
     namespace geometry {

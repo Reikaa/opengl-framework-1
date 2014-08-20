@@ -10,8 +10,8 @@
 #define __OpenGLFramework__draggable_behaviour__
 
 #include <functional>
-#include "behaviour.h"
-#include "layout.h"
+#include "../behaviour.h"
+#include "../layout.h"
 
 namespace lkogl {
     namespace ui {

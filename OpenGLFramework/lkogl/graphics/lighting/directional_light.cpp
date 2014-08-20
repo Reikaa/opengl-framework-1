@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Laszlo Korte. All rights reserved.
 //
 
-#include "directional_light.h"
+#include "./directional_light.h"
 
 namespace lkogl {
     namespace graphics {

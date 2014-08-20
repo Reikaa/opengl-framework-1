@@ -9,7 +9,7 @@
 #ifndef __OpenGLFramework__layout_invalidator__
 #define __OpenGLFramework__layout_invalidator__
 
-#include "element.h"
+#include "./element.h"
 
 namespace lkogl {
     namespace ui {

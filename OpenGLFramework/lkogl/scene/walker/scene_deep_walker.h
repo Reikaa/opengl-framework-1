@@ -9,8 +9,8 @@
 #ifndef __OpenGLFramework__scene_renderer__
 #define __OpenGLFramework__scene_renderer__
 
-#include "base_component.h"
-#include "node.h"
+#include "../node.h"
+#include "../components/base_component.h"
 
 namespace lkogl {
     namespace scene {

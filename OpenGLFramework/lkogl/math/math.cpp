@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Laszlo Korte. All rights reserved.
 //
 
-#include "math.h"
+#include "./math.h"
 
 namespace lkogl {
     namespace math {

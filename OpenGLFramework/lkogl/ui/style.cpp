@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Laszlo Korte. All rights reserved.
 //
 
-#include "style.h"
+#include "./style.h"
 
 namespace lkogl {
     namespace ui {

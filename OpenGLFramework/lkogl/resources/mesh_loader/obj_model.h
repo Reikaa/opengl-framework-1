@@ -12,8 +12,8 @@
 #include <string>
 #include <vector>
 
-#include "math.h"
-#include "index_model.h"
+#include "../../math/math.h"
+#include "./index_model.h"
 
 namespace lkogl {
     namespace resources {

@@ -10,7 +10,7 @@
 #define __OpenGLFramework__mouse__
 
 #include <set>
-#include "math.h"
+#include "../math/math.h"
 
 namespace lkogl {
     namespace input {

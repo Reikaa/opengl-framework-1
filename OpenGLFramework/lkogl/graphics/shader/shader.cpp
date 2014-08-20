@@ -10,7 +10,7 @@
 #include <iostream>
 #include <queue>
 
-#include "shader.h"
+#include "./shader.h"
 
 namespace lkogl {
     namespace graphics {

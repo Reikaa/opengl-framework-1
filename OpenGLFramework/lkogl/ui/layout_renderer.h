@@ -9,10 +9,10 @@
 #ifndef __OpenGLFramework__layout_renderer__
 #define __OpenGLFramework__layout_renderer__
 
-#include "element.h"
-#include "program.h"
-#include "render_target.h"
-#include "geometry_object.h"
+#include "./element.h"
+#include "../graphics/shader/program.h"
+#include "../graphics/render_target.h"
+#include "../graphics/geometry_object.h"
 
 namespace lkogl {
     namespace ui {

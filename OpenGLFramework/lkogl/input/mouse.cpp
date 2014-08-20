@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Laszlo Korte. All rights reserved.
 //
 
-#include "mouse.h"
+#include "./mouse.h"
 
 
 namespace lkogl {

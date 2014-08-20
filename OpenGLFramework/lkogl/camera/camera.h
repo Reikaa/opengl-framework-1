@@ -9,8 +9,8 @@
 #ifndef __OpenGLFramework__camera__
 #define __OpenGLFramework__camera__
 
-#include "math.h"
-#include "perspective.h"
+#include "../math/math.h"
+#include "./perspective.h"
 
 namespace lkogl {
     namespace camera {

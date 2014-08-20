@@ -9,7 +9,7 @@
 #ifndef __OpenGLFramework__projection__
 #define __OpenGLFramework__projection__
 
-#include "math.h"
+#include "../math/math.h"
 
 namespace lkogl {
     namespace camera {

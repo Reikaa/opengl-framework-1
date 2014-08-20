@@ -9,7 +9,7 @@
 #ifndef __OpenGLFramework__spot_light__
 #define __OpenGLFramework__spot_light__
 
-#include "point_light.h"
+#include "./point_light.h"
 
 namespace lkogl {
     namespace graphics {

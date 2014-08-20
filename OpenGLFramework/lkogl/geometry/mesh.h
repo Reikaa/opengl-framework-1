@@ -11,8 +11,8 @@
 
 #include <vector>
 
-#include "opengl.h"
-#include "math.h"
+#include "../opengl.h"
+#include "../math/math.h"
 
 namespace lkogl {
     namespace geometry {

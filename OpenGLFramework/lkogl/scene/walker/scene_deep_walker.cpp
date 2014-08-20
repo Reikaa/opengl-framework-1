@@ -6,8 +6,8 @@
 //  Copyright (c) 2014 Laszlo Korte. All rights reserved.
 //
 
-#include "scene_deep_walker.h"
-#include "material.h"
+#include "./scene_deep_walker.h"
+#include "../../graphics/material.h"
 
 namespace lkogl {
     namespace scene {

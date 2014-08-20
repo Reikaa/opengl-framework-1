@@ -9,9 +9,9 @@
 #ifndef __OpenGLFramework__image_height_map__
 #define __OpenGLFramework__image_height_map__
 
-#include "image.h"
+#include "../../utils/image.h"
 
-#include "index_model.h"
+#include "./index_model.h"
 
 namespace lkogl {
     namespace resources {

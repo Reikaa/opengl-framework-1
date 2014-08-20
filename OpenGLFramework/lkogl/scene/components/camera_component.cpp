@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Laszlo Korte. All rights reserved.
 //
 
-#include "camera_component.h"
+#include "./camera_component.h"
 
 namespace lkogl {
     namespace scene {

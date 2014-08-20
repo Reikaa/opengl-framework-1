@@ -10,41 +10,41 @@
 #include <sstream>
 
 
-#include "lkogl/loop/game_loop.h"
-#include "lkogl/graphics/material.h"
-#include "lkogl/graphics/shader/shader.h"
-#include "lkogl/utils/text.h"
-#include "lkogl/graphics/render_target.h"
-#include "lkogl/graphics/stencil.h"
+#include "./lkogl/loop/game_loop.h"
+#include "./lkogl/graphics/material.h"
+#include "./lkogl/graphics/shader/shader.h"
+#include "./lkogl/utils/text.h"
+#include "./lkogl/graphics/render_target.h"
+#include "./lkogl/graphics/stencil.h"
 
-#include "lkogl/ui/element.h"
-#include "lkogl/ui/layout_renderer.h"
-#include "lkogl/ui/pointer_tracking.h"
-#include "lkogl/ui/layout_invalidator.h"
-#include "lkogl/ui/behaviours/clickable_behaviour.h"
-#include "lkogl/ui/behaviours/draggable_behaviour.h"
+#include "./lkogl/ui/element.h"
+#include "./lkogl/ui/layout_renderer.h"
+#include "./lkogl/ui/pointer_tracking.h"
+#include "./lkogl/ui/layout_invalidator.h"
+#include "./lkogl/ui/behaviours/clickable_behaviour.h"
+#include "./lkogl/ui/behaviours/draggable_behaviour.h"
 
 
-#include "lkogl/graphics/lighting/ambient_light.h"
-#include "lkogl/graphics/lighting/directional_light.h"
-#include "lkogl/graphics/lighting/point_light.h"
-#include "lkogl/graphics/lighting/spot_light.h"
-#include "lkogl/graphics/rendering/deferred_renderer.h"
+#include "./lkogl/graphics/lighting/ambient_light.h"
+#include "./lkogl/graphics/lighting/directional_light.h"
+#include "./lkogl/graphics/lighting/point_light.h"
+#include "./lkogl/graphics/lighting/spot_light.h"
+#include "./lkogl/graphics/rendering/deferred_renderer.h"
 
-#include "lkogl/resources/mesh_loader/obj_model.h"
-#include "lkogl/resources/mesh_loader/image_height_map.h"
+#include "./lkogl/resources/mesh_loader/obj_model.h"
+#include "./lkogl/resources/mesh_loader/image_height_map.h"
 
-#include "lkogl/scene/components/animation_component.h"
-#include "lkogl/scene/components/camera_component.h"
-#include "lkogl/scene/components/render_component.h"
-#include "lkogl/scene/walker/scene_deep_walker.h"
+#include "./lkogl/scene/components/animation_component.h"
+#include "./lkogl/scene/components/camera_component.h"
+#include "./lkogl/scene/components/render_component.h"
+#include "./lkogl/scene/walker/scene_deep_walker.h"
 
-#include "lkogl/input/keyboard.h"
-#include "lkogl/input/adapter/keyboard_adapter.h"
-#include "lkogl/input/mouse.h"
-#include "lkogl/input/adapter/mouse_adapter.h"
+#include "./lkogl/input/keyboard.h"
+#include "./lkogl/input/adapter/keyboard_adapter.h"
+#include "./lkogl/input/mouse.h"
+#include "./lkogl/input/adapter/mouse_adapter.h"
 
-#include "lkogl/input/movement/first_person_movement.h"
+#include "./lkogl/input/movement/first_person_movement.h"
 
 using namespace lkogl::ui;
 using namespace lkogl::math;

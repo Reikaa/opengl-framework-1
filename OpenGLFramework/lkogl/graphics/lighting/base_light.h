@@ -9,7 +9,7 @@
 #ifndef __OpenGLFramework__base_light__
 #define __OpenGLFramework__base_light__
 
-#include "math.h"
+#include "../../math/math.h"
 
 namespace lkogl {
     namespace graphics {

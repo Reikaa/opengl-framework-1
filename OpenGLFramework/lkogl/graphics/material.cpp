@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Laszlo Korte. All rights reserved.
 //
 
-#include "material.h"
+#include "./material.h"
 
 namespace lkogl {
     namespace graphics {

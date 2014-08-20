@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Laszlo Korte. All rights reserved.
 //
 
-#include "program.h"
+#include "./program.h"
 #include <iostream>
 
 namespace lkogl {

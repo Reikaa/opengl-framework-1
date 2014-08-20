@@ -9,7 +9,7 @@
 #ifndef __OpenGLFramework__file_path__
 #define __OpenGLFramework__file_path__
 
-#include "sdl.h"
+#include "../sdl.h"
 #include <string>
 
 namespace lkogl {

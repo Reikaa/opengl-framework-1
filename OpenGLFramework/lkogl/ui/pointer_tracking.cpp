@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Laszlo Korte. All rights reserved.
 //
 
-#include "pointer_tracking.h"
+#include "./pointer_tracking.h"
 
 namespace lkogl {
     namespace ui {

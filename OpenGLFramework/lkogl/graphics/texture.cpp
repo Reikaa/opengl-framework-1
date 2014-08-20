@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Laszlo Korte. All rights reserved.
 //
 
-#include "texture.h"
+#include "./texture.h"
 
 namespace lkogl {
     namespace graphics {

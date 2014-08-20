@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Laszlo Korte. All rights reserved.
 //
 
-#include "spot_light.h"
+#include "./spot_light.h"
 
 namespace lkogl {
     namespace graphics {

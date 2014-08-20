@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Laszlo Korte. All rights reserved.
 //
 
-#include "variable_declaration.h"
+#include "./variable_declaration.h"
 
 namespace lkogl {
     namespace graphics {

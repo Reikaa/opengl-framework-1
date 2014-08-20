@@ -9,7 +9,7 @@
 #ifndef __OpenGLFramework__hittester__
 #define __OpenGLFramework__hittester__
 
-#include "element.h"
+#include "./element.h"
 #include <vector>
 
 namespace lkogl {

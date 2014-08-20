@@ -9,8 +9,8 @@
 #ifndef __OpenGLFramework__mouse_adapter__
 #define __OpenGLFramework__mouse_adapter__
 
-#include "mouse.h"
-#include "sdl.h"
+#include "../mouse.h"
+#include "../../sdl.h"
 
 namespace lkogl {
     namespace input {

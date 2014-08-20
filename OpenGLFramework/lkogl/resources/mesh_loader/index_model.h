@@ -11,8 +11,8 @@
 
 #include <vector>
 
-#include "math.h"
-#include "mesh.h"
+#include "../../math/math.h"
+#include "../../geometry/mesh.h"
 
 namespace lkogl {
     namespace resources {

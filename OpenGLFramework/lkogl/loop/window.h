@@ -11,8 +11,8 @@
 
 #include <string>
 
-#include "sdl.h"
-#include "opengl.h"
+#include "../sdl.h"
+#include "../opengl.h"
 
 namespace lkogl {
     namespace loop {

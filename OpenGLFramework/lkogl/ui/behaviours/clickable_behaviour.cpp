@@ -6,8 +6,8 @@
 //  Copyright (c) 2014 Laszlo Korte. All rights reserved.
 //
 
-#include "clickable_behaviour.h"
-#include "element.h"
+#include "./clickable_behaviour.h"
+#include "../element.h"
 
 #include <iostream>
 

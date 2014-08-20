@@ -9,8 +9,8 @@
 #ifndef __OpenGLFramework__keyboard_adapter__
 #define __OpenGLFramework__keyboard_adapter__
 
-#include "keyboard.h"
-#include "sdl.h"
+#include "../keyboard.h"
+#include "../../sdl.h"
 
 namespace lkogl {
     namespace input {

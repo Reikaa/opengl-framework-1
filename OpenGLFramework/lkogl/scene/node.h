@@ -13,8 +13,8 @@
 #include <list>
 #include <vector>
 
-#include "tree_transformation.h"
-#include "base_component.h"
+#include "./tree_transformation.h"
+#include "./components/base_component.h"
 
 namespace lkogl {
     namespace scene {

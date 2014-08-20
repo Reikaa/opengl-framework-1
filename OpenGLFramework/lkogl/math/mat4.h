@@ -9,7 +9,7 @@
 #ifndef __OpenGLFramework__mat4__
 #define __OpenGLFramework__mat4__
 
-#include "vec4.h"
+#include "./vec4.h"
 
 namespace lkogl {
     namespace math {

@@ -8,8 +8,8 @@
 
 #include<fstream>
 
-#include "text.h"
-#include "file_path.h"
+#include "./text.h"
+#include "./file_path.h"
 
 namespace lkogl {
     namespace utils {

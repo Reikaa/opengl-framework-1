@@ -9,8 +9,8 @@
 #ifndef __OpenGLFramework__ambient_light__
 #define __OpenGLFramework__ambient_light__
 
-#include "math.h"
-#include "program.h"
+#include "../../math/math.h"
+#include "../shader/program.h"
 
 namespace lkogl {
     namespace graphics {

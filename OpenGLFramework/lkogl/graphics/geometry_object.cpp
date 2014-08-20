@@ -6,8 +6,8 @@
 //  Copyright (c) 2014 Laszlo Korte. All rights reserved.
 //
 
-#include "geometry_object.h"
-#include "shader.h"
+#include "./geometry_object.h"
+#include "./shader/shader.h"
 
 namespace lkogl {
     namespace graphics {

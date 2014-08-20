@@ -11,8 +11,8 @@
 
 #include <vector>
 
-#include "image.h"
-#include "program.h"
+#include "../utils/image.h"
+#include "./shader/program.h"
 
 namespace lkogl {
     namespace graphics {

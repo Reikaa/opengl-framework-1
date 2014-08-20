@@ -10,7 +10,7 @@
 #define __OpenGLFramework__hover_behaviour__
 
 #include <functional>
-#include "behaviour.h"
+#include "../behaviour.h"
 
 namespace lkogl {
     namespace ui {

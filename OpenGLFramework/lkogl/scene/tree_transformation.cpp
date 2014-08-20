@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Laszlo Korte. All rights reserved.
 //
 
-#include "tree_transformation.h"
+#include "./tree_transformation.h"
 
 namespace lkogl {
     namespace scene {

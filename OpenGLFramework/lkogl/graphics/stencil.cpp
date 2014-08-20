@@ -6,8 +6,8 @@
 //  Copyright (c) 2014 Laszlo Korte. All rights reserved.
 //
 
-#include "stencil.h"
-#include "opengl.h"
+#include "./stencil.h"
+#include "../opengl.h"
 
 namespace lkogl {
     namespace graphics {

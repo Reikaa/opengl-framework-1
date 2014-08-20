@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Laszlo Korte. All rights reserved.
 //
 
-#include "render_target.h"
+#include "./render_target.h"
 
 namespace lkogl {
     namespace graphics {

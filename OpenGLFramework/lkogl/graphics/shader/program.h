@@ -11,8 +11,8 @@
 
 #include <map>
 
-#include "shader.h"
-#include "variable_declaration.h"
+#include "./shader.h"
+#include "./variable_declaration.h"
 
 namespace lkogl {
     namespace graphics {

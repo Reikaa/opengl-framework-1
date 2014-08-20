@@ -12,7 +12,7 @@
 #include <vector>
 #include <iostream>
 
-#include "window.h"
+#include "./window.h"
 
 namespace lkogl {
     namespace loop {

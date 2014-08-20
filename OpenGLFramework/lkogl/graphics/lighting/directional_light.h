@@ -9,8 +9,8 @@
 #ifndef __OpenGLFramework__directional_light__
 #define __OpenGLFramework__directional_light__
 
-#include "base_light.h"
-#include "program.h"
+#include "./base_light.h"
+#include "../shader/program.h"
 
 namespace lkogl {
     namespace graphics {

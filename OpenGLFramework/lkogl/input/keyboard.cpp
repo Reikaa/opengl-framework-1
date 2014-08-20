@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Laszlo Korte. All rights reserved.
 //
 
-#include "keyboard.h"
+#include "./keyboard.h"
 
 namespace lkogl {
     namespace input {

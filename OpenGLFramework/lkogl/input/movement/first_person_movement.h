@@ -9,8 +9,8 @@
 #ifndef __OpenGLFramework__first_person_movement__
 #define __OpenGLFramework__first_person_movement__
 
-#include "camera.h"
-#include "tree_transformation.h"
+#include "../../camera/camera.h"
+#include "../../scene/tree_transformation.h"
 
 namespace lkogl {
     namespace input {

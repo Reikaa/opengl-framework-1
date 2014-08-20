@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Laszlo Korte. All rights reserved.
 //
 
-#include "hittester.h"
+#include "./hittester.h"
 #include <queue>
 
 namespace lkogl {

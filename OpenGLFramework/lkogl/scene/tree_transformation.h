@@ -9,7 +9,7 @@
 #ifndef __OpenGLFramework__tree_transform__
 #define __OpenGLFramework__tree_transform__
 
-#include "transformation.h"
+#include "../geometry/transformation.h"
 
 namespace lkogl {
     namespace scene {

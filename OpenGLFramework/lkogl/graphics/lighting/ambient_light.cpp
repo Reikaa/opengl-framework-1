@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Laszlo Korte. All rights reserved.
 //
 
-#include "ambient_light.h"
+#include "./ambient_light.h"
 
 namespace lkogl {
     namespace graphics {

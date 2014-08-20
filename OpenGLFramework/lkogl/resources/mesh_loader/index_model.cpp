@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Laszlo Korte. All rights reserved.
 //
 
-#include "index_model.h"
+#include "./index_model.h"
 
 namespace lkogl {
     namespace resources {
