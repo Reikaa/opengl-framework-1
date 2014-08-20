@@ -49,10 +49,7 @@ namespace lkogl {
             
             glEnableVertexAttribArray(PointerLocation::NORMAL);
             glVertexAttribPointer(PointerLocation::NORMAL, 3, GL_FLOAT, GL_FALSE, sizeof(geometry::Vertex), (const GLvoid *) offsetof(geometry::Vertex, normal));
-            
-            glEnableVertexAttribArray(COLOR);
-            glVertexAttribPointer(PointerLocation::COLOR, 4, GL_FLOAT, GL_FALSE, sizeof(geometry::Vertex), (const GLvoid *) offsetof(geometry::Vertex, color));
-            
+
             glEnableVertexAttribArray(PointerLocation::TEXTURE_COORDS);
             glVertexAttribPointer(PointerLocation::TEXTURE_COORDS, 4, GL_FLOAT, GL_FALSE, sizeof(geometry::Vertex), (const GLvoid *) offsetof(geometry::Vertex, textureCoord));
         }

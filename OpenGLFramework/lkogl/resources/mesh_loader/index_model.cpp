@@ -20,7 +20,6 @@ namespace lkogl {
                     vertices.push_back(geometry::Vertex{
                                                         positions_.at(currentIndex),
                                                         normals_.at(currentIndex),
-                                                        math::Vec4<float>(),
                                                         texCoords_.at(currentIndex)
                     });
                     if(++indexNum%3 == 0) {

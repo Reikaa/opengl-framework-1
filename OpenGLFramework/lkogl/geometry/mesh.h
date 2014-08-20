@@ -24,7 +24,6 @@ namespace lkogl {
         struct Vertex {
             Vec3 position;
             Vec3 normal;
-            Color color;
             UVCoord textureCoord;
         };
         

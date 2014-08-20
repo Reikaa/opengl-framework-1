@@ -42,7 +42,6 @@ namespace lkogl {
             enum PointerLocation {
                 POSITION,
                 NORMAL,
-                COLOR,
                 TEXTURE_COORDS
             };
             
