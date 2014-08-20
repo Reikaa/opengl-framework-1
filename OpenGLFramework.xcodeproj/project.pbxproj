@@ -27,6 +27,8 @@
 		F21EA840199BB46200D78E1C /* deferred-ambient.fsh in Resources */ = {isa = PBXBuildFile; fileRef = F21EA83F199BB46200D78E1C /* deferred-ambient.fsh */; };
 		F21EA842199BE7C000D78E1C /* deferred-directional.vsh in Resources */ = {isa = PBXBuildFile; fileRef = F21EA841199BE7C000D78E1C /* deferred-directional.vsh */; };
 		F21EA844199BE7D100D78E1C /* deferred-directional.fsh in Resources */ = {isa = PBXBuildFile; fileRef = F21EA843199BE7D100D78E1C /* deferred-directional.fsh */; };
+		F2293EC919A4103100920353 /* SDL2_mixer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F2293EC819A4103100920353 /* SDL2_mixer.framework */; };
+		F2293ECA19A4103C00920353 /* SDL2_mixer.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F2293EC819A4103100920353 /* SDL2_mixer.framework */; };
 		F24DA04919A3D4AF005F5F32 /* sand.png in Resources */ = {isa = PBXBuildFile; fileRef = F24DA04819A3D4AF005F5F32 /* sand.png */; };
 		F24DA04C19A3F06F005F5F32 /* draggable_behaviour.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F24DA04A19A3F06F005F5F32 /* draggable_behaviour.cpp */; };
 		F258801F19A0CA1200AC7A3C /* file_path.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F258801D19A0CA1200AC7A3C /* file_path.cpp */; };
@@ -131,6 +133,7 @@
 			files = (
 				F21EA822199A870900D78E1C /* SDL2.framework in Embed Frameworks */,
 				F21EA824199A870900D78E1C /* SDL2_image.framework in Embed Frameworks */,
+				F2293ECA19A4103C00920353 /* SDL2_mixer.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -161,6 +164,7 @@
 		F21EA83F199BB46200D78E1C /* deferred-ambient.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = "deferred-ambient.fsh"; sourceTree = "<group>"; };
 		F21EA841199BE7C000D78E1C /* deferred-directional.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = "deferred-directional.vsh"; sourceTree = "<group>"; };
 		F21EA843199BE7D100D78E1C /* deferred-directional.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = "deferred-directional.fsh"; sourceTree = "<group>"; };
+		F2293EC819A4103100920353 /* SDL2_mixer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2_mixer.framework; path = ../../../Library/Frameworks/SDL2_mixer.framework; sourceTree = "<group>"; };
 		F24DA04819A3D4AF005F5F32 /* sand.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sand.png; sourceTree = "<group>"; };
 		F24DA04A19A3F06F005F5F32 /* draggable_behaviour.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = draggable_behaviour.cpp; sourceTree = "<group>"; };
 		F24DA04B19A3F06F005F5F32 /* draggable_behaviour.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = draggable_behaviour.h; sourceTree = "<group>"; };
@@ -289,6 +293,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F29707BB199391FD00D48CE5 /* OpenGL.framework in Frameworks */,
+				F2293EC919A4103100920353 /* SDL2_mixer.framework in Frameworks */,
 				F21EA821199A870900D78E1C /* SDL2.framework in Frameworks */,
 				F21EA823199A870900D78E1C /* SDL2_image.framework in Frameworks */,
 			);
@@ -326,6 +331,13 @@
 				F258802119A0E6C800AC7A3C /* image_height_map.h */,
 			);
 			name = mesh_loader;
+			sourceTree = "<group>";
+		};
+		F2293ECB19A4107300920353 /* audio */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = audio;
 			sourceTree = "<group>";
 		};
 		F2660ABC19A3ACE3000AD4EE /* shader */ = {
@@ -372,7 +384,7 @@
 		F29707291993682F00D48CE5 /* OpenGLFramework */ = {
 			isa = PBXGroup;
 			children = (
-				F297078019936FDB00D48CE5 /* logl */,
+				F297078019936FDB00D48CE5 /* lkogl */,
 				F297077F19936F8B00D48CE5 /* Resources */,
 				F297072A1993682F00D48CE5 /* main.cpp */,
 			);
@@ -412,9 +424,10 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
-		F297078019936FDB00D48CE5 /* logl */ = {
+		F297078019936FDB00D48CE5 /* lkogl */ = {
 			isa = PBXGroup;
 			children = (
+				F2293ECB19A4107300920353 /* audio */,
 				F29707B2199378D300D48CE5 /* math */,
 				F29B1F50199E29D300F17051 /* ui */,
 				F21EA815199A039E00D78E1C /* resources */,
@@ -428,7 +441,6 @@
 				F29707AD199373A800D48CE5 /* opengl.h */,
 				F29707AE199373D500D48CE5 /* sdl.h */,
 			);
-			name = logl;
 			path = lkogl;
 			sourceTree = "<group>";
 		};
@@ -529,6 +541,7 @@
 		F29707A91993736200D48CE5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F2293EC819A4103100920353 /* SDL2_mixer.framework */,
 				F29707A51993735D00D48CE5 /* SDL2.framework */,
 				F29707A61993735D00D48CE5 /* SDL2_image.framework */,
 				F29707A31993734100D48CE5 /* OpenGL.framework */,
