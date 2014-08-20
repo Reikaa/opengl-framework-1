@@ -136,7 +136,7 @@ public:
             auto e1 = std::make_shared<Element>();
             e1->layout().setMargin({percent(8)});
             e1->layout().setAlignment({WeightLinear::Center, WeightLinear::Center});
-            e1->style().setOverflow(true);
+            e1->layout().setOverflow(true);
             
             auto e2 = std::make_shared<Element>(std::make_shared<behaviour::ClickableBehaviour>([this](void){
                 stopped = true;
@@ -145,7 +145,7 @@ public:
             e2->layout().setMargin({px(20)});
             e2->layout().setAlignment({WeightLinear::Right, WeightLinear::Bottom});
             
-            auto e3 = std::make_shared<Element>(std::make_shared<behaviour::DraggableBehaviour>(e1->layout()));
+            auto e3 = std::make_shared<Element>(std::make_shared<behaviour::DraggableBehaviour>(uiRoot_->layout()));
             e3->layout().setSize(px(100), px(100));
             e3->layout().setMargin({px(0)});
             e3->layout().setAlignment({WeightLinear::Left, WeightLinear::Top});

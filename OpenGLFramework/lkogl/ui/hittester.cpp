@@ -41,6 +41,12 @@ namespace lkogl {
                     for(auto i=children.crbegin();i!=children.crend();i++) {
                         elements.push(*i);
                     }
+                } else if(current->layout().overflow()) {
+                    auto children = current->children();
+                    
+                    for(auto i=children.crbegin();i!=children.crend();i++) {
+                        elements.push(*i);
+                    }
                 }
             }
             

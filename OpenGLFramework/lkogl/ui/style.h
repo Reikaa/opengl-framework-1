@@ -18,17 +18,12 @@ namespace lkogl {
         class Style
         {
             Color backgroundColor_ = {0,0,0,0.3};
-            bool overflow_ = false;
             
         public:
             Style() {};
             
             const Color& background() const;
             void setBackground(const Color& col);
-            
-            bool overflow() const;
-            void setOverflow(bool col);
-            
         };
     }
 }

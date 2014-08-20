@@ -63,6 +63,16 @@ namespace lkogl {
             dirty_ = true;
         }
         
+        bool Layout::overflow() const
+        {
+            return overflow_;
+        }
+        
+        void Layout::setOverflow(bool col)
+        {
+            overflow_ = col;
+        }
+        
         const math::Vec2<int>& Layout::offset() const
         {
             return offset_;
