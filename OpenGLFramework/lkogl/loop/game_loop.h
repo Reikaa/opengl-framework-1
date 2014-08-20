@@ -148,6 +148,10 @@ namespace lkogl {
                             SDL_SetRelativeMouseMode(mouseLocked ? SDL_TRUE : SDL_FALSE);
                             
                             lockChanged  = true;
+                            SDL_EventState(SDL_MOUSEMOTION, SDL_IGNORE);
+                            SDL_PumpEvents();
+                            SDL_EventState(SDL_MOUSEMOTION, SDL_ENABLE);
+
                         }
                         
                         state_.behind -= state_.updateDuration;
