@@ -88,12 +88,6 @@ namespace lkogl {
             p.setUniformi("material.sampler", slot);
         }
         
-        TextureUse::TextureUse(GLuint loc, const Texture& tex, int slot) :
-        b_(*tex.resource_.get(), slot)
-        {
-            glUniform1i(loc, slot);
-        }
-        
         TextureUse::~TextureUse()
         {
         }

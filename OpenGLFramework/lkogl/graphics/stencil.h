@@ -12,16 +12,12 @@
 namespace lkogl {
     namespace graphics {
         
-        class StencilCreation {
+        class Stencil {
         public:
-            StencilCreation(bool clear);
-            ~StencilCreation();
-        };
-        
-        class StencilUse {
-            public:
-            StencilUse();
-            ~StencilUse();
+            Stencil();
+            ~Stencil();
+            
+            void filter(int ref) const;
         };
         
     }

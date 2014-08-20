@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F21C7D7219A4EA2B00B006A4 /* sky.vsh in Resources */ = {isa = PBXBuildFile; fileRef = F21C7D7119A4EA2B00B006A4 /* sky.vsh */; };
+		F21C7D7419A4EA3C00B006A4 /* sky.fsh in Resources */ = {isa = PBXBuildFile; fileRef = F21C7D7319A4EA3C00B006A4 /* sky.fsh */; };
+		F21C7D7619A4FDE300B006A4 /* sky.png in Resources */ = {isa = PBXBuildFile; fileRef = F21C7D7519A4FDE300B006A4 /* sky.png */; };
 		F21EA81119990FF200D78E1C /* geometry_object.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F21EA80F19990FF200D78E1C /* geometry_object.cpp */; };
 		F21EA814199911F900D78E1C /* program.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F21EA812199911F900D78E1C /* program.cpp */; };
 		F21EA819199A03EF00D78E1C /* index_model.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F21EA817199A03EF00D78E1C /* index_model.cpp */; };
@@ -144,6 +147,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		F21C7D7119A4EA2B00B006A4 /* sky.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = sky.vsh; sourceTree = "<group>"; };
+		F21C7D7319A4EA3C00B006A4 /* sky.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = sky.fsh; sourceTree = "<group>"; };
+		F21C7D7519A4FDE300B006A4 /* sky.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sky.png; sourceTree = "<group>"; };
 		F21EA80F19990FF200D78E1C /* geometry_object.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = geometry_object.cpp; sourceTree = "<group>"; };
 		F21EA81019990FF200D78E1C /* geometry_object.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = geometry_object.h; sourceTree = "<group>"; };
 		F21EA812199911F900D78E1C /* program.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = program.cpp; sourceTree = "<group>"; };
@@ -362,6 +368,7 @@
 		F238E4B919A422D300DF8601 /* textures */ = {
 			isa = PBXGroup;
 			children = (
+				F21C7D7519A4FDE300B006A4 /* sky.png */,
 				F2F0DB0A19A4B46A00BD63E9 /* pyramid_gold.png */,
 				F2F0DB0819A4AB0500BD63E9 /* steel_box.png */,
 				F24DA04819A3D4AF005F5F32 /* sand.png */,
@@ -389,6 +396,8 @@
 			children = (
 				F29B1F5D199E6C7800F17051 /* ui-shaders */,
 				F2B563C2199D3773007D38D3 /* deferred */,
+				F21C7D7119A4EA2B00B006A4 /* sky.vsh */,
+				F21C7D7319A4EA3C00B006A4 /* sky.fsh */,
 			);
 			path = shaders;
 			sourceTree = "<group>";
@@ -830,6 +839,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F21EA840199BB46200D78E1C /* deferred-ambient.fsh in Resources */,
+				F21C7D7219A4EA2B00B006A4 /* sky.vsh in Resources */,
 				F21EA842199BE7C000D78E1C /* deferred-directional.vsh in Resources */,
 				F2F0DB0B19A4B46A00BD63E9 /* pyramid_gold.png in Resources */,
 				F21EA82A199AB97100D78E1C /* monkey.obj in Resources */,
@@ -837,9 +847,11 @@
 				F2F0DB0919A4AB0500BD63E9 /* steel_box.png in Resources */,
 				F29B1F61199E6C9100F17051 /* ui-element.fsh in Resources */,
 				F2DEC6331997DDD300EE31E7 /* rainbow.png in Resources */,
+				F21C7D7619A4FDE300B006A4 /* sky.png in Resources */,
 				F21EA820199A257F00D78E1C /* box.obj in Resources */,
 				F21EA844199BE7D100D78E1C /* deferred-directional.fsh in Resources */,
 				F297076619936C1600D48CE5 /* Images.xcassets in Resources */,
+				F21C7D7419A4EA3C00B006A4 /* sky.fsh in Resources */,
 				F21EA83A199BA82700D78E1C /* deferred-geometry.vsh in Resources */,
 				F24DA04919A3D4AF005F5F32 /* sand.png in Resources */,
 				F21EA83C199BA83200D78E1C /* deferred-geometry.fsh in Resources */,

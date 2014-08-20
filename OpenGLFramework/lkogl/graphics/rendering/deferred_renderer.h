@@ -12,6 +12,7 @@
 #include "../shader/program.h"
 #include "../../scene/node.h"
 #include "../render_target.h"
+#include "../material.h"
 #include "../geometry_object.h"
 #include "../../camera/camera.h"
 
@@ -20,6 +21,7 @@ namespace lkogl {
         namespace rendering {
             class DeferredRenderer {
                 struct Programs {
+                    shader::Program skybox_;
                     shader::Program deferredGeo_;
                     shader::Program deferredAmbient_;
                     shader::Program deferredStencil_;
@@ -32,7 +34,8 @@ namespace lkogl {
                 Screen screen_;
                 int ratioWidth_, ratioHeight_;
                 GeometryObject square_;
-                
+                GeometryObject box_;
+                Texture sky_;
             public:
                 DeferredRenderer(const Screen& screen, int ratioW, int ratioH);
                 ~DeferredRenderer();

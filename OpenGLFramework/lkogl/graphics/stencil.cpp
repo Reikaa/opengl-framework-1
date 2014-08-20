@@ -12,7 +12,7 @@
 namespace lkogl {
     namespace graphics {
         
-        StencilCreation::StencilCreation(bool clear)
+        Stencil::Stencil()
         {
             glEnable(GL_STENCIL_TEST);
             glClearStencil(0);
@@ -26,7 +26,7 @@ namespace lkogl {
             glDepthMask(GL_FALSE);
         }
         
-        StencilCreation::~StencilCreation()
+        Stencil::~Stencil()
         {
             glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
             glDepthMask(GL_TRUE);
@@ -34,18 +34,12 @@ namespace lkogl {
             glDisable(GL_STENCIL_TEST);
         }
         
-        
-        
-        StencilUse::StencilUse()
+        void Stencil::filter(int ref) const
         {
-            glEnable(GL_STENCIL_TEST);
-            glStencilFunc(GL_EQUAL, 1, 1);
+            glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
+            glDepthMask(GL_TRUE);
+            glStencilFunc(GL_EQUAL, ref, 1);
             glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
-        }
-        
-        StencilUse::~StencilUse()
-        {
-            glDisable(GL_STENCIL_TEST);
         }
         
     }

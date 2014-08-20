@@ -14,6 +14,7 @@
 #include "../../scene/walker/scene_deep_walker.h"
 #include "../stencil.h"
 #include "../../geometry/mesh.h"
+#include "../../utils/image.h"
 
 #include <iostream>
 
@@ -26,7 +27,7 @@ namespace lkogl {
                 TargetType{GL_COLOR_ATTACHMENT0, GL_RGBA16F},
                 TargetType{GL_COLOR_ATTACHMENT1, GL_RGBA16F},
                 TargetType{GL_COLOR_ATTACHMENT2, GL_RGBA16F},
-            })), square_(geometry::primitives::makeSquare()), ratioWidth_(ratioWidth), ratioHeight_(ratioHeight)
+            })), square_(geometry::primitives::makeSquare()), box_(geometry::primitives::makeCube()), ratioWidth_(ratioWidth), ratioHeight_(ratioHeight), sky_(utils::Image("sky.png"))
             {
             }
             
@@ -44,7 +45,11 @@ namespace lkogl {
                 utils::PlainText vshDefDir("deferred-directional.vsh");
                 utils::PlainText fshDefDir("deferred-directional.fsh");
                 
+                utils::PlainText vshDefSky("sky.vsh");
+                utils::PlainText fshDefSky("sky.fsh");
+                
                 return {
+                    shader::Program(vshDefSky.content, fshDefSky.content),
                     shader::Program(vshDefGeo.content, fshDefGeo.content),
                     shader::Program(vshDefPlain.content, fshDefPlain.content),
                     shader::Program(vshDefStencil.content, fshDefStencil.content),
@@ -96,42 +101,54 @@ namespace lkogl {
                 
                 MainTargetUse s;
                 glViewport(0, 0, screen_.width, screen_.height);
-                
-                glEnable(GL_BLEND);
-                glBlendEquation(GL_FUNC_ADD);
-                glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-                glClearColor(0,0.7,0.9,1);
-                glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-                
-                GeometryObjectUse squareObj(square_);
+                Stencil stencil;
                 
                 {
-                    StencilCreation stencil(true);
+                    
 
                     shader::ProgramUse stencilProg(programs_.deferredStencil_);
+                    GeometryObjectUse squareObj(square_);
+
                     BufferTextureUse tus(stencilProg, "uSampler", *buffer_, 0, 0);
                     
                     squareObj.render();
                 }
                 
+                //Skybox
+                {
+                    stencil.filter(0);
+                    glCullFace(GL_FRONT);
+                    GeometryObjectUse box(box_);
+                    shader::ProgramUse skyProg(programs_.skybox_);
+                    TextureUse t(skyProg, sky_, 0);
+                    skyProg.setUniform("uViewProjMatrix", cam.viewProjectionMatrix());
+                    skyProg.setUniform("uModelMatrix", math::scale(math::translate(math::Mat4<float>(1), cam.position()), 5.0f));
+                    box.render();
+                    glCullFace(GL_BACK);
+                }
+                
+                
+                
                 { // Lighting pass
-                    StencilUse stencil;
+                    stencil.filter(1);
                     
                     { // Ambient
                         shader::ProgramUse ambient(programs_.deferredAmbient_);
-                        
+                        GeometryObjectUse squareObj(square_);
+
                         BufferTextureUse tus(ambient, "uSampler", *buffer_, 2, 2);
                         lighting::AmbientLightUse(ambient, ambientLight);
                         
                         squareObj.render();
                     }
-                    
+                    glEnable(GL_BLEND);
+                    glBlendEquation(GL_FUNC_ADD);
                     glBlendFunc(GL_ONE, GL_ONE);
                     
                     { // Directional
                         shader::ProgramUse directional(programs_.deferredDir_);
-                        
+                        GeometryObjectUse squareObj(square_);
+
                         directional.setUniform("uEyePosition", cam.position());
                         
                         BufferTextureUse tu1(directional, "uSamplerPosition", *buffer_, 0, 0);
