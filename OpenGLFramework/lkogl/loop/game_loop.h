@@ -130,6 +130,8 @@ namespace lkogl {
                 state_.running = true;
                 int mouseLocked = false;
                 int updated = false;
+                bool lockChanged = false;
+
                 
                 while(state_.running && !delegate_.stopped)
                 {
@@ -144,6 +146,8 @@ namespace lkogl {
                         if(mouseLocked != delegate_.mouseLocked) {
                             mouseLocked = delegate_.mouseLocked;
                             SDL_SetRelativeMouseMode(mouseLocked ? SDL_TRUE : SDL_FALSE);
+                            
+                            lockChanged  = true;
                         }
                         
                         state_.behind -= state_.updateDuration;
@@ -160,6 +164,12 @@ namespace lkogl {
                                             int windowWidth = e.window.data1;
                                             int windowHeight = e.window.data2;
                                             resize(windowWidth, windowHeight);
+                                    }
+                                    break;
+                                case SDL_MOUSEMOTION:
+                                    if(lockChanged) {
+                                        lockChanged = false;
+                                        continue;
                                     }
                                     break;
                             }
