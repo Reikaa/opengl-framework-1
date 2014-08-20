@@ -54,7 +54,7 @@ namespace lkogl {
         
         const Rectangle::Position Rectangle::bottomRight() const
         {
-            return {max_.x, max_.y};
+            return max_;
         }
         
         const Rectangle::ScalarType Rectangle::left() const

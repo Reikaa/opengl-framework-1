@@ -14,7 +14,7 @@
 namespace lkogl {
     namespace ui {
         namespace behaviour {
-            DraggableBehaviour::DraggableBehaviour()
+            DraggableBehaviour::DraggableBehaviour(const Layout& clamp) : clamp_(clamp)
             {
             }
             
@@ -43,7 +43,7 @@ namespace lkogl {
             bool DraggableBehaviour::onContactBegin(Element& el, const math::Vec2<int>& pos)
             {
                 el.style().setBackground(el.style().background() + math::Vec4<float>{0,0,0,0.2});
-                baseSpacing_ = el.layout().margin();
+                baseOffset_ = el.layout().offset();
                 basePos_ = pos;
                 
                 return false;
@@ -59,9 +59,8 @@ namespace lkogl {
             bool DraggableBehaviour::onContactMove(Element& el, const math::Vec2<int>& pos)
             {
                 math::Vec2<int> diff = pos - basePos_;
-                el.layout().setMargin((baseSpacing_ + Space{diff.y, 0, 0, diff.x}));
-                el.layout().clampMargin();
-                
+                el.layout().setOffset(baseOffset_ + diff, clamp_.rectangle());
+                                
                 return true;
             }
             

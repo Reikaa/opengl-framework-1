@@ -60,7 +60,11 @@ namespace lkogl {
                     math::Mat4<float> modelViewProj = projection;
 
                     for(auto c : current.first->children()) {
-                        elements.push({c, rect});
+                        if(current.first->style().overflow()) {
+                            elements.push({c, current.second});
+                        } else {
+                            elements.push({c, rect});
+                        }
                     }
 
                     modelView = math::translate(modelView, {

@@ -23,6 +23,7 @@ namespace lkogl {
             Length height_ = percent(100);
             WeightPlanar alignment_;
             Space margin_;
+            math::Vec2<int> offset_;
 
             const Layout* parent_ = NULL;
             mutable bool dirty_ = true;
@@ -44,9 +45,11 @@ namespace lkogl {
             
             const Space& margin() const;
             void setMargin(const Space& space);
-            void clampMargin();
             void setAlignment(const WeightPlanar& w);
             
+            const math::Vec2<int>& offset() const;
+            void setOffset(const math::Vec2<int>& offset);
+            void setOffset(const math::Vec2<int>& offset, const Rectangle& clamp);
         private:
             Rectangle::Position calcCenter(const Rectangle::Position& selfSize, const Rectangle::Position& parentSize, int mT, int mR, int mB, int mL) const;
         };

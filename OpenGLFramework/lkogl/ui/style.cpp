@@ -19,5 +19,15 @@ namespace lkogl {
         {
             backgroundColor_ = col;
         }
+        
+        bool Style::overflow() const
+        {
+            return overflow_;
+        }
+        
+        void Style::setOverflow(bool col)
+        {
+            overflow_ = col;
+        }
     }
 }

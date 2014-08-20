@@ -17,10 +17,11 @@ namespace lkogl {
     namespace ui {
         namespace behaviour {
             class DraggableBehaviour : public Behaviour {
-                Space baseSpacing_;
+                math::Vec2<int> baseOffset_;
                 math::Vec2<int> basePos_;
+                const Layout& clamp_;
             public:
-                DraggableBehaviour();
+                DraggableBehaviour(const Layout&);
                 ~DraggableBehaviour();
                 
                 virtual void onInit(Element& el);

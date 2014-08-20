@@ -8,6 +8,8 @@
 
 #include "./layout.h"
 
+#include <iostream>
+
 namespace lkogl {
     namespace ui {
         Layout::Layout()
@@ -35,31 +37,6 @@ namespace lkogl {
             dirty_ = true;
         }
         
-        void Layout::clampMargin()
-        {
-            Rectangle parentRect;
-            if(parent_ != 0) parentRect = parent_->rectangle();
-            
-            int maxHMargin = parentRect.width() - width_.calc(parentRect.width());
-            int maxVMargin = parentRect.height() - height_.calc(parentRect.height());
-            
-            int mTop = margin_.top.calc(parentRect.height());
-            int mRight = margin_.right.calc(parentRect.width());
-            int mBottom = margin_.bottom.calc(parentRect.height());
-            int mLeft = margin_.left.calc(parentRect.width());
-            
-            if(mTop < 0) margin_.top = 0;
-            else if (mTop > maxVMargin) margin_.top = maxVMargin;
-            
-            if(mRight < 0) margin_.right = 0;
-            else if (mRight > maxHMargin) margin_.right = maxHMargin;
-            
-            if(mBottom < 0) margin_.bottom = 0;
-            else if (mTop > maxVMargin) margin_.bottom = maxVMargin;
-            
-            if(mLeft < 0) margin_.left = 0;
-            else if (mLeft > maxHMargin) margin_.left = maxHMargin;
-        }
         
         void Layout::setAlignment(const WeightPlanar& weight)
         {
@@ -83,6 +60,44 @@ namespace lkogl {
         {
             height_ = h;
             width_ = w;
+            dirty_ = true;
+        }
+        
+        const math::Vec2<int>& Layout::offset() const
+        {
+            return offset_;
+        }
+        
+        void Layout::setOffset(const math::Vec2<int>& offset)
+        {
+            offset_ = offset;
+            dirty_ = true;
+        }
+        
+        void Layout::setOffset(const math::Vec2<int>& offset, const Rectangle& clamp)
+        {
+            Rectangle ownRect = rectangle();
+            math::Vec2<int> offsetDiff = offset - offset_;
+            
+            math::Vec2<int> minDiff = offsetDiff + ownRect.topLeft() - clamp.topLeft();
+            math::Vec2<int> maxDiff = offsetDiff + ownRect.bottomRight() - clamp.bottomRight();
+            
+            if(minDiff.x < 0) {
+                offsetDiff.x -= minDiff.x;
+            }
+            if(maxDiff.x > 0) {
+                offsetDiff.x -= maxDiff.x;
+            }
+            
+            if(minDiff.y < 0) {
+                offsetDiff.y -= minDiff.y;
+            }
+            if(maxDiff.y > 0) {
+                offsetDiff.y -= maxDiff.y;
+            }
+            
+            offset_ += offsetDiff;
+            
             dirty_ = true;
         }
         
@@ -111,7 +126,7 @@ namespace lkogl {
                 
                 math::Vec2<int> parentSize = math::max(parentRect.size(), rectangle_.size());
                 
-                rectangle_.setCenter(parentRect.topLeft() + calcCenter({rectangle_.width(), rectangle_.height()}, {parentSize.x,parentSize.y}, mT, mR, mB, mL));
+                rectangle_.setCenter(offset_ + parentRect.topLeft() + calcCenter({rectangle_.width(), rectangle_.height()}, {parentSize.x,parentSize.y}, mT, mR, mB, mL));
 
                 dirty_ = false;
             }
