@@ -25,6 +25,7 @@ namespace lkogl {
             template <typename T>
             struct Frustum3
             {
+                // plane normals are pointing to the outside
                 struct {
                     Plane3<T> left;
                     Plane3<T> right;
@@ -35,30 +36,32 @@ namespace lkogl {
                 } planes;
                 
                 Frustum3() {}
-                Frustum3(const Mat4<T>& mat) { SetFromMatrx(mat); }
-                ~Frustum3() {}
                 
-                void SetFromMatrx(const Mat4<T>& mat)
+                Frustum3(T const & fovy, T const & aspectX, T const & aspectY, T const & zNear, T const & zFar)
                 {
-                
-                    planes.left.setNormalConstant(Vec3<T>(mat[0][3] - mat[0][0], mat[1][3] - mat[1][0], mat[2][3] - mat[2][0]), mat[3][3] - mat[3][0]);
-                    planes.left.normalize();
+                    T aspect = static_cast<T>(aspectX/(double)aspectY);
+                    T fovx = 2*atan(aspect*tan(fovy/2.0));
                     
-                    planes.right.setNormalConstant({mat[0][3] + mat[0][0], mat[1][3] + mat[1][0], mat[2][3] + mat[2][0]}, mat[3][3] + mat[3][0]);
-                    planes.right.normalize();
+                    planes.left = Plane3<T>(rotate({-1,0,0}, angleAxis(fovx/2, {0,1,0})), {0,0,0});
+                    planes.right = Plane3<T>(rotate({1,0,0}, angleAxis(-fovx/2, {0,1,0})), {0,0,0});
                     
-                    planes.top.setNormalConstant({mat[0][3] + mat[0][1], mat[1][3] + mat[1][1], mat[2][3] + mat[2][1]}, mat[3][3] + mat[3][1]);
-                    planes.top.normalize();
-                
-                    planes.bottom.setNormalConstant({mat[0][3] - mat[0][1], mat[1][3] - mat[1][1], mat[2][3] - mat[2][1]}, mat[3][3] - mat[3][1]);
-                    planes.bottom.normalize();
                     
-                    planes.near.setNormalConstant({mat[0][3] - mat[0][2], mat[1][3] - mat[1][2], mat[2][3] - mat[2][2]}, mat[3][3] - mat[3][2]);
-                    planes.near.normalize();
+                    planes.top = Plane3<T>(rotate({0,1,0}, angleAxis(fovy/2, {1,0,0})), {0,0,0});
+                    planes.bottom = Plane3<T>(rotate({0,-1,0}, angleAxis(-fovy/2, {1,0,0})), {0,0,0});
                     
-                    planes.far.setNormalConstant({mat[0][3] + mat[0][2], mat[1][3] + mat[1][2], mat[2][3] + mat[2][2]}, mat[3][3] + mat[3][2]);
-                    planes.far.normalize();
+                    planes.near = Plane3<T>({0,0,1}, -zNear);
+                    planes.far = Plane3<T>({0,0,-1}, zFar);
                 }
+                
+                T verticalAngle() const {
+                    return acos(dot(planes.top.normal, -planes.bottom.normal));
+                }
+                
+                T horizontalAngle() const {
+                    return acos(dot(planes.left.normal, -planes.right.normal));
+                }
+                                
+                ~Frustum3() {}
                 
                 std::array<Plane3<T>, 6> faces() const {
                     std::array<Plane3<T>, 6> faces;
@@ -72,7 +75,84 @@ namespace lkogl {
                     
                     return faces;
                 }
+                
+                std::array<Vec3<T>, 8> corners() const {
+                    std::array<Vec3<T>, 8> corners;
+                    
+                    return {
+                        intersection(planes.left, planes.top, planes.near),
+                        intersection(planes.left, planes.bottom, planes.near),
+                        intersection(planes.left, planes.bottom, planes.far),
+                        intersection(planes.left, planes.top, planes.far),
+                        intersection(planes.right, planes.top, planes.near),
+                        intersection(planes.right, planes.bottom, planes.near),
+                        intersection(planes.right, planes.bottom, planes.far),
+                        intersection(planes.right, planes.top, planes.far)
+                    };
+                }
             };
+            
+            template<typename T>
+            Mat4<T> mat_cast(const Frustum3<T>& f)
+            {
+                Mat4<T> result(0);
+                std::array<Vec3<T>, 8> corners = f.corners();
+                Vec3<T> leftTop = corners[0];
+                Vec3<T> rightBottom = corners[5];
+                T near = -corners[0].z;
+                T far = -corners[3].z;
+                T left = leftTop.x;
+                T right = rightBottom.x;
+                T top = leftTop.y;
+                T bottom = rightBottom.y;
+                
+                result[0][0] = (2*near)/(right-left);
+                result[1][1] = (2*near)/(top-bottom);
+                
+                result[2][0] =  (right+left)/(right-left);
+                result[2][2] = -(far+near)/(far-near);
+                result[2][3] =  -1;
+                
+                result[3][2] =  -(2*far*near)/(far-near);
+                
+                return result;
+            }
+            
+            template<typename T>
+            Frustum3<T> frustum_cast(Mat4<T> mat)
+            {
+                
+                Frustum3<T> frustum;
+                
+                Plane3<T> left({mat[0][3] - mat[0][0], mat[1][3] - mat[1][0], mat[2][3] - mat[2][0]}, mat[3][3] - mat[3][0]);
+                left.normalize();
+                
+                Plane3<T> right({mat[0][3] + mat[0][0], mat[1][3] + mat[1][0], mat[2][3] + mat[2][0]}, mat[3][3] + mat[3][0]);
+                right.normalize();
+                
+                Plane3<T> top({mat[0][3] + mat[0][1], mat[1][3] + mat[1][1], mat[2][3] + mat[2][1]}, mat[3][3] + mat[3][1]);
+                top.normalize();
+                
+                Plane3<T> bottom({mat[0][3] - mat[0][1], mat[1][3] - mat[1][1], mat[2][3] - mat[2][1]}, mat[3][3] - mat[3][1]);
+                bottom.normalize();
+                
+                Plane3<T> near({mat[0][3] - mat[0][2], mat[1][3] - mat[1][2], mat[2][3] - mat[2][2]}, mat[3][3] - mat[3][2]);
+                near.normalize();
+                
+                Plane3<T> far({mat[0][3] + mat[0][2], mat[1][3] + mat[1][2], mat[2][3] + mat[2][2]}, mat[3][3] + mat[3][2]);
+                far.normalize();
+                
+                frustum.planes = {
+                    left,
+                    right,
+                    top,
+                    bottom,
+                    near,
+                    far
+                };
+                
+                return frustum;
+            }
             
         }
     }

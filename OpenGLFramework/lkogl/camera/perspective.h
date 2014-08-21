@@ -10,6 +10,7 @@
 #define __OpenGLFramework__projection__
 
 #include "../math/math.h"
+#include "../math/elements.h"
 
 namespace lkogl {
     namespace camera {
@@ -17,20 +18,16 @@ namespace lkogl {
             mutable math::Mat4<float> matrix_;
             mutable bool dirty_ = true;
             
-            int width_;
-            int height_;
-            float near_;
-            float far_;
-            float fov_;
-            
+            math::geo::Frustum3<float> frustum_;
         public:
             
             Perspective(float fov, int w, int h, float near, float far);
             ~Perspective();
             
             const math::Mat4<float>& matrix() const;
+            const math::geo::Frustum3<float>& frustum() const;
             
-            float far() const { return far_; }
+            float far() const { return frustum_.planes.far.constant; }
         };
     }
 }

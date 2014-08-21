@@ -52,7 +52,6 @@ namespace lkogl {
             {
                 VolumeRelation result = VolumeRelation::INSIDE;
                 std::array<Plane3<T>, 6> planes = frus.faces();
-
                 
                 for(int i = 0; i < 6; i++) {
                     T distance = distance(planes[i], sphere.center);
@@ -148,7 +147,8 @@ namespace lkogl {
             {
                 std::array<Plane3<T>, 6> planes = frus.faces();
                 for(int i = 0; i < 6; ++i) {
-                    if(distance(planes[i], point) < 0.0) {
+                    T d = distance(planes[i], point);
+                    if(d > 0.0) {
                         return false;
                     }
                 }
@@ -171,7 +171,7 @@ namespace lkogl {
             
             template<typename T>
             T distance(const Plane3<T>& a, const Vec3<T>& b) {
-                return dot(a.normal, b) + a.constant;
+                return dot(a.normal, b) - a.constant;
             }
         }
     }

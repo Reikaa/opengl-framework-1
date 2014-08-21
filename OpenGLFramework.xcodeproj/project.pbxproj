@@ -238,6 +238,8 @@
 		F298CBF619A60CA20068DD82 /* sphere3.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sphere3.h; sourceTree = "<group>"; };
 		F298CBF719A60D450068DD82 /* aabb3.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = aabb3.h; sourceTree = "<group>"; };
 		F298CBF819A611D30068DD82 /* ray3.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ray3.h; sourceTree = "<group>"; };
+		F298CBF919A62B1D0068DD82 /* triangle3.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = triangle3.h; sourceTree = "<group>"; };
+		F298CBFA19A67C200068DD82 /* elements.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = elements.h; sourceTree = "<group>"; };
 		F29B1F51199E2A4E00F17051 /* element.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = element.cpp; sourceTree = "<group>"; };
 		F29B1F52199E2A4E00F17051 /* element.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = element.h; sourceTree = "<group>"; };
 		F29B1F54199E2B1800F17051 /* layout.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = layout.cpp; sourceTree = "<group>"; };
@@ -605,6 +607,7 @@
 				F27044DA199542B800C57B6A /* mat4.h */,
 				F27044DD199542D700C57B6A /* quat.h */,
 				F298CBF119A5FD8C0068DD82 /* base.h */,
+				F298CBFA19A67C200068DD82 /* elements.h */,
 			);
 			path = math;
 			sourceTree = "<group>";
@@ -623,10 +626,11 @@
 			children = (
 				F298CBEA19A5F9410068DD82 /* frustum3.h */,
 				F298CBEE19A5FBC10068DD82 /* plane3.h */,
-				F298CBF419A603F50068DD82 /* relation.h */,
 				F298CBF619A60CA20068DD82 /* sphere3.h */,
 				F298CBF719A60D450068DD82 /* aabb3.h */,
 				F298CBF819A611D30068DD82 /* ray3.h */,
+				F298CBF919A62B1D0068DD82 /* triangle3.h */,
+				F298CBF419A603F50068DD82 /* relation.h */,
 			);
 			path = geo;
 			sourceTree = "<group>";

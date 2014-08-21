@@ -25,6 +25,16 @@ namespace lkogl {
                 Sphere3(const Vec3<T>& c, T r) : radius(r), center(c) {}
                 
                 ~Sphere3() {}
+                
+                T surface() const
+                {
+                    return M_PI_4/3 * radius * radius * radius;
+                }
+                
+                T volume() const
+                {
+                    return M_PI_4 * radius * radius;
+                }
             };
             
         }

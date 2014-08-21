@@ -25,18 +25,46 @@ namespace lkogl {
                 
                 std::array<Vec3<T>, 8> corners() const
                 {
-                    std::array<Vec3<T>, 8> corners;
                     
-                    corners[0] = min;
-                    corners[1] = min + Vec3<T>{max.x,0,0};
-                    corners[2] = min + Vec3<T>{max.x,max.y,0};
-                    corners[3] = min + Vec3<T>{0,max.y,0};
-                    corners[4] = min + Vec3<T>{0,max.y,max.z};
-                    corners[5] = min + Vec3<T>{0,0,max.z};
-                    corners[6] = min + Vec3<T>{max.x,0,max.z};
-                    corners[7] = max;
+                    return {
+                        min,
+                        min + Vec3<T>{max.x,0,0},
+                        min + Vec3<T>{max.x,max.y,0},
+                        min + Vec3<T>{0,max.y,0},
+                        min + Vec3<T>{0,max.y,max.z},
+                        min + Vec3<T>{0,0,max.z},
+                        min + Vec3<T>{max.x,0,max.z},
+                        max
+                    };
+                }
+                
+                std::array<Plane3<T>, 6> faces() const {
+                    Vec3<T> x(max.x-min.x,0,0);
+                    Vec3<T> y(0,max.y-min.y,0);
+                    Vec3<T> z(0,0,max.z-min.z);
                     
-                    return corners;
+                    return {
+                        Plane3<T>(cross(y,z), min),
+                        Plane3<T>(-cross(z,z), max),
+                        Plane3<T>(cross(x,z), max),
+                        Plane3<T>(-cross(x,z), min),
+                        Plane3<T>(cross(x,y), min),
+                        Plane3<T>(-cross(x,y), max)
+                    };
+                    
+                    return faces;
+                }
+                
+                T surface() const
+                {
+                    Vec3<T> diagonal = max - min;
+                    return 2 * (diagonal.x*diagonal.y + diagonal.x*diagonal.z + diagonal.y*diagonal.z);
+                }
+                
+                T volume() const
+                {
+                    Vec3<T> diagonal = max - min;
+                    return diagonal.x * diagonal.y * diagonal.z;
                 }
             };
         }

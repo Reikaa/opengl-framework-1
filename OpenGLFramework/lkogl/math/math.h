@@ -18,30 +18,9 @@
 #include "./mat4.h"
 #include "./quat.h"
 
-
-#include "./geo/frustum3.h"
-#include "./geo/plane3.h"
-#include "./geo/sphere3.h"
-#include "./geo/aabb3.h"
-#include "./geo/relation.h"
-
 namespace lkogl {
     namespace math {
         typedef float basetype;
-        
-        template<typename T>
-        Mat4<T> perspective(T const & fovy, T const & aspect, T const & zNear, T const & zFar)
-        {
-            T tanHalfFovy = tan(fovy / static_cast<T>(2));
-            
-            Mat4<T> result(static_cast<T>(0));
-            result[0][0] = static_cast<T>(1) / (aspect * tanHalfFovy);
-            result[1][1] = static_cast<T>(1) / (tanHalfFovy);
-            result[2][2] = - (zFar + zNear) / (zFar - zNear);
-            result[2][3] = - static_cast<T>(1);
-            result[3][2] = - (static_cast<T>(2) * zFar * zNear) / (zFar - zNear);
-            return result;
-        }
         
         template<typename T>
         Mat4<T> ortho

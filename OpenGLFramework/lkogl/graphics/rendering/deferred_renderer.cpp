@@ -72,9 +72,7 @@ namespace lkogl {
                 };
                 
                 lighting::AmbientLight ambientLight({0.2,0.2,0.2});
-                
-                math::geo::Frustum3<float> frustum(cam.viewProjectionMatrix());
-                
+            
                 // Geometry Pass
                 {
                     BufferTargetUse tr(*buffer_);

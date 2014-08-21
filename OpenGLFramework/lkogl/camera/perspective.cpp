@@ -12,7 +12,7 @@ namespace lkogl {
     namespace camera {
 
         Perspective::Perspective(float fov, int w, int h, float near, float far) :
-         fov_(fov), width_(w), height_(h), near_(near), far_(far)
+         frustum_(math::radians(fov), w, h, near, far)
         {
         }
         Perspective::~Perspective()
@@ -22,11 +22,16 @@ namespace lkogl {
         const math::Mat4<float>& Perspective::matrix() const
         {
             if(dirty_) {
-                matrix_ = math::perspective(math::radians(fov_), width_/float(height_), near_, far_);
+                matrix_ = math::geo::mat_cast(frustum_);
                 dirty_ = false;
             }
             
             return matrix_;
+        }
+        
+        const math::geo::Frustum3<float>& Perspective::frustum() const
+        {
+            return frustum_;
         }
         
         
