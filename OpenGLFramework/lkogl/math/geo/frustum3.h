@@ -119,27 +119,57 @@ namespace lkogl {
             }
             
             template<typename T>
-            Frustum3<T> frustum_cast(Mat4<T> mat)
+            Frustum3<T> frustum_from_view_projection(Mat4<T> mat)
             {
                 
                 Frustum3<T> frustum;
                 
-                Plane3<T> left({mat[0][3] - mat[0][0], mat[1][3] - mat[1][0], mat[2][3] - mat[2][0]}, mat[3][3] - mat[3][0]);
+                Plane3<T> left({
+                    mat[0][3] - mat[0][0],
+                    mat[1][3] - mat[1][0],
+                    mat[2][3] - mat[2][0]},
+                               
+                    mat[3][3] - mat[3][0]);
                 left.normalize();
                 
-                Plane3<T> right({mat[0][3] + mat[0][0], mat[1][3] + mat[1][0], mat[2][3] + mat[2][0]}, mat[3][3] + mat[3][0]);
+                Plane3<T> right({
+                    mat[0][3] + mat[0][0],
+                    mat[1][3] + mat[1][0],
+                    mat[2][3] + mat[2][0]},
+                    
+                    mat[3][3] + mat[3][0]);
                 right.normalize();
                 
-                Plane3<T> top({mat[0][3] + mat[0][1], mat[1][3] + mat[1][1], mat[2][3] + mat[2][1]}, mat[3][3] + mat[3][1]);
+                Plane3<T> top({
+                    mat[0][3] + mat[0][1],
+                    mat[1][3] + mat[1][1],
+                    mat[2][3] + mat[2][1]},
+                              
+                    mat[3][3] + mat[3][1]);
                 top.normalize();
                 
-                Plane3<T> bottom({mat[0][3] - mat[0][1], mat[1][3] - mat[1][1], mat[2][3] - mat[2][1]}, mat[3][3] - mat[3][1]);
+                Plane3<T> bottom({
+                    mat[0][3] - mat[0][1],
+                    mat[1][3] - mat[1][1],
+                    mat[2][3] - mat[2][1]},
+                                 
+                    mat[3][3] - mat[3][1]);
                 bottom.normalize();
                 
-                Plane3<T> near({mat[0][3] - mat[0][2], mat[1][3] - mat[1][2], mat[2][3] - mat[2][2]}, mat[3][3] - mat[3][2]);
+                Plane3<T> near({
+                    mat[0][3] - mat[0][2],
+                    mat[1][3] - mat[1][2],
+                    mat[2][3] - mat[2][2]},
+                    
+                    mat[3][3] - mat[3][2]);
                 near.normalize();
                 
-                Plane3<T> far({mat[0][3] + mat[0][2], mat[1][3] + mat[1][2], mat[2][3] + mat[2][2]}, mat[3][3] + mat[3][2]);
+                Plane3<T> far({
+                    mat[0][3] + mat[0][2],
+                    mat[1][3] + mat[1][2],
+                    mat[2][3] + mat[2][2]},
+                              
+                    mat[3][3] + mat[3][2]);
                 far.normalize();
                 
                 frustum.planes = {

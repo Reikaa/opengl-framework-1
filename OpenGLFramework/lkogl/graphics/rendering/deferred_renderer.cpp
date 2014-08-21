@@ -11,7 +11,7 @@
 #include "../render_target.h"
 #include "../lighting/directional_light.h"
 #include "../lighting/ambient_light.h"
-#include "../../scene/walker/scene_deep_walker.h"
+#include "../../scene/walker/collector.h"
 #include "../stencil.h"
 #include "../../geometry/mesh.h"
 #include "../../utils/image.h"
@@ -63,7 +63,7 @@ namespace lkogl {
             
             void DeferredRenderer::render(std::shared_ptr<scene::Node> graph, const camera::Camera& cam) const
             {
-                scene::walker::SceneDeepWalker walker;
+                scene::walker::Collector collector;
                 
                 std::vector<lighting::DirectionalLight> directionalLights = {
                     lighting::DirectionalLight({1,1,1}, 1.4, -math::Vec3<float>{1,2.6,0.4}),
@@ -91,8 +91,19 @@ namespace lkogl {
                     auto matrix = cam.viewProjectionMatrix();
                     defgeo.setUniform("uViewProjMatrix", matrix);
                     defgeo.setUniformf("uFar", cam.perspective().far());
+                    
+                    math::geo::Frustum3<float> viewFrustum = math::geo::frustum_from_view_projection(cam.viewProjectionMatrix());
 
-                    walker.walk(graph, &scene::components::Component::render, defgeo);
+                    auto nodes = collector.collect(graph, [viewFrustum](const scene::Node& n) {
+                        auto p = n.transformation.matrix() * math::Vec4<float>(0);
+                        return math::geo::contains(viewFrustum, math::Vec3<float>(p.x, p.y, p.z));
+                    });
+                    for(auto n : nodes) {
+                        for(auto c : n->components()) {
+                            c->render(n->transformation, defgeo);
+                        }
+                    }
+                    //walker.walk(graph, &scene::components::Component::render, defgeo);
                     
                     glDepthMask(GL_FALSE);
                     glDisable(GL_DEPTH_TEST);

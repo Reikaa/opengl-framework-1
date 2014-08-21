@@ -28,5 +28,10 @@ namespace lkogl {
         void Node::addComponent(std::shared_ptr<components::Component> c) {
             components_.push_back(c);
         }
+        
+        const std::vector<std::shared_ptr<components::Component>>& Node::components() const
+        {
+            return components_;
+        }
     }
 }

@@ -60,6 +60,7 @@
 		F29707BB199391FD00D48CE5 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F29707A31993734100D48CE5 /* OpenGL.framework */; };
 		F29707BE199397FF00D48CE5 /* window.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F29707BC199397FF00D48CE5 /* window.cpp */; };
 		F29707CB1993BD9700D48CE5 /* scene_deep_walker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F29707C91993BD9700D48CE5 /* scene_deep_walker.cpp */; };
+		F298CBFD19A692200068DD82 /* collector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F298CBFB19A692200068DD82 /* collector.cpp */; };
 		F29B1F53199E2A4E00F17051 /* element.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F29B1F51199E2A4E00F17051 /* element.cpp */; };
 		F29B1F56199E2B1800F17051 /* layout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F29B1F54199E2B1800F17051 /* layout.cpp */; };
 		F29B1F59199E2B9600F17051 /* rectangle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F29B1F57199E2B9600F17051 /* rectangle.cpp */; };
@@ -240,6 +241,8 @@
 		F298CBF819A611D30068DD82 /* ray3.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ray3.h; sourceTree = "<group>"; };
 		F298CBF919A62B1D0068DD82 /* triangle3.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = triangle3.h; sourceTree = "<group>"; };
 		F298CBFA19A67C200068DD82 /* elements.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = elements.h; sourceTree = "<group>"; };
+		F298CBFB19A692200068DD82 /* collector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = collector.cpp; sourceTree = "<group>"; };
+		F298CBFC19A692200068DD82 /* collector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = collector.h; sourceTree = "<group>"; };
 		F29B1F51199E2A4E00F17051 /* element.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = element.cpp; sourceTree = "<group>"; };
 		F29B1F52199E2A4E00F17051 /* element.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = element.h; sourceTree = "<group>"; };
 		F29B1F54199E2B1800F17051 /* layout.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = layout.cpp; sourceTree = "<group>"; };
@@ -617,6 +620,8 @@
 			children = (
 				F29707C91993BD9700D48CE5 /* scene_deep_walker.cpp */,
 				F29707CA1993BD9700D48CE5 /* scene_deep_walker.h */,
+				F298CBFB19A692200068DD82 /* collector.cpp */,
+				F298CBFC19A692200068DD82 /* collector.h */,
 			);
 			path = walker;
 			sourceTree = "<group>";
@@ -918,6 +923,7 @@
 				F279E248199F48030001BBBF /* space.cpp in Sources */,
 				F21EA81119990FF200D78E1C /* geometry_object.cpp in Sources */,
 				F2DEC613199790A600EE31E7 /* camera.cpp in Sources */,
+				F298CBFD19A692200068DD82 /* collector.cpp in Sources */,
 				F21EA82F199ABD0B00D78E1C /* animation_component.cpp in Sources */,
 				F2970791199370D800D48CE5 /* texture.cpp in Sources */,
 				F2B0C403199FF4A1008AC975 /* layout_invalidator.cpp in Sources */,

@@ -21,6 +21,7 @@ namespace lkogl {
         
         namespace walker {
             class SceneDeepWalker;
+            class Collector;
         }
         
         class Node {
@@ -37,7 +38,10 @@ namespace lkogl {
             void removeChild(std::shared_ptr<Node>);
             void addComponent(std::shared_ptr<components::Component>);
             
+            const std::vector<std::shared_ptr<components::Component>>& components() const;
+            
             friend class walker::SceneDeepWalker;
+            friend class walker::Collector;
         };
     }
 }
