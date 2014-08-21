@@ -231,6 +231,13 @@
 		F29707BD199397FF00D48CE5 /* window.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = window.h; sourceTree = "<group>"; };
 		F29707C91993BD9700D48CE5 /* scene_deep_walker.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = scene_deep_walker.cpp; sourceTree = "<group>"; };
 		F29707CA1993BD9700D48CE5 /* scene_deep_walker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = scene_deep_walker.h; sourceTree = "<group>"; };
+		F298CBEA19A5F9410068DD82 /* frustum3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = frustum3.h; sourceTree = "<group>"; };
+		F298CBEE19A5FBC10068DD82 /* plane3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = plane3.h; sourceTree = "<group>"; };
+		F298CBF119A5FD8C0068DD82 /* base.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = base.h; sourceTree = "<group>"; };
+		F298CBF419A603F50068DD82 /* relation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = relation.h; sourceTree = "<group>"; };
+		F298CBF619A60CA20068DD82 /* sphere3.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sphere3.h; sourceTree = "<group>"; };
+		F298CBF719A60D450068DD82 /* aabb3.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = aabb3.h; sourceTree = "<group>"; };
+		F298CBF819A611D30068DD82 /* ray3.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ray3.h; sourceTree = "<group>"; };
 		F29B1F51199E2A4E00F17051 /* element.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = element.cpp; sourceTree = "<group>"; };
 		F29B1F52199E2A4E00F17051 /* element.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = element.h; sourceTree = "<group>"; };
 		F29B1F54199E2B1800F17051 /* layout.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = layout.cpp; sourceTree = "<group>"; };
@@ -589,6 +596,7 @@
 		F29707B2199378D300D48CE5 /* math */ = {
 			isa = PBXGroup;
 			children = (
+				F298CBEC19A5FB3D0068DD82 /* geo */,
 				F2970792199370EE00D48CE5 /* math.cpp */,
 				F2970793199370EE00D48CE5 /* math.h */,
 				F2DEC6221997C04400EE31E7 /* vec2.h */,
@@ -596,6 +604,7 @@
 				F27044D71995428B00C57B6A /* vec4.h */,
 				F27044DA199542B800C57B6A /* mat4.h */,
 				F27044DD199542D700C57B6A /* quat.h */,
+				F298CBF119A5FD8C0068DD82 /* base.h */,
 			);
 			path = math;
 			sourceTree = "<group>";
@@ -607,6 +616,19 @@
 				F29707CA1993BD9700D48CE5 /* scene_deep_walker.h */,
 			);
 			path = walker;
+			sourceTree = "<group>";
+		};
+		F298CBEC19A5FB3D0068DD82 /* geo */ = {
+			isa = PBXGroup;
+			children = (
+				F298CBEA19A5F9410068DD82 /* frustum3.h */,
+				F298CBEE19A5FBC10068DD82 /* plane3.h */,
+				F298CBF419A603F50068DD82 /* relation.h */,
+				F298CBF619A60CA20068DD82 /* sphere3.h */,
+				F298CBF719A60D450068DD82 /* aabb3.h */,
+				F298CBF819A611D30068DD82 /* ray3.h */,
+			);
+			path = geo;
 			sourceTree = "<group>";
 		};
 		F29B1F50199E29D300F17051 /* ui */ = {

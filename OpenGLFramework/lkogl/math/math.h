@@ -9,14 +9,21 @@
 #ifndef __OpenGLFramework__math__
 #define __OpenGLFramework__math__
 
-#include <math.h>
 #include <string>
 
+#include "./base.h"
 #include "./vec3.h"
 #include "./vec2.h"
 #include "./vec4.h"
 #include "./mat4.h"
 #include "./quat.h"
+
+
+#include "./geo/frustum3.h"
+#include "./geo/plane3.h"
+#include "./geo/sphere3.h"
+#include "./geo/aabb3.h"
+#include "./geo/relation.h"
 
 namespace lkogl {
     namespace math {
@@ -56,13 +63,71 @@ namespace lkogl {
         }
         
         
-        template<typename T>
-        T radians(const T& deg) {
-            static_assert(std::numeric_limits<T>::is_iec559, "'radians' only accept floating-point input");
-            return deg * 2 * M_PI / 360.f;
+        
+        template <typename T>
+        std::string toString(const Vec3<T>& v)
+        {
+            std::string result;
+            result += "(" + std::to_string(v.x) + ", ";
+            result += std::to_string(v.y) + ", ";
+            result += std::to_string(v.z) + ")";
+            
+            return result;
         }
         
-        float radians(const int& deg);
+        
+        template <typename T>
+        std::string toString(const Vec2<T>& v)
+        {
+            std::string result;
+            result += "(" + std::to_string(v.x) + ", ";
+            result += std::to_string(v.y) + ")";
+            
+            return result;
+        }
+        
+        
+        
+        template <typename T>
+        std::string toString(const Vec4<T>& v)
+        {
+            std::string result;
+            result += "(" + std::to_string(v.x) + ", ";
+            result += std::to_string(v.y) + ", ";
+            result += std::to_string(v.z) + ", ";
+            result += std::to_string(v.w) + ")";
+            
+            return result;
+        }
+        
+        
+        
+        template <typename T>
+        std::string toString(const Mat4<T>& m)
+        {
+            std::string result = "---\n";
+            result += toString(m[0]) + "\n";
+            result += toString(m[1]) + "\n";
+            result += toString(m[2]) + "\n";
+            result += toString(m[3]);
+            
+            return result;
+        }
+        
+        
+        
+        
+        template <typename T>
+        std::string toString(const Quat<T>& v)
+        {
+            std::string result;
+            result += "(" + std::to_string(v.x) + ", ";
+            result += std::to_string(v.y) + ", ";
+            result += std::to_string(v.z) + ", ";
+            result += std::to_string(v.w) + ")";
+            
+            return result;
+        }
     }
 }
 

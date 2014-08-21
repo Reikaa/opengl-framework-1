@@ -9,6 +9,8 @@
 #ifndef __OpenGLFramework__vec4__
 #define __OpenGLFramework__vec4__
 
+#include "./base.h"
+
 namespace lkogl {
     namespace math {
         typedef float basetype;
@@ -302,6 +304,19 @@ namespace lkogl {
         {
             return !(v1==v2);
         }
+        
+        
+        template <typename T>
+        bool operator>>(Vec4<T> const & v1, Vec4<T> const & v2)
+        {
+            return v1.x > v2.x && v1.y > v2.y && v1.z > v2.z && v1.w < v2.w;
+        }
+        
+        template <typename T>
+        bool operator<<(Vec4<T> const & v1, Vec4<T> const & v2)
+        {
+            return v1.x < v2.x && v1.y < v2.y && v1.z < v2.z && v1.w < v2.w;
+        }
 
         
         ////////////////////////////
@@ -335,7 +350,7 @@ namespace lkogl {
         template <typename T>
         T max(const Vec4<T>& v)
         {
-            return std::max(std::max(v.x, v.y), std::max(v.z, v.w));
+            return max(max(v.x, v.y), max(v.z, v.w));
         }
         
         template <typename T>
@@ -355,23 +370,11 @@ namespace lkogl {
         Vec4<T> max(const Vec4<T>& a, const Vec4<T>& b)
         {
             return {
-                std::max(a.x, b.x),
-                std::max(a.y, b.y),
-                std::max(a.z, b.z),
-                std::max(a.w, b.w)
+                max(a.x, b.x),
+                max(a.y, b.y),
+                max(a.z, b.z),
+                max(a.w, b.w)
             };
-        }
-        
-        template <typename T>
-        std::string toString(const Vec4<T>& v)
-        {
-            std::string result;
-            result += "(" + std::to_string(v.x) + ", ";
-            result += std::to_string(v.y) + ", ";
-            result += std::to_string(v.z) + ", ";
-            result += std::to_string(v.w) + ")";
-            
-            return result;
         }
         
     }

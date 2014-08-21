@@ -369,6 +369,10 @@ public:
         << " (" << "OpenGL " << glGetString(GL_VERSION) << ")"
         << " " << extraTitle_;
         
+        if(cameraComponent.get()) {
+          ss << " Cam:" << toString(cameraComponent->camera().position());
+        }
+        
         return ss.str();
     }
     

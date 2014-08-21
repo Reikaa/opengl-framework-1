@@ -9,7 +9,7 @@
 #ifndef __OpenGLFramework__vec3__
 #define __OpenGLFramework__vec3__
 
-#include <math.h>
+#include "./base.h"
 
 namespace lkogl {
     namespace math {
@@ -289,6 +289,18 @@ namespace lkogl {
             return !(v1==v2);
         }
         
+        template <typename T>
+        bool operator>>(Vec3<T> const & v1, Vec3<T> const & v2)
+        {
+            return v1.x > v2.x && v1.y > v2.y && v1.z > v2.z;
+        }
+        
+        template <typename T>
+        bool operator<<(Vec3<T> const & v1, Vec3<T> const & v2)
+        {
+            return v1.x < v2.x && v1.y < v2.y && v1.z < v2.z;
+        }
+        
         
         ////////////////////////////
         /// Unary constant operators
@@ -328,7 +340,8 @@ namespace lkogl {
         template <typename T>
         T max(const Vec3<T>& v)
         {
-            return std::max(v.x, std::max(v.y, v.z));
+            
+            return max(v.x, max(v.y, v.z));
         }
         
         template <typename T>
@@ -348,21 +361,10 @@ namespace lkogl {
         Vec3<T> max(const Vec3<T>& a, const Vec3<T>& b)
         {
             return {
-                std::max(a.x, b.x),
-                std::max(a.y, b.y),
-                std::max(a.z, b.z)
+                max(a.x, b.x),
+                max(a.y, b.y),
+                max(a.z, b.z)
             };
-        }
-        
-        template <typename T>
-        std::string toString(const Vec3<T>& v)
-        {
-            std::string result;
-            result += "(" + std::to_string(v.x) + ", ";
-            result += std::to_string(v.y) + ", ";
-            result += std::to_string(v.z) + ")";
-            
-            return result;
         }
         
     }

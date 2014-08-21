@@ -10,8 +10,10 @@
 #define __OpenGLFramework__quat__
 
 #include <assert.h>
+#include "./base.h"
 #include "./vec3.h"
 #include "./vec4.h"
+#include "./mat4.h"
 
 namespace lkogl {
     namespace math {
@@ -412,20 +414,6 @@ namespace lkogl {
         Vec3<T> rotate(const Vec3<T> vec, Quat<T> rotation)
         {
             return rotation * vec;
-        }
-        
-        
-        
-        template <typename T>
-        std::string toString(const Quat<T>& v)
-        {
-            std::string result;
-            result += "(" + std::to_string(v.x) + ", ";
-            result += std::to_string(v.y) + ", ";
-            result += std::to_string(v.z) + ", ";
-            result += std::to_string(v.w) + ")";
-            
-            return result;
         }
     }
 }

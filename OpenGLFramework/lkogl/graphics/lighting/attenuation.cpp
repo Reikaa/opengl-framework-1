@@ -6,8 +6,8 @@
 //  Copyright (c) 2014 Laszlo Korte. All rights reserved.
 //
 
-#include <math.h>
 
+#include "../../math/base.h"
 #include "./attenuation.h"
 
 namespace lkogl {

@@ -66,13 +66,14 @@ namespace lkogl {
                 scene::walker::SceneDeepWalker walker;
                 
                 std::vector<lighting::DirectionalLight> directionalLights = {
-                    lighting::DirectionalLight({0.6,0.7,0.9}, 0.4, {-0.3,1,-0.3}),
-                    lighting::DirectionalLight({0.6,0.7,0.9}, 0.4, {1,-0.3,1}),
-                    lighting::DirectionalLight({1,1,1}, 1.4, {0,-1,0}),
+                    lighting::DirectionalLight({1,1,1}, 1.4, -math::Vec3<float>{1,2.6,0.4}),
+                    lighting::DirectionalLight({1,1,1}, 0.2, math::Vec3<float>{2,-1,-2}),
+                    lighting::DirectionalLight({1,1,1}, 0.2, math::Vec3<float>{-1,-1,3}),
                 };
                 
-                lighting::AmbientLight ambientLight({0.1,0.1,0.1});
+                lighting::AmbientLight ambientLight({0.2,0.2,0.2});
                 
+                math::geo::Frustum3<float> frustum(cam.viewProjectionMatrix());
                 
                 // Geometry Pass
                 {

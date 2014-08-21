@@ -437,18 +437,6 @@ namespace lkogl {
                            mat[3] + Vec4<T>(offset, 0)
                            );
         }
-        
-        template <typename T>
-        std::string toString(const Mat4<T>& m)
-        {
-            std::string result = "---\n";
-            result += toString(m[0]) + "\n";
-            result += toString(m[1]) + "\n";
-            result += toString(m[2]) + "\n";
-            result += toString(m[3]);
-            
-            return result;
-        }
     }
 }
 
