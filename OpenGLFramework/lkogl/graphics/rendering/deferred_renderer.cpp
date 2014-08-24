@@ -93,11 +93,14 @@ namespace lkogl {
                     defgeo.setUniformf("uFar", cam.perspective().far());
                     
                     math::geo::Frustum3<float> viewFrustum = math::geo::frustum_from_view_projection(cam.viewProjectionMatrix());
-
+                    
                     auto nodes = collector.collect(graph, [viewFrustum](const scene::Node& n) {
-                        auto p = n.transformation.matrix() * math::Vec4<float>(0);
-                        return math::geo::contains(viewFrustum, math::Vec3<float>(p.x, p.y, p.z));
+                        auto box = math::geo::transform(n.bounding, n.transformation.matrix());
+                        return math::geo::relationship(viewFrustum, box) != math::geo::VolumeRelation::OUTSIDE;
                     });
+                    
+                    std::cout << "rendering " << nodes.size() << " nodes" << std::endl;
+                    
                     for(auto n : nodes) {
                         for(auto c : n->components()) {
                             c->render(n->transformation, defgeo);
@@ -132,7 +135,7 @@ namespace lkogl {
                     shader::ProgramUse skyProg(programs_.skybox_);
                     TextureUse t(skyProg, sky_, 0);
                     skyProg.setUniform("uViewProjMatrix", cam.viewProjectionMatrix());
-                    skyProg.setUniform("uModelMatrix", math::scale(math::translate(math::Mat4<float>(1), cam.position()), 5.0f));
+                    skyProg.setUniform("uModelMatrix", math::scale(math::translate(math::Mat4<float>(1), cam.position()), 100.0f));
                     box.render();
                     glCullFace(GL_BACK);
                 }

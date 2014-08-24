@@ -27,24 +27,34 @@ namespace lkogl {
             template<typename T>
             VolumeRelation relationship(const Frustum3<T>& frus, const Aabb3<T>& aabb)
             {
-                int inCount = 0;
-                int outCount = 0;
-
-                for(Vec3<T> c : aabb.corners()) {
-                    if(frus.contains(c)) {
-                        inCount++;
-                    } else {
-                        outCount++;
+                int totalIn = 0;
+                
+                for(Plane3<T> pl : frus.faces()) {
+                    int inCount = 8;
+                    int ptIn = 1;
+                    
+                    for(auto c : aabb.corners()) {
+                        
+                        // test this point against the planes
+                        if(distance(pl, c) > 0) {
+                            ptIn = 0;
+                            --inCount;
+                        }
                     }
+                    
+                    // were all the points outside of plane p?
+                    if(inCount == 0)
+                        return VolumeRelation::OUTSIDE;
+                    
+                    // check if they were all on the right side of the plane
+                    totalIn += ptIn;
                 }
                 
-                if(!inCount) {
-                    return VolumeRelation::OUTSIDE;
-                } else if(!outCount) {
-                    return VolumeRelation::INTERSECTING;
-                } else {
+                if(totalIn == 6) {
                     return VolumeRelation::INSIDE;
                 }
+                
+                return VolumeRelation::INTERSECTING;
             }
             
             template<typename T>
@@ -159,7 +169,7 @@ namespace lkogl {
             template<typename T>
             bool contains(const Frustum3<T>& frus, const Aabb3<T>& aabb) {
                 for(Vec3<T> c : aabb.corners()) {
-                    if(!frus.contains(c)) {
+                    if(!contains(frus, c)) {
                         return false;
                     }
                 }

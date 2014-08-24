@@ -19,6 +19,12 @@ namespace lkogl {
             struct Aabb3 {
                 Vec3<T> min;
                 Vec3<T> max;
+
+                Aabb3() {}
+                Aabb3(const T& w, const T& h, const T& d) :
+                    min(-w/2, -h/2, -d/2),
+                    max(w/2, h/2, d/2)
+                {}
                 
                 Aabb3(const Vec3<T>& minp, const Vec3<T>& maxp) :min(minp), max(maxp) {}
                 ~Aabb3() {}
@@ -28,12 +34,12 @@ namespace lkogl {
                     
                     return {
                         min,
-                        min + Vec3<T>{max.x,0,0},
-                        min + Vec3<T>{max.x,max.y,0},
-                        min + Vec3<T>{0,max.y,0},
-                        min + Vec3<T>{0,max.y,max.z},
-                        min + Vec3<T>{0,0,max.z},
-                        min + Vec3<T>{max.x,0,max.z},
+                        Vec3<T>{max.x,min.y,min.z},
+                        Vec3<T>{max.x,max.y,min.z},
+                        Vec3<T>{min.x,max.y,min.z},
+                        Vec3<T>{min.x,max.y,max.z},
+                        Vec3<T>{min.x,min.y,max.z},
+                        Vec3<T>{max.x,min.y,max.z},
                         max
                     };
                 }
@@ -67,6 +73,14 @@ namespace lkogl {
                     return diagonal.x * diagonal.y * diagonal.z;
                 }
             };
+            
+            template <typename T>
+            Aabb3<T> transform(const Aabb3<T>& box, const Mat4<T>& m)
+            {
+                math::Vec4<float> min = m*math::Vec4<float>(box.min.x, box.min.y, box.min.z, 1);
+                math::Vec4<float> max = m*math::Vec4<float>(box.max.x, box.max.y, box.max.z, 1);
+                return Aabb3<T>({min.x, min.y, min.z}, {max.x, max.y, max.z});
+            }
         }
     }
 }

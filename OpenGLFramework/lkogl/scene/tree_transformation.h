@@ -41,7 +41,7 @@ namespace lkogl {
             void setScale(const Vec3&);
             void setRotation(const Quat&);
             
-            void add(const geometry::Transformation& t);
+            void transform(const geometry::Transformation& t);
             
             const Mat4 matrix() const;
             const Mat4 inverseMatrix() const;

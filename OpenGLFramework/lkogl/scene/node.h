@@ -13,6 +13,7 @@
 #include <list>
 #include <vector>
 
+#include "../math/elements.h"
 #include "./tree_transformation.h"
 #include "./components/base_component.h"
 
@@ -30,6 +31,7 @@ namespace lkogl {
 
         public:
             TreeTransformation transformation;
+            math::geo::Aabb3<float> bounding;
 
             Node();
             ~Node();

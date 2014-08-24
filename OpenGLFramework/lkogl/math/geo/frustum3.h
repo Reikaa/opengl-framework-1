@@ -82,12 +82,13 @@ namespace lkogl {
                     return {
                         intersection(planes.left, planes.top, planes.near),
                         intersection(planes.left, planes.bottom, planes.near),
-                        intersection(planes.left, planes.bottom, planes.far),
-                        intersection(planes.left, planes.top, planes.far),
                         intersection(planes.right, planes.top, planes.near),
                         intersection(planes.right, planes.bottom, planes.near),
                         intersection(planes.right, planes.bottom, planes.far),
-                        intersection(planes.right, planes.top, planes.far)
+                        intersection(planes.right, planes.top, planes.far),
+                        
+                        intersection(planes.left, planes.bottom, planes.far),
+                        intersection(planes.left, planes.top, planes.far),
                     };
                 }
             };
@@ -98,9 +99,9 @@ namespace lkogl {
                 Mat4<T> result(0);
                 std::array<Vec3<T>, 8> corners = f.corners();
                 Vec3<T> leftTop = corners[0];
-                Vec3<T> rightBottom = corners[5];
+                Vec3<T> rightBottom = corners[3];
                 T near = -corners[0].z;
-                T far = -corners[3].z;
+                T far = -corners[7].z;
                 T left = leftTop.x;
                 T right = rightBottom.x;
                 T top = leftTop.y;
@@ -124,54 +125,54 @@ namespace lkogl {
                 
                 Frustum3<T> frustum;
                 
-                Plane3<T> left({
-                    mat[0][3] - mat[0][0],
-                    mat[1][3] - mat[1][0],
-                    mat[2][3] - mat[2][0]},
-                               
-                    mat[3][3] - mat[3][0]);
-                left.normalize();
-                
-                Plane3<T> right({
+                Plane3<T> left(-math::Vec3<float>{
                     mat[0][3] + mat[0][0],
                     mat[1][3] + mat[1][0],
                     mat[2][3] + mat[2][0]},
+                               
+                    (mat[3][3] + mat[3][0]));
+                left.normalize();
+                
+                Plane3<T> right(-math::Vec3<float>{
+                    mat[0][3] - mat[0][0],
+                    mat[1][3] - mat[1][0],
+                    mat[2][3] - mat[2][0]},
                     
-                    mat[3][3] + mat[3][0]);
+                    (mat[3][3] - mat[3][0]));
                 right.normalize();
                 
-                Plane3<T> top({
+                Plane3<T> bottom(-math::Vec3<float>{
                     mat[0][3] + mat[0][1],
                     mat[1][3] + mat[1][1],
                     mat[2][3] + mat[2][1]},
                               
-                    mat[3][3] + mat[3][1]);
-                top.normalize();
+                    (mat[3][3] + mat[3][1]));
+                bottom.normalize();
                 
-                Plane3<T> bottom({
+                Plane3<T> top(-math::Vec3<float>{
                     mat[0][3] - mat[0][1],
                     mat[1][3] - mat[1][1],
                     mat[2][3] - mat[2][1]},
                                  
-                    mat[3][3] - mat[3][1]);
-                bottom.normalize();
+                    (mat[3][3] - mat[3][1]));
+                top.normalize();
                 
-                Plane3<T> near({
-                    mat[0][3] - mat[0][2],
-                    mat[1][3] - mat[1][2],
-                    mat[2][3] - mat[2][2]},
-                    
-                    mat[3][3] - mat[3][2]);
-                near.normalize();
-                
-                Plane3<T> far({
+                Plane3<T> near(-math::Vec3<float>{
                     mat[0][3] + mat[0][2],
                     mat[1][3] + mat[1][2],
                     mat[2][3] + mat[2][2]},
-                              
-                    mat[3][3] + mat[3][2]);
-                far.normalize();
+                    
+                    (mat[3][3] + mat[3][2]));
+                near.normalize();
                 
+                Plane3<T> far(-math::Vec3<float>{
+                    mat[0][3] - mat[0][2],
+                    mat[1][3] - mat[1][2],
+                    mat[2][3] - mat[2][2]},
+                              
+                    (mat[3][3] - mat[3][2]));
+                far.normalize();
+            
                 frustum.planes = {
                     left,
                     right,

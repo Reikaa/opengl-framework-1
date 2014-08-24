@@ -28,11 +28,11 @@ namespace lkogl {
                     
                     if(p(*current.get())) {
                         result.push_back(current);
-                        
-                        auto children = current->children_;
-                        for(auto const c : children) {
-                            queue.push(c);
-                        }
+                    }
+                    
+                    auto children = current->children_;
+                    for(auto const c : children) {
+                        queue.push(c);
                     }
                 }
                 

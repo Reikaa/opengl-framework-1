@@ -161,6 +161,7 @@ public:
             pointerTracking_ = std::make_shared<PointerTracking>(uiRoot_);
             
             graph = std::make_shared<Node>();
+
             
             Material colorful(Image("rainbow.png"), 1, 160);
             Material golden(Image("pyramid_gold.png"), 1, 10);
@@ -169,6 +170,7 @@ public:
             
             Mesh pyramid = primitives::makePyramid();
             std::shared_ptr<Node> node = std::make_shared<Node>();
+            node->bounding = lkogl::math::geo::Aabb3<float>({-1,-1,-1},{1,1,1});
             node->addComponent(std::make_shared<RenderComponent>(GeometryObject(pyramid), golden));
             node->transformation.setScale({2,2,2});
             node->transformation.setTranslation({0,3,0});
@@ -178,23 +180,27 @@ public:
             
 
             Mesh cube = ::obj_from_file("box.obj").toIndexedModel().toMesh();
+
             std::shared_ptr<Node> node2 = std::make_shared<Node>();
             node2->addComponent(std::make_shared<RenderComponent>(GeometryObject(cube), wood));
             node2->transformation.setTranslation({-9,-4.5,2});
             //node2->transformation.setRotation(angleAxis<float>(radians(90), {1,0,0}));
             graph->addChild(node2);
+            node2->bounding = lkogl::math::geo::Aabb3<float>({-1,-1,-1},{1,1,1});
             
             std::shared_ptr<Node> nodeBox2 = std::make_shared<Node>();
             nodeBox2->addComponent(std::make_shared<RenderComponent>(GeometryObject(cube), wood));
             nodeBox2->transformation.setRotation(angleAxis<float>(radians(21), {0,1,0}));
             node2->addChild(nodeBox2);
             nodeBox2->transformation.setTranslation({-1.5,0,-1.9});
-            
+            nodeBox2->bounding = lkogl::math::geo::Aabb3<float>({-1,-1,-1},{1,1,1});
+
             std::shared_ptr<Node> nodeBox3 = std::make_shared<Node>();
             nodeBox3->addComponent(std::make_shared<RenderComponent>(GeometryObject(cube), wood));
             nodeBox3->transformation.setRotation(angleAxis<float>(radians(-17), {0,1,0}));
             node2->addChild(nodeBox3);
             nodeBox3->transformation.setTranslation({-0.5,2,-0.8});
+            nodeBox3->bounding = lkogl::math::geo::Aabb3<float>({-1,-1,-1},{1,1,1});
 
             
             
@@ -209,6 +215,9 @@ public:
             node3->transformation.setRotation(angleAxis<float>(radians(45), {0.1,1,0.3}));
             graph->addChild(node3);
             
+            node3->bounding = lkogl::math::geo::Aabb3<float>({-1,-1,-1},{1,1,1});
+
+            
             
             
             Image terrainImage("terrain.png");
@@ -219,7 +228,8 @@ public:
             node4->addComponent(std::make_shared<RenderComponent>(GeometryObject(terrainMesh), sand));
             node4->transformation.setScale({0.5f,0.5f,0.5f});
             node4->transformation.setTranslation({5,0,5});
-            node->addChild(node4);
+            graph->addChild(node4);
+            node4->bounding = lkogl::math::geo::Aabb3<float>({-125,-20,-125},{125,20,125});
 
 
             
@@ -230,7 +240,7 @@ public:
             camNode_ = std::make_shared<Node>();
 
             camNode_->addComponent(cameraComponent);
-            camNode_->transformation.setTranslation({-4,1,-10});
+            camNode_->transformation.setTranslation({0,0,10});
             graph->addChild(camNode_);
             monkeyNode_ = node3;
             

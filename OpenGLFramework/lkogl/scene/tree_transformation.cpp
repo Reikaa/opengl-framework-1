@@ -82,7 +82,7 @@ namespace lkogl {
             dirty_ = true;
         }
         
-        void TreeTransformation::add(const geometry::Transformation& t) {
+        void TreeTransformation::transform(const geometry::Transformation& t) {
             relativTransform_.rotation = math::normalize(relativTransform_.rotation*t.rotation);
             relativTransform_.scale *= t.scale;
             relativTransform_.translation += t.translation;

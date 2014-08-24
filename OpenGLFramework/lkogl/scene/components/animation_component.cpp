@@ -17,7 +17,7 @@ namespace lkogl {
             
             void AnimationComponent::update(TreeTransformation& transformation) const
             {
-                transformation.add(transform_);
+                transformation.transform(transform_);
             }
             
             void AnimationComponent::render(const TreeTransformation& transformation, const graphics::shader::ProgramUse& program) const
