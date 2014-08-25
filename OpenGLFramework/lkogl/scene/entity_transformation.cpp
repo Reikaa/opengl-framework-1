@@ -53,8 +53,20 @@ namespace lkogl {
             return transformation_.rotation();
         }
         
-        void EntityTransformation::setParent(const math::Mat4<float>& parent)
+        void EntityTransformation::setParent(const math::Mat4<float>& parent, bool keepPos)
         {
+            if(keepPos) {
+                math::Mat4<float> prev = parentTransform_;
+                math::Mat4<float> next = parent;
+                math::Mat4<float> self = transformation_.matrix();
+                
+                math::Mat4<float> abs = math::inverse(next) * prev * self;
+                transformation_.setTranslation({abs[3][0], abs[3][1], abs[3][2]});
+                transformation_.setRotation(math::normalize(math::quat_cast(abs)));
+                transformation_.setScale({math::length(abs[0]),math::length(abs[1]),math::length(abs[2])});
+            }
+
+            
             parentTransform_ = parent;
             dirty_ = true;
         }

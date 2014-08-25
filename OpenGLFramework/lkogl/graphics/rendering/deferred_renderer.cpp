@@ -92,11 +92,11 @@ namespace lkogl {
                     math::geo::Frustum3<float> viewFrustum = math::geo::frustum_from_view_projection(cam.viewProjectionMatrix());
                     
                     auto entities = graph.query([viewFrustum](const scene::Entity& e) {
-                        auto box = math::geo::transform(e.bounding(), e.transformation().matrix());
+                        auto box = math::geo::transformed(e.bounding(), e.transformation().matrix());
                         return math::geo::relationship(viewFrustum, box) != math::geo::VolumeRelation::OUTSIDE;
                     });
                     
-                    entityCount_ = entities.size();
+                    entityCount_ = (int)entities.size();
                     
                     for(auto e : entities) {
                         for(auto c : e->components()) {

@@ -75,7 +75,7 @@ namespace lkogl {
             };
             
             template <typename T>
-            Aabb3<T> transform(const Aabb3<T>& box, const Mat4<T>& m)
+            Aabb3<T> transformed(const Aabb3<T>& box, const Mat4<T>& m)
             {
                 math::Vec3<T> center = (box.min + box.max)/2.0f;
                 math::Vec3<T> halfExtents = (box.max - box.min)/2.0f;

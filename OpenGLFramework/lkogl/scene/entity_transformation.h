@@ -35,7 +35,7 @@ namespace lkogl {
             math::Vec3<float> scale() const;
             math::Quat<float> rotation() const;
             
-            void setParent(const math::Mat4<float>& parent);
+            void setParent(const math::Mat4<float>& parent, bool keepPos = true);
 
             const math::Mat4<float>& matrix() const;
             const math::Mat4<float>& inverseMatrix() const;

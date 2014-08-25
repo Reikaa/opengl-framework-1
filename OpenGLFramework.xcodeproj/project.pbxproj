@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		F215F12519AB4E2D00F7F694 /* entity_transformation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F215F12319AB4E2D00F7F694 /* entity_transformation.cpp */; };
+		F215F12819AB741300F7F694 /* link_component.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F215F12619AB741300F7F694 /* link_component.cpp */; };
 		F21C7D7219A4EA2B00B006A4 /* sky.vsh in Resources */ = {isa = PBXBuildFile; fileRef = F21C7D7119A4EA2B00B006A4 /* sky.vsh */; };
 		F21C7D7419A4EA3C00B006A4 /* sky.fsh in Resources */ = {isa = PBXBuildFile; fileRef = F21C7D7319A4EA3C00B006A4 /* sky.fsh */; };
 		F21C7D7619A4FDE300B006A4 /* sky.png in Resources */ = {isa = PBXBuildFile; fileRef = F21C7D7519A4FDE300B006A4 /* sky.png */; };
@@ -149,6 +150,8 @@
 /* Begin PBXFileReference section */
 		F215F12319AB4E2D00F7F694 /* entity_transformation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = entity_transformation.cpp; sourceTree = "<group>"; };
 		F215F12419AB4E2D00F7F694 /* entity_transformation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = entity_transformation.h; sourceTree = "<group>"; };
+		F215F12619AB741300F7F694 /* link_component.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = link_component.cpp; sourceTree = "<group>"; };
+		F215F12719AB741300F7F694 /* link_component.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = link_component.h; sourceTree = "<group>"; };
 		F21C7D7119A4EA2B00B006A4 /* sky.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = sky.vsh; sourceTree = "<group>"; };
 		F21C7D7319A4EA3C00B006A4 /* sky.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = sky.fsh; sourceTree = "<group>"; };
 		F21C7D7519A4FDE300B006A4 /* sky.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sky.png; sourceTree = "<group>"; };
@@ -714,6 +717,8 @@
 				F2DEC60C1997681E00EE31E7 /* camera_component.h */,
 				F21EA82D199ABD0B00D78E1C /* animation_component.cpp */,
 				F21EA82E199ABD0B00D78E1C /* animation_component.h */,
+				F215F12619AB741300F7F694 /* link_component.cpp */,
+				F215F12719AB741300F7F694 /* link_component.h */,
 			);
 			path = components;
 			sourceTree = "<group>";
@@ -950,6 +955,7 @@
 				F21EA814199911F900D78E1C /* program.cpp in Sources */,
 				F2DEC6401997F4F800EE31E7 /* base_light.cpp in Sources */,
 				F24DA04C19A3F06F005F5F32 /* draggable_behaviour.cpp in Sources */,
+				F215F12819AB741300F7F694 /* link_component.cpp in Sources */,
 				F2DEC6081997621400EE31E7 /* render_component.cpp in Sources */,
 				F2A4968619981F1600588B03 /* spot_light.cpp in Sources */,
 			);

@@ -38,6 +38,7 @@
 #include "./lkogl/scene/components/animation_component.h"
 #include "./lkogl/scene/components/camera_component.h"
 #include "./lkogl/scene/components/render_component.h"
+#include "./lkogl/scene/components/link_component.h"
 
 #include "./lkogl/input/keyboard.h"
 #include "./lkogl/input/adapter/keyboard_adapter.h"
@@ -73,6 +74,7 @@ class MyGame {
     
     mutable std::shared_ptr<Entity> camNode_;
     mutable std::shared_ptr<Entity> monkeyNode_;
+    mutable std::shared_ptr<LinkComponent> linkComp_;
     mutable bool exprerimentToggle = false;
 
     mutable std::shared_ptr<CameraComponent> cameraComponent;
@@ -176,25 +178,24 @@ public:
 
             Mesh cube = ::obj_from_file("box.obj").toIndexedModel().toMesh();
 
-            std::shared_ptr<Entity> node2 = std::make_shared<Entity>();
-            node2->addComponent(std::make_shared<RenderComponent>(GeometryObject(cube), wood));
-            node2->transformation().setTranslation({-9,-4.5,2});
-            //node2->transformation.setRotation(angleAxis<float>(radians(90), {1,0,0}));
-            graph.addEntity(node2);
-            node2->setBounding(lkogl::math::geo::Aabb3<float>({-1,-1,-1},{1,1,1}));
+            std::shared_ptr<Entity> nodeBox1 = std::make_shared<Entity>();
+            nodeBox1->addComponent(std::make_shared<RenderComponent>(GeometryObject(cube), wood));
+            nodeBox1->transformation().setTranslation({-9,-4.5,2});
+            graph.addEntity(nodeBox1);
+            nodeBox1->setBounding(lkogl::math::geo::Aabb3<float>({-1,-1,-1},{1,1,1}));
             
             std::shared_ptr<Entity> nodeBox2 = std::make_shared<Entity>();
             nodeBox2->addComponent(std::make_shared<RenderComponent>(GeometryObject(cube), wood));
             nodeBox2->transformation().setRotation(angleAxis<float>(radians(21), {0,1,0}));
             graph.addEntity(nodeBox2);
-            nodeBox2->transformation().setTranslation({-1.5,0,-1.9});
+            nodeBox2->transformation().setTranslation({-10.5,-4.5,0.1});
             nodeBox2->setBounding(lkogl::math::geo::Aabb3<float>({-1,-1,-1},{1,1,1}));
 
             std::shared_ptr<Entity> nodeBox3 = std::make_shared<Entity>();
             nodeBox3->addComponent(std::make_shared<RenderComponent>(GeometryObject(cube), wood));
             nodeBox3->transformation().setRotation(angleAxis<float>(radians(-17), {0,1,0}));
             graph.addEntity(nodeBox3);
-            nodeBox3->transformation().setTranslation({-0.5,2,-0.8});
+            nodeBox3->transformation().setTranslation({-9.5,-2.5,1.2});
             nodeBox3->setBounding(lkogl::math::geo::Aabb3<float>({-1,-1,-1},{1,1,1}));
 
             
@@ -233,6 +234,9 @@ public:
             cameraComponent = std::make_shared<CameraComponent>(Camera(screen_.width, screen_.height));
             
             camNode_ = std::make_shared<Entity>();
+            linkComp_ = std::make_shared<LinkComponent>(node3);
+            linkComp_->active = false;
+            camNode_->addComponent(linkComp_);
 
             camNode_->addComponent(cameraComponent);
             camNode_->transformation().setTranslation({0,0,10});
@@ -312,17 +316,10 @@ public:
             }
         }
         
-//        if(keyboard_.pressed(Keyboard::Key::LETTER_T)) {
-//            if(exprerimentToggle) {
-//                monkeyNode_->removeChild(camNode_);
-//                graph->addChild(camNode_);
-//            } else {
-//                graph->removeChild(camNode_);
-//                monkeyNode_->addChild(camNode_);
-//            }
-//            exprerimentToggle = !exprerimentToggle;
-//        }
-//        
+        if(keyboard_.pressed(Keyboard::Key::LETTER_T)) {
+            linkComp_->active = !linkComp_->active;
+        }
+        
 
         if(!mouseLocked) {
             pointerTracking_->track(mouse_.position);
