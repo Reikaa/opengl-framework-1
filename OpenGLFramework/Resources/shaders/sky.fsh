@@ -7,8 +7,8 @@ struct Material {
     sampler2D sampler;
 };
 
-uniform Material material;
+uniform Material uMaterial;
 
 void main() {
-    oColor = texture(material.sampler, fTexCoord);
+    oColor = texture(uMaterial.sampler, fTexCoord);
 }

@@ -11,7 +11,6 @@
 #include "../render_target.h"
 #include "../lighting/directional_light.h"
 #include "../lighting/ambient_light.h"
-#include "../../scene/walker/collector.h"
 #include "../stencil.h"
 #include "../../geometry/mesh.h"
 #include "../../utils/image.h"
@@ -61,10 +60,8 @@ namespace lkogl {
             {
             }
             
-            void DeferredRenderer::render(std::shared_ptr<scene::Node> graph, const camera::Camera& cam) const
+            void DeferredRenderer::render(const scene::Scene& graph, const camera::Camera& cam) const
             {
-                scene::walker::Collector collector;
-                
                 std::vector<lighting::DirectionalLight> directionalLights = {
                     lighting::DirectionalLight({1,1,1}, 1.4, -math::Vec3<float>{1,2.6,0.4}),
                     lighting::DirectionalLight({1,1,1}, 0.2, math::Vec3<float>{2,-1,-2}),
@@ -94,17 +91,26 @@ namespace lkogl {
                     
                     math::geo::Frustum3<float> viewFrustum = math::geo::frustum_from_view_projection(cam.viewProjectionMatrix());
                     
-                    auto nodes = collector.collect(graph, [viewFrustum](const scene::Node& n) {
-                        auto box = math::geo::transform(n.bounding, n.transformation.matrix());
+                    auto entities = graph.query([viewFrustum](const scene::Entity& e) {
+                        auto box = math::geo::transform(e.bounding(), e.transformation().matrix());
                         return math::geo::relationship(viewFrustum, box) != math::geo::VolumeRelation::OUTSIDE;
                     });
                     
-                    std::cout << "rendering " << nodes.size() << " nodes" << std::endl;
+                    entityCount_ = entities.size();
                     
-                    for(auto n : nodes) {
-                        for(auto c : n->components()) {
-                            c->render(n->transformation, defgeo);
+                    for(auto e : entities) {
+                        for(auto c : e->components()) {
+                            c->render(*e.get(), defgeo);
                         }
+                        
+//                        auto box = math::geo::transform(e->bounding(), e->transformation().matrix());
+//
+//                        for(auto c : box.corners()) {
+//                            defgeo.setUniform("uModelMatrix", math::translate(math::scale(math::Mat4<float>(1), 0.02f), c));
+//                            defgeo.setUniform("uMaterial.coloring", math::Vec4<float>(0.9,0,0,1));
+//                            const graphics::GeometryObjectUse geo(box_);
+//                            geo.render();
+//                        }
                     }
                     //walker.walk(graph, &scene::components::Component::render, defgeo);
                     

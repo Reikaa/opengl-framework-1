@@ -16,14 +16,14 @@ namespace lkogl {
             {
             }
             
-            void FirstPersonMovement::rotateHorizontally(scene::TreeTransformation& cam, float radians) const
+            void FirstPersonMovement::rotateHorizontally(scene::EntityTransformation& cam, float radians) const
             {
                 auto q = math::angleAxis(-radians, up_);
                 
                 cam.setRotation(math::normalize(q * cam.rotation()));
             }
             
-            void FirstPersonMovement::rotateVertically(scene::TreeTransformation& cam, float radians) const
+            void FirstPersonMovement::rotateVertically(scene::EntityTransformation& cam, float radians) const
             {
                 auto q = math::angleAxis(-radians, sideward_);
                 
@@ -34,7 +34,7 @@ namespace lkogl {
                 }
             }
             
-            void FirstPersonMovement::move(scene::TreeTransformation& cam, math::Vec2<float> dir2d, float amount) const
+            void FirstPersonMovement::move(scene::EntityTransformation& cam, math::Vec2<float> dir2d, float amount) const
             {
                 if(math::length(math::normalize(dir2d)) == 0) return;
 
@@ -46,7 +46,7 @@ namespace lkogl {
                 cam.setTranslation(newPos);
             }
             
-            void FirstPersonMovement::lookAt(scene::TreeTransformation& cam, math::Vec3<float> p) const
+            void FirstPersonMovement::lookAt(scene::EntityTransformation& cam, math::Vec3<float> p) const
             {
                 math::Vec3<float> direction = math::normalize(p - cam.translation());
                 

@@ -18,11 +18,21 @@ namespace lkogl {
             typedef lkogl::math::Mat4<GLfloat> Mat4;
             typedef lkogl::math::Vec3<GLfloat> Vec3;
             
-            Vec3 translation = Vec3(0.0);
-            Vec3 scale = Vec3(1);
-            Quat rotation = math::angleAxis(0.f, Vec3(0,1,0));
+            Vec3 translation_ = Vec3(0.0);
+            Vec3 scale_ = Vec3(1);
+            Quat rotation_ = math::angleAxis(0.f, Vec3(0,1,0));
             
             const Mat4 matrix() const;
+            
+            void setTranslation(const Vec3& t) { translation_ = t; }
+            void setScale(const Vec3& s) { scale_ = s; }
+            void setRotation(const Quat& r) { rotation_ = r; }
+            
+            Vec3 translation() const { return translation_; }
+            Vec3 scale() const { return scale_; }
+            Quat rotation() const { return rotation_; }
+            
+            void transform(const geometry::Transformation& t);
         };
     }
 }

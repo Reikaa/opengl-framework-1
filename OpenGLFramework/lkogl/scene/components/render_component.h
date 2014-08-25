@@ -23,8 +23,8 @@ namespace lkogl {
                 RenderComponent(graphics::GeometryObject geo, graphics::Material mat);
                 ~RenderComponent();
 
-                void update(TreeTransformation& transformation) const override;
-                void render(const TreeTransformation& transformation, const graphics::shader::ProgramUse&) const override;
+                void update(Entity& transformation) const override;
+                void render(const Entity& transformation, const graphics::shader::ProgramUse&) const override;
             };
         }
     }

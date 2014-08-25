@@ -7,6 +7,7 @@
 //
 
 #include "./camera_component.h"
+#include "../entity.h"
 
 namespace lkogl {
     namespace scene {
@@ -15,17 +16,17 @@ namespace lkogl {
             {
             }
             
-            void CameraComponent::update(TreeTransformation& transformation) const
+            void CameraComponent::update(Entity& e) const
             {
-                auto mat = transformation.matrix();
-                camera_.setViewMatrixAndPos(transformation.inverseMatrix(), {
+                auto mat = e.transformation().matrix();
+                camera_.setViewMatrixAndPos(e.transformation().inverseMatrix(), {
                     mat[3][0],
                     mat[3][1],
                     mat[3][2]
                 });
             }
             
-            void CameraComponent::render(const TreeTransformation& transformation, const graphics::shader::ProgramUse& program) const
+            void CameraComponent::render(const Entity& e, const graphics::shader::ProgramUse& program) const
             {
             }
             

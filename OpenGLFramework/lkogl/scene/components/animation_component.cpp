@@ -7,20 +7,21 @@
 //
 
 #include "./animation_component.h"
+#include "entity.h"
 
 namespace lkogl {
     namespace scene {
         namespace components {
-            AnimationComponent::AnimationComponent(geometry::Transformation t) : transform_(t), speed_(1)
+            AnimationComponent::AnimationComponent(const geometry::Transformation& t) : transform_(t), speed_(1)
             {
             }
             
-            void AnimationComponent::update(TreeTransformation& transformation) const
+            void AnimationComponent::update(Entity& e) const
             {
-                transformation.transform(transform_);
+                e.transformation().transform(transform_);
             }
             
-            void AnimationComponent::render(const TreeTransformation& transformation, const graphics::shader::ProgramUse& program) const
+            void AnimationComponent::render(const Entity& e, const graphics::shader::ProgramUse& program) const
             {
             }
             

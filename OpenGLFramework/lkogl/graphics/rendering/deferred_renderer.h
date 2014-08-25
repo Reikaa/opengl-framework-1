@@ -10,7 +10,7 @@
 #define __OpenGLFramework__deferred_renderer__
 
 #include "../shader/program.h"
-#include "../../scene/node.h"
+#include "../../scene/scene.h"
 #include "../render_target.h"
 #include "../material.h"
 #include "../geometry_object.h"
@@ -36,13 +36,16 @@ namespace lkogl {
                 GeometryObject square_;
                 GeometryObject box_;
                 Texture sky_;
+                mutable int entityCount_ = 0;
             public:
                 DeferredRenderer(const Screen& screen, int ratioW, int ratioH);
                 ~DeferredRenderer();
                 
-                void render(std::shared_ptr<scene::Node> graph, const camera::Camera& cam) const;
+                void render(const scene::Scene& graph, const camera::Camera& cam) const;
                 
                 void resize(int w, int h);
+                
+                int entityCount() const { return entityCount_; }
                 
             private:
                 Programs initPrograms();

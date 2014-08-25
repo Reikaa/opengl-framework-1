@@ -77,9 +77,21 @@ namespace lkogl {
             template <typename T>
             Aabb3<T> transform(const Aabb3<T>& box, const Mat4<T>& m)
             {
-                math::Vec4<float> min = m*math::Vec4<float>(box.min.x, box.min.y, box.min.z, 1);
-                math::Vec4<float> max = m*math::Vec4<float>(box.max.x, box.max.y, box.max.z, 1);
-                return Aabb3<T>({min.x, min.y, min.z}, {max.x, max.y, max.z});
+                math::Vec3<T> center = (box.min + box.max)/2.0f;
+                math::Vec3<T> halfExtents = (box.max - box.min)/2.0f;
+                
+                math::Vec4<T> newCenter = m * math::Vec4<float>(center.x, center.y, center.z, 1);
+                math::Vec4<T> newHalfEx = m * math::Vec4<float>(halfExtents.x, halfExtents.y, halfExtents.z, 0);
+                
+                return Aabb3<T>({
+                    newCenter.x-math::max(newHalfEx.x, halfExtents.x),
+                    newCenter.y-math::max(newHalfEx.y, halfExtents.y),
+                    newCenter.z-math::max(newHalfEx.z, halfExtents.z),
+                },{
+                    newCenter.x+math::max(newHalfEx.x, halfExtents.x),
+                    newCenter.y+math::max(newHalfEx.y, halfExtents.y),
+                    newCenter.z+math::max(newHalfEx.z, halfExtents.z),
+                });
             }
         }
     }

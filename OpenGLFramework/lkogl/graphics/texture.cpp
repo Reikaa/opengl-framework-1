@@ -85,7 +85,7 @@ namespace lkogl {
         TextureUse::TextureUse(const shader::ProgramUse& p, const Texture& tex, int slot) :
         b_(*tex.resource_.get(), slot)
         {
-            p.setUniformi("material.sampler", slot);
+            p.setUniformi("uMaterial.sampler", slot);
         }
         
         TextureUse::~TextureUse()

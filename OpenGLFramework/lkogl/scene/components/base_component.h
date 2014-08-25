@@ -9,21 +9,22 @@
 #ifndef __OpenGLFramework__node_component__
 #define __OpenGLFramework__node_component__
 
-#include "../tree_transformation.h"
 #include "../../graphics/shader/program.h"
 
 namespace lkogl {
     namespace scene {
+        class Entity;
+        
         namespace components {
             class Component
             {
             public:
-                typedef void (Component::*ComponentUpdateMethod)(TreeTransformation& transformation) const;
-                typedef void (Component::*ComponentRenderMethod)(const TreeTransformation& transformation, const graphics::shader::ProgramUse&) const;
+                typedef void (Component::*ComponentUpdateMethod)(Entity&) const;
+                typedef void (Component::*ComponentRenderMethod)(const Entity&, const graphics::shader::ProgramUse&) const;
                 
-                virtual void update(TreeTransformation& transformation) const = 0;
+                virtual void update(Entity& transformation) const = 0;
                 
-                virtual void render(const TreeTransformation& transformation, const graphics::shader::ProgramUse&) const = 0;
+                virtual void render(const Entity& transformation, const graphics::shader::ProgramUse&) const = 0;
                 
                 virtual ~Component();
             };

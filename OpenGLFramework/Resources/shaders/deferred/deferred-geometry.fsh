@@ -2,11 +2,12 @@
 
 struct Material {
     sampler2D sampler;
+    vec4 coloring;
     float specularIntensity;
     float specularPower;
 };
 
-uniform Material material;
+uniform Material uMaterial;
 
 in vec3 fPosition;
 in vec2 fTexCoord;
@@ -21,5 +22,6 @@ layout(location = 2) out vec4 oColor;
 void main() {
     oPos = vec4(fPosition,1);
     oNormal = vec4(fNormal,fDepth);
-    oColor = vec4(texture(material.sampler, fTexCoord).xyz, material.specularIntensity);
+    vec4 color = texture(uMaterial.sampler, fTexCoord) * (1-uMaterial.coloring.w) + uMaterial.coloring * uMaterial.coloring.w;
+    oColor = vec4(color.xyz, uMaterial.specularIntensity);
 }

@@ -38,7 +38,6 @@
 #include "./lkogl/scene/components/animation_component.h"
 #include "./lkogl/scene/components/camera_component.h"
 #include "./lkogl/scene/components/render_component.h"
-#include "./lkogl/scene/walker/scene_deep_walker.h"
 
 #include "./lkogl/input/keyboard.h"
 #include "./lkogl/input/adapter/keyboard_adapter.h"
@@ -60,7 +59,6 @@ using namespace lkogl::scene;
 using namespace lkogl::loop;
 using namespace lkogl::math;
 using namespace lkogl::scene::components;
-using namespace lkogl::scene::walker;
 using namespace lkogl::camera;
 using namespace lkogl::input;
 using namespace lkogl::input::movement;
@@ -69,13 +67,12 @@ class MyGame {
     
     mutable std::string extraTitle_;
     
-    mutable std::shared_ptr<Node> graph;
-    SceneDeepWalker walker;
+    mutable Scene graph;
     
     mutable std::shared_ptr<DeferredRenderer> renderer_;
     
-    mutable std::shared_ptr<Node> camNode_;
-    mutable std::shared_ptr<Node> monkeyNode_;
+    mutable std::shared_ptr<Entity> camNode_;
+    mutable std::shared_ptr<Entity> monkeyNode_;
     mutable bool exprerimentToggle = false;
 
     mutable std::shared_ptr<CameraComponent> cameraComponent;
@@ -144,8 +141,8 @@ public:
             e2->layout().setAlignment({WeightLinear::Right, WeightLinear::Bottom});
             
             auto e3 = std::make_shared<Element>(std::make_shared<behaviour::DraggableBehaviour>(uiRoot_->layout(), [this](const Vec2<int> o) {
-                monkeyNode_->transformation.setTranslation(
-                    monkeyNode_->transformation.translation()-Vec3<float>{0.05f*o.x, 0,0.05f*o.y}
+                monkeyNode_->transformation().setTranslation(
+                    monkeyNode_->transformation().translation()-Vec3<float>{0.05f*o.x, 0,0.05f*o.y}
                 );
             }));
             e3->layout().setSize(px(100), px(100));
@@ -160,8 +157,6 @@ public:
             
             pointerTracking_ = std::make_shared<PointerTracking>(uiRoot_);
             
-            graph = std::make_shared<Node>();
-
             
             Material colorful(Image("rainbow.png"), 1, 160);
             Material golden(Image("pyramid_gold.png"), 1, 10);
@@ -169,53 +164,53 @@ public:
             Material sand(Image("sand.png"), 0, 0);
             
             Mesh pyramid = primitives::makePyramid();
-            std::shared_ptr<Node> node = std::make_shared<Node>();
-            node->bounding = lkogl::math::geo::Aabb3<float>({-1,-1,-1},{1,1,1});
+            std::shared_ptr<Entity> node = std::make_shared<Entity>();
+            node->setBounding(lkogl::math::geo::Aabb3<float>({-1,-1,-1},{1,1,1}));
             node->addComponent(std::make_shared<RenderComponent>(GeometryObject(pyramid), golden));
-            node->transformation.setScale({2,2,2});
-            node->transformation.setTranslation({0,3,0});
+            node->transformation().setScale({2,2,2});
+            node->transformation().setTranslation({0,3,0});
             
-            node->transformation.setRotation(angleAxis<float>(radians(1), {1,1,1}));
-            graph->addChild(node);
+            node->transformation().setRotation(angleAxis<float>(radians(1), {1,1,1}));
+            graph.addEntity(node);
             
 
             Mesh cube = ::obj_from_file("box.obj").toIndexedModel().toMesh();
 
-            std::shared_ptr<Node> node2 = std::make_shared<Node>();
+            std::shared_ptr<Entity> node2 = std::make_shared<Entity>();
             node2->addComponent(std::make_shared<RenderComponent>(GeometryObject(cube), wood));
-            node2->transformation.setTranslation({-9,-4.5,2});
+            node2->transformation().setTranslation({-9,-4.5,2});
             //node2->transformation.setRotation(angleAxis<float>(radians(90), {1,0,0}));
-            graph->addChild(node2);
-            node2->bounding = lkogl::math::geo::Aabb3<float>({-1,-1,-1},{1,1,1});
+            graph.addEntity(node2);
+            node2->setBounding(lkogl::math::geo::Aabb3<float>({-1,-1,-1},{1,1,1}));
             
-            std::shared_ptr<Node> nodeBox2 = std::make_shared<Node>();
+            std::shared_ptr<Entity> nodeBox2 = std::make_shared<Entity>();
             nodeBox2->addComponent(std::make_shared<RenderComponent>(GeometryObject(cube), wood));
-            nodeBox2->transformation.setRotation(angleAxis<float>(radians(21), {0,1,0}));
-            node2->addChild(nodeBox2);
-            nodeBox2->transformation.setTranslation({-1.5,0,-1.9});
-            nodeBox2->bounding = lkogl::math::geo::Aabb3<float>({-1,-1,-1},{1,1,1});
+            nodeBox2->transformation().setRotation(angleAxis<float>(radians(21), {0,1,0}));
+            graph.addEntity(nodeBox2);
+            nodeBox2->transformation().setTranslation({-1.5,0,-1.9});
+            nodeBox2->setBounding(lkogl::math::geo::Aabb3<float>({-1,-1,-1},{1,1,1}));
 
-            std::shared_ptr<Node> nodeBox3 = std::make_shared<Node>();
+            std::shared_ptr<Entity> nodeBox3 = std::make_shared<Entity>();
             nodeBox3->addComponent(std::make_shared<RenderComponent>(GeometryObject(cube), wood));
-            nodeBox3->transformation.setRotation(angleAxis<float>(radians(-17), {0,1,0}));
-            node2->addChild(nodeBox3);
-            nodeBox3->transformation.setTranslation({-0.5,2,-0.8});
-            nodeBox3->bounding = lkogl::math::geo::Aabb3<float>({-1,-1,-1},{1,1,1});
+            nodeBox3->transformation().setRotation(angleAxis<float>(radians(-17), {0,1,0}));
+            graph.addEntity(nodeBox3);
+            nodeBox3->transformation().setTranslation({-0.5,2,-0.8});
+            nodeBox3->setBounding(lkogl::math::geo::Aabb3<float>({-1,-1,-1},{1,1,1}));
 
             
             
             Mesh monkey = obj_from_file("monkey.obj").toIndexedModel().toMesh();
-            std::shared_ptr<Node> node3 = std::make_shared<Node>();
+            std::shared_ptr<Entity> node3 = std::make_shared<Entity>();
             node3->addComponent(std::make_shared<RenderComponent>(GeometryObject(monkey), colorful));
             Transformation spin;
-            spin.rotation = angleAxis(radians(1.0f), {0.0f,1.0f,0.0f});;
+            spin.setRotation(angleAxis(radians(1.0f), {0.0f,1.0f,0.0f}));
             
             node3->addComponent(std::make_shared<AnimationComponent>(spin));
-            node3->transformation.setTranslation({0,6,0});
-            node3->transformation.setRotation(angleAxis<float>(radians(45), {0.1,1,0.3}));
-            graph->addChild(node3);
+            node3->transformation().setTranslation({0,6,0});
+            node3->transformation().setRotation(angleAxis<float>(radians(45), {0.1,1,0.3}));
+            graph.addEntity(node3);
             
-            node3->bounding = lkogl::math::geo::Aabb3<float>({-1,-1,-1},{1,1,1});
+            node3->setBounding(lkogl::math::geo::Aabb3<float>({-1,-1,-1},{1,1,1}));
 
             
             
@@ -224,12 +219,12 @@ public:
             ImageHeightMap terrainMap = heigh_map_from_image(terrainImage);
             Mesh terrainMesh = terrainMap.toIndexedModel().toMesh();
             
-            std::shared_ptr<Node> node4 = std::make_shared<Node>();
+            std::shared_ptr<Entity> node4 = std::make_shared<Entity>();
             node4->addComponent(std::make_shared<RenderComponent>(GeometryObject(terrainMesh), sand));
-            node4->transformation.setScale({0.5f,0.5f,0.5f});
-            node4->transformation.setTranslation({5,0,5});
-            graph->addChild(node4);
-            node4->bounding = lkogl::math::geo::Aabb3<float>({-125,-20,-125},{125,20,125});
+            node4->transformation().setScale({0.5f,0.5f,0.5f});
+            node4->transformation().setTranslation({5,0,5});
+            graph.addEntity(node4);
+            node4->setBounding(lkogl::math::geo::Aabb3<float>({-125,-20,-125},{125,20,125}));
 
 
             
@@ -237,14 +232,14 @@ public:
             
             cameraComponent = std::make_shared<CameraComponent>(Camera(screen_.width, screen_.height));
             
-            camNode_ = std::make_shared<Node>();
+            camNode_ = std::make_shared<Entity>();
 
             camNode_->addComponent(cameraComponent);
-            camNode_->transformation.setTranslation({0,0,10});
-            graph->addChild(camNode_);
+            camNode_->transformation().setTranslation({0,0,10});
+            graph.addEntity(camNode_);
             monkeyNode_ = node3;
             
-            movement.lookAt(camNode_->transformation, {0,0,0});
+            movement.lookAt(camNode_->transformation(), {0,0,0});
 
             
             sampler_ = std::make_shared<Sampler>("double_click_mouse_over.wav");
@@ -295,7 +290,7 @@ public:
         
         if(keyboard_.pressed(Keyboard::Key::LETTER_F)) {
             if(movement.canFly()) {
-                camNode_->transformation.setTranslation({camNode_->transformation.translation().x, 0, camNode_->transformation.translation().z});
+                camNode_->transformation().setTranslation({camNode_->transformation().translation().x, 0, camNode_->transformation().translation().z});
                 movement.setFly(false);
             } else {
                 movement.setFly(true);
@@ -303,31 +298,31 @@ public:
         }
         
         if(mouseLocked) {
-            movement.move(camNode_->transformation, dir, moveDelay/2);
+            movement.move(camNode_->transformation(), dir, moveDelay/2);
             
             if(keyboard_.isDown(Keyboard::Key::LETTER_C)) {
-                movement.lookAt(camNode_->transformation, {0,0,0});
+                movement.lookAt(camNode_->transformation(), {0,0,0});
             } else {
                 if(mouse_.delta.x != 0) {
-                    movement.rotateHorizontally(camNode_->transformation, radians(.25f*mouse_.delta.x));
+                    movement.rotateHorizontally(camNode_->transformation(), radians(.25f*mouse_.delta.x));
                 }
                 if(mouse_.delta.y != 0) {
-                    movement.rotateVertically(camNode_->transformation, radians(.25f*mouse_.delta.y));
+                    movement.rotateVertically(camNode_->transformation(), radians(.25f*mouse_.delta.y));
                 }
             }
         }
         
-        if(keyboard_.pressed(Keyboard::Key::LETTER_T)) {
-            if(exprerimentToggle) {
-                monkeyNode_->removeChild(camNode_);
-                graph->addChild(camNode_);
-            } else {
-                graph->removeChild(camNode_);
-                monkeyNode_->addChild(camNode_);
-            }
-            exprerimentToggle = !exprerimentToggle;
-        }
-        
+//        if(keyboard_.pressed(Keyboard::Key::LETTER_T)) {
+//            if(exprerimentToggle) {
+//                monkeyNode_->removeChild(camNode_);
+//                graph->addChild(camNode_);
+//            } else {
+//                graph->removeChild(camNode_);
+//                monkeyNode_->addChild(camNode_);
+//            }
+//            exprerimentToggle = !exprerimentToggle;
+//        }
+//        
 
         if(!mouseLocked) {
             pointerTracking_->track(mouse_.position);
@@ -347,7 +342,12 @@ public:
         keyboard_.update();
         mouse_.update();
         
-        walker.walk(graph, &Component::update);
+        for(auto e : graph.query([](const Entity&){ return true;}))
+        {
+            for(auto c : e->components()) {
+                c->update(*e.get());
+            }
+        }
     }
     
     void render() const {
@@ -380,7 +380,14 @@ public:
         << " " << extraTitle_;
         
         if(cameraComponent.get()) {
-          ss << " Cam:" << toString(cameraComponent->camera().position());
+            auto p = cameraComponent->camera().position();
+            ss.precision(3);
+            ss.setf( std::ios::fixed, std:: ios::floatfield );
+            ss << ", Cam:" << "("<<p.x<<", "<<p.y<<", "<<p.z<<")";
+        }
+        
+        if(renderer_.get()) {
+            ss << ", Entities:" << renderer_->entityCount();
         }
         
         return ss.str();

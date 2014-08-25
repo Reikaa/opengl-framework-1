@@ -7,6 +7,7 @@
 //
 
 #include "./render_component.h"
+#include "../entity.h"
 
 namespace lkogl {
     namespace scene {
@@ -15,15 +16,15 @@ namespace lkogl {
             geometry_(geo), material_(mat)
             {}
             
-            void RenderComponent::update(TreeTransformation& transformation) const
+            void RenderComponent::update(Entity& e) const
             {
             }
             
-            void RenderComponent::render(const TreeTransformation& transformation, const graphics::shader::ProgramUse& program) const
+            void RenderComponent::render(const Entity& e, const graphics::shader::ProgramUse& program) const
             {
                 graphics::MaterialUse mat(program, material_);
                 const graphics::GeometryObjectUse geo(geometry_);
-                program.setUniform("uModelMatrix", transformation.matrix());
+                program.setUniform("uModelMatrix", e.transformation().matrix());
                 
                 geo.render();
             }

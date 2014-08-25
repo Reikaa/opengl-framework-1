@@ -10,6 +10,7 @@
 #define __OpenGLFramework__animation_component__
 
 #include "./base_component.h"
+#include "../../geometry/transformation.h"
 
 namespace lkogl {
     namespace scene {
@@ -18,11 +19,11 @@ namespace lkogl {
                 geometry::Transformation transform_;
                 const float speed_;
             public:
-                AnimationComponent(geometry::Transformation);
+                AnimationComponent(const geometry::Transformation&);
                 ~AnimationComponent();
                 
-                void update(TreeTransformation& transformation) const override;
-                void render(const TreeTransformation& transformation, const graphics::shader::ProgramUse&) const override;
+                void update(Entity& transformation) const override;
+                void render(const Entity& transformation, const graphics::shader::ProgramUse&) const override;
             };
         }
     }
