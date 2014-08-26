@@ -20,7 +20,8 @@ namespace lkogl {
             public:
                 class Exception {
                 public:
-                    Exception(const std::string& msg) {}
+                    std::string msg;
+                    Exception(const std::string& m) : msg(m) {}
                     ~Exception() {}
                 };
                 
@@ -28,7 +29,7 @@ namespace lkogl {
                 ShaderLoader(const utils::Path& path);
                 ~ShaderLoader();
                 
-                graphics::shader::Shader fromFile(graphics::shader::ShaderType, const std::string&) const throw (Exception);
+                graphics::shader::Shader fromFile(graphics::shader::ShaderType, const std::string&) const throw (Exception, graphics::shader::Shader::Exception);
             };
         }
     }

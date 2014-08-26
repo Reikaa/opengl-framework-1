@@ -30,7 +30,7 @@ namespace lkogl {
             ShaderLoader::~ShaderLoader()
             {}
             
-            graphics::shader::Shader ShaderLoader::fromFile(graphics::shader::ShaderType type, const std::string& name) const throw (Exception)
+            graphics::shader::Shader ShaderLoader::fromFile(graphics::shader::ShaderType type, const std::string& name) const throw (Exception, graphics::shader::Shader::Exception)
             {
                 std::set<std::string> duplicates;
                 std::stringstream ss;
@@ -44,10 +44,12 @@ namespace lkogl {
                 while(!fileStack.empty())
                 {
                     if(!fileStack.top().second.good()) {
-                        throw Exception("File not found:" + fileStack.top().first);
+                        throw Exception("Included shader file not found: " + fileStack.top().first);
                     }
+                    
                     while (std::getline(fileStack.top().second, line))
                     {
+                        
                         size_t startpos = line.find_first_not_of(WHITESPACE);
                         size_t length = INCLUDE_KEYWORD.length()+PREPROCESSOR_BEGIN.length();
                         
@@ -66,15 +68,19 @@ namespace lkogl {
                             }
                             
                             std::string rel = path_.relative(includeName);
-                            fileStack.push(std::make_pair(rel, std::ifstream(rel)));
+                            fileStack.push(std::make_pair(includeName, std::ifstream(rel)));
+                            break;
                         }
                         else
                         {
                             ss << line << std::endl;
                         }
                     }
-                    duplicates.erase(fileStack.top().first);
-                    fileStack.pop();
+                    
+                    if(fileStack.top().second.eof()) {
+                        duplicates.erase(fileStack.top().first);
+                        fileStack.pop();
+                    }
                 }
                                 
                 return graphics::shader::Shader(type, ss.str());
