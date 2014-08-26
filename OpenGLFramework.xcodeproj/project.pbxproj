@@ -17,6 +17,8 @@
 		F215F13519ACE1D300F7F694 /* deferred-spot.vsh in Resources */ = {isa = PBXBuildFile; fileRef = F215F13419ACE1D300F7F694 /* deferred-spot.vsh */; };
 		F215F13719ACE1E000F7F694 /* deferred-spot.fsh in Resources */ = {isa = PBXBuildFile; fileRef = F215F13619ACE1E000F7F694 /* deferred-spot.fsh */; };
 		F215F13919ACF20200F7F694 /* deferred.gls in Resources */ = {isa = PBXBuildFile; fileRef = F215F13819ACF20200F7F694 /* deferred.gls */; };
+		F215F13C19AD212E00F7F694 /* default_normal.png in Resources */ = {isa = PBXBuildFile; fileRef = F215F13A19AD212E00F7F694 /* default_normal.png */; };
+		F215F13D19AD212E00F7F694 /* stone_normal.png in Resources */ = {isa = PBXBuildFile; fileRef = F215F13B19AD212E00F7F694 /* stone_normal.png */; };
 		F21C7D7219A4EA2B00B006A4 /* sky.vsh in Resources */ = {isa = PBXBuildFile; fileRef = F21C7D7119A4EA2B00B006A4 /* sky.vsh */; };
 		F21C7D7419A4EA3C00B006A4 /* sky.fsh in Resources */ = {isa = PBXBuildFile; fileRef = F21C7D7319A4EA3C00B006A4 /* sky.fsh */; };
 		F21C7D7619A4FDE300B006A4 /* sky.png in Resources */ = {isa = PBXBuildFile; fileRef = F21C7D7519A4FDE300B006A4 /* sky.png */; };
@@ -169,6 +171,8 @@
 		F215F13419ACE1D300F7F694 /* deferred-spot.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = "deferred-spot.vsh"; sourceTree = "<group>"; };
 		F215F13619ACE1E000F7F694 /* deferred-spot.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = "deferred-spot.fsh"; sourceTree = "<group>"; };
 		F215F13819ACF20200F7F694 /* deferred.gls */ = {isa = PBXFileReference; explicitFileType = sourcecode.glsl; fileEncoding = 4; path = deferred.gls; sourceTree = "<group>"; };
+		F215F13A19AD212E00F7F694 /* default_normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = default_normal.png; sourceTree = "<group>"; };
+		F215F13B19AD212E00F7F694 /* stone_normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stone_normal.png; sourceTree = "<group>"; };
 		F21C7D7119A4EA2B00B006A4 /* sky.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = sky.vsh; sourceTree = "<group>"; };
 		F21C7D7319A4EA3C00B006A4 /* sky.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = sky.fsh; sourceTree = "<group>"; };
 		F21C7D7519A4FDE300B006A4 /* sky.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sky.png; sourceTree = "<group>"; };
@@ -397,6 +401,8 @@
 		F238E4B919A422D300DF8601 /* textures */ = {
 			isa = PBXGroup;
 			children = (
+				F215F13A19AD212E00F7F694 /* default_normal.png */,
+				F215F13B19AD212E00F7F694 /* stone_normal.png */,
 				F21C7D7519A4FDE300B006A4 /* sky.png */,
 				F2F0DB0A19A4B46A00BD63E9 /* pyramid_gold.png */,
 				F2F0DB0819A4AB0500BD63E9 /* steel_box.png */,
@@ -498,10 +504,10 @@
 				F29707841993705200D48CE5 /* input */,
 				F2293ECB19A4107300920353 /* audio */,
 				F29707831993704700D48CE5 /* graphics */,
+				F29707821993703C00D48CE5 /* geometry */,
 				F29B1F50199E29D300F17051 /* ui */,
 				F297079B199371B400D48CE5 /* camera */,
 				F297078B199370A800D48CE5 /* scene */,
-				F29707821993703C00D48CE5 /* geometry */,
 				F21EA815199A039E00D78E1C /* resources */,
 				F29707811993701C00D48CE5 /* utils */,
 				F29707AD199373A800D48CE5 /* opengl.h */,
@@ -719,11 +725,11 @@
 				F21EA83F199BB46200D78E1C /* deferred-ambient.fsh */,
 				F21EA841199BE7C000D78E1C /* deferred-directional.vsh */,
 				F21EA843199BE7D100D78E1C /* deferred-directional.fsh */,
-				F215F12C19ACA66800F7F694 /* material.gls */,
 				F215F13019ACB5A300F7F694 /* deferred-point.vsh */,
 				F215F13219ACB5B000F7F694 /* deferred-point.fsh */,
 				F215F13419ACE1D300F7F694 /* deferred-spot.vsh */,
 				F215F13619ACE1E000F7F694 /* deferred-spot.fsh */,
+				F215F12C19ACA66800F7F694 /* material.gls */,
 				F215F12E19ACAE0800F7F694 /* lighting.gls */,
 				F215F13819ACF20200F7F694 /* deferred.gls */,
 			);
@@ -899,6 +905,8 @@
 				F29B1F61199E6C9100F17051 /* ui-element.fsh in Resources */,
 				F2DEC6331997DDD300EE31E7 /* rainbow.png in Resources */,
 				F215F13519ACE1D300F7F694 /* deferred-spot.vsh in Resources */,
+				F215F13C19AD212E00F7F694 /* default_normal.png in Resources */,
+				F215F13D19AD212E00F7F694 /* stone_normal.png in Resources */,
 				F21C7D7619A4FDE300B006A4 /* sky.png in Resources */,
 				F21EA820199A257F00D78E1C /* box.obj in Resources */,
 				F21EA844199BE7D100D78E1C /* deferred-directional.fsh in Resources */,

@@ -49,6 +49,9 @@ namespace lkogl {
             
             glEnableVertexAttribArray(PointerLocation::NORMAL);
             glVertexAttribPointer(PointerLocation::NORMAL, 3, GL_FLOAT, GL_FALSE, sizeof(geometry::Vertex), (const GLvoid *) offsetof(geometry::Vertex, normal));
+            
+            glEnableVertexAttribArray(PointerLocation::TANGENT);
+            glVertexAttribPointer(PointerLocation::TANGENT, 3, GL_FLOAT, GL_FALSE, sizeof(geometry::Vertex), (const GLvoid *) offsetof(geometry::Vertex, tangent));
 
             glEnableVertexAttribArray(PointerLocation::TEXTURE_COORDS);
             glVertexAttribPointer(PointerLocation::TEXTURE_COORDS, 4, GL_FLOAT, GL_FALSE, sizeof(geometry::Vertex), (const GLvoid *) offsetof(geometry::Vertex, textureCoord));

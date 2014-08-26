@@ -11,18 +11,18 @@
 namespace lkogl {
     namespace graphics {
 
-        Material::Material(Texture texture, float specInt, float specPow) :
-        texture_(texture), specularIntensity_(specInt), specularPower_(specPow) {}
+        Material::Material(Texture texture, Texture normalMap, float specInt, float specPow) :
+        texture_(texture), specularIntensity_(specInt), specularPower_(specPow), normalMap_(normalMap) {}
         
         Material::Material(const Material& mat) :
-            texture_(mat.texture_), specularIntensity_(mat.specularIntensity_), specularPower_(mat.specularPower_)
+            texture_(mat.texture_), specularIntensity_(mat.specularIntensity_), specularPower_(mat.specularPower_), normalMap_(mat.normalMap_)
         {
         }
         
         Material::~Material() {}
 
 
-        MaterialUse::MaterialUse(const shader::ProgramUse& p, const Material& mat) : _texUse(p, mat.texture_)
+        MaterialUse::MaterialUse(const shader::ProgramUse& p, const Material& mat) : texUse_(p,"uMaterial.color", mat.texture_, 0), texNormalUse_(p,"uMaterial.normal", mat.normalMap_, 1)
         {
             p.setUniformf("uMaterial.specularIntensity", mat.specularIntensity_);
             p.setUniformf("uMaterial.specularPower", mat.specularPower_);

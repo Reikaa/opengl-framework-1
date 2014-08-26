@@ -96,9 +96,7 @@ namespace lkogl {
             void DeferredRenderer::render(const scene::Scene& graph, const camera::Camera& cam) const
             {
                 std::vector<lighting::DirectionalLight> directionalLights = {
-                    lighting::DirectionalLight({1,1,1}, 1.4, -math::Vec3<float>{1,2.6,0.4}),
-                    lighting::DirectionalLight({1,1,1}, 0.2, math::Vec3<float>{2,-1,-2}),
-                    lighting::DirectionalLight({1,1,1}, 0.2, math::Vec3<float>{-1,-1,3}),
+                   
                 };
                 
                 std::vector<lighting::PointLight> pointLights = {
@@ -184,7 +182,7 @@ namespace lkogl {
                     glCullFace(GL_FRONT);
                     GeometryObjectUse box(box_);
                     shader::ProgramUse skyProg(programs_.skybox_);
-                    TextureUse t(skyProg, sky_, 0);
+                    TextureUse t(skyProg, "uSkybox", sky_, 0);
                     skyProg.setUniform("uViewProjMatrix", cam.viewProjectionMatrix());
                     skyProg.setUniform("uModelMatrix", math::scale(math::translate(math::Mat4<float>(1), cam.position()), 100.0f));
                     box.render();

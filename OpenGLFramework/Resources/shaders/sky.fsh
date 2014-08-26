@@ -1,12 +1,10 @@
 #version 330
 
-#include "material.gls"
-
 out vec4 oColor;
 in vec2 fTexCoord;
 
-uniform Material uMaterial;
+uniform sampler2D uSkybox;
 
 void main() {
-    oColor = texture(uMaterial.sampler, fTexCoord);
+    oColor = texture(uSkybox, fTexCoord);
 }

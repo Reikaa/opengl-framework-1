@@ -6,8 +6,9 @@ uniform Material uMaterial;
 
 in vec3 fPosition;
 in vec2 fTexCoord;
-in vec3 fNormal;
 in float fDepth;
+in mat3 fTbnMatrix;
+in vec3 fNormal;
 
 
 layout(location = 0) out vec4 oPos;
@@ -15,8 +16,12 @@ layout(location = 1) out vec4 oNormal;
 layout(location = 2) out vec4 oColor;
 
 void main() {
+    vec3 texNormal = texture(uMaterial.normal, fTexCoord).xyz;
+    float texNormalLength = length(texNormal);
+    vec3 normal = normalize(fTbnMatrix * (texNormalLength*(255/128*texNormal-1)+(1-texNormalLength)*vec3(0,0,1)));
+    
     oPos = vec4(fPosition,1);
-    oNormal = vec4(fNormal,fDepth);
-    vec4 color = texture(uMaterial.sampler, fTexCoord) * (1-uMaterial.coloring.w) + uMaterial.coloring * uMaterial.coloring.w;
+    oNormal = vec4(normal,fDepth);
+    vec4 color = texture(uMaterial.color, fTexCoord) * (1-uMaterial.coloring.w) + uMaterial.coloring * uMaterial.coloring.w;
     oColor = vec4(color.xyz, uMaterial.specularIntensity);
 }

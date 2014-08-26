@@ -82,8 +82,8 @@ namespace lkogl {
         class TextureUse {
             TextureBinding b_;
         public:
-            TextureUse(const shader::ProgramUse& p, const Texture&);
-            TextureUse(const shader::ProgramUse& p, const Texture&, int slot);
+            TextureUse(const shader::ProgramUse& p, const std::string& uniform, const Texture&);
+            TextureUse(const shader::ProgramUse& p, const std::string& uniform, const Texture&, int slot);
             ~TextureUse();
         };
     }

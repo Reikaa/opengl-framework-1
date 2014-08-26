@@ -25,6 +25,7 @@ namespace lkogl {
                     VEC3,
                     VEC4,
                     MAT4,
+                    MAT3,
                     SAMPLER2D
                 };
             private:

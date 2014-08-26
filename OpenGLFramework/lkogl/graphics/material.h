@@ -16,18 +16,20 @@ namespace lkogl {
     namespace graphics {
         class Material {
             Texture texture_;
+            Texture normalMap_;
             float specularIntensity_ = 4;
             float specularPower_ = 4;
         public:
             Material(const Material& mat);
-            Material(Texture, float specInt, float specPow);
+            Material(Texture, Texture, float specInt, float specPow);
             ~Material();
             
             friend class MaterialUse;
         };
         
         class MaterialUse {
-            TextureUse _texUse;
+            TextureUse texUse_;
+            TextureUse texNormalUse_;
         public:
             MaterialUse(const shader::ProgramUse& p, const Material&);
             ~MaterialUse();

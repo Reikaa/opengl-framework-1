@@ -2,6 +2,7 @@
 
 in vec3 vPosition;
 in vec3 vNormal;
+in vec3 vTangent;
 in vec2 vTexCoord;
 
 uniform mat4 uModelMatrix;

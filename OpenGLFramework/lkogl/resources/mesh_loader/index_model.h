@@ -26,6 +26,8 @@ namespace lkogl {
                 
                 geometry::Mesh toMesh() const;
             };
+            
+            void calculateTangent(geometry::Vertex&, geometry::Vertex&, geometry::Vertex&);
         }
     }
 }

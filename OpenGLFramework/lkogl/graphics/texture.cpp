@@ -77,15 +77,15 @@ namespace lkogl {
         {
         }
         
-        TextureUse::TextureUse(const shader::ProgramUse& p, const Texture& tex) :
-        TextureUse(p, tex, 0)
+        TextureUse::TextureUse(const shader::ProgramUse& p, const std::string& uniform, const Texture& tex) :
+        TextureUse(p, uniform, tex, 0)
         {
         }
         
-        TextureUse::TextureUse(const shader::ProgramUse& p, const Texture& tex, int slot) :
+        TextureUse::TextureUse(const shader::ProgramUse& p, const std::string& uniform, const Texture& tex, int slot) :
         b_(*tex.resource_.get(), slot)
         {
-            p.setUniformi("uMaterial.sampler", slot);
+            p.setUniformi(uniform, slot);
         }
         
         TextureUse::~TextureUse()

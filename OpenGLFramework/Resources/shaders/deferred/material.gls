@@ -1,5 +1,6 @@
 struct Material {
-    sampler2D sampler;
+    sampler2D color;
+    sampler2D normal;
     vec4 coloring;
     float specularIntensity;
     float specularPower;

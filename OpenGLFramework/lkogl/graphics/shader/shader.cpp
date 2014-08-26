@@ -133,6 +133,8 @@ namespace lkogl {
                             type=VariableDeclaration::Type::VEC4;
                         } else if(current.type=="mat4") {
                             type=VariableDeclaration::Type::MAT4;
+                        } else if(current.type=="mat3") {
+                            type=VariableDeclaration::Type::MAT3;
                         } else if(current.type=="sampler2D") {
                             type=VariableDeclaration::Type::SAMPLER2D;
                         } else {

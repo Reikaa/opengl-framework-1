@@ -19,11 +19,13 @@ namespace lkogl {
         
         typedef lkogl::math::Vec4<GLfloat> Color;
         typedef lkogl::math::Vec3<GLfloat> Vec3;
+        typedef lkogl::math::Vec4<GLfloat> Vec4;
         typedef lkogl::math::Vec2<GLfloat> UVCoord;
         
         struct Vertex {
             Vec3 position;
             Vec3 normal;
+            Vec4 tangent;
             UVCoord textureCoord;
         };
         
