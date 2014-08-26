@@ -10,7 +10,7 @@
 #define __OpenGLFramework__sampler__
 
 #include <string>
-#include "sdl.h"
+#include "../sdl.h"
 
 namespace lkogl {
     namespace audio {

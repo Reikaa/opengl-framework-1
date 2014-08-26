@@ -7,7 +7,7 @@
 //
 
 #include "./animation_component.h"
-#include "entity.h"
+#include "../entity.h"
 
 namespace lkogl {
     namespace scene {
