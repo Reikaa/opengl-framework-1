@@ -163,7 +163,7 @@ public:
             Image stoneNormal("stone_normal.png");
             
             Material colorful(Image("rainbow.png"), defaultNormal, 1, 160);
-            Material golden(Image("pyramid_gold.png"), defaultNormal, 1, 10);
+            Material golden(Image("pyramid_gold.png"), stoneNormal, 1, 10);
             Material wood(Image("steel_box.png"), stoneNormal, 1, 0.8);
             Material sand(Image("sand.png"), defaultNormal, 0, 0);
             
