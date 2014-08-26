@@ -80,18 +80,13 @@ namespace lkogl {
                 math::Vec3<T> center = (box.min + box.max)/2.0f;
                 math::Vec3<T> halfExtents = (box.max - box.min)/2.0f;
                 
-                math::Vec4<T> newCenter = m * math::Vec4<float>(center.x, center.y, center.z, 1);
-                math::Vec4<T> newHalfEx = m * math::Vec4<float>(halfExtents.x, halfExtents.y, halfExtents.z, 0);
+                math::Vec3<T> newCenter = math::vec3_cast<T>(m * center);
+                math::Vec3<T> newHalfEx = math::vec3_cast<T>(m * math::Vec4<float>(halfExtents, 0));
                 
-                return Aabb3<T>({
-                    newCenter.x-math::max(newHalfEx.x, halfExtents.x),
-                    newCenter.y-math::max(newHalfEx.y, halfExtents.y),
-                    newCenter.z-math::max(newHalfEx.z, halfExtents.z),
-                },{
-                    newCenter.x+math::max(newHalfEx.x, halfExtents.x),
-                    newCenter.y+math::max(newHalfEx.y, halfExtents.y),
-                    newCenter.z+math::max(newHalfEx.z, halfExtents.z),
-                });
+                return Aabb3<T>(
+                    newCenter - math::max(newHalfEx, halfExtents),
+                    newCenter + math::max(newHalfEx, halfExtents)
+                );
             }
         }
     }

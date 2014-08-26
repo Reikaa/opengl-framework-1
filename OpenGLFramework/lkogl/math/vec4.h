@@ -377,6 +377,12 @@ namespace lkogl {
             };
         }
         
+        template <typename T>
+        Vec3<T> vec3_cast(Vec4<T> const & v)
+        {
+            return Vec3<T>(v.x, v.y, v.z);
+        }
+        
     }
 }
 

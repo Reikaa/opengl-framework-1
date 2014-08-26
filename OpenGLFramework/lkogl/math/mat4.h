@@ -254,15 +254,33 @@ namespace lkogl {
         {
             Vec4<T> const Mov0(v[0]);
             Vec4<T> const Mov1(v[1]);
-            Vec4<T> const Mul0 = m[0] * Mov0;
-            Vec4<T> const Mul1 = m[1] * Mov1;
-            Vec4<T> const Add0 = Mul0 + Mul1;
             Vec4<T> const Mov2(v[2]);
             Vec4<T> const Mov3(v[3]);
+            Vec4<T> const Mul0 = m[0] * Mov0;
+            Vec4<T> const Mul1 = m[1] * Mov1;
             Vec4<T> const Mul2 = m[2] * Mov2;
             Vec4<T> const Mul3 = m[3] * Mov3;
+            Vec4<T> const Add0 = Mul0 + Mul1;
             Vec4<T> const Add1 = Mul2 + Mul3;
             Vec4<T> const Add2 = Add0 + Add1;
+            
+            return Add2;
+        }
+        
+        template <typename T>
+        Vec4<T> operator* (Mat4<T> const & m, Vec3<T> const & v)
+        {
+            Vec4<T> const Mov0(v[0]);
+            Vec4<T> const Mov1(v[1]);
+            Vec4<T> const Mov2(v[2]);
+            Vec4<T> const Mul0 = m[0] * Mov0;
+            Vec4<T> const Mul1 = m[1] * Mov1;
+            Vec4<T> const Mul2 = m[2] * Mov2;
+            Vec4<T> const Mul3 = m[3];
+            Vec4<T> const Add0 = Mul0 + Mul1;
+            Vec4<T> const Add1 = Mul2 + Mul3;
+            Vec4<T> const Add2 = Add0 + Add1;
+            
             return Add2;
         }
         
