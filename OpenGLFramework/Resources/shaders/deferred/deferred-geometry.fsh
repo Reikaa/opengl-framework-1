@@ -1,11 +1,6 @@
 #version 330
 
-struct Material {
-    sampler2D sampler;
-    vec4 coloring;
-    float specularIntensity;
-    float specularPower;
-};
+#include "material.gls"
 
 uniform Material uMaterial;
 

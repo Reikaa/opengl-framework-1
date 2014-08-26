@@ -9,6 +9,11 @@
 /* Begin PBXBuildFile section */
 		F215F12519AB4E2D00F7F694 /* entity_transformation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F215F12319AB4E2D00F7F694 /* entity_transformation.cpp */; };
 		F215F12819AB741300F7F694 /* link_component.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F215F12619AB741300F7F694 /* link_component.cpp */; };
+		F215F12B19ACA0C500F7F694 /* shader_loader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F215F12919ACA0C500F7F694 /* shader_loader.cpp */; };
+		F215F12D19ACA66800F7F694 /* material.gls in Resources */ = {isa = PBXBuildFile; fileRef = F215F12C19ACA66800F7F694 /* material.gls */; };
+		F215F12F19ACAE0800F7F694 /* lighting.gls in Resources */ = {isa = PBXBuildFile; fileRef = F215F12E19ACAE0800F7F694 /* lighting.gls */; };
+		F215F13119ACB5A300F7F694 /* deferred-point.vsh in Resources */ = {isa = PBXBuildFile; fileRef = F215F13019ACB5A300F7F694 /* deferred-point.vsh */; };
+		F215F13319ACB5B000F7F694 /* deferred-point.fsh in Resources */ = {isa = PBXBuildFile; fileRef = F215F13219ACB5B000F7F694 /* deferred-point.fsh */; };
 		F21C7D7219A4EA2B00B006A4 /* sky.vsh in Resources */ = {isa = PBXBuildFile; fileRef = F21C7D7119A4EA2B00B006A4 /* sky.vsh */; };
 		F21C7D7419A4EA3C00B006A4 /* sky.fsh in Resources */ = {isa = PBXBuildFile; fileRef = F21C7D7319A4EA3C00B006A4 /* sky.fsh */; };
 		F21C7D7619A4FDE300B006A4 /* sky.png in Resources */ = {isa = PBXBuildFile; fileRef = F21C7D7519A4FDE300B006A4 /* sky.png */; };
@@ -152,6 +157,12 @@
 		F215F12419AB4E2D00F7F694 /* entity_transformation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = entity_transformation.h; sourceTree = "<group>"; };
 		F215F12619AB741300F7F694 /* link_component.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = link_component.cpp; sourceTree = "<group>"; };
 		F215F12719AB741300F7F694 /* link_component.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = link_component.h; sourceTree = "<group>"; };
+		F215F12919ACA0C500F7F694 /* shader_loader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shader_loader.cpp; sourceTree = "<group>"; };
+		F215F12A19ACA0C500F7F694 /* shader_loader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shader_loader.h; sourceTree = "<group>"; };
+		F215F12C19ACA66800F7F694 /* material.gls */ = {isa = PBXFileReference; explicitFileType = sourcecode.glsl; fileEncoding = 4; path = material.gls; sourceTree = "<group>"; };
+		F215F12E19ACAE0800F7F694 /* lighting.gls */ = {isa = PBXFileReference; explicitFileType = sourcecode.glsl; fileEncoding = 4; path = lighting.gls; sourceTree = "<group>"; };
+		F215F13019ACB5A300F7F694 /* deferred-point.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = "deferred-point.vsh"; sourceTree = "<group>"; };
+		F215F13219ACB5B000F7F694 /* deferred-point.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = "deferred-point.fsh"; sourceTree = "<group>"; };
 		F21C7D7119A4EA2B00B006A4 /* sky.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = sky.vsh; sourceTree = "<group>"; };
 		F21C7D7319A4EA3C00B006A4 /* sky.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = sky.fsh; sourceTree = "<group>"; };
 		F21C7D7519A4FDE300B006A4 /* sky.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sky.png; sourceTree = "<group>"; };
@@ -169,12 +180,12 @@
 		F21EA82E199ABD0B00D78E1C /* animation_component.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = animation_component.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		F21EA833199B9B9300D78E1C /* render_target.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = render_target.cpp; sourceTree = "<group>"; };
 		F21EA834199B9B9300D78E1C /* render_target.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = render_target.h; sourceTree = "<group>"; };
-		F21EA839199BA82700D78E1C /* deferred-geometry.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = "deferred-geometry.vsh"; sourceTree = "<group>"; };
-		F21EA83B199BA83200D78E1C /* deferred-geometry.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = "deferred-geometry.fsh"; sourceTree = "<group>"; };
-		F21EA83D199BB45700D78E1C /* deferred-ambient.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = "deferred-ambient.vsh"; sourceTree = "<group>"; };
-		F21EA83F199BB46200D78E1C /* deferred-ambient.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = "deferred-ambient.fsh"; sourceTree = "<group>"; };
-		F21EA841199BE7C000D78E1C /* deferred-directional.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = "deferred-directional.vsh"; sourceTree = "<group>"; };
-		F21EA843199BE7D100D78E1C /* deferred-directional.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = "deferred-directional.fsh"; sourceTree = "<group>"; };
+		F21EA839199BA82700D78E1C /* deferred-geometry.vsh */ = {isa = PBXFileReference; explicitFileType = sourcecode.glsl; fileEncoding = 4; path = "deferred-geometry.vsh"; sourceTree = "<group>"; };
+		F21EA83B199BA83200D78E1C /* deferred-geometry.fsh */ = {isa = PBXFileReference; explicitFileType = sourcecode.glsl; fileEncoding = 4; path = "deferred-geometry.fsh"; sourceTree = "<group>"; };
+		F21EA83D199BB45700D78E1C /* deferred-ambient.vsh */ = {isa = PBXFileReference; explicitFileType = sourcecode.glsl; fileEncoding = 4; path = "deferred-ambient.vsh"; sourceTree = "<group>"; };
+		F21EA83F199BB46200D78E1C /* deferred-ambient.fsh */ = {isa = PBXFileReference; explicitFileType = sourcecode.glsl; fileEncoding = 4; path = "deferred-ambient.fsh"; sourceTree = "<group>"; };
+		F21EA841199BE7C000D78E1C /* deferred-directional.vsh */ = {isa = PBXFileReference; explicitFileType = sourcecode.glsl; fileEncoding = 4; path = "deferred-directional.vsh"; sourceTree = "<group>"; };
+		F21EA843199BE7D100D78E1C /* deferred-directional.fsh */ = {isa = PBXFileReference; explicitFileType = sourcecode.glsl; fileEncoding = 4; path = "deferred-directional.fsh"; sourceTree = "<group>"; };
 		F2293EC819A4103100920353 /* SDL2_mixer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2_mixer.framework; path = ../../../Library/Frameworks/SDL2_mixer.framework; sourceTree = "<group>"; };
 		F24DA04819A3D4AF005F5F32 /* sand.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sand.png; sourceTree = "<group>"; };
 		F24DA04A19A3F06F005F5F32 /* draggable_behaviour.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = draggable_behaviour.cpp; sourceTree = "<group>"; };
@@ -269,8 +280,8 @@
 		F2B0C3FF199FE7F8008AC975 /* clickable_behaviour.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = clickable_behaviour.h; sourceTree = "<group>"; };
 		F2B0C401199FF4A1008AC975 /* layout_invalidator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = layout_invalidator.cpp; sourceTree = "<group>"; };
 		F2B0C402199FF4A1008AC975 /* layout_invalidator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = layout_invalidator.h; sourceTree = "<group>"; };
-		F2B563B5199CFA28007D38D3 /* deferred-stencil.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = "deferred-stencil.vsh"; sourceTree = "<group>"; };
-		F2B563B7199CFA37007D38D3 /* deferred-stencil.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = "deferred-stencil.fsh"; sourceTree = "<group>"; };
+		F2B563B5199CFA28007D38D3 /* deferred-stencil.vsh */ = {isa = PBXFileReference; explicitFileType = sourcecode.glsl; fileEncoding = 4; path = "deferred-stencil.vsh"; sourceTree = "<group>"; };
+		F2B563B7199CFA37007D38D3 /* deferred-stencil.fsh */ = {isa = PBXFileReference; explicitFileType = sourcecode.glsl; fileEncoding = 4; path = "deferred-stencil.fsh"; sourceTree = "<group>"; };
 		F2B563BB199D0CC8007D38D3 /* stencil.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = stencil.cpp; sourceTree = "<group>"; };
 		F2B563BC199D0CC8007D38D3 /* stencil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stencil.h; sourceTree = "<group>"; };
 		F2B563BF199D2AA3007D38D3 /* deferred_renderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = deferred_renderer.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
@@ -702,6 +713,10 @@
 				F21EA83F199BB46200D78E1C /* deferred-ambient.fsh */,
 				F21EA841199BE7C000D78E1C /* deferred-directional.vsh */,
 				F21EA843199BE7D100D78E1C /* deferred-directional.fsh */,
+				F215F12C19ACA66800F7F694 /* material.gls */,
+				F215F12E19ACAE0800F7F694 /* lighting.gls */,
+				F215F13019ACB5A300F7F694 /* deferred-point.vsh */,
+				F215F13219ACB5B000F7F694 /* deferred-point.fsh */,
 			);
 			path = deferred;
 			sourceTree = "<group>";
@@ -765,6 +780,8 @@
 		F2F0DAFF19A4815200BD63E9 /* shader_loader */ = {
 			isa = PBXGroup;
 			children = (
+				F215F12919ACA0C500F7F694 /* shader_loader.cpp */,
+				F215F12A19ACA0C500F7F694 /* shader_loader.h */,
 			);
 			path = shader_loader;
 			sourceTree = "<group>";
@@ -867,16 +884,20 @@
 				F2F0DB0B19A4B46A00BD63E9 /* pyramid_gold.png in Resources */,
 				F21EA82A199AB97100D78E1C /* monkey.obj in Resources */,
 				F258802419A10B6B00AC7A3C /* terrain.png in Resources */,
+				F215F12F19ACAE0800F7F694 /* lighting.gls in Resources */,
 				F2F0DB0919A4AB0500BD63E9 /* steel_box.png in Resources */,
 				F29B1F61199E6C9100F17051 /* ui-element.fsh in Resources */,
 				F2DEC6331997DDD300EE31E7 /* rainbow.png in Resources */,
 				F21C7D7619A4FDE300B006A4 /* sky.png in Resources */,
 				F21EA820199A257F00D78E1C /* box.obj in Resources */,
 				F21EA844199BE7D100D78E1C /* deferred-directional.fsh in Resources */,
+				F215F13319ACB5B000F7F694 /* deferred-point.fsh in Resources */,
 				F297076619936C1600D48CE5 /* Images.xcassets in Resources */,
 				F21C7D7419A4EA3C00B006A4 /* sky.fsh in Resources */,
 				F21EA83A199BA82700D78E1C /* deferred-geometry.vsh in Resources */,
+				F215F13119ACB5A300F7F694 /* deferred-point.vsh in Resources */,
 				F24DA04919A3D4AF005F5F32 /* sand.png in Resources */,
+				F215F12D19ACA66800F7F694 /* material.gls in Resources */,
 				F21EA83C199BA83200D78E1C /* deferred-geometry.fsh in Resources */,
 				F29B1F5F199E6C8800F17051 /* ui-element.vsh in Resources */,
 				F2B563B8199CFA37007D38D3 /* deferred-stencil.fsh in Resources */,
@@ -913,6 +934,7 @@
 				F2B563C1199D2AA3007D38D3 /* deferred_renderer.cpp in Sources */,
 				F2B0C3FC199FE247008AC975 /* behaviour.cpp in Sources */,
 				F279E248199F48030001BBBF /* space.cpp in Sources */,
+				F215F12B19ACA0C500F7F694 /* shader_loader.cpp in Sources */,
 				F21EA81119990FF200D78E1C /* geometry_object.cpp in Sources */,
 				F2DEC613199790A600EE31E7 /* camera.cpp in Sources */,
 				F21EA82F199ABD0B00D78E1C /* animation_component.cpp in Sources */,

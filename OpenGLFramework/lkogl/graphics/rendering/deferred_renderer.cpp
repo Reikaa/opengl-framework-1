@@ -14,8 +14,11 @@
 #include "../stencil.h"
 #include "../../geometry/mesh.h"
 #include "../../utils/image.h"
+#include "../../resources/shader_loader/shader_loader.h"
 
 #include <iostream>
+
+using namespace lkogl::graphics::shader;
 
 namespace lkogl {
     namespace graphics {
@@ -32,27 +35,35 @@ namespace lkogl {
             
             DeferredRenderer::Programs DeferredRenderer::initPrograms()
             {
-                utils::PlainText vshDefGeo("deferred-geometry.vsh");
-                utils::PlainText fshDefGeo("deferred-geometry.fsh");
+                resources::shader_loader::ShaderLoader loader;
                 
-                utils::PlainText vshDefPlain("deferred-ambient.vsh");
-                utils::PlainText fshDefPlain("deferred-ambient.fsh");
+                Shader vshGeo = loader.fromFile(ShaderType::VERTEX, "deferred-geometry.vsh");
                 
-                utils::PlainText vshDefStencil("deferred-stencil.vsh");
-                utils::PlainText fshDefStencil("deferred-stencil.fsh");
+                Shader fshGeo = loader.fromFile(ShaderType::FRAGMENT, "deferred-geometry.fsh");
                 
-                utils::PlainText vshDefDir("deferred-directional.vsh");
-                utils::PlainText fshDefDir("deferred-directional.fsh");
+                Shader vshAmbient = loader.fromFile(ShaderType::VERTEX, "deferred-ambient.vsh");
                 
-                utils::PlainText vshDefSky("sky.vsh");
-                utils::PlainText fshDefSky("sky.fsh");
+                Shader fshAmbient = loader.fromFile(ShaderType::FRAGMENT, "deferred-ambient.fsh");
+                
+                Shader vshStencil = loader.fromFile(ShaderType::VERTEX, "deferred-stencil.vsh");
+                
+                Shader fshStencil = loader.fromFile(ShaderType::FRAGMENT, "deferred-stencil.fsh");
+                
+                Shader vshDir = loader.fromFile(ShaderType::VERTEX, "deferred-directional.vsh");
+                
+                Shader fshDir = loader.fromFile(ShaderType::FRAGMENT, "deferred-directional.fsh");
+                
+                
+                Shader vshSky = loader.fromFile(ShaderType::VERTEX, "sky.vsh");
+                
+                Shader fshSky = loader.fromFile(ShaderType::FRAGMENT, "sky.fsh");
                 
                 return {
-                    shader::Program(vshDefSky.content, fshDefSky.content),
-                    shader::Program(vshDefGeo.content, fshDefGeo.content),
-                    shader::Program(vshDefPlain.content, fshDefPlain.content),
-                    shader::Program(vshDefStencil.content, fshDefStencil.content),
-                    shader::Program(vshDefDir.content, fshDefDir.content)
+                    shader::Program(vshSky, fshSky),
+                    shader::Program(vshGeo, fshGeo),
+                    shader::Program(vshAmbient, fshAmbient),
+                    shader::Program(vshStencil, fshStencil),
+                    shader::Program(vshDir, fshDir)
                 };
             }
             

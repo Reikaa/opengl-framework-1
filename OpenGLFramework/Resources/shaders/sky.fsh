@@ -1,11 +1,9 @@
 #version 330
 
+#include "material.gls"
+
 out vec4 oColor;
 in vec2 fTexCoord;
-
-struct Material {
-    sampler2D sampler;
-};
 
 uniform Material uMaterial;
 

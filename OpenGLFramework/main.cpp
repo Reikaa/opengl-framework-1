@@ -251,6 +251,9 @@ public:
         } catch(lkogl::graphics::shader::Shader::Exception e) {
             std::cerr << e.msg << std::endl;
             exit(1);
+        } catch(lkogl::graphics::shader::Program::Exception e) {
+            std::cerr << e.msg << std::endl;
+            exit(1);
         }
     }
     

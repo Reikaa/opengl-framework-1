@@ -26,7 +26,8 @@ namespace lkogl {
             public:
                 class Exception {
                 public:
-                    Exception(const std::string& msg) {}
+                    std::string msg;
+                    Exception(const std::string& m) : msg(m) {}
                     ~Exception() {}
                 };
                 

@@ -1,0 +1,38 @@
+struct BaseLight {
+    vec3 color;
+    float intensity;
+};
+
+struct DirectionalLight {
+    BaseLight base;
+    vec3 direction;
+};
+
+vec4 calcLight(BaseLight light, vec3 direction, vec3 eyePos, vec3 normal, vec3 fPosition, float specularPower, float specularIntensity) {
+    float diffuseFactor = dot(normal, -direction);
+    
+    vec4 diffuseColor = vec4(0,0,0,0);
+    vec4 specularColor = vec4(0,0,0,0);
+    
+    if(diffuseFactor > 0) {
+        diffuseColor = vec4(light.color, 1) * light.intensity * diffuseFactor;
+        vec3 directionToEye = normalize(eyePos - fPosition);
+        vec3 halfDirection = normalize(directionToEye - direction);
+        float specularBase = dot(halfDirection, normal);
+        float specularFactor = pow(specularBase, specularPower);
+        
+        if(specularFactor > 0) {
+            specularColor = vec4(light.color, 1) * specularFactor * specularIntensity;
+        } else {
+            specularColor = vec4(0,0,0,0);
+        }
+    } else {
+        diffuseColor = vec4(0,0,0,0);
+    }
+    
+    return diffuseColor + specularColor;
+}
+
+vec4 calcDirectionalLight(DirectionalLight light, vec3 eyePos, vec3 normal, vec3 fPosition, float specPower, float specIntensity) {
+    return calcLight(light.base, normalize(light.direction), eyePos, normal, fPosition, specPower, specIntensity);
+}

@@ -1,0 +1,6 @@
+struct Material {
+    sampler2D sampler;
+    vec4 coloring;
+    float specularIntensity;
+    float specularPower;
+};
