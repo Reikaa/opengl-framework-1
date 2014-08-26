@@ -52,7 +52,7 @@ namespace lkogl {
                 
                 if(det != 0) {
                     tangent = (Q1 * D2.y - Q2 * D1.y) * (1.0f/det);
-                    tangent2 = (Q2 * D1.y - Q1 * D2.y) * (1.0f/det);
+                    tangent2 = (Q2 * D1.x - Q1 * D2.x) * (1.0f/det);
                 }
                 
                 float nDotT1 = math::dot(v1.normal, tangent);
@@ -67,9 +67,9 @@ namespace lkogl {
                 float h2 = (math::dot(math::cross(v2.normal, t2), tangent2) < 0.0f) ? -1.0f : 1.0f;
                 float h3 = (math::dot(math::cross(v3.normal, t3), tangent2) < 0.0f) ? -1.0f : 1.0f;
                 
-                v1.tangent = math::Vec4<float>(t1, h1);
-                v2.tangent = math::Vec4<float>(t2, h2);
-                v3.tangent = math::Vec4<float>(t3, h3);
+                v1.tangent = h1*math::Vec4<float>(t1, 1);
+                v2.tangent = h2*math::Vec4<float>(t2, 1);
+                v3.tangent = h3*math::Vec4<float>(t3, 1);
             }
         }
     }

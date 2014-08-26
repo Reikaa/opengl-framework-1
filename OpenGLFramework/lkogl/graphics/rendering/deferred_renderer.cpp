@@ -96,19 +96,21 @@ namespace lkogl {
             void DeferredRenderer::render(const scene::Scene& graph, const camera::Camera& cam) const
             {
                 std::vector<lighting::DirectionalLight> directionalLights = {
-                   
+                    lighting::DirectionalLight({1,1,1}, 1.4, -math::Vec3<float>{1,2.6,0.4}),
+                    lighting::DirectionalLight({1,1,1}, 0.2, math::Vec3<float>{2,-1,-2}),
+                    lighting::DirectionalLight({1,1,1}, 0.2, math::Vec3<float>{-1,-1,3}),
                 };
                 
                 std::vector<lighting::PointLight> pointLights = {
                     lighting::PointLight({1,0,0}, 1.4, {0,-2,0}, lighting::Attenuation(0,0,1)),
                     lighting::PointLight({0,1,0}, 1, {-9,-3.9,0}, lighting::Attenuation(0,1,0.8)),
-                    lighting::PointLight({1,1,0}, 1, {-9,-2,-0.3}, lighting::Attenuation(0,1,0.8)),
+                    lighting::PointLight({1,1,0}, 1, {-8.5,-2,-0.3}, lighting::Attenuation(0,0,1)),
                     lighting::PointLight({1,0,1}, 1, {-11,-4,-1.5}, lighting::Attenuation(0,1,0.8)),
                     lighting::PointLight({0,0.2,1}, 1, {-11,-2.6,0.9}, lighting::Attenuation(0,1,0.8)),
                 };
                 
                 std::vector<lighting::SpotLight> spotLights = {
-                    lighting::SpotLight({1,0,0}, 1, {-10,-2,2.2}, lighting::Attenuation(0,0.5,0), {0,-1,0}, 0.7),
+                    lighting::SpotLight({1,0,0}, 1, {-10,-2,2.3}, lighting::Attenuation(0,0.5,0), {0,-1,0}, 0.7),
                 };
                 
                 lighting::AmbientLight ambientLight({0.2,0.2,0.2});

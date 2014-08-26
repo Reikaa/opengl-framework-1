@@ -17,8 +17,7 @@ layout(location = 2) out vec4 oColor;
 
 void main() {
     vec3 texNormal = texture(uMaterial.normal, fTexCoord).xyz;
-    float texNormalLength = length(texNormal);
-    vec3 normal = normalize(fTbnMatrix * (texNormalLength*(255/128*texNormal-1)+(1-texNormalLength)*vec3(0,0,1)));
+    vec3 normal = normalize(fTbnMatrix * (255.0/128*texNormal-1));
     
     oPos = vec4(fPosition,1);
     oNormal = vec4(normal,fDepth);
