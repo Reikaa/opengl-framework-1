@@ -3,10 +3,33 @@ struct BaseLight {
     float intensity;
 };
 
+struct Attenuation {
+    float constant;
+    float linear;
+    float quadratic;
+};
+
 struct DirectionalLight {
-    BaseLight base;
+    BaseLight baseLight;
     vec3 direction;
 };
+
+struct PointLight {
+    BaseLight baseLight;
+    vec3 position;
+    Attenuation attenuation;
+    float range;
+};
+
+struct SpotLight {
+    PointLight pointLight;
+    vec3 direction;
+    float cutoff;
+};
+
+float calcAttenuation(Attenuation att, float x) {
+    return att.constant + x * att.linear + x*x *att.quadratic;
+}
 
 vec4 calcLight(BaseLight light, vec3 direction, vec3 eyePos, vec3 normal, vec3 fPosition, float specularPower, float specularIntensity) {
     float diffuseFactor = dot(normal, -direction);
@@ -34,5 +57,34 @@ vec4 calcLight(BaseLight light, vec3 direction, vec3 eyePos, vec3 normal, vec3 f
 }
 
 vec4 calcDirectionalLight(DirectionalLight light, vec3 eyePos, vec3 normal, vec3 fPosition, float specPower, float specIntensity) {
-    return calcLight(light.base, normalize(light.direction), eyePos, normal, fPosition, specPower, specIntensity);
+    
+    return calcLight(light.baseLight, normalize(light.direction), eyePos, normal, fPosition, specPower, specIntensity);
+}
+
+vec4 calcPointLight(PointLight light, vec3 eyePos, vec3 normal, vec3 fPosition, float specPower, float specIntensity) {
+    vec3 lightDirection = fPosition - light.position;
+    float distanceToLight = length(lightDirection);
+    
+    if(distanceToLight > light.range)
+        return vec4(0,0,0,0);
+    
+    lightDirection = normalize(lightDirection);
+    
+    vec4 color = calcLight(light.baseLight, lightDirection, eyePos, normal, fPosition, specPower, specIntensity);
+    float attenuation = abs(calcAttenuation(light.attenuation, distanceToLight))+0.0001;
+    
+    return color/attenuation;
+}
+
+vec4 calcSpotLight(SpotLight light, vec3 eyePos, vec3 normal, vec3 fPosition, float specPower, float specIntensity) {
+    vec3 lightDirection = normalize(fPosition - light.pointLight.position);
+    float spotFactor = dot(lightDirection, light.direction);
+    
+    vec4 color = vec4(0,0,0,0);
+    
+    if(spotFactor > light.cutoff) {
+        color = calcPointLight(light.pointLight, eyePos, normal, fPosition, specPower, specIntensity) * (1 - (1-spotFactor)/(1-light.cutoff));
+    }
+    
+    return color;
 }

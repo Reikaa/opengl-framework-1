@@ -21,17 +21,20 @@ namespace lkogl {
             
             SpotLightUse::SpotLightUse(const shader::ProgramUse& program, const SpotLight& l)
             {
-                program.setUniform("", l.pointLight_.baseLight_.color_);
-                program.setUniformf("", l.pointLight_.baseLight_.intensity_);
-                program.setUniform("", l.pointLight_.position_);
-                program.setUniformf("", l.pointLight_.range_);
+            
+                program.setUniform("uSpotLight.pointLight.baseLight.color", l.pointLight_.baseLight_.color_);
+            
+                program.setUniformf("uSpotLight.pointLight.baseLight.intensity", l.pointLight_.baseLight_.intensity_);
                 
-                program.setUniformf("", l.pointLight_.attenuation_.constant_);
-                program.setUniformf("", l.pointLight_.attenuation_.linear_);
-                program.setUniformf("", l.pointLight_.attenuation_.quadratic_);
+                program.setUniform("uSpotLight.pointLight.position", l.pointLight_.position_);
+                program.setUniformf("uSpotLight.pointLight.range", l.pointLight_.range_);
+                
+                program.setUniformf("uSpotLight.pointLight.attenuation.constant", l.pointLight_.attenuation_.constant_);
+                program.setUniformf("uSpotLight.pointLight.attenuation.linear", l.pointLight_.attenuation_.linear_);
+                program.setUniformf("uSpotLight.pointLight.attenuation.quadratic", l.pointLight_.attenuation_.quadratic_);
 
-                program.setUniform("", l.direction_);
-                program.setUniformf("", l.cutoff_);
+                program.setUniform("uSpotLight.direction", l.direction_);
+                program.setUniformf("uSpotLight.cutoff", l.cutoff_);
             }
             
             SpotLightUse::~SpotLightUse()

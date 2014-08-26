@@ -5,7 +5,7 @@
 
 uniform vec3 uEyePosition;
 uniform GeometrySampler uGeometry;
-uniform DirectionalLight uDirectionalLight;
+uniform SpotLight uSpotLight;
 
 in vec2 fUV;
 
@@ -16,5 +16,5 @@ void main() {
     vec4 defNormal = texture(uGeometry.normal, fUV);
     vec4 defColor = texture(uGeometry.color, fUV);
     
-    oColor = defColor*calcDirectionalLight(uDirectionalLight, uEyePosition, normalize(defNormal.xyz), defPos.xyz, 100, defColor.w);
+    oColor = defColor*calcSpotLight(uSpotLight, uEyePosition, normalize(defNormal.xyz), defPos.xyz, 100, defColor.w);
 }

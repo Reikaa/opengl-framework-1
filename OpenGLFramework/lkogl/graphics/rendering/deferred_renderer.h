@@ -26,6 +26,8 @@ namespace lkogl {
                     shader::Program deferredAmbient_;
                     shader::Program deferredStencil_;
                     shader::Program deferredDir_;
+                    shader::Program deferredPoint_;
+                    shader::Program deferredSpot_;
                 } programs_;
                 std::unique_ptr<FrameBuffer> buffer_;
                 struct {
@@ -38,7 +40,7 @@ namespace lkogl {
                 Texture sky_;
                 mutable int entityCount_ = 0;
             public:
-                DeferredRenderer(const Screen& screen, int ratioW, int ratioH);
+                DeferredRenderer(const Screen& screen, int ratioW, int ratioH) throw (graphics::shader::Shader::Exception);;
                 ~DeferredRenderer();
                 
                 void render(const scene::Scene& graph, const camera::Camera& cam) const;
@@ -48,7 +50,7 @@ namespace lkogl {
                 int entityCount() const { return entityCount_; }
                 
             private:
-                Programs initPrograms();
+                Programs initPrograms() throw (graphics::shader::Shader::Exception);
             };
         }
     }

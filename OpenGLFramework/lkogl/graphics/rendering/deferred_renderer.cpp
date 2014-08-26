@@ -9,6 +9,8 @@
 #include "./deferred_renderer.h"
 #include "../../utils/text.h"
 #include "../render_target.h"
+#include "../lighting/spot_light.h"
+#include "../lighting/point_light.h"
 #include "../lighting/directional_light.h"
 #include "../lighting/ambient_light.h"
 #include "../stencil.h"
@@ -24,7 +26,7 @@ namespace lkogl {
     namespace graphics {
         namespace rendering {
             
-            DeferredRenderer::DeferredRenderer(const Screen& s, int ratioWidth, int ratioHeight) :
+            DeferredRenderer::DeferredRenderer(const Screen& s, int ratioWidth, int ratioHeight) throw (Shader::Exception) :
             programs_(initPrograms()), buffer_(new FrameBuffer(s.width, s.height, std::vector<TargetType> {
                 TargetType{GL_COLOR_ATTACHMENT0, GL_RGBA16F},
                 TargetType{GL_COLOR_ATTACHMENT1, GL_RGBA16F},
@@ -33,7 +35,7 @@ namespace lkogl {
             {
             }
             
-            DeferredRenderer::Programs DeferredRenderer::initPrograms()
+            DeferredRenderer::Programs DeferredRenderer::initPrograms() throw (Shader::Exception)
             {
                 resources::shader_loader::ShaderLoader loader;
                 
@@ -41,29 +43,49 @@ namespace lkogl {
                 
                 Shader fshGeo = loader.fromFile(ShaderType::FRAGMENT, "deferred-geometry.fsh");
                 
+                
+                
                 Shader vshAmbient = loader.fromFile(ShaderType::VERTEX, "deferred-ambient.vsh");
                 
                 Shader fshAmbient = loader.fromFile(ShaderType::FRAGMENT, "deferred-ambient.fsh");
                 
+                
+                
                 Shader vshStencil = loader.fromFile(ShaderType::VERTEX, "deferred-stencil.vsh");
                 
                 Shader fshStencil = loader.fromFile(ShaderType::FRAGMENT, "deferred-stencil.fsh");
+                
+                
                 
                 Shader vshDir = loader.fromFile(ShaderType::VERTEX, "deferred-directional.vsh");
                 
                 Shader fshDir = loader.fromFile(ShaderType::FRAGMENT, "deferred-directional.fsh");
                 
                 
+                Shader vshPoint = loader.fromFile(ShaderType::VERTEX, "deferred-point.vsh");
+                
+                Shader fshPoint = loader.fromFile(ShaderType::FRAGMENT, "deferred-point.fsh");
+                
+                
+                Shader vshSpot = loader.fromFile(ShaderType::VERTEX, "deferred-spot.vsh");
+                
+                Shader fshSpot = loader.fromFile(ShaderType::FRAGMENT, "deferred-spot.fsh");
+                
+                
+                
                 Shader vshSky = loader.fromFile(ShaderType::VERTEX, "sky.vsh");
                 
                 Shader fshSky = loader.fromFile(ShaderType::FRAGMENT, "sky.fsh");
+              
                 
                 return {
                     shader::Program(vshSky, fshSky),
                     shader::Program(vshGeo, fshGeo),
                     shader::Program(vshAmbient, fshAmbient),
                     shader::Program(vshStencil, fshStencil),
-                    shader::Program(vshDir, fshDir)
+                    shader::Program(vshDir, fshDir),
+                    shader::Program(vshPoint, fshPoint),
+                    shader::Program(vshSpot, fshSpot)
                 };
             }
             
@@ -77,6 +99,18 @@ namespace lkogl {
                     lighting::DirectionalLight({1,1,1}, 1.4, -math::Vec3<float>{1,2.6,0.4}),
                     lighting::DirectionalLight({1,1,1}, 0.2, math::Vec3<float>{2,-1,-2}),
                     lighting::DirectionalLight({1,1,1}, 0.2, math::Vec3<float>{-1,-1,3}),
+                };
+                
+                std::vector<lighting::PointLight> pointLights = {
+                    lighting::PointLight({1,0,0}, 1.4, {0,-2,0}, lighting::Attenuation(0,0,1)),
+                    lighting::PointLight({0,1,0}, 1, {-9,-3.9,0}, lighting::Attenuation(0,1,0.8)),
+                    lighting::PointLight({1,1,0}, 1, {-9,-2,-0.3}, lighting::Attenuation(0,1,0.8)),
+                    lighting::PointLight({1,0,1}, 1, {-11,-4,-1.5}, lighting::Attenuation(0,1,0.8)),
+                    lighting::PointLight({0,0.2,1}, 1, {-11,-2.6,0.9}, lighting::Attenuation(0,1,0.8)),
+                };
+                
+                std::vector<lighting::SpotLight> spotLights = {
+                    lighting::SpotLight({1,0,0}, 1, {-10,-2,2.2}, lighting::Attenuation(0,0.5,0), {0,-1,0}, 0.7),
                 };
                 
                 lighting::AmbientLight ambientLight({0.2,0.2,0.2});
@@ -178,15 +212,49 @@ namespace lkogl {
                     { // Directional
                         shader::ProgramUse directional(programs_.deferredDir_);
                         GeometryObjectUse squareObj(square_);
-
+                        
                         directional.setUniform("uEyePosition", cam.position());
                         
-                        BufferTextureUse tu1(directional, "uSamplerPosition", *buffer_, 0, 0);
-                        BufferTextureUse tu2(directional, "uSamplerNormal", *buffer_, 1, 1);
-                        BufferTextureUse tu3(directional, "uSamplerColor", *buffer_, 2, 2);
-
+                        BufferTextureUse tu1(directional, "uGeometry.position", *buffer_, 0, 0);
+                        BufferTextureUse tu2(directional, "uGeometry.normal", *buffer_, 1, 1);
+                        BufferTextureUse tu3(directional, "uGeometry.color", *buffer_, 2, 2);
+                        
                         for(const lighting::DirectionalLight& light : directionalLights) {
                             lighting::DirectionalLightUse use(directional, light);
+                            
+                            squareObj.render();
+                        }
+                    }
+                    
+                    { // Point
+                        shader::ProgramUse point(programs_.deferredPoint_);
+                        GeometryObjectUse squareObj(square_);
+                        
+                        point.setUniform("uEyePosition", cam.position());
+                        
+                        BufferTextureUse tu1(point, "uGeometry.position", *buffer_, 0, 0);
+                        BufferTextureUse tu2(point, "uGeometry.normal", *buffer_, 1, 1);
+                        BufferTextureUse tu3(point, "uGeometry.color", *buffer_, 2, 2);
+                        
+                        for(const lighting::PointLight& light : pointLights) {
+                            lighting::PointLightUse use(point, light);
+                            
+                            squareObj.render();
+                        }
+                    }
+                    
+                    { // Spot
+                        shader::ProgramUse spot(programs_.deferredSpot_);
+                        GeometryObjectUse squareObj(square_);
+                        
+                        spot.setUniform("uEyePosition", cam.position());
+                        
+                        BufferTextureUse tu1(spot, "uGeometry.position", *buffer_, 0, 0);
+                        BufferTextureUse tu2(spot, "uGeometry.normal", *buffer_, 1, 1);
+                        BufferTextureUse tu3(spot, "uGeometry.color", *buffer_, 2, 2);
+                        
+                        for(const lighting::SpotLight& light : spotLights) {
+                            lighting::SpotLightUse use(spot, light);
                             
                             squareObj.render();
                         }

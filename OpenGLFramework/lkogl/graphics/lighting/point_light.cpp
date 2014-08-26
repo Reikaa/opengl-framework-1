@@ -27,14 +27,16 @@ namespace lkogl {
             PointLightUse::PointLightUse(const shader::ProgramUse& program, const PointLight& l)
             {
                 
-                program.setUniform("", l.baseLight_.color_);
-                program.setUniformf("", l.baseLight_.intensity_);
-                program.setUniform("", l.position_);
-                program.setUniformf("", l.range_);
+                program.setUniform("uPointLight.baseLight.color", l.baseLight_.color_);
                 
-                program.setUniformf("", l.attenuation_.constant_);
-                program.setUniformf("", l.attenuation_.linear_);
-                program.setUniformf("", l.attenuation_.quadratic_);
+                program.setUniformf("uPointLight.baseLight.intensity", l.baseLight_.intensity_);
+                
+                program.setUniform("uPointLight.position", l.position_);
+                program.setUniformf("uPointLight.range", l.range_);
+                
+                program.setUniformf("uPointLight.attenuation.constant", l.attenuation_.constant_);
+                program.setUniformf("uPointLight.attenuation.linear", l.attenuation_.linear_);
+                program.setUniformf("uPointLight.attenuation.quadratic", l.attenuation_.quadratic_);
             }
             
             PointLightUse::~PointLightUse()

@@ -1,0 +1,5 @@
+struct GeometrySampler {
+    sampler2D position;
+    sampler2D normal;
+    sampler2D color;
+};
