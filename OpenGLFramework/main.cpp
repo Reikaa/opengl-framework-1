@@ -161,10 +161,10 @@ public:
             
             Image defaultNormal("default_normal.png");
             Image stoneNormal("stone_normal.png");
-            
+                    
             Material colorful(Image("rainbow.png"), defaultNormal, 1, 160);
             Material golden(Image("pyramid_gold.png"), stoneNormal, 1, 10);
-            Material wood(Image("steel_box.png"), stoneNormal, 1, 0.8);
+            Material tiling(Image("tiling_color.png"), Image("tiling_normal.png"), 1, 0.8);
             Material sand(Image("sand.png"), defaultNormal, 0, 0);
             
             Mesh pyramid = primitives::makePyramid();
@@ -181,20 +181,20 @@ public:
             Mesh cube = ::obj_from_file("box.obj").toIndexedModel().toMesh();
 
             std::shared_ptr<Entity> nodeBox1 = std::make_shared<Entity>();
-            nodeBox1->addComponent(std::make_shared<RenderComponent>(GeometryObject(cube), wood));
+            nodeBox1->addComponent(std::make_shared<RenderComponent>(GeometryObject(cube), tiling));
             nodeBox1->transformation().setTranslation({-9,-4.5,2});
             graph.addEntity(nodeBox1);
             nodeBox1->setBounding(lkogl::math::geo::Aabb3<float>({-1,-1,-1},{1,1,1}));
             
             std::shared_ptr<Entity> nodeBox2 = std::make_shared<Entity>();
-            nodeBox2->addComponent(std::make_shared<RenderComponent>(GeometryObject(cube), wood));
+            nodeBox2->addComponent(std::make_shared<RenderComponent>(GeometryObject(cube), tiling));
             nodeBox2->transformation().setRotation(angleAxis<float>(radians(21), {0,1,0}));
             graph.addEntity(nodeBox2);
             nodeBox2->transformation().setTranslation({-10.5,-4.5,0.1});
             nodeBox2->setBounding(lkogl::math::geo::Aabb3<float>({-1,-1,-1},{1,1,1}));
 
             std::shared_ptr<Entity> nodeBox3 = std::make_shared<Entity>();
-            nodeBox3->addComponent(std::make_shared<RenderComponent>(GeometryObject(cube), wood));
+            nodeBox3->addComponent(std::make_shared<RenderComponent>(GeometryObject(cube), tiling));
             nodeBox3->transformation().setRotation(angleAxis<float>(radians(-17), {0,1,0}));
             graph.addEntity(nodeBox3);
             nodeBox3->transformation().setTranslation({-9.5,-2.5,1.2});

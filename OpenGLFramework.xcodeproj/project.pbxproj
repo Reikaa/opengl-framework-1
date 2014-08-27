@@ -42,6 +42,7 @@
 		F21EA844199BE7D100D78E1C /* deferred-directional.fsh in Resources */ = {isa = PBXBuildFile; fileRef = F21EA843199BE7D100D78E1C /* deferred-directional.fsh */; };
 		F2293EC919A4103100920353 /* SDL2_mixer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F2293EC819A4103100920353 /* SDL2_mixer.framework */; };
 		F2293ECA19A4103C00920353 /* SDL2_mixer.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F2293EC819A4103100920353 /* SDL2_mixer.framework */; };
+		F23A8BA119AD56640074E7DD /* tiling_normal.png in Resources */ = {isa = PBXBuildFile; fileRef = F23A8BA019AD56640074E7DD /* tiling_normal.png */; };
 		F24DA04919A3D4AF005F5F32 /* sand.png in Resources */ = {isa = PBXBuildFile; fileRef = F24DA04819A3D4AF005F5F32 /* sand.png */; };
 		F24DA04C19A3F06F005F5F32 /* draggable_behaviour.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F24DA04A19A3F06F005F5F32 /* draggable_behaviour.cpp */; };
 		F253730F19AA905500BC5CAD /* scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F253730D19AA905500BC5CAD /* scene.cpp */; };
@@ -105,7 +106,7 @@
 		F2DEC6401997F4F800EE31E7 /* base_light.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2DEC63E1997F4F800EE31E7 /* base_light.cpp */; };
 		F2F0DB0219A4828000BD63E9 /* sampler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2F0DB0019A4828000BD63E9 /* sampler.cpp */; };
 		F2F0DB0519A487E900BD63E9 /* double_click_mouse_over.wav in Resources */ = {isa = PBXBuildFile; fileRef = F2F0DB0419A487E900BD63E9 /* double_click_mouse_over.wav */; };
-		F2F0DB0919A4AB0500BD63E9 /* steel_box.png in Resources */ = {isa = PBXBuildFile; fileRef = F2F0DB0819A4AB0500BD63E9 /* steel_box.png */; };
+		F2F0DB0919A4AB0500BD63E9 /* tiling_color.png in Resources */ = {isa = PBXBuildFile; fileRef = F2F0DB0819A4AB0500BD63E9 /* tiling_color.png */; };
 		F2F0DB0B19A4B46A00BD63E9 /* pyramid_gold.png in Resources */ = {isa = PBXBuildFile; fileRef = F2F0DB0A19A4B46A00BD63E9 /* pyramid_gold.png */; };
 		F2FC464519A34D4800EFCEF5 /* variable_declaration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2FC464319A34D4800EFCEF5 /* variable_declaration.cpp */; };
 /* End PBXBuildFile section */
@@ -197,6 +198,7 @@
 		F21EA841199BE7C000D78E1C /* deferred-directional.vsh */ = {isa = PBXFileReference; explicitFileType = sourcecode.glsl; fileEncoding = 4; path = "deferred-directional.vsh"; sourceTree = "<group>"; };
 		F21EA843199BE7D100D78E1C /* deferred-directional.fsh */ = {isa = PBXFileReference; explicitFileType = sourcecode.glsl; fileEncoding = 4; path = "deferred-directional.fsh"; sourceTree = "<group>"; };
 		F2293EC819A4103100920353 /* SDL2_mixer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2_mixer.framework; path = ../../../Library/Frameworks/SDL2_mixer.framework; sourceTree = "<group>"; };
+		F23A8BA019AD56640074E7DD /* tiling_normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tiling_normal.png; sourceTree = "<group>"; };
 		F24DA04819A3D4AF005F5F32 /* sand.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sand.png; sourceTree = "<group>"; };
 		F24DA04A19A3F06F005F5F32 /* draggable_behaviour.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = draggable_behaviour.cpp; sourceTree = "<group>"; };
 		F24DA04B19A3F06F005F5F32 /* draggable_behaviour.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = draggable_behaviour.h; sourceTree = "<group>"; };
@@ -327,7 +329,7 @@
 		F2F0DB0019A4828000BD63E9 /* sampler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sampler.cpp; sourceTree = "<group>"; };
 		F2F0DB0119A4828000BD63E9 /* sampler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sampler.h; sourceTree = "<group>"; };
 		F2F0DB0419A487E900BD63E9 /* double_click_mouse_over.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = double_click_mouse_over.wav; sourceTree = "<group>"; };
-		F2F0DB0819A4AB0500BD63E9 /* steel_box.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = steel_box.png; sourceTree = "<group>"; };
+		F2F0DB0819A4AB0500BD63E9 /* tiling_color.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tiling_color.png; sourceTree = "<group>"; };
 		F2F0DB0A19A4B46A00BD63E9 /* pyramid_gold.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pyramid_gold.png; sourceTree = "<group>"; };
 		F2FC464319A34D4800EFCEF5 /* variable_declaration.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = variable_declaration.cpp; sourceTree = "<group>"; };
 		F2FC464419A34D4800EFCEF5 /* variable_declaration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = variable_declaration.h; sourceTree = "<group>"; };
@@ -401,11 +403,12 @@
 		F238E4B919A422D300DF8601 /* textures */ = {
 			isa = PBXGroup;
 			children = (
+				F23A8BA019AD56640074E7DD /* tiling_normal.png */,
 				F215F13A19AD212E00F7F694 /* default_normal.png */,
 				F215F13B19AD212E00F7F694 /* stone_normal.png */,
 				F21C7D7519A4FDE300B006A4 /* sky.png */,
 				F2F0DB0A19A4B46A00BD63E9 /* pyramid_gold.png */,
-				F2F0DB0819A4AB0500BD63E9 /* steel_box.png */,
+				F2F0DB0819A4AB0500BD63E9 /* tiling_color.png */,
 				F24DA04819A3D4AF005F5F32 /* sand.png */,
 				F258802319A10B6B00AC7A3C /* terrain.png */,
 				F2DEC6321997DDD300EE31E7 /* rainbow.png */,
@@ -901,7 +904,7 @@
 				F21EA82A199AB97100D78E1C /* monkey.obj in Resources */,
 				F258802419A10B6B00AC7A3C /* terrain.png in Resources */,
 				F215F12F19ACAE0800F7F694 /* lighting.gls in Resources */,
-				F2F0DB0919A4AB0500BD63E9 /* steel_box.png in Resources */,
+				F2F0DB0919A4AB0500BD63E9 /* tiling_color.png in Resources */,
 				F29B1F61199E6C9100F17051 /* ui-element.fsh in Resources */,
 				F2DEC6331997DDD300EE31E7 /* rainbow.png in Resources */,
 				F215F13519ACE1D300F7F694 /* deferred-spot.vsh in Resources */,
@@ -913,6 +916,7 @@
 				F215F13319ACB5B000F7F694 /* deferred-point.fsh in Resources */,
 				F297076619936C1600D48CE5 /* Images.xcassets in Resources */,
 				F215F13719ACE1E000F7F694 /* deferred-spot.fsh in Resources */,
+				F23A8BA119AD56640074E7DD /* tiling_normal.png in Resources */,
 				F21C7D7419A4EA3C00B006A4 /* sky.fsh in Resources */,
 				F21EA83A199BA82700D78E1C /* deferred-geometry.vsh in Resources */,
 				F215F13119ACB5A300F7F694 /* deferred-point.vsh in Resources */,

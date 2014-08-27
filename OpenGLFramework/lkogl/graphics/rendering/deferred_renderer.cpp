@@ -97,16 +97,17 @@ namespace lkogl {
             {
                 std::vector<lighting::DirectionalLight> directionalLights = {
                     lighting::DirectionalLight({1,1,1}, 1.4, -math::Vec3<float>{1,2.6,0.4}),
-                    lighting::DirectionalLight({1,1,1}, 0.2, math::Vec3<float>{2,-1,-2}),
-                    lighting::DirectionalLight({1,1,1}, 0.2, math::Vec3<float>{-1,-1,3}),
                 };
                 
                 std::vector<lighting::PointLight> pointLights = {
-                    lighting::PointLight({1,0,0}, 1.4, {0,-2,0}, lighting::Attenuation(0,0,1)),
+                    lighting::PointLight({1,0,0}, 1.4, {0,-1,0}, lighting::Attenuation(0,0,1)),
                     lighting::PointLight({0,1,0}, 1, {-9,-3.9,0}, lighting::Attenuation(0,1,0.8)),
                     lighting::PointLight({1,1,0}, 1, {-8.5,-2,-0.3}, lighting::Attenuation(0,0,1)),
                     lighting::PointLight({1,0,1}, 1, {-11,-4,-1.5}, lighting::Attenuation(0,1,0.8)),
                     lighting::PointLight({0,0.2,1}, 1, {-11,-2.6,0.9}, lighting::Attenuation(0,1,0.8)),
+                    lighting::PointLight({1,0,1}, 1, {0,3.5,-2}, lighting::Attenuation(0,0,0.8)),
+                    lighting::PointLight({1,1,1}, 0.5, {-10.5,-4,1.6}, lighting::Attenuation(0,0,1)),
+                    lighting::PointLight({1,0.5,0}, 1, {-7.7,-2.8,1.5}, lighting::Attenuation(0,0,1)),
                 };
                 
                 std::vector<lighting::SpotLight> spotLights = {
