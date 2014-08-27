@@ -24,9 +24,16 @@ namespace lkogl {
             
             float Attenuation::solve(float y) const
             {
-                float c = constant_ - y;
                 float a = quadratic_;
                 float b = linear_;
+                float c = constant_ - y;
+                
+                if(a==0) {
+                    if(b==0) {
+                        return -c;
+                    }
+                    return -c / b;
+                }
                 
                 // abc formula
                 return (-b+sqrtf(b*b-4*a*c))/(2*a);
