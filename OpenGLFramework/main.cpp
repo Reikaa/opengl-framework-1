@@ -169,7 +169,7 @@ public:
             
             Mesh pyramid = primitives::makePyramid();
             std::shared_ptr<Entity> node = std::make_shared<Entity>();
-            node->setBounding(lkogl::math::geo::Aabb3<float>({-1,-1,-1},{1,1,1}));
+            node->setBounding(lkogl::math::geo::Aabb3<float>(2));
             node->addComponent(std::make_shared<RenderComponent>(GeometryObject(pyramid), golden));
             node->transformation().setScale({2,2,2});
             node->transformation().setTranslation({0,3,0});
@@ -178,33 +178,37 @@ public:
             graph.addEntity(node);
             
 
-            Mesh cube = ::obj_from_file("box.obj").toIndexedModel().toMesh();
+            IndexModel cubeModel = obj_from_file("box.obj").toIndexedModel();
+            geo::Aabb3<float> cubeBounding = cubeModel.bounding();
+            Mesh cubeMesh = cubeModel.toMesh();
 
             std::shared_ptr<Entity> nodeBox1 = std::make_shared<Entity>();
-            nodeBox1->addComponent(std::make_shared<RenderComponent>(GeometryObject(cube), tiling));
+            nodeBox1->addComponent(std::make_shared<RenderComponent>(GeometryObject(cubeMesh), tiling));
             nodeBox1->transformation().setTranslation({-9,-4.5,2});
             graph.addEntity(nodeBox1);
-            nodeBox1->setBounding(lkogl::math::geo::Aabb3<float>({-1,-1,-1},{1,1,1}));
+            nodeBox1->setBounding(cubeBounding);
             
             std::shared_ptr<Entity> nodeBox2 = std::make_shared<Entity>();
-            nodeBox2->addComponent(std::make_shared<RenderComponent>(GeometryObject(cube), tiling));
+            nodeBox2->addComponent(std::make_shared<RenderComponent>(GeometryObject(cubeMesh), tiling));
             nodeBox2->transformation().setRotation(angleAxis<float>(radians(21), {0,1,0}));
             graph.addEntity(nodeBox2);
             nodeBox2->transformation().setTranslation({-10.5,-4.5,0.1});
-            nodeBox2->setBounding(lkogl::math::geo::Aabb3<float>({-1,-1,-1},{1,1,1}));
+            nodeBox2->setBounding(cubeBounding);
 
             std::shared_ptr<Entity> nodeBox3 = std::make_shared<Entity>();
-            nodeBox3->addComponent(std::make_shared<RenderComponent>(GeometryObject(cube), tiling));
+            nodeBox3->addComponent(std::make_shared<RenderComponent>(GeometryObject(cubeMesh), tiling));
             nodeBox3->transformation().setRotation(angleAxis<float>(radians(-17), {0,1,0}));
             graph.addEntity(nodeBox3);
             nodeBox3->transformation().setTranslation({-9.5,-2.5,1.2});
-            nodeBox3->setBounding(lkogl::math::geo::Aabb3<float>({-1,-1,-1},{1,1,1}));
-
+            nodeBox3->setBounding(cubeBounding);
             
             
-            Mesh monkey = obj_from_file("monkey.obj").toIndexedModel().toMesh();
+            IndexModel monkeyModel = obj_from_file("monkey.obj").toIndexedModel();
+            geo::Aabb3<float> monkeyBounding = monkeyModel.bounding();
+            Mesh monkeyMesh = monkeyModel.toMesh();
+            
             std::shared_ptr<Entity> node3 = std::make_shared<Entity>();
-            node3->addComponent(std::make_shared<RenderComponent>(GeometryObject(monkey), colorful));
+            node3->addComponent(std::make_shared<RenderComponent>(GeometryObject(monkeyMesh), colorful));
             Transformation spin;
             spin.setRotation(angleAxis(radians(1.0f), {0.0f,1.0f,0.0f}));
             
@@ -213,21 +217,25 @@ public:
             node3->transformation().setRotation(angleAxis<float>(radians(45), {0.1,1,0.3}));
             graph.addEntity(node3);
             
-            node3->setBounding(lkogl::math::geo::Aabb3<float>({-1,-1,-1},{1,1,1}));
+            node3->setBounding(monkeyBounding);
 
             
             
             
             Image terrainImage("terrain.png");
-            ImageHeightMap terrainMap = heigh_map_from_image(terrainImage);
-            Mesh terrainMesh = terrainMap.toIndexedModel().toMesh();
+            
+            IndexModel terrainModel = heigh_map_from_image(terrainImage).toIndexedModel();
+            geo::Aabb3<float> terrainBounding = terrainModel.bounding();
+            Mesh terrainMesh = terrainModel.toMesh();
             
             std::shared_ptr<Entity> node4 = std::make_shared<Entity>();
             node4->addComponent(std::make_shared<RenderComponent>(GeometryObject(terrainMesh), sand));
             node4->transformation().setScale({0.5f,0.5f,0.5f});
             node4->transformation().setTranslation({5,0,5});
             graph.addEntity(node4);
-            node4->setBounding(lkogl::math::geo::Aabb3<float>({-125,-20,-125},{125,20,125}));
+            node4->setBounding(terrainBounding);
+            
+            std::cout << toString(terrainBounding.max);
 
 
             

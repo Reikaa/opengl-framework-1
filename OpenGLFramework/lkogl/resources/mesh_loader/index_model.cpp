@@ -37,6 +37,21 @@ namespace lkogl {
                 return geometry::Mesh(vertices, triangles);
             }
             
+            math::geo::Aabb3<float> IndexModel::bounding() const
+            {
+                math::Vec3<float> min;
+                math::Vec3<float> max;
+                
+                for(const unsigned int currentIndex : indices_) {
+                    math::Vec3<float> p = positions_.at(currentIndex);
+                    
+                    min = math::min<float>(p, min);
+                    max = math::max<float>(p, max);
+                }
+                
+                return math::geo::Aabb3<float>(min, max);
+            }
+            
             void calculateTangent(geometry::Vertex& v1, geometry::Vertex& v2, geometry::Vertex& v3)
             {
                 math::Vec3<float> tangent(1,0,0);

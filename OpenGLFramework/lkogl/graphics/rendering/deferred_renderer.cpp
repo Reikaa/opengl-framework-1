@@ -111,11 +111,13 @@ namespace lkogl {
                 };
                 
                 std::vector<lighting::SpotLight> spotLights = {
-                    lighting::SpotLight({1,0,0}, 1, {-10,-2,2.3}, lighting::Attenuation(0,0.5,0), {0,-1,0}, 0.7),
+                    lighting::SpotLight({1,0,0}, 1, {-10,-2,2.3}, lighting::Attenuation(0,0.5,0.5), {0,-1,0}, 0.7),
                 };
                 
                 lighting::AmbientLight ambientLight({0.2,0.2,0.2});
-            
+                
+                math::geo::Frustum3<float> viewFrustum = math::geo::frustum_from_view_projection(cam.viewProjectionMatrix());
+                
                 // Geometry Pass
                 {
                     BufferTargetUse tr(*buffer_);
@@ -134,8 +136,6 @@ namespace lkogl {
                     auto matrix = cam.viewProjectionMatrix();
                     defgeo.setUniform("uViewProjMatrix", matrix);
                     defgeo.setUniformf("uFar", cam.perspective().far());
-                    
-                    math::geo::Frustum3<float> viewFrustum = math::geo::frustum_from_view_projection(cam.viewProjectionMatrix());
                     
                     auto entities = graph.query([viewFrustum](const scene::Entity& e) {
                         auto box = math::geo::transformed(e.bounding(), e.transformation().matrix());
@@ -238,9 +238,12 @@ namespace lkogl {
                         BufferTextureUse tu3(point, "uGeometry.color", *buffer_, 2, 2);
                         
                         for(const lighting::PointLight& light : pointLights) {
-                            lighting::PointLightUse use(point, light);
-                            
-                            squareObj.render();
+                            if(math::geo::relationship(viewFrustum, light.boundingSphere()) != math::geo::VolumeRelation::OUTSIDE) {
+                                lighting::PointLightUse use(point, light);
+                                
+                                squareObj.render();
+                                entityCount_++;
+                            }
                         }
                     }
                     
@@ -255,9 +258,13 @@ namespace lkogl {
                         BufferTextureUse tu3(spot, "uGeometry.color", *buffer_, 2, 2);
                         
                         for(const lighting::SpotLight& light : spotLights) {
-                            lighting::SpotLightUse use(spot, light);
-                            
-                            squareObj.render();
+                            if(math::geo::relationship(viewFrustum, light.boundingSphere()) != math::geo::VolumeRelation::OUTSIDE) {
+                                lighting::SpotLightUse use(spot, light);
+                                
+                                squareObj.render();
+                                auto a = light.boundingSphere();
+                                entityCount_++;
+                            }
                         }
                     }
                     

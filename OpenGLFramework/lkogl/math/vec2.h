@@ -328,8 +328,17 @@ namespace lkogl {
         Vec2<T> max(const Vec2<T>& a, const Vec2<T>& b)
         {
             return {
-                a.x>b.x ? a.x:b.x,
-                a.y>b.y ? a.y:b.y
+                math::max(a.x, b.x),
+                math::max(a.y, b.y)
+            };
+        }
+        
+        template <typename T>
+        Vec2<T> min(const Vec2<T>& a, const Vec2<T>& b)
+        {
+            return {
+                math::min(a.x, b.x),
+                math::min(a.y, b.y)
             };
         }
         

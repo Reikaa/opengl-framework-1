@@ -64,12 +64,12 @@ namespace lkogl {
                 std::array<Plane3<T>, 6> planes = frus.faces();
                 
                 for(int i = 0; i < 6; i++) {
-                    T distance = distance(planes[i], sphere.center);
+                    T d = distance(planes[i], sphere.center);
                     
-                    if (distance < -sphere.radius) {
+                    if (d > sphere.radius) {
                         return VolumeRelation::OUTSIDE;
                     }
-                    else if (distance < sphere.radius) {
+                    else if (d > -sphere.radius) {
                         result =  VolumeRelation::INTERSECTING;
                     }
                 }

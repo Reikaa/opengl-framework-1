@@ -9,6 +9,8 @@
 #ifndef __OpenGLFramework__point_light__
 #define __OpenGLFramework__point_light__
 
+#include "../../math/elements.h"
+
 #include "./base_light.h"
 #include "./attenuation.h"
 #include "../shader/program.h"
@@ -25,6 +27,8 @@ namespace lkogl {
                 
                 PointLight(const math::Vec3<float>& color, float intensity, const math::Vec3<float>& position, const Attenuation& att);
                 ~PointLight();
+                
+                math::geo::Sphere3<float> boundingSphere() const;
                 
                 friend class PointLightUse;
             };

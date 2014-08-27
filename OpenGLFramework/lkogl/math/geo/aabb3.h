@@ -21,6 +21,9 @@ namespace lkogl {
                 Vec3<T> max;
 
                 Aabb3() {}
+                
+                Aabb3(const T& side) : Aabb3(side, side, side) {}
+
                 Aabb3(const T& w, const T& h, const T& d) :
                     min(-w/2, -h/2, -d/2),
                     max(w/2, h/2, d/2)

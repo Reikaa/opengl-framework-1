@@ -367,6 +367,16 @@ namespace lkogl {
             };
         }
         
+        template <typename T>
+        Vec3<T> min(const Vec3<T>& a, const Vec3<T>& b)
+        {
+            return {
+                min(a.x, b.x),
+                min(a.y, b.y),
+                min(a.z, b.z)
+            };
+        }
+        
     }
 }
 

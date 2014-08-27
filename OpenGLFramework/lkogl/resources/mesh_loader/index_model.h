@@ -12,6 +12,7 @@
 #include <vector>
 
 #include "../../math/math.h"
+#include "../../math/elements.h"
 #include "../../geometry/mesh.h"
 
 namespace lkogl {
@@ -25,6 +26,8 @@ namespace lkogl {
                 std::vector<unsigned int> indices_;
                 
                 geometry::Mesh toMesh() const;
+                
+                math::geo::Aabb3<float> bounding() const;
             };
             
             void calculateTangent(geometry::Vertex&, geometry::Vertex&, geometry::Vertex&);

@@ -18,6 +18,11 @@ namespace lkogl {
             SpotLight::~SpotLight()
             {}
             
+            math::geo::Sphere3<float> SpotLight::boundingSphere() const
+            {
+                return pointLight_.boundingSphere();
+            }
+            
             
             SpotLightUse::SpotLightUse(const shader::ProgramUse& program, const SpotLight& l)
             {
