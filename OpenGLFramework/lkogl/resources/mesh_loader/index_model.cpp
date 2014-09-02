@@ -37,7 +37,7 @@ namespace lkogl {
                 return geometry::Mesh(vertices, triangles);
             }
             
-            math::geo::Aabb3<float> IndexModel::bounding() const
+            math::elements::Aabb3<float> IndexModel::bounding() const
             {
                 math::Vec3<float> min;
                 math::Vec3<float> max;
@@ -49,7 +49,7 @@ namespace lkogl {
                     max = math::max<float>(p, max);
                 }
                 
-                return math::geo::Aabb3<float>(min, max);
+                return math::elements::Aabb3<float>(min, max);
             }
             
             void calculateTangent(geometry::Vertex& v1, geometry::Vertex& v2, geometry::Vertex& v3)

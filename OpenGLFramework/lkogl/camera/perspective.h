@@ -18,14 +18,14 @@ namespace lkogl {
             mutable math::Mat4<float> matrix_;
             mutable bool dirty_ = true;
             
-            math::geo::Frustum3<float> frustum_;
+            math::elements::Frustum3<float> frustum_;
         public:
             
             Perspective(float fov, int w, int h, float near, float far);
             ~Perspective();
             
             const math::Mat4<float>& matrix() const;
-            const math::geo::Frustum3<float>& frustum() const;
+            const math::elements::Frustum3<float>& frustum() const;
             
             float far() const { return frustum_.planes.far.constant; }
         };

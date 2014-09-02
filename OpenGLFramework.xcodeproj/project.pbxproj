@@ -298,6 +298,7 @@
 		F2B563BC199D0CC8007D38D3 /* stencil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stencil.h; sourceTree = "<group>"; };
 		F2B563BF199D2AA3007D38D3 /* deferred_renderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = deferred_renderer.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		F2B563C0199D2AA3007D38D3 /* deferred_renderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = deferred_renderer.h; sourceTree = "<group>"; };
+		F2BFC82719B5E1130044D076 /* octree.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = octree.h; sourceTree = "<group>"; };
 		F2DEC60219975A8700EE31E7 /* base_component.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = base_component.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		F2DEC60319975A8700EE31E7 /* base_component.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = base_component.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		F2DEC6061997621400EE31E7 /* render_component.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = render_component.cpp; sourceTree = "<group>"; };
@@ -628,7 +629,8 @@
 		F29707B2199378D300D48CE5 /* math */ = {
 			isa = PBXGroup;
 			children = (
-				F298CBEC19A5FB3D0068DD82 /* geo */,
+				F2BFC82919B5E1D50044D076 /* graphs */,
+				F298CBEC19A5FB3D0068DD82 /* elements */,
 				F2970792199370EE00D48CE5 /* math.cpp */,
 				F2970793199370EE00D48CE5 /* math.h */,
 				F2DEC6221997C04400EE31E7 /* vec2.h */,
@@ -642,7 +644,7 @@
 			path = math;
 			sourceTree = "<group>";
 		};
-		F298CBEC19A5FB3D0068DD82 /* geo */ = {
+		F298CBEC19A5FB3D0068DD82 /* elements */ = {
 			isa = PBXGroup;
 			children = (
 				F298CBEA19A5F9410068DD82 /* frustum3.h */,
@@ -653,7 +655,7 @@
 				F298CBF919A62B1D0068DD82 /* triangle3.h */,
 				F298CBF419A603F50068DD82 /* relation.h */,
 			);
-			path = geo;
+			path = elements;
 			sourceTree = "<group>";
 		};
 		F29B1F50199E29D300F17051 /* ui */ = {
@@ -737,6 +739,14 @@
 				F215F13819ACF20200F7F694 /* deferred.gls */,
 			);
 			path = deferred;
+			sourceTree = "<group>";
+		};
+		F2BFC82919B5E1D50044D076 /* graphs */ = {
+			isa = PBXGroup;
+			children = (
+				F2BFC82719B5E1130044D076 /* octree.h */,
+			);
+			path = graphs;
 			sourceTree = "<group>";
 		};
 		F2DEC605199761FD00EE31E7 /* components */ = {

@@ -18,7 +18,7 @@ namespace lkogl {
             SpotLight::~SpotLight()
             {}
             
-            math::geo::Sphere3<float> SpotLight::boundingSphere() const
+            math::elements::Sphere3<float> SpotLight::boundingSphere() const
             {
                 return pointLight_.boundingSphere();
             }

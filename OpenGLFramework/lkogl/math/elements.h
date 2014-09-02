@@ -9,11 +9,11 @@
 #ifndef OpenGLFramework_elements_h
 #define OpenGLFramework_elements_h
 
-#include "./geo/frustum3.h"
-#include "./geo/plane3.h"
-#include "./geo/sphere3.h"
-#include "./geo/aabb3.h"
-#include "./geo/triangle3.h"
-#include "./geo/relation.h"
+#include "./elements/frustum3.h"
+#include "./elements/plane3.h"
+#include "./elements/sphere3.h"
+#include "./elements/aabb3.h"
+#include "./elements/triangle3.h"
+#include "./elements/relation.h"
 
 #endif

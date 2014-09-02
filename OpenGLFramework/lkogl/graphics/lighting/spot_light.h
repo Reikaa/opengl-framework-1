@@ -23,7 +23,7 @@ namespace lkogl {
                 SpotLight(const math::Vec3<float>& color, float intensity, const math::Vec3<float>& position, const Attenuation& att, const math::Vec3<float>& direction, float cutoff);
                 ~SpotLight();
                 
-                math::geo::Sphere3<float> boundingSphere() const;
+                math::elements::Sphere3<float> boundingSphere() const;
                 
                 friend class PointLightUse;
             };

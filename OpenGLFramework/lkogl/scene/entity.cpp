@@ -44,14 +44,19 @@ namespace lkogl {
             return transformation_;
         }
         
-        void Entity::setBounding(const math::geo::Aabb3<float>& b)
+        void Entity::setBoundingSize(const math::elements::Aabb3<float>& b)
         {
-            bounding_ = b;
+            boundingSize_ = b;
         }
         
-        const math::geo::Aabb3<float>& Entity::bounding() const
+        const math::elements::Aabb3<float>& Entity::boundingSize() const
         {
-            return bounding_;
+            return boundingSize_;
+        }
+        
+        const math::elements::Aabb3<float> Entity::boundingBox() const
+        {
+            return math::elements::transformed(boundingSize_, transformation_.matrix());
         }
         
     }

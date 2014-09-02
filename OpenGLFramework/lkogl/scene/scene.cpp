@@ -10,13 +10,19 @@
 
 namespace lkogl {
     namespace scene {
-        Scene::Scene()
+        Scene::Scene() : tree_(math::elements::Aabb3<float>(1,1,1))
         {}
         Scene::~Scene()
         {}
-            
+        
+        const lkogl::math::graphs::Octree<float, Entity>& Scene::tree() const
+        {
+            return tree_;
+        }
+        
         void Scene::addEntity(std::shared_ptr<Entity> e)
         {
+            tree_.insert(e);
             entities_.push_back(e);
         }
         
@@ -24,8 +30,9 @@ namespace lkogl {
         {
             auto p = std::find(entities_.begin(), entities_.end(), e);
             entities_.erase(p);
+            tree_.remove(e);
         }
-            
+        
         std::vector<std::shared_ptr<Entity>> Scene::query(const Predicate& p)
         {
             std::vector<std::shared_ptr<Entity>> result;

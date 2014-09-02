@@ -27,7 +27,7 @@ namespace lkogl {
                 
                 geometry::Mesh toMesh() const;
                 
-                math::geo::Aabb3<float> bounding() const;
+                math::elements::Aabb3<float> bounding() const;
             };
             
             void calculateTangent(geometry::Vertex&, geometry::Vertex&, geometry::Vertex&);

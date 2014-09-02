@@ -22,14 +22,14 @@ namespace lkogl {
         const math::Mat4<float>& Perspective::matrix() const
         {
             if(dirty_) {
-                matrix_ = math::geo::mat_cast(frustum_);
+                matrix_ = math::elements::mat_cast(frustum_);
                 dirty_ = false;
             }
             
             return matrix_;
         }
         
-        const math::geo::Frustum3<float>& Perspective::frustum() const
+        const math::elements::Frustum3<float>& Perspective::frustum() const
         {
             return frustum_;
         }

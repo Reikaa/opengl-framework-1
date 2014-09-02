@@ -28,9 +28,9 @@ namespace lkogl {
             
             DeferredRenderer::DeferredRenderer(const Screen& s, int ratioWidth, int ratioHeight) throw (Shader::Exception) :
             programs_(initPrograms()), buffer_(new FrameBuffer(s.width, s.height, std::vector<TargetType> {
-                TargetType{GL_COLOR_ATTACHMENT0, GL_RGBA16F},
-                TargetType{GL_COLOR_ATTACHMENT1, GL_RGBA16F},
-                TargetType{GL_COLOR_ATTACHMENT2, GL_RGBA16F},
+                TargetType{GL_COLOR_ATTACHMENT0, GL_RGBA32F},
+                TargetType{GL_COLOR_ATTACHMENT1, GL_RGBA32F},
+                TargetType{GL_COLOR_ATTACHMENT2, GL_RGBA32F},
             })), square_(geometry::primitives::makeSquare()), box_(geometry::primitives::makeCube()), ratioWidth_(ratioWidth), ratioHeight_(ratioHeight), sky_(utils::Image("sky.png"))
             {
             }
@@ -116,7 +116,7 @@ namespace lkogl {
                 
                 lighting::AmbientLight ambientLight({0.2,0.2,0.2});
                 
-                math::geo::Frustum3<float> viewFrustum = math::geo::frustum_from_view_projection(cam.viewProjectionMatrix());
+                math::elements::Frustum3<float> viewFrustum = math::elements::frustum_from_view_projection(cam.viewProjectionMatrix());
                 
                 // Geometry Pass
                 {
@@ -138,8 +138,8 @@ namespace lkogl {
                     defgeo.setUniformf("uFar", cam.perspective().far());
                     
                     auto entities = graph.query([viewFrustum](const scene::Entity& e) {
-                        auto box = math::geo::transformed(e.bounding(), e.transformation().matrix());
-                        return math::geo::relationship(viewFrustum, box) != math::geo::VolumeRelation::OUTSIDE;
+                        auto box = e.boundingBox();
+                        return math::elements::relationship(viewFrustum, box) != math::elements::VolumeRelation::OUTSIDE;
                     });
                     
                     entityCount_ = (int)entities.size();
@@ -149,7 +149,7 @@ namespace lkogl {
                             c->render(*e.get(), defgeo);
                         }
                         
-//                        auto box = math::geo::transform(e->bounding(), e->transformation().matrix());
+//                        auto box = math::elements::transform(e->bounding(), e->transformation().matrix());
 //
 //                        for(auto c : box.corners()) {
 //                            defgeo.setUniform("uModelMatrix", math::translate(math::scale(math::Mat4<float>(1), 0.02f), c));
@@ -238,7 +238,7 @@ namespace lkogl {
                         BufferTextureUse tu3(point, "uGeometry.color", *buffer_, 2, 2);
                         
                         for(const lighting::PointLight& light : pointLights) {
-                            if(math::geo::relationship(viewFrustum, light.boundingSphere()) != math::geo::VolumeRelation::OUTSIDE) {
+                            if(math::elements::relationship(viewFrustum, light.boundingSphere()) != math::elements::VolumeRelation::OUTSIDE) {
                                 lighting::PointLightUse use(point, light);
                                 
                                 squareObj.render();
@@ -258,7 +258,7 @@ namespace lkogl {
                         BufferTextureUse tu3(spot, "uGeometry.color", *buffer_, 2, 2);
                         
                         for(const lighting::SpotLight& light : spotLights) {
-                            if(math::geo::relationship(viewFrustum, light.boundingSphere()) != math::geo::VolumeRelation::OUTSIDE) {
+                            if(math::elements::relationship(viewFrustum, light.boundingSphere()) != math::elements::VolumeRelation::OUTSIDE) {
                                 lighting::SpotLightUse use(spot, light);
                                 
                                 squareObj.render();

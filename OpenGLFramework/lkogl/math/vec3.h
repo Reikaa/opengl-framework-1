@@ -377,6 +377,15 @@ namespace lkogl {
             };
         }
         
+        template <typename T>
+        Vec3<int> sign(const Vec3<T> v)
+        {
+            int sx = v.x > 1 ? 1 : (v.x < 0 ? -1 : 0);
+            int sy = v.y > 1 ? 1 : (v.x < 0 ? -1 : 0);
+            int sz = v.z > 1 ? 1 : (v.x < 0 ? -1 : 0);
+            return Vec3<int>(sx, sy, sz);
+        }
+    
     }
 }
 

@@ -23,9 +23,9 @@ namespace lkogl {
             PointLight::~PointLight()
             {}
             
-            math::geo::Sphere3<float> PointLight::boundingSphere() const
+            math::elements::Sphere3<float> PointLight::boundingSphere() const
             {
-                return math::geo::Sphere3<float>(position_, range_);
+                return math::elements::Sphere3<float>(position_, range_);
             }
             
 

@@ -66,6 +66,8 @@ using namespace lkogl::input::movement;
 
 class MyGame {
     
+    graphs::Octree<float, Entity> octree_;
+    
     mutable std::string extraTitle_;
     
     mutable Scene graph;
@@ -102,7 +104,7 @@ public:
     
     mutable bool stopped = false;
     
-    MyGame() : kbAdapter_(keyboard_), mouseAdapter_(mouse_)
+    MyGame() : kbAdapter_(keyboard_), mouseAdapter_(mouse_), octree_(elements::Aabb3<float>(10,10,10))
     {}
     
     void setUp() const {
@@ -169,42 +171,41 @@ public:
             
             Mesh pyramid = primitives::makePyramid();
             std::shared_ptr<Entity> node = std::make_shared<Entity>();
-            node->setBounding(lkogl::math::geo::Aabb3<float>(2));
+            node->setBoundingSize(lkogl::math::elements::Aabb3<float>(2));
             node->addComponent(std::make_shared<RenderComponent>(GeometryObject(pyramid), golden));
             node->transformation().setScale({2,2,2});
             node->transformation().setTranslation({0,3,0});
-            
             node->transformation().setRotation(angleAxis<float>(radians(1), {1,1,1}));
             graph.addEntity(node);
             
 
             IndexModel cubeModel = obj_from_file("box.obj").toIndexedModel();
-            geo::Aabb3<float> cubeBounding = cubeModel.bounding();
+            elements::Aabb3<float> cubeBounding = cubeModel.bounding();
             Mesh cubeMesh = cubeModel.toMesh();
 
             std::shared_ptr<Entity> nodeBox1 = std::make_shared<Entity>();
             nodeBox1->addComponent(std::make_shared<RenderComponent>(GeometryObject(cubeMesh), tiling));
             nodeBox1->transformation().setTranslation({-9,-4.5,2});
+            nodeBox1->setBoundingSize(cubeBounding);
             graph.addEntity(nodeBox1);
-            nodeBox1->setBounding(cubeBounding);
             
             std::shared_ptr<Entity> nodeBox2 = std::make_shared<Entity>();
             nodeBox2->addComponent(std::make_shared<RenderComponent>(GeometryObject(cubeMesh), tiling));
             nodeBox2->transformation().setRotation(angleAxis<float>(radians(21), {0,1,0}));
             graph.addEntity(nodeBox2);
             nodeBox2->transformation().setTranslation({-10.5,-4.5,0.1});
-            nodeBox2->setBounding(cubeBounding);
+            nodeBox2->setBoundingSize(cubeBounding);
 
             std::shared_ptr<Entity> nodeBox3 = std::make_shared<Entity>();
             nodeBox3->addComponent(std::make_shared<RenderComponent>(GeometryObject(cubeMesh), tiling));
             nodeBox3->transformation().setRotation(angleAxis<float>(radians(-17), {0,1,0}));
-            graph.addEntity(nodeBox3);
             nodeBox3->transformation().setTranslation({-9.5,-2.5,1.2});
-            nodeBox3->setBounding(cubeBounding);
+            nodeBox3->setBoundingSize(cubeBounding);
+            graph.addEntity(nodeBox3);
             
             
             IndexModel monkeyModel = obj_from_file("monkey.obj").toIndexedModel();
-            geo::Aabb3<float> monkeyBounding = monkeyModel.bounding();
+            elements::Aabb3<float> monkeyBounding = monkeyModel.bounding();
             Mesh monkeyMesh = monkeyModel.toMesh();
             
             std::shared_ptr<Entity> node3 = std::make_shared<Entity>();
@@ -215,9 +216,9 @@ public:
             node3->addComponent(std::make_shared<AnimationComponent>(spin));
             node3->transformation().setTranslation({0,6,0});
             node3->transformation().setRotation(angleAxis<float>(radians(45), {0.1,1,0.3}));
+            node3->setBoundingSize(monkeyBounding);
             graph.addEntity(node3);
             
-            node3->setBounding(monkeyBounding);
 
             
             
@@ -225,19 +226,16 @@ public:
             Image terrainImage("terrain.png");
             
             IndexModel terrainModel = heigh_map_from_image(terrainImage).toIndexedModel();
-            geo::Aabb3<float> terrainBounding = terrainModel.bounding();
+            elements::Aabb3<float> terrainBounding = terrainModel.bounding();
             Mesh terrainMesh = terrainModel.toMesh();
             
             std::shared_ptr<Entity> node4 = std::make_shared<Entity>();
             node4->addComponent(std::make_shared<RenderComponent>(GeometryObject(terrainMesh), sand));
             node4->transformation().setScale({0.5f,0.5f,0.5f});
             node4->transformation().setTranslation({5,0,5});
+            node4->setBoundingSize(terrainBounding);
             graph.addEntity(node4);
-            node4->setBounding(terrainBounding);
-            
-            std::cout << toString(terrainBounding.max);
-
-
+        
             
             movement.setFly(true);
             
@@ -257,6 +255,8 @@ public:
 
             
             sampler_ = std::make_shared<Sampler>("double_click_mouse_over.wav");
+            
+            graph.tree().print();
             
         } catch(lkogl::graphics::shader::Shader::Exception e) {
             std::cerr << e.msg << std::endl;
@@ -420,7 +420,7 @@ public:
 };
 
 int main(int argc, const char * argv[]) {
-    const MyGame game = MyGame();
+    const MyGame game;
     const Loop<MyGame> l(game);
     
     l.start();

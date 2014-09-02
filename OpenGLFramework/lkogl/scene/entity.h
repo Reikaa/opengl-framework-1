@@ -21,7 +21,7 @@ namespace lkogl {
         class Entity {
             std::vector<std::shared_ptr<components::Component>> components_;
             EntityTransformation transformation_;
-            math::geo::Aabb3<float> bounding_;
+            math::elements::Aabb3<float> boundingSize_;
         public:
             Entity();
             ~Entity();
@@ -33,8 +33,11 @@ namespace lkogl {
             const EntityTransformation& transformation() const;
             EntityTransformation& transformation();
             
-            void setBounding(const math::geo::Aabb3<float>&);
-            const math::geo::Aabb3<float>& bounding() const;
+            void setBoundingSize(const math::elements::Aabb3<float>&);
+            const math::elements::Aabb3<float>& boundingSize() const;
+
+            const math::elements::Aabb3<float> boundingBox() const;
+
         };
     }
 }

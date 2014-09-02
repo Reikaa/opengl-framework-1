@@ -17,7 +17,7 @@
 
 namespace lkogl {
     namespace math {
-        namespace geo {
+        namespace elements {
             enum class VolumeRelation {
                 INSIDE,
                 OUTSIDE,
@@ -107,6 +107,15 @@ namespace lkogl {
             bool contains(const Aabb3<T>& a, const Sphere3<T>& b) {
                 return (a.min << (b.center - b.radius))
                     && (a.max >> (b.center + b.radius));
+            }
+            
+            //
+            // Aabb3 intersects
+            //
+            
+            template<typename T>
+            bool intersects(const Aabb3<T>& a, const Aabb3<T>& b) {
+                return (a.min.x < b.max.x) && (a.min.y < b.max.y) && (a.min.z < b.max.z) && (a.max.x > b.min.x) && (a.max.y > b.min.y) && (a.max.z > b.min.z);
             }
             
             //

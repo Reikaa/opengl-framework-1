@@ -19,7 +19,7 @@
 
 namespace lkogl {
     namespace math {
-        namespace geo {
+        namespace elements {
         
             
             template <typename T>

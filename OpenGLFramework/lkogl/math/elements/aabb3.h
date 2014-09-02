@@ -10,10 +10,12 @@
 #define OpenGLFramework_aabb3_h
 
 #include "../vec3.h"
+#include "../mat4.h"
+#include "./plane3.h"
 
 namespace lkogl {
     namespace math {
-        namespace geo {
+        namespace elements {
             
             template<typename T>
             struct Aabb3 {
@@ -62,6 +64,11 @@ namespace lkogl {
                     };
                     
                     return faces;
+                }
+                
+                Vec3<T> center() const
+                {
+                    return (min+max)/((T)2);
                 }
                 
                 T surface() const

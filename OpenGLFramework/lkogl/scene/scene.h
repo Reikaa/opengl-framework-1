@@ -11,6 +11,7 @@
 
 #include <vector>
 
+#include "../math/graphs/octree.h"
 #include "./entity.h"
 
 namespace lkogl {
@@ -19,12 +20,15 @@ namespace lkogl {
         
         class Scene {
             std::vector<std::shared_ptr<Entity>> entities_;
+            lkogl::math::graphs::Octree<float, Entity, &Entity::boundingBox> tree_;
         public:
             Scene();
             ~Scene();
             
             void addEntity(std::shared_ptr<Entity>);
             void removeEntity(std::shared_ptr<Entity>);
+            
+            const lkogl::math::graphs::Octree<float, Entity>& tree() const;
             
             std::vector<std::shared_ptr<const Entity>> query(const Predicate& p) const;
             std::vector<std::shared_ptr<Entity>> query(const Predicate& p);
