@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 Laszlo Korte. All rights reserved.
 //
 
+#include <iostream>
+
 #include "./entity_transformation.h"
 
 namespace lkogl {

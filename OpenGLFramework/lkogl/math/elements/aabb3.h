@@ -82,6 +82,11 @@ namespace lkogl {
                     Vec3<T> diagonal = max - min;
                     return diagonal.x * diagonal.y * diagonal.z;
                 }
+                
+                Vec3<T> dimensions() const
+                {
+                    return max - min;
+                }
             };
             
             template <typename T>
@@ -93,10 +98,23 @@ namespace lkogl {
                 math::Vec3<T> newCenter = math::vec3_cast<T>(m * center);
                 math::Vec3<T> newHalfEx = math::vec3_cast<T>(m * math::Vec4<float>(halfExtents, 0));
                 
-                return Aabb3<T>(
-                    newCenter - math::max(newHalfEx, halfExtents),
-                    newCenter + math::max(newHalfEx, halfExtents)
-                );
+                std::array<Vec3<T>, 8> corners = box.corners();
+                math::Vec3<T> min;
+                math::Vec3<T> max;
+                int i=0;
+                for(auto c : corners) {
+                    math::Vec3<T> newC = math::vec3_cast<T>(m * c);
+                    
+                    if(i++==0) {
+                        min = newC;
+                        max = newC;
+                    } else {
+                        min = math::min(min, newC);
+                        max = math::max(max, newC);
+                    }
+                }
+                
+                return Aabb3<T>(min, max);
             }
         }
     }

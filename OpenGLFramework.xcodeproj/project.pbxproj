@@ -90,6 +90,8 @@
 		F2B563B8199CFA37007D38D3 /* deferred-stencil.fsh in Resources */ = {isa = PBXBuildFile; fileRef = F2B563B7199CFA37007D38D3 /* deferred-stencil.fsh */; };
 		F2B563BD199D0CC8007D38D3 /* stencil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2B563BB199D0CC8007D38D3 /* stencil.cpp */; };
 		F2B563C1199D2AA3007D38D3 /* deferred_renderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2B563BF199D2AA3007D38D3 /* deferred_renderer.cpp */; };
+		F2DA97B319B727250021A8B9 /* quadtree.vsh in Resources */ = {isa = PBXBuildFile; fileRef = F2DA97B219B727250021A8B9 /* quadtree.vsh */; };
+		F2DA97B519B727300021A8B9 /* quadtree.fsh in Resources */ = {isa = PBXBuildFile; fileRef = F2DA97B419B727300021A8B9 /* quadtree.fsh */; };
 		F2DEC60419975A8700EE31E7 /* base_component.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2DEC60219975A8700EE31E7 /* base_component.cpp */; };
 		F2DEC6081997621400EE31E7 /* render_component.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2DEC6061997621400EE31E7 /* render_component.cpp */; };
 		F2DEC60D1997681E00EE31E7 /* camera_component.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2DEC60B1997681E00EE31E7 /* camera_component.cpp */; };
@@ -299,6 +301,8 @@
 		F2B563BF199D2AA3007D38D3 /* deferred_renderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = deferred_renderer.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		F2B563C0199D2AA3007D38D3 /* deferred_renderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = deferred_renderer.h; sourceTree = "<group>"; };
 		F2BFC82719B5E1130044D076 /* octree.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = octree.h; sourceTree = "<group>"; };
+		F2DA97B219B727250021A8B9 /* quadtree.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = quadtree.vsh; sourceTree = "<group>"; };
+		F2DA97B419B727300021A8B9 /* quadtree.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = quadtree.fsh; sourceTree = "<group>"; };
 		F2DEC60219975A8700EE31E7 /* base_component.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = base_component.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		F2DEC60319975A8700EE31E7 /* base_component.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = base_component.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		F2DEC6061997621400EE31E7 /* render_component.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = render_component.cpp; sourceTree = "<group>"; };
@@ -437,6 +441,8 @@
 				F2B563C2199D3773007D38D3 /* deferred */,
 				F21C7D7119A4EA2B00B006A4 /* sky.vsh */,
 				F21C7D7319A4EA3C00B006A4 /* sky.fsh */,
+				F2DA97B219B727250021A8B9 /* quadtree.vsh */,
+				F2DA97B419B727300021A8B9 /* quadtree.fsh */,
 			);
 			path = shaders;
 			sourceTree = "<group>";
@@ -934,10 +940,12 @@
 				F215F12D19ACA66800F7F694 /* material.gls in Resources */,
 				F21EA83C199BA83200D78E1C /* deferred-geometry.fsh in Resources */,
 				F29B1F5F199E6C8800F17051 /* ui-element.vsh in Resources */,
+				F2DA97B519B727300021A8B9 /* quadtree.fsh in Resources */,
 				F2B563B8199CFA37007D38D3 /* deferred-stencil.fsh in Resources */,
 				F2F0DB0519A487E900BD63E9 /* double_click_mouse_over.wav in Resources */,
 				F21EA83E199BB45700D78E1C /* deferred-ambient.vsh in Resources */,
 				F2B563B6199CFA28007D38D3 /* deferred-stencil.vsh in Resources */,
+				F2DA97B319B727250021A8B9 /* quadtree.vsh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

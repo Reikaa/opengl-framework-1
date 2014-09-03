@@ -30,8 +30,8 @@ namespace lkogl {
             
             const lkogl::math::graphs::Octree<float, Entity>& tree() const;
             
-            std::vector<std::shared_ptr<const Entity>> query(const Predicate& p) const;
-            std::vector<std::shared_ptr<Entity>> query(const Predicate& p);
+//            std::vector<std::shared_ptr<const Entity>> query(const Predicate& p) const;
+//            std::vector<std::shared_ptr<Entity>> query(const Predicate& p);
         };
     }
 }

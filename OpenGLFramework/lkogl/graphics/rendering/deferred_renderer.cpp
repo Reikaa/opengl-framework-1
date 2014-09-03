@@ -76,6 +76,11 @@ namespace lkogl {
                 Shader vshSky = loader.fromFile(ShaderType::VERTEX, "sky.vsh");
                 
                 Shader fshSky = loader.fromFile(ShaderType::FRAGMENT, "sky.fsh");
+                
+                
+                Shader vshQuad = loader.fromFile(ShaderType::VERTEX, "quadtree.vsh");
+                
+                Shader fshQuad = loader.fromFile(ShaderType::FRAGMENT, "quadtree.fsh");
               
                 
                 return {
@@ -85,7 +90,8 @@ namespace lkogl {
                     shader::Program(vshStencil, fshStencil),
                     shader::Program(vshDir, fshDir),
                     shader::Program(vshPoint, fshPoint),
-                    shader::Program(vshSpot, fshSpot)
+                    shader::Program(vshSpot, fshSpot),
+                    shader::Program(vshQuad, fshQuad)
                 };
             }
             
@@ -137,10 +143,7 @@ namespace lkogl {
                     defgeo.setUniform("uViewProjMatrix", matrix);
                     defgeo.setUniformf("uFar", cam.perspective().far());
                     
-                    auto entities = graph.query([viewFrustum](const scene::Entity& e) {
-                        auto box = e.boundingBox();
-                        return math::elements::relationship(viewFrustum, box) != math::elements::VolumeRelation::OUTSIDE;
-                    });
+                    auto entities = graph.tree().queryRange<math::elements::Frustum3<float>>(viewFrustum);
                     
                     entityCount_ = (int)entities.size();
                     
@@ -148,126 +151,170 @@ namespace lkogl {
                         for(auto c : e->components()) {
                             c->render(*e.get(), defgeo);
                         }
-                        
-//                        auto box = math::elements::transform(e->bounding(), e->transformation().matrix());
-//
-//                        for(auto c : box.corners()) {
-//                            defgeo.setUniform("uModelMatrix", math::translate(math::scale(math::Mat4<float>(1), 0.02f), c));
-//                            defgeo.setUniform("uMaterial.coloring", math::Vec4<float>(0.9,0,0,1));
-//                            const graphics::GeometryObjectUse geo(box_);
-//                            geo.render();
-//                        }
                     }
-                    //walker.walk(graph, &scene::components::Component::render, defgeo);
                     
                     glDepthMask(GL_FALSE);
                     glDisable(GL_DEPTH_TEST);
                 }
                 
+
+                
                 MainTargetUse s;
                 glViewport(0, 0, screen_.width, screen_.height);
-                Stencil stencil;
                 
                 {
+                    Stencil stencil;
                     
-
-                    shader::ProgramUse stencilProg(programs_.deferredStencil_);
-                    GeometryObjectUse squareObj(square_);
-
-                    BufferTextureUse tus(stencilProg, "uSampler", *buffer_, 0, 0);
-                    
-                    squareObj.render();
-                }
-                
-                //Skybox
-                {
-                    stencil.filter(0);
-                    glCullFace(GL_FRONT);
-                    GeometryObjectUse box(box_);
-                    shader::ProgramUse skyProg(programs_.skybox_);
-                    TextureUse t(skyProg, "uSkybox", sky_, 0);
-                    skyProg.setUniform("uViewProjMatrix", cam.viewProjectionMatrix());
-                    skyProg.setUniform("uModelMatrix", math::scale(math::translate(math::Mat4<float>(1), cam.position()), 100.0f));
-                    box.render();
-                    glCullFace(GL_BACK);
-                }
-                
-                
-                
-                { // Lighting pass
-                    stencil.filter(1);
-                    
-                    { // Ambient
-                        shader::ProgramUse ambient(programs_.deferredAmbient_);
+                    {
+                        shader::ProgramUse stencilProg(programs_.deferredStencil_);
                         GeometryObjectUse squareObj(square_);
 
-                        BufferTextureUse tus(ambient, "uSampler", *buffer_, 2, 2);
-                        lighting::AmbientLightUse(ambient, ambientLight);
+                        BufferTextureUse tus(stencilProg, "uSampler", *buffer_, 0, 0);
                         
                         squareObj.render();
                     }
-                    glEnable(GL_BLEND);
-                    glBlendEquation(GL_FUNC_ADD);
-                    glBlendFunc(GL_ONE, GL_ONE);
                     
-                    { // Directional
-                        shader::ProgramUse directional(programs_.deferredDir_);
-                        GeometryObjectUse squareObj(square_);
+                    //Skybox
+                    {
+                        stencil.filter(0);
+                        glCullFace(GL_FRONT);
+                        GeometryObjectUse box(box_);
+                        shader::ProgramUse skyProg(programs_.skybox_);
+                        TextureUse t(skyProg, "uSkybox", sky_, 0);
+                        skyProg.setUniform("uViewProjMatrix", cam.viewProjectionMatrix());
+                        skyProg.setUniform("uModelMatrix", math::scale(math::translate(math::Mat4<float>(1), cam.position()), 100.0f));
+                        box.render();
+                        glCullFace(GL_BACK);
+                    }
+                    
+                    
+                    
+                    { // Lighting pass
+                        stencil.filter(1);
                         
-                        directional.setUniform("uEyePosition", cam.position());
-                        
-                        BufferTextureUse tu1(directional, "uGeometry.position", *buffer_, 0, 0);
-                        BufferTextureUse tu2(directional, "uGeometry.normal", *buffer_, 1, 1);
-                        BufferTextureUse tu3(directional, "uGeometry.color", *buffer_, 2, 2);
-                        
-                        for(const lighting::DirectionalLight& light : directionalLights) {
-                            lighting::DirectionalLightUse use(directional, light);
+                        { // Ambient
+                            shader::ProgramUse ambient(programs_.deferredAmbient_);
+                            GeometryObjectUse squareObj(square_);
+
+                            BufferTextureUse tus(ambient, "uSampler", *buffer_, 2, 2);
+                            lighting::AmbientLightUse(ambient, ambientLight);
                             
                             squareObj.render();
                         }
-                    }
-                    
-                    { // Point
-                        shader::ProgramUse point(programs_.deferredPoint_);
-                        GeometryObjectUse squareObj(square_);
+                        glEnable(GL_BLEND);
+                        glBlendEquation(GL_FUNC_ADD);
+                        glBlendFunc(GL_ONE, GL_ONE);
                         
-                        point.setUniform("uEyePosition", cam.position());
-                        
-                        BufferTextureUse tu1(point, "uGeometry.position", *buffer_, 0, 0);
-                        BufferTextureUse tu2(point, "uGeometry.normal", *buffer_, 1, 1);
-                        BufferTextureUse tu3(point, "uGeometry.color", *buffer_, 2, 2);
-                        
-                        for(const lighting::PointLight& light : pointLights) {
-                            if(math::elements::relationship(viewFrustum, light.boundingSphere()) != math::elements::VolumeRelation::OUTSIDE) {
-                                lighting::PointLightUse use(point, light);
+                        { // Directional
+                            shader::ProgramUse directional(programs_.deferredDir_);
+                            GeometryObjectUse squareObj(square_);
+                            
+                            directional.setUniform("uEyePosition", cam.position());
+                            
+                            BufferTextureUse tu1(directional, "uGeometry.position", *buffer_, 0, 0);
+                            BufferTextureUse tu2(directional, "uGeometry.normal", *buffer_, 1, 1);
+                            BufferTextureUse tu3(directional, "uGeometry.color", *buffer_, 2, 2);
+                            
+                            for(const lighting::DirectionalLight& light : directionalLights) {
+                                lighting::DirectionalLightUse use(directional, light);
                                 
                                 squareObj.render();
-                                entityCount_++;
                             }
+                        }
+                        
+                        { // Point
+                            shader::ProgramUse point(programs_.deferredPoint_);
+                            GeometryObjectUse squareObj(square_);
+                            
+                            point.setUniform("uEyePosition", cam.position());
+                            
+                            BufferTextureUse tu1(point, "uGeometry.position", *buffer_, 0, 0);
+                            BufferTextureUse tu2(point, "uGeometry.normal", *buffer_, 1, 1);
+                            BufferTextureUse tu3(point, "uGeometry.color", *buffer_, 2, 2);
+                            
+                            for(const lighting::PointLight& light : pointLights) {
+                                if(math::elements::relationship(viewFrustum, light.boundingSphere()) != math::elements::VolumeRelation::OUTSIDE) {
+                                    lighting::PointLightUse use(point, light);
+                                    
+                                    squareObj.render();
+                                    entityCount_++;
+                                }
+                            }
+                        }
+                        
+                        { // Spot
+                            shader::ProgramUse spot(programs_.deferredSpot_);
+                            GeometryObjectUse squareObj(square_);
+                            
+                            spot.setUniform("uEyePosition", cam.position());
+                            
+                            BufferTextureUse tu1(spot, "uGeometry.position", *buffer_, 0, 0);
+                            BufferTextureUse tu2(spot, "uGeometry.normal", *buffer_, 1, 1);
+                            BufferTextureUse tu3(spot, "uGeometry.color", *buffer_, 2, 2);
+                            
+                            for(const lighting::SpotLight& light : spotLights) {
+                                if(math::elements::relationship(viewFrustum, light.boundingSphere()) != math::elements::VolumeRelation::OUTSIDE) {
+                                    lighting::SpotLightUse use(spot, light);
+                                    
+                                    squareObj.render();
+                                    auto a = light.boundingSphere();
+                                    entityCount_++;
+                                }
+                            }
+                        }
+                        
+                    }
+                }
+                if(drawBoxes_){
+                    glViewport(viewport_.x, viewport_.y, viewport_.width, viewport_.height);
+
+                    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+                    glDisable(GL_CULL_FACE);
+                    glDisable(GL_DEPTH_TEST);
+                    math::Vec3<float> colors[] = {
+                        math::Vec3<float>(1,1,1),
+                        math::Vec3<float>(0.5,0.5,0),
+                        math::Vec3<float>(0.5,0,0.5),
+                        math::Vec3<float>(0,0.5,0),
+                        math::Vec3<float>(0,0,0.5)
+                    };
+                    
+                    glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
+                    
+                    auto quads = graph.tree().boxes();
+                    
+                    shader::ProgramUse quadProg(programs_.quadtree_);
+                    GeometryObjectUse box(box_);
+                    
+                    for(auto bb : graph.tree().boxes()) {
+                        math::Mat4<float> modelMat = math::translate(math::scale(math::Mat4<float>(), bb.dimensions()/2.0f), bb.center());
+                        quadProg.setUniform("uViewProjMatrix", cam.viewProjectionMatrix());
+                        quadProg.setUniform("uModelMatrix", modelMat);
+                        quadProg.setUniform("uColor", colors[0]);
+                        
+                        box.render();
+                    }
+                    
+                    glPolygonMode( GL_FRONT_AND_BACK, GL_FILL );
+
+
+                    for(auto e : graph.tree().queryRange(viewFrustum)) {
+                        lkogl::math::elements::Aabb3<float> bb = e->boundingBox();
+                        
+                        if(math::length(bb.center()-cam.position())>0.01) {
+                        
+                            math::Mat4<float> modelMat = math::translate(math::scale(math::Mat4<float>(), bb.dimensions()/2.0f), bb.center());
+                            quadProg.setUniform("uViewProjMatrix", cam.viewProjectionMatrix());
+                            quadProg.setUniform("uModelMatrix", modelMat);
+                            quadProg.setUniform("uColor", colors[2]);
+                            
+                            box.render();
                         }
                     }
                     
-                    { // Spot
-                        shader::ProgramUse spot(programs_.deferredSpot_);
-                        GeometryObjectUse squareObj(square_);
-                        
-                        spot.setUniform("uEyePosition", cam.position());
-                        
-                        BufferTextureUse tu1(spot, "uGeometry.position", *buffer_, 0, 0);
-                        BufferTextureUse tu2(spot, "uGeometry.normal", *buffer_, 1, 1);
-                        BufferTextureUse tu3(spot, "uGeometry.color", *buffer_, 2, 2);
-                        
-                        for(const lighting::SpotLight& light : spotLights) {
-                            if(math::elements::relationship(viewFrustum, light.boundingSphere()) != math::elements::VolumeRelation::OUTSIDE) {
-                                lighting::SpotLightUse use(spot, light);
-                                
-                                squareObj.render();
-                                auto a = light.boundingSphere();
-                                entityCount_++;
-                            }
-                        }
-                    }
-                    
+                    glEnable(GL_CULL_FACE);
+                    glEnable(GL_DEPTH_TEST);
+
                 }
                 
             }

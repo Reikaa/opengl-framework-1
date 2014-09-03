@@ -83,6 +83,20 @@ namespace lkogl {
                 return contains(frus, point) ? VolumeRelation::INSIDE : VolumeRelation::OUTSIDE;
             }
             
+            template<typename T>
+            VolumeRelation relationship(const Aabb3<T>& a, const Aabb3<T>& b)
+            {
+                if(intersects(a,b)) {
+                    if(contains(a,b)) {
+                        return VolumeRelation::INSIDE;
+                    } else {
+                        return VolumeRelation::INTERSECTING;
+                    }
+                } else {
+                    return VolumeRelation::OUTSIDE;
+                }
+            }
+            
             //
             // AABB3 contains
             //

@@ -11,6 +11,7 @@
 
 #include <set>
 #include <array>
+#include <vector>
 #include <iostream>
 
 #include "../elements/aabb3.h"
@@ -24,12 +25,12 @@ namespace lkogl {
             template<typename T, typename E, const Aabb3<T>(E::*G)(void) const = &E::boundingBox>
             class Octree {
                 static const int OCT = 8;
-                static const int NODE_CAPACITY = 2;
+                static const int NODE_CAPACITY = 1;
                 
                 Aabb3<T> bounds_;
                 
                 int childCount_ = 0;
-                std::array<std::unique_ptr<Octree<T, E, G>>, OCT> children_;
+                std::array<std::array<std::array<std::unique_ptr<Octree<T, E, G>>, 2>, 2>, 2> children_;
                 std::vector<std::shared_ptr<E>> elements_;
                 
             public:
@@ -38,58 +39,44 @@ namespace lkogl {
                     if(bounds.volume() == 0) {
                         throw;
                     }
+                    elements_.reserve(NODE_CAPACITY);
                 }
                 
                 void insert(const std::shared_ptr<E> e)
                 {
-                    Aabb3<T> bounding = (&*e->*G)();
-                    if(math::elements::intersects(bounding, bounds_)) {
+                    if(math::elements::intersects((&*e->*G)(), bounds_)) {
                         if(elements_.size() < NODE_CAPACITY) {
                             elements_.push_back(e);
                         } else {
                             insertIntoChildren(e);
                         }
-                    } else {
-                        Octree<T, E, G>* thisAsNode(new Octree<T, E, G>(bounds_, std::move(children_), std::move(elements_)));
-                        elements_ = std::vector<std::shared_ptr<E>>();
-                        children_ = std::array<std::unique_ptr<Octree<T, E, G>>, OCT>();
-                        
-                        Vec3<int> dirInt = math::sign(bounding.center() - bounds_.center());
-                        
-                        Vec3<T> lowerOffset = math::Vec3<T>(dirInt.x <= 0?1:0, dirInt.y<=0?1:0, dirInt.z<=0?1:0);
-                        Vec3<T> upperOffset = math::Vec3<T>(dirInt.x>0?1:0, dirInt.y>0?1:0, dirInt.z>0?1:0);
-                        
-                        Vec3<T> expansion = bounds_.max - bounds_.min;
-                        
-                         Aabb3<T> newBounds = Aabb3<T>(bounds_.min - lowerOffset*expansion, bounds_.max + upperOffset * expansion);
-                        
-                        bounds_ = newBounds;
-                        
-                        int index = 7-(dirInt.x + (dirInt.y<<1) + (dirInt.z<<2));
-                        
-                        children_[index].reset(thisAsNode);
-                        
-                        insert(e);
                     }
                 }
                 
                 void remove(std::shared_ptr<E> e)
                 {
-                    Aabb3<T> bounding = (&*e->*G)();
-                    if(math::elements::intersects(bounding, bounds_)) {
-                        elements_.erase(std::find(elements_.begin(), elements_.end(), e));
-                        
-                        for(unsigned int i=0;i<OCT;i++) {
-                            removeFromChild(e,i);
+                    if(math::elements::intersects((&*e->*G)(), bounds_)) {
+                        auto pos = std::find(elements_.begin(), elements_.end(), e);
+                        if(pos != elements_.end()) {
+                            elements_.erase(pos);
+                        } else {
+                            removeFromChildren(e);
                         }
                     }
                 }
                 
-                std::set<std::shared_ptr<E>> queryRange(Aabb3<T> range)
+                template<typename Q>
+                std::set<std::shared_ptr<E>> queryRange(const Q& range) const
                 {
                     std::set<std::shared_ptr<E>> result;
+                    queryRange(range, result);
                     
                     return result;
+                }
+                
+                std::set<std::shared_ptr<E>> queryAll() const
+                {
+                    return queryRange(bounds_);
                 }
                 
                 bool empty() const
@@ -101,89 +88,152 @@ namespace lkogl {
                 {
                 }
                 
-                
-                
                 void print() const
                 {
                     print(0, "X");
                 }
                 
-            private:
-                Octree(Aabb3<T> b,
-                       std::array<std::unique_ptr<Octree<T, E, G>>, OCT> c,
-                       std::vector<std::shared_ptr<E>> el) :
-                bounds_(b),
-                children_(std::move(c)),
-                elements_(std::move(el))
+                std::vector<Aabb3<T>> boxes() const
                 {
+                    std::vector<Aabb3<T>> result;
                     
+                    boxes(result);
+                    
+                    return result;
                 }
+                
+            private:
                 
                 void insertIntoChildren(const std::shared_ptr<E> e)
                 {
-                    for(unsigned int i=0;i<OCT;i++) {
-                        insertIntoChild(e, i);
-                    }
-                }
-                
-                void insertIntoChild(const std::shared_ptr<E> e, unsigned int i)
-                {
-                    Aabb3<T> bounding = (&*e->*G)();
-                    
-                    math::Vec3<T> childWidth = (bounds_.max - bounds_.min)/T(2);
-                    math::Vec3<T> lowerOffset(i&1, (i>>1)&1,(i>>2)&1);
-                    math::Vec3<T> upperOffset = math::Vec3<T>(1,1,1) - lowerOffset;
-                    
-                    Aabb3<T> childBounding(bounds_.min + childWidth*lowerOffset, bounds_.max - childWidth*upperOffset);
-                    
-                    if(math::elements::intersects(childBounding, bounding))
-                    {
-                        if(!children_[i]) {
-                            children_[i].reset(new Octree<T, E, G>(childBounding));
-                            childCount_++;
+                    for(unsigned short x=0;x<2;x++) {
+                        for(unsigned short y=0;y<2;y++) {
+                            for(unsigned short z=0;z<2;z++) {
+                                insertIntoChild(e, x, y, z);
+                            }
                         }
-                        
-                        children_[i]->insert(e);
                     }
                 }
                 
-                void removeFromChild(const std::shared_ptr<E> e, unsigned int i)
+                void insertIntoChild(const std::shared_ptr<E> e, unsigned short x, unsigned short y, unsigned short z)
                 {
-                    if(children_[i]) {
-                        children_[i]->remove(e);
-                        if(children_[i]->empty()) {
-                            children_[i].reset();
+                    
+                    if(!children_[x][y][z]) {
+                        
+                        Vec3<T> halfWidth = bounds_.dimensions() / T(2);
+                        Vec3<T> lowerOff = Vec3<T>(x,y,z);
+                        Vec3<T> upperOff = 1.0f-lowerOff;
+                        
+                        
+                        children_[x][y][z].reset(new Octree(Aabb3<T>(bounds_.min + lowerOff*halfWidth, bounds_.max - upperOff*halfWidth)));
+                        childCount_++;
+                    }
+                    
+                    children_[x][y][z]->insert(e);
+                    
+                    if(children_[x][y][z]->empty()) {
+                        children_[x][y][z].reset();
+                        childCount_--;
+                    }
+                }
+                
+                void removeFromChildren(const std::shared_ptr<E> e)
+                {
+                    for(unsigned short x=0;x<2;x++) {
+                        for(unsigned short y=0;y<2;y++) {
+                            for(unsigned short z=0;z<2;z++) {
+                                removeFromChild(e, x, y, z);
+                            }
+                        }
+                    }
+                }
+                
+                void removeFromChild(const std::shared_ptr<E> e, unsigned short x, unsigned short y, unsigned short z)
+                {
+                    if(children_[x][y][z]) {
+                        children_[x][y][z]->remove(e);
+                        if(children_[x][y][z]->empty()) {
+                            children_[x][y][z].reset();
                             childCount_--;
                         }
                     }
                 }
                 
+                template<typename Q>
+                void queryRange(const Q& range, std::set<std::shared_ptr<E>>& result) const
+                {
+                    if(math::elements::relationship(range, bounds_) != elements::VolumeRelation::OUTSIDE) {
+                        for(auto e : elements_) {
+                            if(math::elements::relationship(range, (&*e->*G)()) != elements::VolumeRelation::OUTSIDE) {
+                                result.insert(e);
+                            }
+                        }
+                    }
+                    queryRangeChildren(range, result);
+                }
                 
+                template<typename Q>
+                void queryRangeChildren(const Q& range, std::set<std::shared_ptr<E>>& result) const
+                {
+                    for(unsigned short x=0;x<2;x++) {
+                        for(unsigned short y=0;y<2;y++) {
+                            for(unsigned short z=0;z<2;z++) {
+                                if(children_[x][y][z]) {
+                                    children_[x][y][z]->queryRange(range, result);
+                                }
+                            }
+                        }
+                    }
+                }
                 
                 void print(int depth, const std::string& label) const
                 {
-                    for(int i = 0; i < depth; i++)
-                    {
+                    for(int i=0;i<depth;i++) {
                         std::cout << "  ";
                     }
+                    std::cout << label;
+                    std::cout << "(";
+                    std::cout << elements_.size();
+                    std::cout << "/";
+                    std::cout << childCount_;
+                    std::cout << ")";
                     
-                    std::cout << label << ":";
-                    std::cout << "["<< bounds_.min.x << "," << bounds_.min.y << "," << bounds_.min.z <<"]-";
-                    std::cout << "["<< bounds_.max.x << "," << bounds_.max.y << "," << bounds_.max.z <<"]";
-                    for(auto e : elements_) {
-                        std::cout << e << ", ";
+                    if(empty()) {
+                        std::cout << "EMPTY";
                     }
-                    std::cout  << std::endl;
                     
-                    if(children_[0]) { children_[0]->print(depth+1, "LeftDownFlat"); }
-                    if(children_[1]) { children_[1]->print(depth+1, "RightDownFlat"); }
-                    if(children_[2]) { children_[2]->print(depth+1, "LeftUpFlat"); }
-                    if(children_[3]) { children_[3]->print(depth+1, "RightUpFlat"); }
-                    if(children_[4]) { children_[4]->print(depth+1, "LeftDownDeep"); }
-                    if(children_[5]) { children_[5]->print(depth+1, "RightDownDeep"); }
-                    if(children_[6]) { children_[6]->print(depth+1, "LeftUpDeep"); }
-                    if(children_[7]) { children_[7]->print(depth+1, "RightUpDeep"); }
+                    std::cout << std::endl;
+
+                    int test = 0;
                     
+                    for(unsigned short x=0;x<2;x++) {
+                        for(unsigned short y=0;y<2;y++) {
+                            for(unsigned short z=0;z<2;z++) {
+                                auto l = std::string(x>0?"right":"left") + (y>0?"top":"bottom") + (z>0?"deep":"shallow");
+                                if(children_[x][y][z]) {
+                                    children_[x][y][z]->print(depth+1, l);
+                                    test++;
+                                }
+                            }
+                        }
+                    }
+                    
+                    
+                }
+                
+                void boxes(std::vector<Aabb3<T>>& result) const
+                {
+                    result.push_back(bounds_);
+
+                    for(unsigned short x=0;x<2;x++) {
+                        for(unsigned short y=0;y<2;y++) {
+                            for(unsigned short z=0;z<2;z++) {
+                                if(children_[x][y][z]) {
+                                    children_[x][y][z]->boxes(result);
+                                }
+                            }
+                        }
+                    }
                 }
             };
         }

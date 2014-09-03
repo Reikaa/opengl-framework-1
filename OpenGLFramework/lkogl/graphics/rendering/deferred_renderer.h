@@ -28,6 +28,7 @@ namespace lkogl {
                     shader::Program deferredDir_;
                     shader::Program deferredPoint_;
                     shader::Program deferredSpot_;
+                    shader::Program quadtree_;
                 } programs_;
                 std::unique_ptr<FrameBuffer> buffer_;
                 struct {
@@ -40,6 +41,8 @@ namespace lkogl {
                 Texture sky_;
                 mutable int entityCount_ = 0;
             public:
+                mutable bool drawBoxes_ = false;
+                
                 DeferredRenderer(const Screen& screen, int ratioW, int ratioH) throw (graphics::shader::Shader::Exception);;
                 ~DeferredRenderer();
                 

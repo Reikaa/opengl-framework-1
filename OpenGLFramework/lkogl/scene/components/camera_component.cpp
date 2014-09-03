@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 Laszlo Korte. All rights reserved.
 //
 
+#include <iostream>
+
 #include "./camera_component.h"
 #include "../entity.h"
 

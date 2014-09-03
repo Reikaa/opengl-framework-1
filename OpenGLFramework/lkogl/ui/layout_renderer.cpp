@@ -33,6 +33,7 @@ namespace lkogl {
         void LayoutRenderer::render(std::shared_ptr<Element> e, const graphics::Screen& screen)
         {
             glClearColor(0, 0, 0, 0);
+            glClear(GL_DEPTH_BUFFER_BIT);
             glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
             
             glViewport(0, 0, screen.width, screen.height);

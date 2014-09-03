@@ -380,11 +380,21 @@ namespace lkogl {
         template <typename T>
         Vec3<int> sign(const Vec3<T> v)
         {
-            int sx = v.x > 1 ? 1 : (v.x < 0 ? -1 : 0);
-            int sy = v.y > 1 ? 1 : (v.x < 0 ? -1 : 0);
-            int sz = v.z > 1 ? 1 : (v.x < 0 ? -1 : 0);
+            int sx = v.x > 0 ? 1 : (v.x < 0 ? -1 : 0);
+            int sy = v.y > 0 ? 1 : (v.x < 0 ? -1 : 0);
+            int sz = v.z > 0 ? 1 : (v.x < 0 ? -1 : 0);
             return Vec3<int>(sx, sy, sz);
         }
+        
+        template <typename T>
+        Vec3<T> abs(const Vec3<T> v)
+        {
+            int sx = v.x > 0 ? v.x : (v.x < 0 ? -v.x : 0);
+            int sy = v.y > 0 ? v.y : (v.x < 0 ? -v.y : 0);
+            int sz = v.z > 0 ? v.z : (v.x < 0 ? -v.z : 0);
+            return Vec3<T>(sx, sy, sz);
+        }
+
     
     }
 }

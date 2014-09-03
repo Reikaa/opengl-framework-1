@@ -10,7 +10,7 @@
 
 namespace lkogl {
     namespace scene {
-        Scene::Scene() : tree_(math::elements::Aabb3<float>(1,1,1))
+        Scene::Scene() : tree_(math::elements::Aabb3<float>(128,128,128))
         {}
         Scene::~Scene()
         {}
@@ -23,42 +23,11 @@ namespace lkogl {
         void Scene::addEntity(std::shared_ptr<Entity> e)
         {
             tree_.insert(e);
-            entities_.push_back(e);
         }
         
         void Scene::removeEntity(std::shared_ptr<Entity> e)
         {
-            auto p = std::find(entities_.begin(), entities_.end(), e);
-            entities_.erase(p);
             tree_.remove(e);
-        }
-        
-        std::vector<std::shared_ptr<Entity>> Scene::query(const Predicate& p)
-        {
-            std::vector<std::shared_ptr<Entity>> result;
-            result.reserve(entities_.size()/3);
-            
-            for(auto e : entities_) {
-                if(p(*e.get())) {
-                    result.push_back(e);
-                }
-            }
-            
-            return result;
-        }
-        
-        std::vector<std::shared_ptr<const Entity>> Scene::query(const Predicate& p) const
-        {
-            std::vector<std::shared_ptr<const Entity>> result;
-            result.reserve(entities_.size()/3);
-            
-            for(auto e : entities_) {
-                if(p(*e.get())) {
-                    result.push_back(e);
-                }
-            }
-            
-            return result;
         }
     }
 }

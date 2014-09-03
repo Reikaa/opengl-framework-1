@@ -145,9 +145,13 @@ public:
             e2->layout().setAlignment({WeightLinear::Right, WeightLinear::Bottom});
             
             auto e3 = std::make_shared<Element>(std::make_shared<behaviour::DraggableBehaviour>(uiRoot_->layout(), [this](const Vec2<int> o) {
+                graph.removeEntity(monkeyNode_);
+
                 monkeyNode_->transformation().setTranslation(
                     monkeyNode_->transformation().translation()-Vec3<float>{0.05f*o.x, 0,0.05f*o.y}
                 );
+                
+                graph.addEntity(monkeyNode_);
             }));
             e3->layout().setSize(px(100), px(100));
             e3->layout().setMargin({px(0)});
@@ -192,9 +196,9 @@ public:
             std::shared_ptr<Entity> nodeBox2 = std::make_shared<Entity>();
             nodeBox2->addComponent(std::make_shared<RenderComponent>(GeometryObject(cubeMesh), tiling));
             nodeBox2->transformation().setRotation(angleAxis<float>(radians(21), {0,1,0}));
-            graph.addEntity(nodeBox2);
             nodeBox2->transformation().setTranslation({-10.5,-4.5,0.1});
             nodeBox2->setBoundingSize(cubeBounding);
+            graph.addEntity(nodeBox2);
 
             std::shared_ptr<Entity> nodeBox3 = std::make_shared<Entity>();
             nodeBox3->addComponent(std::make_shared<RenderComponent>(GeometryObject(cubeMesh), tiling));
@@ -218,10 +222,8 @@ public:
             node3->transformation().setRotation(angleAxis<float>(radians(45), {0.1,1,0.3}));
             node3->setBoundingSize(monkeyBounding);
             graph.addEntity(node3);
-            
+            monkeyNode_ = node3;
 
-            
-            
             
             Image terrainImage("terrain.png");
             
@@ -232,8 +234,8 @@ public:
             std::shared_ptr<Entity> node4 = std::make_shared<Entity>();
             node4->addComponent(std::make_shared<RenderComponent>(GeometryObject(terrainMesh), sand));
             node4->transformation().setScale({0.5f,0.5f,0.5f});
-            node4->transformation().setTranslation({5,0,5});
             node4->setBoundingSize(terrainBounding);
+            
             graph.addEntity(node4);
         
             
@@ -245,19 +247,16 @@ public:
             linkComp_ = std::make_shared<LinkComponent>(node3);
             linkComp_->active = false;
             camNode_->addComponent(linkComp_);
-
             camNode_->addComponent(cameraComponent);
             camNode_->transformation().setTranslation({0,0,10});
-            graph.addEntity(camNode_);
-            monkeyNode_ = node3;
-            
-            movement.lookAt(camNode_->transformation(), {0,0,0});
+            camNode_->setBoundingSize({0.1,0.1,0.1});
 
             
+            movement.lookAt(camNode_->transformation(), {0,0,1});
+            
+            graph.addEntity(camNode_);
+
             sampler_ = std::make_shared<Sampler>("double_click_mouse_over.wav");
-            
-            graph.tree().print();
-            
         } catch(lkogl::graphics::shader::Shader::Exception e) {
             std::cerr << e.msg << std::endl;
             exit(1);
@@ -315,6 +314,7 @@ public:
         }
         
         if(mouseLocked) {
+            graph.removeEntity(camNode_);
             movement.move(camNode_->transformation(), dir, moveDelay/2);
             
             if(keyboard_.isDown(Keyboard::Key::LETTER_C)) {
@@ -327,10 +327,26 @@ public:
                     movement.rotateVertically(camNode_->transformation(), radians(.25f*mouse_.delta.y));
                 }
             }
+            graph.addEntity(camNode_);
+
         }
         
         if(keyboard_.pressed(Keyboard::Key::LETTER_T)) {
             linkComp_->active = !linkComp_->active;
+        }
+        
+        if(keyboard_.pressed(Keyboard::Key::LETTER_O)) {
+            graph.tree().print();
+        }
+        
+        renderer_->drawBoxes_ = keyboard_.isDown(Keyboard::Key::LETTER_B);
+        
+        if(keyboard_.pressed(Keyboard::Key::LETTER_K)) {
+            auto all = graph.tree().queryAll();
+            auto p = std::find_if(all.begin(), all.end(), [this](std::shared_ptr<Entity> x) { return x!=camNode_; });
+            if(p != all.end()) {
+                graph.removeEntity(*p);
+            }
         }
         
 
@@ -352,11 +368,13 @@ public:
         keyboard_.update();
         mouse_.update();
         
-        for(auto e : graph.query([](const Entity&){ return true;}))
+        for(auto e : graph.tree().queryAll())
         {
+            graph.removeEntity(e);
             for(auto c : e->components()) {
                 c->update(*e.get());
             }
+            graph.addEntity(e);
         }
     }
     
