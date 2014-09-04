@@ -11,7 +11,7 @@
 namespace lkogl {
     namespace graphics {
         namespace lighting {
-            constexpr int COLOR_DEPTH = 32;
+            constexpr int COLOR_DEPTH = 16;
             
             PointLight::PointLight(const math::Vec3<float>& color, float intensity, const math::Vec3<float>& position, const Attenuation& att) :
             baseLight_(color, intensity),
