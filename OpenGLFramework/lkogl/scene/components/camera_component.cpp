@@ -26,6 +26,8 @@ namespace lkogl {
                     mat[3][1],
                     mat[3][2]
                 });
+                
+                e.invalidateBoundingBox();
             }
             
             void CameraComponent::render(const Entity& e, const graphics::shader::ProgramUse& program) const

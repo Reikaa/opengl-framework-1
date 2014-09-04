@@ -369,7 +369,6 @@ public:
             for(auto c : e->components()) {
                 c->update(*e.get());
             }
-            e->invalidateBoundingBox();
         }
         
         graph.update();

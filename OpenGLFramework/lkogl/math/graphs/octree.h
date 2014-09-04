@@ -22,7 +22,7 @@ using lkogl::math::elements::Aabb3;
 namespace lkogl {
     namespace math {
         namespace graphs {
-            template<typename T, typename E, const Aabb3<T> (E::*G)(void) const = &E::boundingBox>
+            template<typename T, typename E, const Aabb3<T>& (E::*G)(void) const = &E::boundingBox>
             class Octree {
                 static const int OCT = 8;
                 static const int NODE_CAPACITY = 1;
@@ -203,7 +203,7 @@ namespace lkogl {
                 {
                     if(math::elements::relationship(range, bounds_) != elements::VolumeRelation::OUTSIDE) {
                         for(auto e : elements_) {
-                            if(math::elements::intersects(range, (&*e->*G)())) {
+                            if(math::elements::relationship(range, (&*e->*G)()) != math::elements::VolumeRelation::OUTSIDE) {
                                 result.insert(e);
                             }
                         }

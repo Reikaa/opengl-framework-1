@@ -29,6 +29,8 @@ namespace lkogl {
                 } else if(!active) {
                     e.transformation().setParent(math::Mat4<float>(1), false);
                 }
+                
+                e.invalidateBoundingBox();
             }
             
             void LinkComponent::render(const Entity& e, const graphics::shader::ProgramUse& program) const

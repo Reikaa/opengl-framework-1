@@ -301,6 +301,8 @@ namespace lkogl {
                     for(auto e : graph.tree().queryRange(viewFrustum)) {
                         lkogl::math::elements::Aabb3<float> bb = e->boundingBox();
                         
+                        std::cout << math::toString(bb.center());
+                        
                         if(math::length(bb.center()-cam.position())>0.01) {
                         
                             math::Mat4<float> modelMat = math::translate(math::scale(math::Mat4<float>(), bb.dimensions()/2.0f), bb.center());

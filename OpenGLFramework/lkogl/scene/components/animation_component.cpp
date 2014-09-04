@@ -19,6 +19,8 @@ namespace lkogl {
             void AnimationComponent::update(Entity& e) const
             {
                 e.transformation().transform(transform_);
+                
+                e.invalidateBoundingBox();
             }
             
             void AnimationComponent::render(const Entity& e, const graphics::shader::ProgramUse& program) const
