@@ -145,13 +145,9 @@ public:
             e2->layout().setAlignment({WeightLinear::Right, WeightLinear::Bottom});
             
             auto e3 = std::make_shared<Element>(std::make_shared<behaviour::DraggableBehaviour>(uiRoot_->layout(), [this](const Vec2<int> o) {
-                graph.removeEntity(monkeyNode_);
-
                 monkeyNode_->transformation().setTranslation(
                     monkeyNode_->transformation().translation()-Vec3<float>{0.05f*o.x, 0,0.05f*o.y}
                 );
-                
-                graph.addEntity(monkeyNode_);
             }));
             e3->layout().setSize(px(100), px(100));
             e3->layout().setMargin({px(0)});
@@ -227,17 +223,20 @@ public:
             
             Image terrainImage("terrain.png");
             
-            IndexModel terrainModel = heigh_map_from_image(terrainImage).toIndexedModel();
-            elements::Aabb3<float> terrainBounding = terrainModel.bounding();
-            Mesh terrainMesh = terrainModel.toMesh();
+            std::vector<std::pair<Vec3<float>, IndexModel>> terrainModel = heigh_map_from_image(terrainImage).toIndexedModel(4);
             
-            std::shared_ptr<Entity> node4 = std::make_shared<Entity>();
-            node4->addComponent(std::make_shared<RenderComponent>(GeometryObject(terrainMesh), sand));
-            node4->transformation().setScale({0.5f,0.5f,0.5f});
-            node4->setBoundingSize(terrainBounding);
             
-            graph.addEntity(node4);
-        
+            for(auto p : terrainModel) {
+                elements::Aabb3<float> terrainBounding = p.second.bounding();
+                Mesh terrainMesh = p.second.toMesh();
+                
+                std::shared_ptr<Entity> node4 = std::make_shared<Entity>();
+                node4->addComponent(std::make_shared<RenderComponent>(GeometryObject(terrainMesh), sand));
+                node4->transformation().setTranslation(p.first + Vec3<float>(0,5.1,0));
+                node4->setBoundingSize(terrainBounding);
+                
+                graph.addEntity(node4);
+            }
             
             movement.setFly(true);
             
@@ -314,7 +313,6 @@ public:
         }
         
         if(mouseLocked) {
-            graph.removeEntity(camNode_);
             movement.move(camNode_->transformation(), dir, moveDelay/2);
             
             if(keyboard_.isDown(Keyboard::Key::LETTER_C)) {
@@ -327,8 +325,6 @@ public:
                     movement.rotateVertically(camNode_->transformation(), radians(.25f*mouse_.delta.y));
                 }
             }
-            graph.addEntity(camNode_);
-
         }
         
         if(keyboard_.pressed(Keyboard::Key::LETTER_T)) {
@@ -368,14 +364,15 @@ public:
         keyboard_.update();
         mouse_.update();
         
-        for(auto e : graph.tree().queryAll())
+        for(auto e : graph.all())
         {
-            graph.removeEntity(e);
             for(auto c : e->components()) {
                 c->update(*e.get());
             }
-            graph.addEntity(e);
+            e->invalidateBoundingBox();
         }
+        
+        graph.update();
     }
     
     void render() const {

@@ -27,6 +27,8 @@ namespace lkogl {
                 void setHeightAt(int x, int y, float h);
                 
                 IndexModel toIndexedModel() const;
+
+                std::vector<std::pair<math::Vec3<float>, IndexModel>> toIndexedModel(int parts) const;
             };
             
             ImageHeightMap heigh_map_from_image(const utils::Image& img, unsigned short filterRadius = 3);

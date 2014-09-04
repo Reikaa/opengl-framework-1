@@ -22,6 +22,8 @@ namespace lkogl {
             std::vector<std::shared_ptr<components::Component>> components_;
             EntityTransformation transformation_;
             math::elements::Aabb3<float> boundingSize_;
+            mutable math::elements::Aabb3<float> boundingBox_;
+            mutable bool boundingBoxValid_ = false;
         public:
             Entity();
             ~Entity();
@@ -37,6 +39,7 @@ namespace lkogl {
             const math::elements::Aabb3<float>& boundingSize() const;
 
             const math::elements::Aabb3<float> boundingBox() const;
+            void invalidateBoundingBox();
 
         };
     }

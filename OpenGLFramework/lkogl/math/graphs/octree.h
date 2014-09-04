@@ -22,7 +22,7 @@ using lkogl::math::elements::Aabb3;
 namespace lkogl {
     namespace math {
         namespace graphs {
-            template<typename T, typename E, const Aabb3<T>(E::*G)(void) const = &E::boundingBox>
+            template<typename T, typename E, const Aabb3<T> (E::*G)(void) const = &E::boundingBox>
             class Octree {
                 static const int OCT = 8;
                 static const int NODE_CAPACITY = 1;
@@ -43,8 +43,8 @@ namespace lkogl {
                 }
                 
                 void insert(const std::shared_ptr<E> e)
-                {
-                    if(math::elements::intersects((&*e->*G)(), bounds_)) {
+                {                    
+                    if(math::elements::intersects(bounds_, (&*e->*G)())) {
                         if(elements_.size() < NODE_CAPACITY) {
                             elements_.push_back(e);
                         } else {
@@ -55,7 +55,7 @@ namespace lkogl {
                 
                 void remove(std::shared_ptr<E> e)
                 {
-                    if(math::elements::intersects((&*e->*G)(), bounds_)) {
+                    if(math::elements::intersects(bounds_, (&*e->*G)())) {
                         auto pos = std::find(elements_.begin(), elements_.end(), e);
                         if(pos != elements_.end()) {
                             elements_.erase(pos);
@@ -102,7 +102,43 @@ namespace lkogl {
                     return result;
                 }
                 
+                void repair()
+                {
+                    std::set<std::shared_ptr<E>> result;
+                    
+                    removeNotFitting(result);
+                    
+                    for(auto e : result) {
+                        insert(e);
+                    }
+                }
+                
             private:
+                
+                void removeNotFitting(std::set<std::shared_ptr<E>>& result)
+                {
+                    for(auto it = elements_.begin(); it != elements_.end();)
+                    {
+                        if(!math::elements::intersects(bounds_, (&**it->*G)())) {
+                            result.insert(*it);
+                            elements_.erase(it);
+                        } else {
+                            it++;
+                        }
+                    }
+                    
+                    if(childCount_) {
+                        for(unsigned short x=0;x<2;x++) {
+                            for(unsigned short y=0;y<2;y++) {
+                                for(unsigned short z=0;z<2;z++) {
+                                    if(children_[x][y][z]) {
+                                        children_[x][y][z]->removeNotFitting(result);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
                 
                 void insertIntoChildren(const std::shared_ptr<E> e)
                 {
@@ -125,24 +161,27 @@ namespace lkogl {
                         Vec3<T> upperOff = 1.0f-lowerOff;
                         
                         
-                        children_[x][y][z].reset(new Octree(Aabb3<T>(bounds_.min + lowerOff*halfWidth, bounds_.max - upperOff*halfWidth)));
+                        Aabb3<T> childBounding = Aabb3<T>(bounds_.min + lowerOff*halfWidth, bounds_.max - upperOff*halfWidth);
+                        
+                        if(!math::elements::intersects(childBounding, (&*e->*G)())) {
+                            return;
+                        }
+                        
+                        children_[x][y][z].reset(new Octree(childBounding));
                         childCount_++;
                     }
                     
                     children_[x][y][z]->insert(e);
-                    
-                    if(children_[x][y][z]->empty()) {
-                        children_[x][y][z].reset();
-                        childCount_--;
-                    }
                 }
                 
                 void removeFromChildren(const std::shared_ptr<E> e)
                 {
-                    for(unsigned short x=0;x<2;x++) {
-                        for(unsigned short y=0;y<2;y++) {
-                            for(unsigned short z=0;z<2;z++) {
-                                removeFromChild(e, x, y, z);
+                    if(childCount_) {
+                        for(unsigned short x=0;x<2;x++) {
+                            for(unsigned short y=0;y<2;y++) {
+                                for(unsigned short z=0;z<2;z++) {
+                                    removeFromChild(e, x, y, z);
+                                }
                             }
                         }
                     }
@@ -164,7 +203,7 @@ namespace lkogl {
                 {
                     if(math::elements::relationship(range, bounds_) != elements::VolumeRelation::OUTSIDE) {
                         for(auto e : elements_) {
-                            if(math::elements::relationship(range, (&*e->*G)()) != elements::VolumeRelation::OUTSIDE) {
+                            if(math::elements::intersects(range, (&*e->*G)())) {
                                 result.insert(e);
                             }
                         }
@@ -175,11 +214,13 @@ namespace lkogl {
                 template<typename Q>
                 void queryRangeChildren(const Q& range, std::set<std::shared_ptr<E>>& result) const
                 {
-                    for(unsigned short x=0;x<2;x++) {
-                        for(unsigned short y=0;y<2;y++) {
-                            for(unsigned short z=0;z<2;z++) {
-                                if(children_[x][y][z]) {
-                                    children_[x][y][z]->queryRange(range, result);
+                    if(childCount_) {
+                        for(unsigned short x=0;x<2;x++) {
+                            for(unsigned short y=0;y<2;y++) {
+                                for(unsigned short z=0;z<2;z++) {
+                                    if(children_[x][y][z]) {
+                                        children_[x][y][z]->queryRange(range, result);
+                                    }
                                 }
                             }
                         }
@@ -225,11 +266,13 @@ namespace lkogl {
                 {
                     result.push_back(bounds_);
 
-                    for(unsigned short x=0;x<2;x++) {
-                        for(unsigned short y=0;y<2;y++) {
-                            for(unsigned short z=0;z<2;z++) {
-                                if(children_[x][y][z]) {
-                                    children_[x][y][z]->boxes(result);
+                    if(childCount_) {
+                        for(unsigned short x=0;x<2;x++) {
+                            for(unsigned short y=0;y<2;y++) {
+                                for(unsigned short z=0;z<2;z++) {
+                                    if(children_[x][y][z]) {
+                                        children_[x][y][z]->boxes(result);
+                                    }
                                 }
                             }
                         }

@@ -56,7 +56,16 @@ namespace lkogl {
         
         const math::elements::Aabb3<float> Entity::boundingBox() const
         {
-            return math::elements::transformed(boundingSize_, transformation_.matrix());
+            if(!boundingBoxValid_) {
+                boundingBox_ = math::elements::transformed(boundingSize_, transformation_.matrix());
+                boundingBoxValid_ = true;
+            }
+            return boundingBox_;
+        }
+        
+        void Entity::invalidateBoundingBox()
+        {
+            boundingBoxValid_ = false;
         }
         
     }
