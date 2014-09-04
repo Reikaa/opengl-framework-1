@@ -133,6 +133,10 @@ namespace lkogl {
                                 for(unsigned short z=0;z<2;z++) {
                                     if(children_[x][y][z]) {
                                         children_[x][y][z]->removeNotFitting(result);
+                                        if(children_[x][y][z]->empty()) {
+                                            children_[x][y][z].reset();
+                                            childCount_--;
+                                        }
                                     }
                                 }
                             }
