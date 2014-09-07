@@ -214,7 +214,7 @@ namespace lkogl {
         template<typename T = basetype>
         Quat<T> rotation(const Vec3<T>& orig, const Vec3<T>& dest)
         {
-            T epsilon(0.00000001);
+            T epsilon(0.0001);
             T pi(3.141592653589793);
             T cosTheta = dot(orig, dest);
             Vec3<T> rotationAxis;
