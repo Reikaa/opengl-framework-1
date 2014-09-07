@@ -247,11 +247,11 @@ public:
             linkComp_->active = false;
             camNode_->addComponent(linkComp_);
             camNode_->addComponent(cameraComponent);
-            camNode_->transformation().setTranslation({0,0,10});
+            camNode_->transformation().setTranslation({0,0,-10});
             camNode_->setBoundingSize({0.1,0.1,0.1});
 
             
-            movement.lookAt(camNode_->transformation(), {0,0,1});
+            movement.lookAt(camNode_->transformation(), {0,0,0});
             
             graph.addEntity(camNode_);
 
