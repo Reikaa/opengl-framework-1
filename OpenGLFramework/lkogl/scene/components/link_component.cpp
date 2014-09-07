@@ -26,8 +26,8 @@ namespace lkogl {
                 } else if(active) {
                     e.transformation().setParent(linkedTo_->transformation().matrix(), true);
                     linked_ = true;
-                } else if(!active) {
-                    e.transformation().setParent(math::Mat4<float>(1), false);
+                } else {
+                    return;
                 }
                 
                 e.invalidateBoundingBox();
