@@ -223,7 +223,7 @@ public:
             
             Image terrainImage("terrain.png");
             
-            std::vector<std::pair<Vec3<float>, IndexModel>> terrainModel = heigh_map_from_image(terrainImage).toIndexedModel(4);
+            std::vector<std::pair<Vec3<float>, IndexModel>> terrainModel = heigh_map_from_image(terrainImage).toIndexedModel(1);
             
             
             for(auto p : terrainModel) {
