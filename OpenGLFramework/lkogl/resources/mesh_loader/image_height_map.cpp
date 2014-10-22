@@ -173,7 +173,7 @@ namespace lkogl {
                             result.normals_.push_back(avgNormal);
                         }
                                                 
-                        results.push_back(std::make_pair(math::Vec3<float>((h*width-width_/4)*scale, 0, (v*height-height_/4)*scale), result));
+                        results.push_back(std::make_pair(math::Vec3<float>(((h+1)*width-width_/2)*scale, 0, ((v+1)*height-height_/2)*scale), result));
                     }
                 }
                 
