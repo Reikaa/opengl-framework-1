@@ -26,26 +26,24 @@ namespace lkogl {
             class Octree {
                 static const int OCT = 8;
                 static const int NODE_CAPACITY = 1;
+                static const int MAX_DEPTH = 5;
                 
                 Aabb3<T> bounds_;
                 
                 int childCount_ = 0;
+                int depth_ = 0;
                 std::array<std::array<std::array<std::unique_ptr<Octree<T, E, G>>, 2>, 2>, 2> children_;
                 std::vector<std::shared_ptr<E>> elements_;
                 
             public:
-                explicit Octree(Aabb3<T> bounds) : bounds_(bounds)
+                explicit Octree(Aabb3<T> bounds) : Octree(bounds, 0)
                 {
-                    if(bounds.volume() == 0) {
-                        throw;
-                    }
-                    elements_.reserve(NODE_CAPACITY);
                 }
                 
                 void insert(const std::shared_ptr<E> e)
                 {                    
                     if(math::elements::intersects(bounds_, (&*e->*G)())) {
-                        if(elements_.size() < NODE_CAPACITY) {
+                        if(elements_.size() < NODE_CAPACITY || depth_ >= MAX_DEPTH) {
                             elements_.push_back(e);
                         } else {
                             insertIntoChildren(e);
@@ -114,6 +112,14 @@ namespace lkogl {
                 }
                 
             private:
+                 
+                Octree(Aabb3<T> bounds, int d) : bounds_(bounds), depth_(d)
+                {
+                    if(bounds.volume() == 0) {
+                        throw;
+                    }
+                    elements_.reserve(NODE_CAPACITY);
+                }
                 
                 void removeNotFitting(std::set<std::shared_ptr<E>>& result)
                 {
@@ -164,14 +170,13 @@ namespace lkogl {
                         Vec3<T> lowerOff = Vec3<T>(x,y,z);
                         Vec3<T> upperOff = 1.0f-lowerOff;
                         
-                        
                         Aabb3<T> childBounding = Aabb3<T>(bounds_.min + lowerOff*halfWidth, bounds_.max - upperOff*halfWidth);
                         
                         if(!math::elements::intersects(childBounding, (&*e->*G)())) {
                             return;
                         }
                         
-                        children_[x][y][z].reset(new Octree(childBounding));
+                        children_[x][y][z].reset(new Octree(childBounding, depth_+1));
                         childCount_++;
                     }
                     
