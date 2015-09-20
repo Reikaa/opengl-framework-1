@@ -27,10 +27,6 @@
 		F21EA819199A03EF00D78E1C /* index_model.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F21EA817199A03EF00D78E1C /* index_model.cpp */; };
 		F21EA81C199A04AC00D78E1C /* obj_model.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F21EA81A199A04AC00D78E1C /* obj_model.cpp */; };
 		F21EA820199A257F00D78E1C /* box.obj in Resources */ = {isa = PBXBuildFile; fileRef = F21EA81F199A257F00D78E1C /* box.obj */; };
-		F21EA821199A870900D78E1C /* SDL2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F29707A51993735D00D48CE5 /* SDL2.framework */; };
-		F21EA822199A870900D78E1C /* SDL2.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F29707A51993735D00D48CE5 /* SDL2.framework */; };
-		F21EA823199A870900D78E1C /* SDL2_image.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F29707A61993735D00D48CE5 /* SDL2_image.framework */; };
-		F21EA824199A870900D78E1C /* SDL2_image.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F29707A61993735D00D48CE5 /* SDL2_image.framework */; };
 		F21EA82A199AB97100D78E1C /* monkey.obj in Resources */ = {isa = PBXBuildFile; fileRef = F21EA829199AB97100D78E1C /* monkey.obj */; };
 		F21EA82F199ABD0B00D78E1C /* animation_component.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F21EA82D199ABD0B00D78E1C /* animation_component.cpp */; };
 		F21EA835199B9B9300D78E1C /* render_target.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F21EA833199B9B9300D78E1C /* render_target.cpp */; };
@@ -40,8 +36,6 @@
 		F21EA840199BB46200D78E1C /* deferred-ambient.fsh in Resources */ = {isa = PBXBuildFile; fileRef = F21EA83F199BB46200D78E1C /* deferred-ambient.fsh */; };
 		F21EA842199BE7C000D78E1C /* deferred-directional.vsh in Resources */ = {isa = PBXBuildFile; fileRef = F21EA841199BE7C000D78E1C /* deferred-directional.vsh */; };
 		F21EA844199BE7D100D78E1C /* deferred-directional.fsh in Resources */ = {isa = PBXBuildFile; fileRef = F21EA843199BE7D100D78E1C /* deferred-directional.fsh */; };
-		F2293EC919A4103100920353 /* SDL2_mixer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F2293EC819A4103100920353 /* SDL2_mixer.framework */; };
-		F2293ECA19A4103C00920353 /* SDL2_mixer.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F2293EC819A4103100920353 /* SDL2_mixer.framework */; };
 		F23A8BA119AD56640074E7DD /* tiling_normal.png in Resources */ = {isa = PBXBuildFile; fileRef = F23A8BA019AD56640074E7DD /* tiling_normal.png */; };
 		F24DA04919A3D4AF005F5F32 /* sand.png in Resources */ = {isa = PBXBuildFile; fileRef = F24DA04819A3D4AF005F5F32 /* sand.png */; };
 		F24DA04C19A3F06F005F5F32 /* draggable_behaviour.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F24DA04A19A3F06F005F5F32 /* draggable_behaviour.cpp */; };
@@ -65,8 +59,6 @@
 		F2970791199370D800D48CE5 /* texture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F297078F199370D800D48CE5 /* texture.cpp */; };
 		F2970794199370EE00D48CE5 /* math.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2970792199370EE00D48CE5 /* math.cpp */; };
 		F29707A21993728300D48CE5 /* game_loop.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F29707A01993728300D48CE5 /* game_loop.cpp */; };
-		F29707AA1993737E00D48CE5 /* SDL2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F29707A51993735D00D48CE5 /* SDL2.framework */; };
-		F29707AB1993737E00D48CE5 /* SDL2_image.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F29707A61993735D00D48CE5 /* SDL2_image.framework */; };
 		F29707AC1993737E00D48CE5 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F29707A31993734100D48CE5 /* OpenGL.framework */; };
 		F29707B11993786600D48CE5 /* image.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F29707AF1993786600D48CE5 /* image.cpp */; };
 		F29707B5199379DC00D48CE5 /* material.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F29707B3199379DC00D48CE5 /* material.cpp */; };
@@ -111,6 +103,12 @@
 		F2F0DB0919A4AB0500BD63E9 /* tiling_color.png in Resources */ = {isa = PBXBuildFile; fileRef = F2F0DB0819A4AB0500BD63E9 /* tiling_color.png */; };
 		F2F0DB0B19A4B46A00BD63E9 /* pyramid_gold.png in Resources */ = {isa = PBXBuildFile; fileRef = F2F0DB0A19A4B46A00BD63E9 /* pyramid_gold.png */; };
 		F2FC464519A34D4800EFCEF5 /* variable_declaration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2FC464319A34D4800EFCEF5 /* variable_declaration.cpp */; };
+		F2FE7BC11BAF1987000D72EC /* SDL2.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F2FE7BBE1BAF197A000D72EC /* SDL2.framework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		F2FE7BC31BAF1987000D72EC /* SDL2_mixer.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F2FE7BBC1BAF1974000D72EC /* SDL2_mixer.framework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		F2FE7BC51BAF1987000D72EC /* SDL2_image.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F2FE7BBA1BAF196E000D72EC /* SDL2_image.framework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		F2FE7BC61BAF1990000D72EC /* SDL2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F2FE7BBE1BAF197A000D72EC /* SDL2.framework */; };
+		F2FE7BC71BAF1990000D72EC /* SDL2_mixer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F2FE7BBC1BAF1974000D72EC /* SDL2_mixer.framework */; };
+		F2FE7BC81BAF1990000D72EC /* SDL2_image.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F2FE7BBA1BAF196E000D72EC /* SDL2_image.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -151,9 +149,9 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				F21EA822199A870900D78E1C /* SDL2.framework in Embed Frameworks */,
-				F21EA824199A870900D78E1C /* SDL2_image.framework in Embed Frameworks */,
-				F2293ECA19A4103C00920353 /* SDL2_mixer.framework in Embed Frameworks */,
+				F2FE7BC51BAF1987000D72EC /* SDL2_image.framework in Embed Frameworks */,
+				F2FE7BC11BAF1987000D72EC /* SDL2.framework in Embed Frameworks */,
+				F2FE7BC31BAF1987000D72EC /* SDL2_mixer.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -199,7 +197,6 @@
 		F21EA83F199BB46200D78E1C /* deferred-ambient.fsh */ = {isa = PBXFileReference; explicitFileType = sourcecode.glsl; fileEncoding = 4; path = "deferred-ambient.fsh"; sourceTree = "<group>"; };
 		F21EA841199BE7C000D78E1C /* deferred-directional.vsh */ = {isa = PBXFileReference; explicitFileType = sourcecode.glsl; fileEncoding = 4; path = "deferred-directional.vsh"; sourceTree = "<group>"; };
 		F21EA843199BE7D100D78E1C /* deferred-directional.fsh */ = {isa = PBXFileReference; explicitFileType = sourcecode.glsl; fileEncoding = 4; path = "deferred-directional.fsh"; sourceTree = "<group>"; };
-		F2293EC819A4103100920353 /* SDL2_mixer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2_mixer.framework; path = ../../../Library/Frameworks/SDL2_mixer.framework; sourceTree = "<group>"; };
 		F23A8BA019AD56640074E7DD /* tiling_normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tiling_normal.png; sourceTree = "<group>"; };
 		F24DA04819A3D4AF005F5F32 /* sand.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sand.png; sourceTree = "<group>"; };
 		F24DA04A19A3F06F005F5F32 /* draggable_behaviour.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = draggable_behaviour.cpp; sourceTree = "<group>"; };
@@ -249,8 +246,6 @@
 		F29707A01993728300D48CE5 /* game_loop.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = game_loop.cpp; sourceTree = "<group>"; };
 		F29707A11993728300D48CE5 /* game_loop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = game_loop.h; sourceTree = "<group>"; };
 		F29707A31993734100D48CE5 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
-		F29707A51993735D00D48CE5 /* SDL2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2.framework; path = ../../../Library/Frameworks/SDL2.framework; sourceTree = "<group>"; };
-		F29707A61993735D00D48CE5 /* SDL2_image.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2_image.framework; path = ../../../Library/Frameworks/SDL2_image.framework; sourceTree = "<group>"; };
 		F29707AD199373A800D48CE5 /* opengl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = opengl.h; sourceTree = "<group>"; };
 		F29707AE199373D500D48CE5 /* sdl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sdl.h; sourceTree = "<group>"; };
 		F29707AF1993786600D48CE5 /* image.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = image.cpp; sourceTree = "<group>"; };
@@ -338,6 +333,9 @@
 		F2F0DB0A19A4B46A00BD63E9 /* pyramid_gold.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pyramid_gold.png; sourceTree = "<group>"; };
 		F2FC464319A34D4800EFCEF5 /* variable_declaration.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = variable_declaration.cpp; sourceTree = "<group>"; };
 		F2FC464419A34D4800EFCEF5 /* variable_declaration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = variable_declaration.h; sourceTree = "<group>"; };
+		F2FE7BBA1BAF196E000D72EC /* SDL2_image.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SDL2_image.framework; sourceTree = "<group>"; };
+		F2FE7BBC1BAF1974000D72EC /* SDL2_mixer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SDL2_mixer.framework; sourceTree = "<group>"; };
+		F2FE7BBE1BAF197A000D72EC /* SDL2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SDL2.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -346,9 +344,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				F29707BB199391FD00D48CE5 /* OpenGL.framework in Frameworks */,
-				F2293EC919A4103100920353 /* SDL2_mixer.framework in Frameworks */,
-				F21EA821199A870900D78E1C /* SDL2.framework in Frameworks */,
-				F21EA823199A870900D78E1C /* SDL2_image.framework in Frameworks */,
+				F2FE7BC61BAF1990000D72EC /* SDL2.framework in Frameworks */,
+				F2FE7BC71BAF1990000D72EC /* SDL2_mixer.framework in Frameworks */,
+				F2FE7BC81BAF1990000D72EC /* SDL2_image.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -356,8 +354,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F29707AA1993737E00D48CE5 /* SDL2.framework in Frameworks */,
-				F29707AB1993737E00D48CE5 /* SDL2_image.framework in Frameworks */,
 				F29707AC1993737E00D48CE5 /* OpenGL.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -624,9 +620,9 @@
 		F29707A91993736200D48CE5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				F2293EC819A4103100920353 /* SDL2_mixer.framework */,
-				F29707A51993735D00D48CE5 /* SDL2.framework */,
-				F29707A61993735D00D48CE5 /* SDL2_image.framework */,
+				F2FE7BBE1BAF197A000D72EC /* SDL2.framework */,
+				F2FE7BBC1BAF1974000D72EC /* SDL2_mixer.framework */,
+				F2FE7BBA1BAF196E000D72EC /* SDL2_image.framework */,
 				F29707A31993734100D48CE5 /* OpenGL.framework */,
 			);
 			name = Frameworks;
@@ -876,7 +872,7 @@
 		F297071F1993682F00D48CE5 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0600;
+				LastUpgradeCheck = 0710;
 				ORGANIZATIONNAME = "Laszlo Korte";
 				TargetAttributes = {
 					F297075B19936C1600D48CE5 = {
@@ -1078,6 +1074,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = c11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -1092,7 +1089,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
@@ -1127,7 +1124,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
 			};
@@ -1142,13 +1139,16 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(USER_LIBRARY_DIR)/Frameworks",
+					"$(PROJECT_DIR)",
 				);
+				GCC_OPTIMIZATION_LEVEL = 3;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/OpenGLFramework/Resources/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "de.laszlokorte.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -1162,9 +1162,12 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(USER_LIBRARY_DIR)/Frameworks",
+					"$(PROJECT_DIR)",
 				);
+				GCC_OPTIMIZATION_LEVEL = 3;
 				INFOPLIST_FILE = "$(SRCROOT)/OpenGLFramework/Resources/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "de.laszlokorte.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -1185,6 +1188,7 @@
 				);
 				INFOPLIST_FILE = "OpenGLFrameworkTests/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "de.laszlokorte.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 			};
@@ -1202,6 +1206,7 @@
 				);
 				INFOPLIST_FILE = "OpenGLFrameworkTests/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "de.laszlokorte.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 			};

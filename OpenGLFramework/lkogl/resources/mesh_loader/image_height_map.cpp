@@ -19,7 +19,7 @@ namespace lkogl {
             
             ImageHeightMap::~ImageHeightMap()
             {
-                free(points_);
+                delete[] points_;
             }
                 
             void ImageHeightMap::setHeightAt(int x, int y, float h)
