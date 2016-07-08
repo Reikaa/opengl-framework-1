@@ -19,3 +19,7 @@ This is some toy project I used to learn basics OpenGL and C++.
 
  * press <kbd>T</kbd> to attach the camera to the spinning head (press <kbd>T</kbd> again to detach)
  * hold <kbd>B</kbd> to show bounding boxes and octree bounds
+
+## Links
+
+The project is inspired by the really great tutorial videos by [TheBennyBox](https://www.youtube.com/user/thebennybox/videos).
