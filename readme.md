@@ -1,7 +1,7 @@
 OpenGL Framework
 ================
 
-This is some toy project I used to learn basics OpenGL and C++.
+This is some toy project I used to learn some basics of OpenGL and C++.
 
 ## It contains:
 
