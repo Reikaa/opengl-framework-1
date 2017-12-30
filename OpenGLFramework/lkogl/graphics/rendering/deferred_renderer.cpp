@@ -33,6 +33,9 @@ namespace lkogl {
                 TargetType{GL_COLOR_ATTACHMENT2, GL_RGBA32F},
             })), square_(geometry::primitives::makeSquare()), box_(geometry::primitives::makeCube()), ratioWidth_(ratioWidth), ratioHeight_(ratioHeight), sky_(utils::Image("sky.png"))
             {
+                sky_.setParameter(GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+                sky_.setParameter(GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+                sky_.setParameter(GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
             }
             
             DeferredRenderer::Programs DeferredRenderer::initPrograms() throw (Shader::Exception)

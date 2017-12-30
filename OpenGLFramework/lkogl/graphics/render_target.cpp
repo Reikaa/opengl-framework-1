@@ -80,8 +80,8 @@ namespace lkogl {
                 
                 glTexParameteri(textureTarget_, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
                 glTexParameteri(textureTarget_, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-                glTexParameteri(textureTarget_, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
-                glTexParameteri(textureTarget_, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
+                glTexParameteri(textureTarget_, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+                glTexParameteri(textureTarget_, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
                 
                 
                 if(targets[i].attachment == GL_DEPTH_ATTACHMENT) {

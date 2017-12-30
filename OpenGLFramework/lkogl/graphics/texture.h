@@ -38,7 +38,8 @@ namespace lkogl {
             ~TextureResource();
             
             void replaceImage(const utils::Image& image) throw (Exception);
-            
+            void setParameter(GLenum pname, GLint param);
+
         private:
             explicit TextureResource(int handle, int w, int h);
             GLuint generateTexture() const;
@@ -74,6 +75,10 @@ namespace lkogl {
             Texture(const utils::Image&) throw (Exception);
             Texture(const Texture&);
             ~Texture();
+            
+            void setParameter(GLenum pname, GLint param) {
+                resource_->setParameter(pname, param);
+            }
         private:            
             friend class TextureUse;
             friend class TextureRendering;

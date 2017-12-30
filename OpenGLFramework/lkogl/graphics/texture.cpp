@@ -64,6 +64,13 @@ namespace lkogl {
             glTexParameteri(textureTarget_, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
         }
         
+        void TextureResource::setParameter(GLenum pname, GLint param) {
+            TextureBinding b(*this, 1);
+
+            glTexParameteri(textureTarget_, pname, param);
+        }
+
+        
         Texture::Texture(const utils::Image& img) throw (Exception) :
         resource_(std::make_shared<TextureResource>(img.width(), img.height())) {
             resource_->replaceImage(img);
