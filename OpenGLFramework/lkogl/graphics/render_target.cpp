@@ -60,7 +60,7 @@ namespace lkogl {
             
             
             for(int i=0;i<numTargets;i++) {
-                h.textures_.push_back(std::move(TextureResource(texturesRaw[i], width_, height_)));
+                h.textures_.push_back(TextureResource(texturesRaw[i], width_, height_));
             }
             
             for(int i = 0; i < numTargets; i++)
