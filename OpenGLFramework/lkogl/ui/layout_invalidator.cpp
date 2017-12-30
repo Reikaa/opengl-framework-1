@@ -30,7 +30,7 @@ namespace lkogl {
                 elements.pop();
                 bool selfDirty = current->layout().dirty();
                 
-                for(const auto c : current->children()) {
+                for(const auto &c : current->children()) {
                     elements.push(c);
                     if(selfDirty) {
                         c->layout().invalidate();
